@@ -2,7 +2,7 @@
 
 This is a work-in-progress implementation of Amazon's Selling Partner API in PHP. This package aims to provide an easy to use, fluent interface to the API. 
 
-If you would like to participate in the development of this SDK, please get in touch with us at: `support@jasaratech.com`
+If you would like to participate in the development of this SDK, please get in touch with us at support@jasaratech.com
 
 # Installation
 
