@@ -4,6 +4,8 @@ This is a work-in-progress implementation of Amazon's Selling Partner API in PHP
 
 If you would like to participate in the development of this SDK, please get in touch with us at support@jasaratech.com
 
+We also maintain an updated fork of the old Amazon MWS API: https://github.com/keithbrink/amazon-mws-laravel
+
 # Installation
 
 You can use Composer to install this package in your projects:
