@@ -1,0 +1,20 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import '_base';
+@import '_navigation';
+@import '_documentation';
+@import '_search';
+
+/* Tables */
+td,
+th {
+  @apply px-4 py-1 border border-gray-200;
+}
+tr:nth-child(odd) {
+  @apply bg-gray-100;
+}
+table {
+  @apply mb-6;
+}
