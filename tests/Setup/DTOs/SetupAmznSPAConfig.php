@@ -7,10 +7,10 @@ use Jasara\AmznSPA\DTOs\AmznSPAConfig;
 
 trait SetupAmznSPAConfig
 {
-    public function setupMinimalConfig()
+    public function setupMinimalConfig(string $marketplace_id = null)
     {
         return new AmznSPAConfig(
-            marketplace_id: Str::random(),
+            marketplace_id: $marketplace_id ?: Str::random(),
             application_id: Str::random(),
         );
     }
