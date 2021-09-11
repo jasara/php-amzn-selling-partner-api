@@ -6,6 +6,10 @@ If you would like to participate in the development of this SDK, please get in t
 
 We also maintain an updated fork of the old Amazon MWS API for Laravel: https://github.com/keithbrink/amazon-mws-laravel
 
+# Documentation
+
+This README provides some basic details about the package; detailed documentation is available at: https://phpspa.com/docs/getting-started/
+
 # Installation
 
 You can use Composer to install this package in your projects:
@@ -31,18 +35,20 @@ if($feed->completed) {
 
 ## Config
 
-When you instantiate the AmazonSPA class, the config paramater should be set as follows:
+When you instantiate the AmazonSPA class, the config is a data transfer object that should be initialized and then passed in:
 
 ```php
-[
-    'marketplaceId' => 'ATVPDKIKX0DER',
-    'accessToken' => '***', 
-    'refreshToken' => '***', // If you would like the SDK to automatically fetch a new access token if necessary
-    'clientId' => '***',
-    'clientSecret' => '***',
-    'accessKey' => '***', // Your AWS Access Key ID
-    'secretKey' => '***', // Your AWS Secret Access Key
-]
+use Jasara\AmznSPA\DTOs\AmznSPAConfig;
+
+$config = new AmznSPAConfig(
+    marketplace_id: 'ATVPDKIKX0DER',
+    lwa_access_token: '***',
+    lwa_refresh_token: '***', // If you would like the SDK to automatically fetch a new access token if necessary
+    lwa_client_id: '***',
+    lwa_client_secret: '***',
+    aws_access_key: '***',
+    aws_secret_key: '***',
+);
 ```
 
 # License
@@ -55,4 +61,4 @@ You are free to use the project for non-commercial purposes.
 
 Judging by the current pace of development by the Amazon Selling Partner API team, it looks like they plan to develop at a rapid pace, so it will be an effort to keep up with all the changes. We would like this project to start with sustainability in mind, rather than have a project that only works properly for several months and then no longer receives updates.
 
-If reducing costs is more important to you than development speed and time, you can always generate your own PHP SDK using the swagger-gen tools that the Selling Partner API team provides.
+If reducing costs is more important to you than development speed and sustainability, you can always generate your own PHP SDK using the swagger-gen tools that the Selling Partner API team provides.
