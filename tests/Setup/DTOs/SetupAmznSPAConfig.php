@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Setup\DTOs;
+namespace Jasara\AmznSPA\Tests\Setup\DTOs;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DTOs\AmznSPAConfig;

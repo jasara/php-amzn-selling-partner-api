@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Traits;
+namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
-use Tests\Unit\UnitTestCase;
+use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class HasConfigTest extends UnitTestCase
 {

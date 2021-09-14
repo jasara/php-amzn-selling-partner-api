@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Resources;
+namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Jasara\AmznSPA\Exceptions\InvalidParametersException;
 use Jasara\AmznSPA\Resources\ResourceGetter;
-use Tests\Unit\UnitTestCase;
+use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class ResourceGetterTest extends UnitTestCase
 {

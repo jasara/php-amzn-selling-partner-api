@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Resources;
+namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Constants\MarketplaceData;
-use Tests\Unit\UnitTestCase;
+use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class OAuthResourceTest extends UnitTestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Jasara\AmznSPA\Tests\Unit;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
