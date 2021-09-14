@@ -1,3 +1,7 @@
+[![CI](https://github.com/jasara/php-amzn-selling-partner-api/actions/workflows/ci.yml/badge.svg)](https://github.com/jasara/php-amzn-selling-partner-api/actions/workflows/ci.yml)
+
+[![Code coverage](https://raw.githubusercontent.com/jasara/php-amzn-selling-partner-api/master/.github/coverage.svg)](https://github.com/jasara/php-amzn-selling-partner-api)
+
 # PHP SDK for Amazon's Selling Partner API
 
 This is a work-in-progress implementation of Amazon's Selling Partner API in PHP. This package aims to provide an easy to use, fluent interface to the API. 
