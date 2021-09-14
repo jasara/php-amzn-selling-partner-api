@@ -12,5 +12,4 @@ jobs:
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         with:
-          configuration: test/phpunit.xml
-          args: --coverage-text
+          configuration: phpunit.xml
