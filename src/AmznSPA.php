@@ -3,25 +3,46 @@
 namespace Jasara\AmznSPA;
 
 use Jasara\AmznSPA\DTOs\AmznSPAConfig;
-use Jasara\AmznSPA\Resources\OAuthResource;
+use Jasara\AmznSPA\Exceptions\InvalidResourceException;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
-use LazyProperty\LazyPropertiesTrait;
 
+/**
+ * @property \Jasara\AmznSPA\Resources\OAuthResource $oauth
+ */
 class AmznSPA
 {
-    use HasConfig, LazyPropertiesTrait;
+    use HasConfig;
 
-    public $oauth;
+    private $resource_cache = [];
 
     public function __construct(AmznSPAConfig $config)
     {
-        $this->initLazyProperties(['oauth']);
-
         $this->setupConfig($config);
     }
 
-    private function getOauth(): OAuthResource
+    public function __get($name)
     {
-        return $this->oauth ?: $this->oauth = new OAuthResource($this->config->marketplace_id);
+        if (! isset($this->resource_cache[$name])) {
+            $function = 'get' . ucfirst($name);
+
+            $resource_getter = new ResourceGetter($this->config);
+
+            if (! method_exists($resource_getter, $function)) {
+                throw new InvalidResourceException($name . ' is not a supported resource.');
+            }
+
+            $this->resource_cache[$name] = $resource_getter->{$function}();
+        }
+
+        return $this->resource_cache[$name];
+    }
+
+    public function usingMarketplace(string $marketplace_id): self
+    {
+        $config = clone $this->config;
+        $config->marketplace_id = $marketplace_id;
+
+        return new self($config);
     }
 }

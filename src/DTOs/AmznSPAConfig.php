@@ -10,6 +10,10 @@ class AmznSPAConfig extends DataTransferObject
 
     public string $application_id;
 
+    public ?string $lwa_client_id;
+
+    public ?string $lwa_client_secret;
+
     public ?string $lwa_refresh_token;
 
     public ?string $lwa_access_token;

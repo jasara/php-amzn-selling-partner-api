@@ -22,4 +22,9 @@ trait HasConfig
 
         return $this->config->lwa_access_token;
     }
+
+    public function getMarketplaceId(): string
+    {
+        return $this->config->marketplace_id;
+    }
 }

@@ -28,7 +28,9 @@
     "minimum-stability": "dev",
     "require": {
         "spatie/data-transfer-object": "dev-master",
-        "ocramius/lazy-property": "2.3.x-dev"
+        "ocramius/lazy-property": "2.3.x-dev",
+        "guzzlehttp/guzzle": "7.4.x-dev",
+        "illuminate/http": "8.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
