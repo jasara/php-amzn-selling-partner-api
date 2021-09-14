@@ -9,24 +9,20 @@
             "email": "keith@jasaratech.com"
         }
     ],
-    "config": {
-        "platform": {
-            "php": "8.0"
-        },
-        "preferred-install": "dist"
-    },
     "autoload": {
         "psr-4": {
-            "Jasara\\AmznSPA\\": "src/"
+            "Jasara\\AmznSPA\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jasara\\AmznSPA\\Tests\\": "tests/"
+            "Jasara\\AmznSPA\\Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
+        "php": "^8.0",
         "spatie/data-transfer-object": "dev-master",
         "ocramius/lazy-property": "2.3.x-dev",
         "guzzlehttp/guzzle": "7.4.x-dev",
