@@ -1,5 +1,4 @@
 [![CI](https://github.com/jasara/php-amzn-selling-partner-api/actions/workflows/ci.yml/badge.svg)](https://github.com/jasara/php-amzn-selling-partner-api/actions/workflows/ci.yml)
-
 [![Code coverage](https://raw.githubusercontent.com/jasara/php-amzn-selling-partner-api/master/.github/coverage.svg)](https://github.com/jasara/php-amzn-selling-partner-api)
 
 # PHP SDK for Amazon's Selling Partner API
