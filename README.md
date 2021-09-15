@@ -21,13 +21,13 @@ You can use Composer to install this package in your projects:
 
 # Usage
 
-The best way to understand how to use this SDK is by reading the class for the specific call you would like to make. In general, you should expect a fluent interface, such as:
+The best way to understand how to use this SDK is by reading the documentation for the specific call you would like to make. In general, you should expect a fluent interface, such as:
 
 ```php
-use Jasara\AmazonSPA\Feeds;
+use Jasara\AmazonSPA\AmznSPA;
 
-$amazon = new Feeds($config);
-$feed = $amazon->feedId($feed_id)->getFeed();
+$amazon = new AmznSPA($config);
+$feed = $amazon->feeds->feedId($feed_id)->getFeed();
 if($feed->failed) {
     $errors = $amazon->errors();
 }
@@ -38,13 +38,14 @@ if($feed->completed) {
 
 ## Config
 
-When you instantiate the AmazonSPA class, the config is a data transfer object that should be initialized and then passed in:
+When you instantiate the AmazonSPA class, the config is an object that should be initialized and then passed in:
 
 ```php
 use Jasara\AmznSPA\AmznSPAConfig;
 
 $config = new AmznSPAConfig(
     marketplace_id: 'ATVPDKIKX0DER',
+    application_id: '***',
     lwa_access_token: '***',
     lwa_refresh_token: '***', // If you would like the SDK to automatically fetch a new access token if necessary
     lwa_client_id: '***',
