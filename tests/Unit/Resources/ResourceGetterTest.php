@@ -5,8 +5,15 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @coversDefaultClass \Jasara\AmznSPA\Resources\ResourceGetter
+ */
 class ResourceGetterTest extends UnitTestCase
 {
+    /**
+     * @covers ::__construct
+     * @covers ::getOauth
+     */
     public function testGetOauth()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());

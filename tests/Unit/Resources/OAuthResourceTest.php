@@ -8,12 +8,18 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Constants\MarketplaceData;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
+use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @coversDefaultClass \Jasara\AmznSPA\Resources\OAuthResource
+ */
 class OAuthResourceTest extends UnitTestCase
 {
     /**
      * @dataProvider marketplaces
+     * @covers ::getAuthUrl()
+     * @covers ::getBaseUrlFromMarketplace()
      */
     public function testAuthUrlGenerated(array $marketplace_data)
     {
@@ -25,6 +31,8 @@ class OAuthResourceTest extends UnitTestCase
 
     /**
      * @dataProvider marketplaces
+     * @covers ::getAuthUrl()
+     * @covers ::getBaseUrlFromMarketplace()
      */
     public function testAuthUrlGeneratedWithStateAndRedirectUrl(array $marketplace_data)
     {
@@ -37,18 +45,28 @@ class OAuthResourceTest extends UnitTestCase
         $this->assertEquals($marketplace_data['base_url'] . '/apps/authorize/consent?redirect_url=https%3A%2F%2Ftest.com%2F' . $state . '&state=' . $state, $url);
     }
 
+    /**
+     * @covers ::isRedirectValid()
+     * @covers ::getTokensFromRedirect()
+     */
     public function testStateDoesNotMatch()
     {
         $this->expectException(AmznSPAException::class);
         $this->expectExceptionMessage('State returned from Amazon does not match the original state');
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
-        $tokens = $amzn->oauth->getTokensFromRedirect(Str::random(), [
+        $amzn->oauth->getTokensFromRedirect(Str::random(), [
             'state' => Str::random(),
             'spapi_oauth_code' => Str::random(),
         ]);
     }
 
+    /**
+     * @covers ::__construct()
+     * @covers ::getTokensFromRedirect()
+     * @covers ::callGetTokens()
+     * @covers ::isRedirectValid()
+     */
     public function testGetTokensFromRedirect()
     {
         $state = Str::random();
@@ -76,6 +94,25 @@ class OAuthResourceTest extends UnitTestCase
 
             return true;
         });
+    }
+
+    /**
+     * @covers ::callGetTokens
+     */
+    public function testGetTokensFromRedirectError()
+    {
+        $this->expectException(AuthenticationException::class);
+
+        $state = Str::random();
+        $spapi_oauth_code = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->oauth->getTokensFromRedirect($state, [
+            'state' => $state,
+            'spapi_oauth_code' => $spapi_oauth_code,
+        ]);
     }
 
     public function marketplaces(): array

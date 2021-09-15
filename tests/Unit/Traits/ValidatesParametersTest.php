@@ -4,13 +4,21 @@ namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\InvalidParametersException;
+use Jasara\AmznSPA\Resources\OAuthResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @coversDefaultClass \Jasara\AmznSPA\Traits\ValidatesParameters
+ */
 class ValidatesParametersTest extends UnitTestCase
 {
-    public function testRequiredParametersInConfig()
+    /**
+     * @covers ::validateConfigParameters
+     */
+    public function testRequiredParametersInConfigException()
     {
         $this->expectException(InvalidParametersException::class);
 
@@ -21,12 +29,42 @@ class ValidatesParametersTest extends UnitTestCase
         $resource_getter->getOauth();
     }
 
-    public function testRequiredParametersInArray()
+    /**
+     * @covers ::validateConfigParameters
+     */
+    public function testRequiredParametersInConfigPasses()
+    {
+        $config = $this->setupMinimalConfig();
+
+        $resource_getter = new ResourceGetter($config);
+        $oauth = $resource_getter->getOauth();
+
+        $this->assertInstanceOf(OAuthResource::class, $oauth);
+    }
+
+    /**
+     * @covers ::validateArrayParameters
+     */
+    public function testRequiredParametersInArrayException()
     {
         $this->expectException(InvalidParametersException::class);
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
         $amzn->oauth->getTokensFromRedirect(Str::random(), [
+            'spapi_oauth_code' => Str::random(),
+        ]);
+    }
+
+    /**
+     * @covers ::validateArrayParameters
+     */
+    public function testRequiredParametersInArrayPasses()
+    {
+        $this->expectException(AmznSPAException::class); // Testing it is not the invalid parameters exception
+
+        $amzn = new AmznSPA($this->setupMinimalConfig());
+        $amzn->oauth->getTokensFromRedirect(Str::random(), [
+            'state' => Str::random(),
             'spapi_oauth_code' => Str::random(),
         ]);
     }

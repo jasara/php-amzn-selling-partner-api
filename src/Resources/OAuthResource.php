@@ -60,8 +60,6 @@ class OAuthResource implements ResourceContract
             $this->handleError($response);
         }
 
-        ray($response->json());
-
         return $response->json();
     }
 
