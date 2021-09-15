@@ -2,7 +2,7 @@
 
 namespace Jasara\AmznSPA\Traits;
 
-use Jasara\AmznSPA\DTOs\AmznSPAConfig;
+use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 
 trait HasConfig

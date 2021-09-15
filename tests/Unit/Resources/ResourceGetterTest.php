@@ -2,20 +2,16 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
-use Jasara\AmznSPA\Exceptions\InvalidParametersException;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class ResourceGetterTest extends UnitTestCase
 {
-    public function testOauthRequiredParameters()
+    public function testGetOauth()
     {
-        $this->expectException(InvalidParametersException::class);
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $oauth = $resource_getter->getOauth();
 
-        $config = $this->setupMinimalConfig();
-        $config->lwa_client_id = null;
-
-        $resource_getter = new ResourceGetter($config);
-        $resource_getter->getOauth();
+        $this->assertInstanceOf(Resources\OAuthResource::class, $oauth);
     }
 }

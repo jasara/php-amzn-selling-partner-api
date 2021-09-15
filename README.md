@@ -41,7 +41,7 @@ if($feed->completed) {
 When you instantiate the AmazonSPA class, the config is a data transfer object that should be initialized and then passed in:
 
 ```php
-use Jasara\AmznSPA\DTOs\AmznSPAConfig;
+use Jasara\AmznSPA\AmznSPAConfig;
 
 $config = new AmznSPAConfig(
     marketplace_id: 'ATVPDKIKX0DER',

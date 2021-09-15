@@ -2,7 +2,7 @@
 
 namespace Jasara\AmznSPA;
 
-use Jasara\AmznSPA\DTOs\AmznSPAConfig;
+use Illuminate\Http\Client\Factory;
 use Jasara\AmznSPA\Exceptions\InvalidResourceException;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
@@ -42,6 +42,14 @@ class AmznSPA
     {
         $config = clone $this->config;
         $config->marketplace_id = $marketplace_id;
+
+        return new self($config);
+    }
+
+    public function usingHttp(Factory $http): self
+    {
+        $config = clone $this->config;
+        $config->http = $http;
 
         return new self($config);
     }
