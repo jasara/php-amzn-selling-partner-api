@@ -6,6 +6,7 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Arr;
 use Jasara\AmznSPA\Constants\MarketplaceData;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Traits\HandlesHttpErrors;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -35,7 +36,14 @@ class OAuthResource implements ResourceContract
         return $url;
     }
 
-    public function getTokensFromRedirect(string $original_state, array $parameters): array
+    /**
+     * @param array $parameters Array containing the data sent by Amazon on the redirect
+     *      $parameters = [
+     *          'state'             => (string) Required, should match the original state that was sent to Amazon
+     *          'spapi_oauth_code'  => (string) Required, the authorization code
+     *      ]
+     */
+    public function getTokensFromRedirect(string $original_state, array $parameters): AuthTokensDTO
     {
         $this->validateArrayParameters($parameters, ['state', 'spapi_oauth_code']);
 
@@ -46,7 +54,7 @@ class OAuthResource implements ResourceContract
         return $this->callGetTokens($parameters['spapi_oauth_code']);
     }
 
-    private function callGetTokens(string $spapi_oauth_code): array
+    private function callGetTokens(string $spapi_oauth_code): AuthTokensDTO
     {
         $response = $this->http->post('https://api.amazon.com/auth/o2/token', [
             'grant_type' => 'authorization_code',
@@ -60,7 +68,13 @@ class OAuthResource implements ResourceContract
             $this->handleError($response);
         }
 
-        return $response->json();
+        $data = $response->json();
+
+        return new AuthTokensDTO(
+            access_token: $data['access_token'],
+            refresh_token: $data['refresh_token'],
+            expires_at: $data['expires_in'],
+        );
     }
 
     private function isRedirectValid(string $original_state, string $amzn_state): bool

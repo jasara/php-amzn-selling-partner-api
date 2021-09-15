@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Constants\MarketplaceData;
+use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -80,10 +82,11 @@ class OAuthResourceTest extends UnitTestCase
             'spapi_oauth_code' => $spapi_oauth_code,
         ]);
 
-        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', Arr::get($tokens, 'access_token'));
-        $this->assertEquals('bearer', Arr::get($tokens, 'token_type'));
-        $this->assertEquals(3600, Arr::get($tokens, 'expires_in'));
-        $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', Arr::get($tokens, 'refresh_token'));
+        $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
+        $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
+        $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
+        $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', $tokens->refresh_token);
 
         $http->assertSent(function (Request $request) use ($spapi_oauth_code, $config) {
             $this->assertEquals('authorization_code', Arr::get($request, 'grant_type'));

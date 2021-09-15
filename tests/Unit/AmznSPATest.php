@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\Tests\Unit;
 
 use Illuminate\Http\Client\Factory;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Exceptions\InvalidResourceException;
@@ -65,7 +64,7 @@ class AmznSPATest extends UnitTestCase
         $test_string_1 = Str::random();
         $http = new Factory;
         $http->fake([
-            '*' => $http->response(['access_token' => $test_string_1]),
+            '*' => $http->response(['access_token' => $test_string_1, 'refresh_token' => $test_string_1, 'expires_in' => 3600]),
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
@@ -76,12 +75,12 @@ class AmznSPATest extends UnitTestCase
             'spapi_oauth_code' => Str::random(),
         ]);
 
-        $this->assertEquals($test_string_1, Arr::get($result, 'access_token'));
+        $this->assertEquals($test_string_1, $result->access_token);
 
         $test_string_2 = Str::random();
         $new_http = new Factory;
         $new_http->fake([
-            '*' => $new_http->response(['access_token' => $test_string_2]),
+            '*' => $new_http->response(['access_token' => $test_string_2, 'refresh_token' => $test_string_2, 'expires_in' => 3600]),
         ]);
 
         $new_amzn = $amzn->usingHttp($new_http);
@@ -91,6 +90,6 @@ class AmznSPATest extends UnitTestCase
             'spapi_oauth_code' => Str::random(),
         ]);
 
-        $this->assertEquals($test_string_2, Arr::get($result_2, 'access_token'));
+        $this->assertEquals($test_string_2, $result_2->access_token);
     }
 }
