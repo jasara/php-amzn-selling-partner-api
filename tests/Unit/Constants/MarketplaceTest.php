@@ -10,13 +10,12 @@ class MarketplaceTest extends UnitTestCase
 {
     /**
      * @covers \Jasara\AmznSPA\Constants\Marketplace
+     * @dataProvider regions
      */
-    public function testGetters()
+    public function testGetters(string $region)
     {
         $identifier = Str::random();
         $country_code = Str::random();
-        $regions = ['NA', 'EU', 'FE'];
-        $region = $regions[rand(0, 2)];
 
         $marketplace = new Marketplace(
             identifier: $identifier,
@@ -30,9 +29,25 @@ class MarketplaceTest extends UnitTestCase
             'FE' => 'https://sellingpartnerapi-fe.amazon.com',
         };
 
+        $aws_region = match ($region) {
+            'NA' => 'us-east-1',
+            'EU' => 'eu-west-1',
+            'FE' => 'us-west-2',
+        };
+
         $this->assertEquals($identifier, $marketplace->getIdentifier());
         $this->assertEquals($country_code, $marketplace->getCountryCode());
         $this->assertEquals($region, $marketplace->getRegion());
         $this->assertEquals($base_url, $marketplace->getBaseUrl());
+        $this->assertEquals($aws_region, $marketplace->getAwsRegion());
+    }
+
+    public function regions()
+    {
+        return [
+            ['NA'],
+            ['EU'],
+            ['FE'],
+        ];
     }
 }

@@ -15,8 +15,6 @@ class AmznSPA
 {
     use HasConfig;
 
-    private $resource_cache = [];
-
     public function __construct(AmznSPAConfig $config)
     {
         $this->setupConfig($config);
@@ -24,19 +22,15 @@ class AmznSPA
 
     public function __get($name)
     {
-        if (! isset($this->resource_cache[$name])) {
-            $function = 'get' . ucfirst($name);
+        $function = 'get' . ucfirst($name);
 
-            $resource_getter = new ResourceGetter($this->config);
+        $resource_getter = new ResourceGetter($this->config);
 
-            if (! method_exists($resource_getter, $function)) {
-                throw new InvalidResourceException($name . ' is not a supported resource.');
-            }
-
-            $this->resource_cache[$name] = $resource_getter->{$function}();
+        if (! method_exists($resource_getter, $function)) {
+            throw new InvalidResourceException($name . ' is not a supported resource.');
         }
 
-        return $this->resource_cache[$name];
+        return $resource_getter->{$function}();
     }
 
     public function usingMarketplace(string $marketplace_id): self

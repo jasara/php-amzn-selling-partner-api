@@ -15,14 +15,12 @@ use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @coversDefaultClass \Jasara\AmznSPA\Resources\OAuthResource
+ * @covers \Jasara\AmznSPA\Resources\OAuthResource
  */
 class OAuthResourceTest extends UnitTestCase
 {
     /**
      * @dataProvider marketplaces
-     * @covers ::getAuthUrl()
-     * @covers ::getBaseUrlFromMarketplace()
      */
     public function testAuthUrlGenerated(Marketplace $marketplace)
     {
@@ -34,8 +32,6 @@ class OAuthResourceTest extends UnitTestCase
 
     /**
      * @dataProvider marketplaces
-     * @covers ::getAuthUrl()
-     * @covers ::getBaseUrlFromMarketplace()
      */
     public function testAuthUrlGeneratedWithStateAndRedirectUrl(Marketplace $marketplace)
     {
@@ -48,10 +44,6 @@ class OAuthResourceTest extends UnitTestCase
         $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=https%3A%2F%2Ftest.com%2F' . $state . '&state=' . $state, $url);
     }
 
-    /**
-     * @covers ::isRedirectValid()
-     * @covers ::getTokensFromRedirect()
-     */
     public function testStateDoesNotMatch()
     {
         $this->expectException(AmznSPAException::class);
@@ -64,12 +56,6 @@ class OAuthResourceTest extends UnitTestCase
         ]);
     }
 
-    /**
-     * @covers ::__construct()
-     * @covers ::getTokensFromRedirect()
-     * @covers ::callGetTokens()
-     * @covers ::isRedirectValid()
-     */
     public function testGetTokensFromRedirect()
     {
         $state = Str::random();
@@ -100,9 +86,31 @@ class OAuthResourceTest extends UnitTestCase
         });
     }
 
-    /**
-     * @covers ::callGetTokens
-     */
+    public function testGetAccessTokenFromRefreshToken()
+    {
+        $refresh_token = Str::random();
+
+        list($config, $http) = $this->setupConfigWithFakeHttp('oauth/get-tokens');
+
+        $amzn = new AmznSPA($config);
+        $tokens = $amzn->oauth->getAccessTokenFromRefreshToken($refresh_token);
+
+        $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
+        $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
+        $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
+        $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', $tokens->refresh_token);
+
+        $http->assertSent(function (Request $request) use ($refresh_token, $config) {
+            $this->assertEquals('refresh_token', Arr::get($request, 'grant_type'));
+            $this->assertEquals($refresh_token, Arr::get($request, 'refresh_token'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_id, Arr::get($request, 'client_id'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_secret, Arr::get($request, 'client_secret'));
+
+            return true;
+        });
+    }
+
     public function testGetTokensFromRedirectError()
     {
         $this->expectException(AuthenticationException::class);

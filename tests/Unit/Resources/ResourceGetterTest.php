@@ -6,14 +6,10 @@ use Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @coversDefaultClass \Jasara\AmznSPA\Resources\ResourceGetter
+ * @covers \Jasara\AmznSPA\Resources\ResourceGetter
  */
 class ResourceGetterTest extends UnitTestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::getOauth
-     */
     public function testGetOauth()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
@@ -22,9 +18,6 @@ class ResourceGetterTest extends UnitTestCase
         $this->assertInstanceOf(Resources\OAuthResource::class, $oauth);
     }
 
-    /**
-     * @covers ::getNotifications
-     */
     public function testGetNotifications()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());

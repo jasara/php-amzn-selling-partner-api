@@ -7,7 +7,7 @@ use Jasara\AmznSPA\Exceptions\AmznSPAException;
 
 trait HasConfig
 {
-    protected AmznSPAConfig $config;
+    private AmznSPAConfig $config;
 
     private function setupConfig(AmznSPAConfig $config)
     {

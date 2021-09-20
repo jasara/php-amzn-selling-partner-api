@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAConfig;
+use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class ResourceGetter
@@ -30,12 +31,13 @@ class ResourceGetter
     public function getNotifications(): NotificationsResource
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
+        $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
+
+        $http = new AmznSPAHttp($this->config);
 
         return new NotificationsResource(
-            $this->config->getHttp(),
-            $this->config->getTokens(),
-            $this->config->getMarketplace(),
-            $this->config->getApplicationKeys(),
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
         );
     }
 }

@@ -24,8 +24,6 @@ class HttpEventHandler extends SimpleDispatcher
     {
         $handler = 'handle' . $response->status();
         if (! method_exists($this, $handler)) {
-            ray($response->body());
-
             return $response->throw();
         }
 

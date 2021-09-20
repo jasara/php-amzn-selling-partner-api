@@ -16,6 +16,7 @@ trait SetupAmznSPAConfig
             marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
             redirect_url: Str::random() . '.com',
+            lwa_refresh_token: Str::random(),
             aws_access_key: Str::random(),
             aws_secret_key: Str::random(),
             lwa_client_id: Str::random(),
@@ -40,13 +41,18 @@ trait SetupAmznSPAConfig
 
     public function fakeHttpStub(string $stub, int $status_code = 200): Factory
     {
-        $stub_filepath = __DIR__ . '/../stubs/' . $stub . '.json';
-
         $http = new Factory(new HttpEventHandler);
         $http->fake([
-            '*' => $http->response(json_decode(file_get_contents($stub_filepath), true), $status_code),
+            '*' => $http->response($this->loadHttpStub($stub), $status_code),
         ]);
 
         return $http;
+    }
+
+    public function loadHttpStub(string $stub): array
+    {
+        $stub_filepath = __DIR__ . '/../stubs/' . $stub . '.json';
+
+        return json_decode(file_get_contents($stub_filepath), true);
     }
 }

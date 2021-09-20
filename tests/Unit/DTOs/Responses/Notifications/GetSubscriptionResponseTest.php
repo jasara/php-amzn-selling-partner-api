@@ -12,6 +12,7 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 class GetSubscriptionResponseTest extends UnitTestCase
 {
     /**
+     * @covers \Jasara\AmznSPA\DTOs\Responses\BaseResponse
      * @covers \Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse
      * @covers \Jasara\AmznSPA\DTOs\Schemas\ErrorListSchema
      * @covers \Jasara\AmznSPA\DTOs\Schemas\ErrorSchema
