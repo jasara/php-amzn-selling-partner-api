@@ -34,8 +34,6 @@ class AmznSPAHttp
         try {
             return $this->http->$method($url);
         } catch (RequestException $e) {
-            ray($e->response->json());
-
             if (! $this->shouldRefreshToken($e->response->json())) {
                 throw $e;
             }
@@ -43,10 +41,7 @@ class AmznSPAHttp
                 throw $e;
             }
 
-            $amzn = new AmznSPA($this->config);
-            $new_tokens = $amzn->oauth->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
-
-            $this->config->setTokens($new_tokens);
+            $this->refreshTokens();
 
             return $this->call($method, $url);
         }
@@ -68,10 +63,25 @@ class AmznSPAHttp
         return true;
     }
 
+    private function refreshTokens(): void
+    {
+        $amzn = new AmznSPA($this->config);
+        $new_tokens = $amzn->oauth->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
+
+        $this->config->setTokens($new_tokens);
+    }
+
     private function setupHttp(Factory $http): void
     {
+        $access_token = $this->config->getTokens()->access_token;
+        if (! $access_token) {
+            $this->refreshTokens();
+
+            $access_token = $this->config->getTokens()->access_token;
+        }
+
         $this->http = $http->withHeaders([
-            'x-amz-access-token' => $this->config->getTokens()->access_token,
+            'x-amz-access-token' => $access_token,
             'user-agent' => $this->buildUserAgent(),
         ]);
 

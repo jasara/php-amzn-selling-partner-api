@@ -17,6 +17,7 @@ trait SetupAmznSPAConfig
             application_id: Str::random(),
             redirect_url: Str::random() . '.com',
             lwa_refresh_token: Str::random(),
+            lwa_access_token: Str::random(),
             aws_access_key: Str::random(),
             aws_secret_key: Str::random(),
             lwa_client_id: Str::random(),

@@ -4,7 +4,9 @@ namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\HttpEventHandler;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
@@ -24,6 +26,26 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getTokens()->access_token);
+    }
+
+    public function testGetTokenIfNotSet()
+    {
+        $http = new Factory(new HttpEventHandler);
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('oauth/get-tokens'), 200)
+                ->push($this->loadHttpStub('notifications/get-subscription'), 200),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+        $config->setTokens(new AuthTokensDTO(
+            refresh_token: Str::random(),
+        ));
 
         $amzn = new AmznSPA($config);
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
@@ -67,6 +89,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     /**
      * @group external
+     * An actual API call is required here, in order to test the request signing.
      */
     public function testSetupHttp()
     {
