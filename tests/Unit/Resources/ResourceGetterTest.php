@@ -21,4 +21,15 @@ class ResourceGetterTest extends UnitTestCase
 
         $this->assertInstanceOf(Resources\OAuthResource::class, $oauth);
     }
+
+    /**
+     * @covers ::getNotifications
+     */
+    public function testGetNotifications()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $oauth = $resource_getter->getNotifications();
+
+        $this->assertInstanceOf(Resources\NotificationsResource::class, $oauth);
+    }
 }

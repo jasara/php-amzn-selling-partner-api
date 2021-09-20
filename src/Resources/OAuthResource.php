@@ -3,24 +3,24 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Illuminate\Http\Client\Factory;
-use Illuminate\Support\Arr;
-use Jasara\AmznSPA\Constants\MarketplaceData;
+use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DTOs\ApplicationKeysDTO;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
-use Jasara\AmznSPA\Traits\HandlesHttpErrors;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class OAuthResource implements ResourceContract
 {
-    use ValidatesParameters, HandlesHttpErrors;
+    use ValidatesParameters;
+
+    private $endpoint = 'https://api.amazon.com/auth/o2/token';
 
     public function __construct(
         private Factory $http,
-        private string $marketplace_id,
+        private Marketplace $marketplace,
         private string $redirect_url,
-        private string $lwa_client_id,
-        private string $lwa_client_secret,
+        private ApplicationKeysDTO $application_keys,
     ) {
     }
 
@@ -56,25 +56,27 @@ class OAuthResource implements ResourceContract
 
     private function callGetTokens(string $spapi_oauth_code): AuthTokensDTO
     {
-        $response = $this->http->post('https://api.amazon.com/auth/o2/token', [
+        $response = $this->http->post($this->endpoint, [
             'grant_type' => 'authorization_code',
             'code' => $spapi_oauth_code,
             'redirect_uri' => $this->redirect_url,
-            'client_id' => $this->lwa_client_id,
-            'client_secret' => $this->lwa_client_secret,
+            'client_id' => $this->application_keys->lwa_client_id,
+            'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
 
-        if (! $response->ok()) {
-            $this->handleError($response);
-        }
+        return $this->formatTokenResponse($response->json());
+    }
 
-        $data = $response->json();
+    public function getAccessTokenFromRefreshToken(string $refresh_token): AuthTokensDTO
+    {
+        $response = $this->http->post($this->endpoint, [
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refresh_token,
+            'client_id' => $this->application_keys->lwa_client_id,
+            'client_secret' => $this->application_keys->lwa_client_secret,
+        ]);
 
-        return new AuthTokensDTO(
-            access_token: $data['access_token'],
-            refresh_token: $data['refresh_token'],
-            expires_at: $data['expires_in'],
-        );
+        return $this->formatTokenResponse($response->json());
     }
 
     private function isRedirectValid(string $original_state, string $amzn_state): bool
@@ -86,8 +88,17 @@ class OAuthResource implements ResourceContract
         return false;
     }
 
-    private function getBaseUrlFromMarketplace()
+    private function formatTokenResponse(array $response_data): AuthTokensDTO
     {
-        return Arr::get(MarketplaceData::allMarketplaces(), $this->marketplace_id . '.base_url');
+        return new AuthTokensDTO(
+            access_token: $response_data['access_token'],
+            refresh_token: $response_data['refresh_token'],
+            expires_at: $response_data['expires_in'],
+        );
+    }
+
+    private function getBaseUrlFromMarketplace(): string
+    {
+        return $this->marketplace->getBaseUrl();
     }
 }

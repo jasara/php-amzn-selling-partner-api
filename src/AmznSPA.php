@@ -9,6 +9,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
 
 /**
  * @property \Jasara\AmznSPA\Resources\OAuthResource $oauth
+ * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
  */
 class AmznSPA
 {
@@ -41,7 +42,7 @@ class AmznSPA
     public function usingMarketplace(string $marketplace_id): self
     {
         $config = clone $this->config;
-        $config->marketplace_id = $marketplace_id;
+        $config->setMarketplace($marketplace_id);
 
         return new self($config);
     }
@@ -49,7 +50,7 @@ class AmznSPA
     public function usingHttp(Factory $http): self
     {
         $config = clone $this->config;
-        $config->http = $http;
+        $config->setHttp($http);
 
         return new self($config);
     }

@@ -29,8 +29,15 @@
         "spatie/data-transfer-object": "^3.7"
     },
     "require-dev": {
+        "aws/aws-sdk-php": "dev-feature-guzzle-2.0",
         "phpunit/phpunit": "^9",
         "illuminate/support": "^8",
         "spatie/ray": "^1.30"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/SamRemis/aws-sdk-php"
+        }
+    ]
 }

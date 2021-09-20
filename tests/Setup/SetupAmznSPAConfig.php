@@ -5,21 +5,25 @@ namespace Jasara\AmznSPA\Tests\Setup;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPAConfig;
+use Jasara\AmznSPA\Constants\MarketplacesList;
+use Jasara\AmznSPA\HttpEventHandler;
 
 trait SetupAmznSPAConfig
 {
     public function setupMinimalConfig(string $marketplace_id = null, Factory $http = null)
     {
         $config = new AmznSPAConfig(
-            marketplace_id: $marketplace_id ?: Str::random(),
+            marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
             redirect_url: Str::random() . '.com',
+            aws_access_key: Str::random(),
+            aws_secret_key: Str::random(),
             lwa_client_id: Str::random(),
             lwa_client_secret: Str::random(),
         );
 
         if ($http) {
-            $config->http = $http;
+            $config->setHttp($http);
         }
 
         return $config;
@@ -38,7 +42,7 @@ trait SetupAmznSPAConfig
     {
         $stub_filepath = __DIR__ . '/../stubs/' . $stub . '.json';
 
-        $http = new Factory;
+        $http = new Factory(new HttpEventHandler);
         $http->fake([
             '*' => $http->response(json_decode(file_get_contents($stub_filepath), true), $status_code),
         ]);

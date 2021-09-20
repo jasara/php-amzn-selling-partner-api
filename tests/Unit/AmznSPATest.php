@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Tests\Unit;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Exceptions\InvalidResourceException;
 use Jasara\AmznSPA\Resources\OAuthResource;
 
@@ -44,12 +45,12 @@ class AmznSPATest extends UnitTestCase
         $config = $this->setupMinimalConfig();
         $amzn = new AmznSPA($config);
 
-        $new_marketplace_id = Str::random();
-        $this->assertEquals($config->marketplace_id, $amzn->getMarketplaceId());
+        $new_marketplace_id = MarketplacesList::allIdentifiers()[rand(0, 15)];
+        $this->assertEquals($config->getMarketplace()->getIdentifier(), $amzn->getMarketplaceId());
         $new_amzn = $amzn->usingMarketplace($new_marketplace_id);
 
         // Doesn't change original object
-        $this->assertEquals($config->marketplace_id, $amzn->getMarketplaceId());
+        $this->assertEquals($config->getMarketplace()->getIdentifier(), $amzn->getMarketplaceId());
 
         $this->assertEquals($new_marketplace_id, $new_amzn->getMarketplaceId());
     }

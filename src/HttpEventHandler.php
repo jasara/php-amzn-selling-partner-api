@@ -1,16 +1,31 @@
 <?php
 
-namespace Jasara\AmznSPA\Traits;
+namespace Jasara\AmznSPA;
 
+use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Client\Response;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 
-trait HandlesHttpErrors
+class HttpEventHandler extends SimpleDispatcher
 {
+    public function dispatch($event, $payload = [], $halt = false)
+    {
+        if (get_class($event) === ResponseReceived::class) {
+            /** @var Response $response */
+            $response = $event->response;
+
+            if ($response->failed()) {
+                $this->handleError($response);
+            }
+        }
+    }
+
     private function handleError(Response $response)
     {
         $handler = 'handle' . $response->status();
         if (! method_exists($this, $handler)) {
+            ray($response->body());
+
             return $response->throw();
         }
 

@@ -16,15 +16,16 @@ trait HasConfig
 
     public function getAccessToken(): string
     {
-        if (! $this->config->lwa_access_token) {
+        $tokens = $this->config->getTokens();
+        if (! $tokens->access_token) {
             throw new AmznSPAException('Access token not available');
         }
 
-        return $this->config->lwa_access_token;
+        return $tokens->access_token;
     }
 
     public function getMarketplaceId(): string
     {
-        return $this->config->marketplace_id;
+        return $this->config->getMarketplace()->getIdentifier();
     }
 }

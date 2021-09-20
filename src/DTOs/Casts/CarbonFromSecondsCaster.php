@@ -14,6 +14,10 @@ class CarbonFromSecondsCaster implements Caster
      */
     public function cast(mixed $value): CarbonImmutable
     {
-        return CarbonImmutable::now()->addSeconds(3600);
+        if (is_object($value) && get_class($value) === CarbonImmutable::class) {
+            return $value;
+        }
+
+        return CarbonImmutable::now()->addSeconds($value);
     }
 }

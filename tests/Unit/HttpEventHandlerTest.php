@@ -9,14 +9,10 @@ use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @coversDefaultClass \Jasara\AmznSPA\Traits\HandlesHttpErrors
+ * @covers \Jasara\AmznSPA\HttpEventHandler
  */
-class HandlesHttpErrorsTest extends UnitTestCase
+class HttpEventHandlerTest extends UnitTestCase
 {
-    /**
-     * @covers ::handle401
-     * @covers ::handleError
-     */
     public function testHandle401()
     {
         $this->expectException(AuthenticationException::class);
@@ -32,9 +28,6 @@ class HandlesHttpErrorsTest extends UnitTestCase
         ]);
     }
 
-    /**
-     * @covers ::handleError
-     */
     public function testStatusCodeWithNoHandler()
     {
         $this->expectException(RequestException::class);
@@ -50,9 +43,6 @@ class HandlesHttpErrorsTest extends UnitTestCase
         ]);
     }
 
-    /**
-     * @covers ::handleError
-     */
     public function testErrorStatusWithNoErrorData()
     {
         $this->expectException(RequestException::class);
@@ -68,9 +58,6 @@ class HandlesHttpErrorsTest extends UnitTestCase
         ]);
     }
 
-    /**
-     * @covers ::handleError
-     */
     public function testErrorStatusWithNoErrorDescriptionData()
     {
         $this->expectException(RequestException::class);

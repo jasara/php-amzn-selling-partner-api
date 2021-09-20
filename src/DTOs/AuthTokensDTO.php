@@ -9,10 +9,10 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class AuthTokensDTO extends DataTransferObject
 {
-    public string $access_token;
+    public ?string $access_token;
 
     #[CastWith(CarbonFromSecondsCaster::class)]
-    public CarbonImmutable $expires_at;
+    public ?CarbonImmutable $expires_at;
 
-    public string $refresh_token;
+    public ?string $refresh_token;
 }

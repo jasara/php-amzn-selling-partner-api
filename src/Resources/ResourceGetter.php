@@ -16,14 +16,26 @@ class ResourceGetter
 
     public function getOauth(): OAuthResource
     {
-        $this->validateConfigParameters($this->config, ['marketplace_id', 'redirect_url', 'lwa_client_id', 'lwa_client_secret']);
+        $this->validateConfigParameters($this->config, ['redirect_url']);
+        $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret']);
 
         return new OAuthResource(
-            $this->config->http,
-            $this->config->marketplace_id,
-            $this->config->redirect_url,
-            $this->config->lwa_client_id,
-            $this->config->lwa_client_secret,
+            $this->config->getHttp(),
+            $this->config->getMarketplace(),
+            $this->config->getRedirectUrl(),
+            $this->config->getApplicationKeys(),
+        );
+    }
+
+    public function getNotifications(): NotificationsResource
+    {
+        $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
+
+        return new NotificationsResource(
+            $this->config->getHttp(),
+            $this->config->getTokens(),
+            $this->config->getMarketplace(),
+            $this->config->getApplicationKeys(),
         );
     }
 }

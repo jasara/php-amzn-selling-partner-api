@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\DTOs;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -26,5 +27,27 @@ class AuthTokensDTOTest extends UnitTestCase
 
         $this->assertEquals($access_token, $dto->access_token);
         $this->assertEquals($refresh_token, $dto->refresh_token);
+        $this->assertEqualsWithDelta($expires_in, $dto->expires_at->diffInSeconds(CarbonImmutable::now()), 2);
+    }
+
+    /**
+     * @covers \Jasara\AmznSPA\DTOs\AuthTokensDTO
+     * @covers \Jasara\AmznSPA\DTOs\Casts\CarbonFromSecondsCaster
+     */
+    public function testSetupDTOWithExistingDate()
+    {
+        $access_token = Str::random();
+        $refresh_token = Str::random();
+        $expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
+
+        $dto = new AuthTokensDTO(
+            access_token: $access_token,
+            refresh_token: $refresh_token,
+            expires_at: $expires_at,
+        );
+
+        $this->assertEquals($access_token, $dto->access_token);
+        $this->assertEquals($refresh_token, $dto->refresh_token);
+        $this->assertEquals($expires_at, $dto->expires_at);
     }
 }

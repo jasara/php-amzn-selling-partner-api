@@ -7,7 +7,8 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\Constants\MarketplaceData;
+use Jasara\AmznSPA\Constants\Marketplace;
+use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -23,12 +24,12 @@ class OAuthResourceTest extends UnitTestCase
      * @covers ::getAuthUrl()
      * @covers ::getBaseUrlFromMarketplace()
      */
-    public function testAuthUrlGenerated(array $marketplace_data)
+    public function testAuthUrlGenerated(Marketplace $marketplace)
     {
-        $amzn = new AmznSPA($this->setupMinimalConfig($marketplace_data['marketplace_id']));
+        $amzn = new AmznSPA($this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->oauth->getAuthUrl();
 
-        $this->assertEquals($marketplace_data['base_url'] . '/apps/authorize/consent', $url);
+        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent', $url);
     }
 
     /**
@@ -36,15 +37,15 @@ class OAuthResourceTest extends UnitTestCase
      * @covers ::getAuthUrl()
      * @covers ::getBaseUrlFromMarketplace()
      */
-    public function testAuthUrlGeneratedWithStateAndRedirectUrl(array $marketplace_data)
+    public function testAuthUrlGeneratedWithStateAndRedirectUrl(Marketplace $marketplace)
     {
         $state = Str::random();
         $redirect_url = 'https://test.com/' . $state;
 
-        $amzn = new AmznSPA($this->setupMinimalConfig($marketplace_data['marketplace_id']));
+        $amzn = new AmznSPA($this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->oauth->getAuthUrl($redirect_url, $state);
 
-        $this->assertEquals($marketplace_data['base_url'] . '/apps/authorize/consent?redirect_url=https%3A%2F%2Ftest.com%2F' . $state . '&state=' . $state, $url);
+        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=https%3A%2F%2Ftest.com%2F' . $state . '&state=' . $state, $url);
     }
 
     /**
@@ -91,9 +92,9 @@ class OAuthResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($spapi_oauth_code, $config) {
             $this->assertEquals('authorization_code', Arr::get($request, 'grant_type'));
             $this->assertEquals($spapi_oauth_code, Arr::get($request, 'code'));
-            $this->assertEquals($config->redirect_url, Arr::get($request, 'redirect_uri'));
-            $this->assertEquals($config->lwa_client_id, Arr::get($request, 'client_id'));
-            $this->assertEquals($config->lwa_client_secret, Arr::get($request, 'client_secret'));
+            $this->assertEquals($config->getRedirectUrl(), Arr::get($request, 'redirect_uri'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_id, Arr::get($request, 'client_id'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_secret, Arr::get($request, 'client_secret'));
 
             return true;
         });
@@ -120,11 +121,11 @@ class OAuthResourceTest extends UnitTestCase
 
     public function marketplaces(): array
     {
-        $marketplaces = array_map(function ($key, $elem) {
-            return [$key => array_merge($elem, [
-                'marketplace_id' => $key,
-            ])];
-        }, array_keys(MarketplaceData::allMarketplaces()), MarketplaceData::allMarketplaces());
+        $marketplaces = [];
+        $marketplaces_list = MarketplacesList::all()->toArray();
+        foreach ($marketplaces_list as $marketplace) {
+            $marketplaces[] = [$marketplace];
+        }
 
         return $marketplaces;
     }

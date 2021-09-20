@@ -3,3 +3,5 @@ vendor
 .phpunit.result.cache
 .DS_Store
 .env
+/build_local
+/source
