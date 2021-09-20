@@ -29,10 +29,15 @@ class AmznSPAHttp
         return $this->call('get', $url);
     }
 
-    private function call(string $method, string $url): Response
+    public function post(string $url, array $data): Response
+    {
+        return $this->call('post', $url, $data);
+    }
+
+    private function call(string $method, string $url, array $data = []): Response
     {
         try {
-            return $this->http->$method($url);
+            return $this->http->$method($url, $data);
         } catch (RequestException $e) {
             if (! $this->shouldRefreshToken($e->response->json())) {
                 throw $e;
