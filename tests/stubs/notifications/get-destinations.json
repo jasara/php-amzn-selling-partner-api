@@ -1,0 +1,13 @@
+{
+    "payload": [
+        {
+            "destinationId": "TEST_CASE_200",
+            "resource": {
+                "sqs": {
+                    "arn": "arn:aws:sqs:us-east-2:444455556666:queue1"
+                }
+            },
+            "name": "SQSDestination"
+        }
+    ]
+}

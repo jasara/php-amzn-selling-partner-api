@@ -8,7 +8,7 @@ use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
 
 /**
- * @property \Jasara\AmznSPA\Resources\OAuthResource $oauth
+ * @property \Jasara\AmznSPA\Resources\AuthResource $auth
  * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
  */
 class AmznSPA

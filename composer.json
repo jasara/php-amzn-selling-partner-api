@@ -26,7 +26,8 @@
         "ocramius/lazy-property": "^2.3",
         "guzzlehttp/guzzle": "^7.4",
         "illuminate/http": "^8",
-        "spatie/data-transfer-object": "^3.7"
+        "spatie/data-transfer-object": "^3.7",
+        "vlucas/phpdotenv": "^5.3"
     },
     "require-dev": {
         "aws/aws-sdk-php": "dev-feature-guzzle-2.0",

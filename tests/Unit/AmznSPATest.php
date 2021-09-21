@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Exceptions\InvalidResourceException;
-use Jasara\AmznSPA\Resources\OAuthResource;
+use Jasara\AmznSPA\Resources\AuthResource;
 
 /**
  * @coversDefaultClass \Jasara\AmznSPA\AmznSPA
@@ -31,9 +31,9 @@ class AmznSPATest extends UnitTestCase
     public function testValidResource()
     {
         $amzn = new AmznSPA($this->setupMinimalConfig());
-        $oauth = $amzn->oauth;
+        $auth = $amzn->auth;
 
-        $this->assertInstanceOf(OAuthResource::class, $oauth);
+        $this->assertInstanceOf(AuthResource::class, $auth);
     }
 
     /**
@@ -71,7 +71,7 @@ class AmznSPATest extends UnitTestCase
         $config = $this->setupMinimalConfig(null, $http);
         $amzn = new AmznSPA($config);
 
-        $result = $amzn->oauth->getTokensFromRedirect($state, [
+        $result = $amzn->auth->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => Str::random(),
         ]);
@@ -86,7 +86,7 @@ class AmznSPATest extends UnitTestCase
 
         $new_amzn = $amzn->usingHttp($new_http);
 
-        $result_2 = $new_amzn->oauth->getTokensFromRedirect($state, [
+        $result_2 = $new_amzn->auth->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => Str::random(),
         ]);

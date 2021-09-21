@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DTOs\ApplicationKeysDTO;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
+use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
 
 /**
  * @covers \Jasara\AmznSPA\AmznSPAConfig
@@ -31,6 +32,8 @@ class AmznSPAConfigTest extends UnitTestCase
         $lwa_refresh_token = Str::random();
         $lwa_access_token = Str::random();
         $lwa_access_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
+        $grantless_access_token = Str::random();
+        $grantless_access_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
 
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id,
@@ -43,6 +46,8 @@ class AmznSPAConfigTest extends UnitTestCase
             lwa_refresh_token: $lwa_refresh_token,
             lwa_access_token: $lwa_access_token,
             lwa_access_token_expires_at: $lwa_access_token_expires_at,
+            grantless_access_token: $grantless_access_token,
+            grantless_access_token_expires_at: $grantless_access_token_expires_at,
         );
 
         $this->assertInstanceOf(Marketplace::class, $config->getMarketplace());
@@ -60,6 +65,10 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertEquals($lwa_access_token, $tokens->access_token);
         $this->assertEquals($lwa_refresh_token, $tokens->refresh_token);
         $this->assertEquals($lwa_access_token_expires_at, $tokens->expires_at);
+
+        $grantless_token = $config->getGrantlessToken();
+        $this->assertEquals($grantless_access_token, $grantless_token->access_token);
+        $this->assertEquals($grantless_access_token_expires_at, $grantless_token->expires_at);
 
         $this->assertEquals($redirect_url, $config->getRedirectUrl());
     }
@@ -85,6 +94,13 @@ class AmznSPAConfigTest extends UnitTestCase
         ));
 
         $this->assertEquals($refresh_token, $config->getTokens()->refresh_token);
+
+        $grantless_access_token = Str::random();
+        $config->setGrantlessToken(new GrantlessTokenDTO(
+            access_token: $grantless_access_token,
+        ));
+
+        $this->assertEquals($grantless_access_token, $config->getGrantlessToken()->access_token);
     }
 
     public function testIsPropertySet()

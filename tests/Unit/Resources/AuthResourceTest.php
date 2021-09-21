@@ -10,24 +10,25 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
+use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @covers \Jasara\AmznSPA\Resources\OAuthResource
+ * @covers \Jasara\AmznSPA\Resources\AuthResource
  */
-class OAuthResourceTest extends UnitTestCase
+class AuthResourceTest extends UnitTestCase
 {
     /**
      * @dataProvider marketplaces
      */
     public function testAuthUrlGenerated(Marketplace $marketplace)
     {
-        $amzn = new AmznSPA($this->setupMinimalConfig($marketplace->getIdentifier()));
-        $url = $amzn->oauth->getAuthUrl();
+        $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
+        $url = $amzn->auth->getAuthUrl();
 
-        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent', $url);
+        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl(), $url);
     }
 
     /**
@@ -36,12 +37,11 @@ class OAuthResourceTest extends UnitTestCase
     public function testAuthUrlGeneratedWithStateAndRedirectUrl(Marketplace $marketplace)
     {
         $state = Str::random();
-        $redirect_url = 'https://test.com/' . $state;
 
-        $amzn = new AmznSPA($this->setupMinimalConfig($marketplace->getIdentifier()));
-        $url = $amzn->oauth->getAuthUrl($redirect_url, $state);
+        $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
+        $url = $amzn->auth->getAuthUrl($state);
 
-        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=https%3A%2F%2Ftest.com%2F' . $state . '&state=' . $state, $url);
+        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl() . '&state=' . $state, $url);
     }
 
     public function testStateDoesNotMatch()
@@ -50,7 +50,7 @@ class OAuthResourceTest extends UnitTestCase
         $this->expectExceptionMessage('State returned from Amazon does not match the original state');
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
-        $amzn->oauth->getTokensFromRedirect(Str::random(), [
+        $amzn->auth->getTokensFromRedirect(Str::random(), [
             'state' => Str::random(),
             'spapi_oauth_code' => Str::random(),
         ]);
@@ -61,10 +61,10 @@ class OAuthResourceTest extends UnitTestCase
         $state = Str::random();
         $spapi_oauth_code = Str::random();
 
-        list($config, $http) = $this->setupConfigWithFakeHttp('oauth/get-tokens');
+        list($config, $http) = $this->setupConfigWithFakeHttp('auth/get-tokens');
 
         $amzn = new AmznSPA($config);
-        $tokens = $amzn->oauth->getTokensFromRedirect($state, [
+        $tokens = $amzn->auth->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => $spapi_oauth_code,
         ]);
@@ -90,10 +90,10 @@ class OAuthResourceTest extends UnitTestCase
     {
         $refresh_token = Str::random();
 
-        list($config, $http) = $this->setupConfigWithFakeHttp('oauth/get-tokens');
+        list($config, $http) = $this->setupConfigWithFakeHttp('auth/get-tokens');
 
         $amzn = new AmznSPA($config);
-        $tokens = $amzn->oauth->getAccessTokenFromRefreshToken($refresh_token);
+        $tokens = $amzn->auth->getAccessTokenFromRefreshToken($refresh_token);
 
         $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
@@ -111,6 +111,29 @@ class OAuthResourceTest extends UnitTestCase
         });
     }
 
+    public function testGetGrantlessAccessToken()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('auth/get-tokens');
+        $scope = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $tokens = $amzn->auth->getGrantlessAccessToken($scope);
+
+        $this->assertInstanceOf(GrantlessTokenDTO::class, $tokens);
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
+        $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
+        $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
+
+        $http->assertSent(function (Request $request) use ($scope, $config) {
+            $this->assertEquals('client_credentials', Arr::get($request, 'grant_type'));
+            $this->assertEquals($scope, Arr::get($request, 'scope'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_id, Arr::get($request, 'client_id'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_secret, Arr::get($request, 'client_secret'));
+
+            return true;
+        });
+    }
+
     public function testGetTokensFromRedirectError()
     {
         $this->expectException(AuthenticationException::class);
@@ -121,7 +144,7 @@ class OAuthResourceTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
-        $amzn->oauth->getTokensFromRedirect($state, [
+        $amzn->auth->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => $spapi_oauth_code,
         ]);

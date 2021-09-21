@@ -8,7 +8,7 @@ use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\InvalidParametersException;
-use Jasara\AmznSPA\Resources\OAuthResource;
+use Jasara\AmznSPA\Resources\AuthResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
@@ -17,29 +17,43 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
  */
 class ValidatesParametersTest extends UnitTestCase
 {
-    public function testRequiredParametersInConfigException()
+    public function testRequiredParametersInObjectException()
     {
         $this->expectException(InvalidParametersException::class);
+        $state = Str::random();
 
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            lwa_client_id: null,
+            lwa_client_id: Str::random(),
             lwa_client_secret: Str::random(),
         );
 
-        $resource_getter = new ResourceGetter($config);
-        $resource_getter->getOauth();
+        $amzn = new AmznSPA($config);
+        $amzn->auth->getTokensFromRedirect($state, [
+            'state' => $state,
+            'spapi_oauth_code' => Str::random(),
+        ]);
     }
 
-    public function testRequiredParametersInConfigPasses()
+    public function testRequiredParametersInObjectPasses()
     {
-        $config = $this->setupMinimalConfig();
+        $this->expectException(AmznSPAException::class); // Testing it is not the invalid parameters exception
+        $this->expectExceptionMessage('State returned from Amazon does not match the original state');
 
-        $resource_getter = new ResourceGetter($config);
-        $oauth = $resource_getter->getOauth();
+        $config = new AmznSPAConfig(
+            marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
+            application_id: Str::random(),
+            redirect_url: Str::random(),
+            lwa_client_id: Str::random(),
+            lwa_client_secret: Str::random(),
+        );
 
-        $this->assertInstanceOf(OAuthResource::class, $oauth);
+        $amzn = new AmznSPA($config);
+        $amzn->auth->getTokensFromRedirect(Str::random(), [
+            'state' => Str::random(),
+            'spapi_oauth_code' => Str::random(),
+        ]);
     }
 
     public function testRequiredParametersInDtoException()
@@ -55,7 +69,7 @@ class ValidatesParametersTest extends UnitTestCase
         );
 
         $resource_getter = new ResourceGetter($config);
-        $resource_getter->getOauth();
+        $resource_getter->getAuth();
     }
 
     public function testRequiredParametersInDtoPasses()
@@ -63,9 +77,9 @@ class ValidatesParametersTest extends UnitTestCase
         $config = $this->setupMinimalConfig();
 
         $resource_getter = new ResourceGetter($config);
-        $oauth = $resource_getter->getOauth();
+        $auth = $resource_getter->getAuth();
 
-        $this->assertInstanceOf(OAuthResource::class, $oauth);
+        $this->assertInstanceOf(AuthResource::class, $auth);
     }
 
     public function testRequiredParametersInArrayException()
@@ -73,7 +87,7 @@ class ValidatesParametersTest extends UnitTestCase
         $this->expectException(InvalidParametersException::class);
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
-        $amzn->oauth->getTokensFromRedirect(Str::random(), [
+        $amzn->auth->getTokensFromRedirect(Str::random(), [
             'spapi_oauth_code' => Str::random(),
         ]);
     }
@@ -81,9 +95,10 @@ class ValidatesParametersTest extends UnitTestCase
     public function testRequiredParametersInArrayPasses()
     {
         $this->expectException(AmznSPAException::class); // Testing it is not the invalid parameters exception
+        $this->expectExceptionMessage('State returned from Amazon does not match the original state');
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
-        $amzn->oauth->getTokensFromRedirect(Str::random(), [
+        $amzn->auth->getTokensFromRedirect(Str::random(), [
             'state' => Str::random(),
             'spapi_oauth_code' => Str::random(),
         ]);

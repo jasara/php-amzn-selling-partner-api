@@ -8,6 +8,7 @@ use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DTOs\ApplicationKeysDTO;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
+use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class AmznSPAConfig
@@ -33,6 +34,8 @@ class AmznSPAConfig
         ?string $lwa_refresh_token = null,
         ?string $lwa_access_token = null,
         ?CarbonImmutable $lwa_access_token_expires_at = null,
+        ?string $grantless_access_token = null,
+        ?CarbonImmutable $grantless_access_token_expires_at = null,
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -41,6 +44,10 @@ class AmznSPAConfig
             refresh_token: $lwa_refresh_token,
             access_token: $lwa_access_token,
             expires_at: $lwa_access_token_expires_at,
+        );
+        $this->grantless_token = new GrantlessTokenDTO(
+            access_token: $grantless_access_token,
+            expires_at: $grantless_access_token_expires_at,
         );
         $this->marketplace = MarketplacesList::getMarketplaceById($marketplace_id);
         $this->application_keys = new ApplicationKeysDTO(
@@ -60,6 +67,11 @@ class AmznSPAConfig
     public function getTokens(): AuthTokensDTO
     {
         return $this->tokens;
+    }
+
+    public function getGrantlessToken(): GrantlessTokenDTO
+    {
+        return $this->grantless_token;
     }
 
     public function getMarketplace(): Marketplace
@@ -85,6 +97,11 @@ class AmznSPAConfig
     public function setTokens(AuthTokensDTO $tokens): void
     {
         $this->tokens = $tokens;
+    }
+
+    public function setGrantlessToken(GrantlessTokenDTO $token): void
+    {
+        $this->grantless_token = $token;
     }
 
     public function setMarketplace(string $marketplace_id): void

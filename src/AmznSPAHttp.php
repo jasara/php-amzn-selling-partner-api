@@ -20,8 +20,8 @@ class AmznSPAHttp
 
     public function __construct(
         private AmznSPAConfig $config,
+        private ?string $grantless_resource = null,
     ) {
-        $this->setupHttp($config->getHttp());
     }
 
     public function get(string $url): Response
@@ -34,8 +34,33 @@ class AmznSPAHttp
         return $this->call('post', $url, $data);
     }
 
-    private function call(string $method, string $url, array $data = []): Response
+    public function getGrantless(string $url): Response
     {
+        return $this->call(
+            method: 'get',
+            url: $url,
+            grantless: true
+        );
+    }
+
+    public function postGrantless(string $url, array $data): Response
+    {
+        return $this->call(
+            method: 'post',
+            url: $url,
+            data: $data,
+            grantless: true
+        );
+    }
+
+    private function call(string $method, string $url, array $data = [], bool $grantless = false): Response
+    {
+        $this->setupHttp($this->config->getHttp(), $grantless);
+
+        if (env('AMZN_SPA_TEST_ENDPOINTS')) {
+            $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
+        }
+
         try {
             return $this->http->$method($url, $data);
         } catch (RequestException $e) {
@@ -46,9 +71,13 @@ class AmznSPAHttp
                 throw $e;
             }
 
-            $this->refreshTokens();
+            if (! $grantless) {
+                $this->refreshTokens();
+            } else {
+                $this->refreshGrantlessToken();
+            }
 
-            return $this->call($method, $url);
+            return $this->call($method, $url, $data, $grantless);
         }
     }
 
@@ -71,26 +100,48 @@ class AmznSPAHttp
     private function refreshTokens(): void
     {
         $amzn = new AmznSPA($this->config);
-        $new_tokens = $amzn->oauth->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
+        $new_tokens = $amzn->auth->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
 
         $this->config->setTokens($new_tokens);
     }
 
-    private function setupHttp(Factory $http): void
+    private function refreshGrantlessToken()
     {
-        $access_token = $this->config->getTokens()->access_token;
-        if (! $access_token) {
-            $this->refreshTokens();
+        $scope = 'sellingpartnerapi::' . $this->grantless_resource;
 
-            $access_token = $this->config->getTokens()->access_token;
-        }
+        $amzn = new AmznSPA($this->config);
+        $token = $amzn->auth->getGrantlessAccessToken($scope);
 
+        $this->config->setGrantlessToken($token);
+    }
+
+    private function setupHttp(Factory $http, bool $grantless = false): void
+    {
         $this->http = $http->withHeaders([
-            'x-amz-access-token' => $access_token,
+            'x-amz-access-token' => $this->getToken($grantless),
             'user-agent' => $this->buildUserAgent(),
         ]);
 
         $this->signRequest($this->config->getMarketplace()->getAwsRegion());
+    }
+
+    private function getToken(bool $grantless = false): string
+    {
+        if (! $grantless) {
+            $tokens = $this->config->getTokens();
+            if (! $tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
+                $this->refreshTokens();
+            }
+
+            return $this->config->getTokens()->access_token;
+        } else {
+            $grantless_token = $this->config->getGrantlessToken();
+            if (! $grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
+                $this->refreshGrantlessToken();
+            }
+
+            return $this->config->getGrantlessToken()->access_token;
+        }
     }
 
     private function buildUserAgent(): string

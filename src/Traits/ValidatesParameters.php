@@ -10,20 +10,29 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 trait ValidatesParameters
 {
-    private function validateConfigParameters(AmznSPAConfig $config, array $required_parameters)
+    /* private function validateConfigProperties(AmznSPAConfig $config, array $required_properties)
     {
-        foreach ($required_parameters as $parameter) {
-            if (! $config->isPropertySet($parameter)) {
-                throw new InvalidParametersException(Str::of($parameter)->replace('_', ' ')->title() . ' is not set on config.');
+        foreach ($required_properties as $property) {
+            if (! $config->isPropertySet($property)) {
+                throw new InvalidParametersException(Str::of($property)->replace('_', ' ')->title() . ' is not set on config.');
+            }
+        }
+    } */
+
+    private function validateObjectProperties(object $object_to_validate, array $required_properties)
+    {
+        foreach ($required_properties as $property) {
+            if (! isset($object_to_validate->$property) || is_null($object_to_validate->$property)) {
+                throw new InvalidParametersException(Str::of($property)->replace('_', ' ')->title() . ' is not set.');
             }
         }
     }
 
-    private function validateDtoProperties(DataTransferObject $dto, array $required_parameters)
+    private function validateDtoProperties(DataTransferObject $dto, array $required_properties)
     {
-        foreach ($required_parameters as $parameter) {
-            if (! isset($dto->$parameter) || is_null($dto->$parameter)) {
-                throw new InvalidParametersException(Str::of($parameter)->replace('_', ' ')->title() . ' is not set.');
+        foreach ($required_properties as $property) {
+            if (! isset($dto->$property) || is_null($dto->$property)) {
+                throw new InvalidParametersException(Str::of($property)->replace('_', ' ')->title() . ' is not set.');
             }
         }
     }

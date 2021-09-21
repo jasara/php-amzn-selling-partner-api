@@ -7,10 +7,11 @@ use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DTOs\ApplicationKeysDTO;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
+use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
-class OAuthResource implements ResourceContract
+class AuthResource implements ResourceContract
 {
     use ValidatesParameters;
 
@@ -19,13 +20,15 @@ class OAuthResource implements ResourceContract
     public function __construct(
         private Factory $http,
         private Marketplace $marketplace,
-        private string $redirect_url,
+        private ?string $redirect_url,
         private ApplicationKeysDTO $application_keys,
     ) {
     }
 
-    public function getAuthUrl(?string $redirect_url = null, ?string $state = null): string
+    public function getAuthUrl(?string $state = null): string
     {
+        $redirect_url = $this->redirect_url;
+
         $params = http_build_query(compact('redirect_url', 'state'));
         $url = $this->getBaseUrlFromMarketplace() . '/apps/authorize/consent';
 
@@ -45,6 +48,7 @@ class OAuthResource implements ResourceContract
      */
     public function getTokensFromRedirect(string $original_state, array $parameters): AuthTokensDTO
     {
+        $this->validateObjectProperties($this, ['redirect_url']);
         $this->validateArrayParameters($parameters, ['state', 'spapi_oauth_code']);
 
         if (! $this->isRedirectValid($original_state, $parameters['state'])) {
@@ -79,6 +83,18 @@ class OAuthResource implements ResourceContract
         return $this->formatTokenResponse($response->json());
     }
 
+    public function getGrantlessAccessToken(string $scope): GrantlessTokenDTO
+    {
+        $response = $this->http->post($this->endpoint, [
+            'grant_type' => 'client_credentials',
+            'scope' => $scope,
+            'client_id' => $this->application_keys->lwa_client_id,
+            'client_secret' => $this->application_keys->lwa_client_secret,
+        ]);
+
+        return $this->formatGrantlessTokenResponse($response->json());
+    }
+
     private function isRedirectValid(string $original_state, string $amzn_state): bool
     {
         if ($original_state === $amzn_state) {
@@ -93,6 +109,14 @@ class OAuthResource implements ResourceContract
         return new AuthTokensDTO(
             access_token: $response_data['access_token'],
             refresh_token: $response_data['refresh_token'],
+            expires_at: $response_data['expires_in'],
+        );
+    }
+
+    private function formatGrantlessTokenResponse(array $response_data): GrantlessTokenDTO
+    {
+        return new GrantlessTokenDTO(
+            access_token: $response_data['access_token'],
             expires_at: $response_data['expires_in'],
         );
     }

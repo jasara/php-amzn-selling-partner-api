@@ -10,19 +10,19 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
  */
 class ResourceGetterTest extends UnitTestCase
 {
-    public function testGetOauth()
+    public function testGetAuth()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
-        $oauth = $resource_getter->getOauth();
+        $auth = $resource_getter->getAuth();
 
-        $this->assertInstanceOf(Resources\OAuthResource::class, $oauth);
+        $this->assertInstanceOf(Resources\AuthResource::class, $auth);
     }
 
     public function testGetNotifications()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
-        $oauth = $resource_getter->getNotifications();
+        $notifications = $resource_getter->getNotifications();
 
-        $this->assertInstanceOf(Resources\NotificationsResource::class, $oauth);
+        $this->assertInstanceOf(Resources\NotificationsResource::class, $notifications);
     }
 }

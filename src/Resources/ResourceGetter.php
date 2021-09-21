@@ -15,15 +15,14 @@ class ResourceGetter
     ) {
     }
 
-    public function getOauth(): OAuthResource
+    public function getAuth(): AuthResource
     {
-        $this->validateConfigParameters($this->config, ['redirect_url']);
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret']);
 
-        return new OAuthResource(
+        return new AuthResource(
             $this->config->getHttp(),
             $this->config->getMarketplace(),
-            $this->config->getRedirectUrl(),
+            $this->config->isPropertySet('redirect_url') ? $this->config->getRedirectUrl() : null,
             $this->config->getApplicationKeys(),
         );
     }
@@ -33,7 +32,7 @@ class ResourceGetter
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
         $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
 
-        $http = new AmznSPAHttp($this->config);
+        $http = new AmznSPAHttp($this->config, 'notifications');
 
         return new NotificationsResource(
             $http,

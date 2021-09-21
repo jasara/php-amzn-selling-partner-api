@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA;
 
 use Illuminate\Http\Client\Events\ResponseReceived;
+use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\Response;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 
@@ -10,9 +11,14 @@ class HttpEventHandler extends SimpleDispatcher
 {
     public function dispatch($event, $payload = [], $halt = false)
     {
+        /** @var Request $request */
+        $request = $event->request;
+
         if (get_class($event) === ResponseReceived::class) {
             /** @var Response $response */
             $response = $event->response;
+
+            ray($response->body());
 
             if ($response->failed()) {
                 $this->handleError($response);
