@@ -6,6 +6,8 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\AmznSPAConfig;
+use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
 use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSpecificationSchema;
@@ -153,7 +155,17 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $config = $this->setupSandboxConfig();
+        $config = new AmznSPAConfig(
+            marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
+            application_id: Str::random(),
+            lwa_refresh_token: Str::random(),
+            lwa_access_token: Str::random(),
+            aws_access_key: Str::random(),
+            aws_secret_key: Str::random(),
+            lwa_client_id: Str::random(),
+            lwa_client_secret: Str::random(),
+            use_test_endpoints: true,
+        );
 
         $amzn = new AmznSPA($config);
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
