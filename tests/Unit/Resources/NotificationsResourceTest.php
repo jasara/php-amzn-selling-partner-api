@@ -7,6 +7,9 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateDestinationResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateSubscriptionResponse;
+use Jasara\AmznSPA\DTOs\Responses\Notifications\DeleteDestinationResponse;
+use Jasara\AmznSPA\DTOs\Responses\Notifications\DeleteSubscriptionByIdResponse;
+use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionByIdResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse;
@@ -51,6 +54,26 @@ class NotificationsResourceTest extends UnitTestCase
         $this->assertEquals('7fcacc7e-727b-11e9-8848-1681be663d3e', $response->payload->subscription_id);
 
         $http->assertSent(function (Request $request) use ($subscription_id) {
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED/' . $subscription_id, $request->url());
+
+            return true;
+        });
+    }
+
+    public function testDeleteSubscriptionById()
+    {
+        $subscription_id = Str::random();
+
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->notifications->deleteSubscriptionById('ANY_OFFER_CHANGED', $subscription_id);
+
+        $this->assertInstanceOf(DeleteSubscriptionByIdResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($subscription_id) {
+            $this->assertEquals('DELETE', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED/' . $subscription_id, $request->url());
 
             return true;
@@ -104,6 +127,33 @@ class NotificationsResourceTest extends UnitTestCase
         });
     }
 
+    public function testGetDestination()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('notifications/create-destination');
+
+        $destination_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->notifications->getDestination($destination_id);
+
+        $this->assertInstanceOf(GetDestinationResponse::class, $response);
+        $this->assertInstanceOf(DestinationSchema::class, $response->payload);
+
+        /** @var DestinationSchema $destination */
+        $destination = $response->payload;
+        $this->assertEquals('TEST_CASE_200_DESTINATION_ID', $destination->destination_id);
+        $this->assertEquals('SQSDestination', $destination->name);
+        $this->assertEquals('arn:aws:sqs:us-east-2:444455556666:queue1', $destination->resource->sqs->arn);
+
+        $http->assertSent(function (Request $request) use ($destination_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations/' . $destination_id, $request->url());
+
+            return true;
+        });
+    }
+
     public function testCreateDestination()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('notifications/create-destination');
@@ -123,6 +173,26 @@ class NotificationsResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testDeleteDestination()
+    {
+        $destination_id = Str::random();
+
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->notifications->deleteDestination($destination_id);
+
+        $this->assertInstanceOf(DeleteDestinationResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($destination_id) {
+            $this->assertEquals('DELETE', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations/' . $destination_id, $request->url());
 
             return true;
         });

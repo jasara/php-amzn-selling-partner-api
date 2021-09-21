@@ -90,7 +90,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ));
 
         $amzn = new AmznSPA($config);
-        $amzn->notifications->getSubscriptionById('ANY_OFFER_CHANGED', Str::random());
+        $amzn->notifications->deleteSubscriptionById('ANY_OFFER_CHANGED', Str::random());
 
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getGrantlessToken()->access_token);
     }

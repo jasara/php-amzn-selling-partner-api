@@ -53,6 +53,15 @@ class AmznSPAHttp
         );
     }
 
+    public function deleteGrantless(string $url): Response
+    {
+        return $this->call(
+            method: 'delete',
+            url: $url,
+            grantless: true
+        );
+    }
+
     private function call(string $method, string $url, array $data = [], bool $grantless = false): Response
     {
         $this->setupHttp($this->config->getHttp(), $grantless);
