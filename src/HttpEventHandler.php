@@ -18,6 +18,8 @@ class HttpEventHandler extends SimpleDispatcher
             /** @var Response $response */
             $response = $event->response;
 
+            ray($request->data());
+            ray($request->body());
             ray($response->body());
 
             if ($response->failed()) {

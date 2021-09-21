@@ -30,7 +30,7 @@ class DestinationResourceSpecificationSchemaTest extends UnitTestCase
             ),
         );
 
-        $array = $dto->toArray();
+        $array = $dto->toArrayObject();
 
         $this->assertEquals($arn, $array['sqs']['arn']);
         $this->assertEquals($event_bridge_region, $array['eventBridge']['region']);

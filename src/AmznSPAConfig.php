@@ -27,6 +27,7 @@ class AmznSPAConfig
         string $marketplace_id,
         string $application_id,
         private ?string $redirect_url = null,
+        private bool $use_test_endpoints = false,
         ?string $aws_access_key = null,
         ?string $aws_secret_key = null,
         ?string $lwa_client_id = null,
@@ -87,6 +88,11 @@ class AmznSPAConfig
     public function getRedirectUrl(): string
     {
         return $this->redirect_url;
+    }
+
+    public function shouldUseTestEndpoints(): bool
+    {
+        return $this->use_test_endpoints;
     }
 
     public function setHttp(Factory $http): void

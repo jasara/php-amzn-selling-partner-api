@@ -147,13 +147,15 @@ class AmznSPAHttpTest extends UnitTestCase
 
     /**
      * @group external
-     * An actual API call is required here, in order to test the request signing.
+     * An actual API call is required here, in order to test the request signing and test endpoints.
      */
     public function testSetupHttp()
     {
         $this->expectException(RequestException::class);
 
-        $amzn = new AmznSPA($this->setupMinimalConfig());
+        $config = $this->setupSandboxConfig();
+
+        $amzn = new AmznSPA($config);
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
     }
 }

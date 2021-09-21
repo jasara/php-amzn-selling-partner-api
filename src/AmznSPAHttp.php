@@ -57,7 +57,7 @@ class AmznSPAHttp
     {
         $this->setupHttp($this->config->getHttp(), $grantless);
 
-        if (env('AMZN_SPA_TEST_ENDPOINTS')) {
+        if ($this->config->shouldUseTestEndpoints()) {
             $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
         }
 

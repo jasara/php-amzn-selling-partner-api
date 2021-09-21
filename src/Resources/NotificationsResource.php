@@ -68,7 +68,7 @@ class NotificationsResource implements ResourceContract
     {
         $response = $this->http->postGrantless($this->endpoint . static::BASE_PATH . 'destinations', [
             'name' => $name,
-            'resourceSpecification' => $resource_specification->toArray(),
+            'resourceSpecification' => $resource_specification->toArrayObject(),
         ]);
 
         return new CreateDestinationResponse($response->json());

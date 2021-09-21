@@ -2,7 +2,6 @@
 
 namespace Jasara\AmznSPA\Tests\Setup;
 
-use Dotenv\Dotenv;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPAConfig;
@@ -33,11 +32,8 @@ trait SetupAmznSPAConfig
         return $config;
     }
 
-    public function setupLiveConfig(): AmznSPAConfig
+    public function setupSandboxConfig(): AmznSPAConfig
     {
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../..');
-        $dotenv->safeLoad();
-
         $config = new AmznSPAConfig(
             marketplace_id: 'ATVPDKIKX0DER',
             application_id: env('APPLICATION_ID'),
@@ -46,6 +42,7 @@ trait SetupAmznSPAConfig
             aws_secret_key: env('AWS_SECRET_KEY'),
             lwa_client_id: env('LWA_CLIENT_ID'),
             lwa_client_secret: env('LWA_CLIENT_SECRET'),
+            use_test_endpoints: true,
         );
 
         return $config;

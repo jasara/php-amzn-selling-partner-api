@@ -5,10 +5,12 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateDestinationResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateSubscriptionResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionByIdResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse;
+use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\DTOs\Schemas\DestinationSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
@@ -96,6 +98,30 @@ class NotificationsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testCreateDestination()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('notifications/create-destination');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->notifications->createDestination(Str::random(), new DestinationResourceSpecificationSchema());
+
+        $this->assertInstanceOf(CreateDestinationResponse::class, $response);
+        $this->assertInstanceOf(DestinationSchema::class, $response->payload);
+
+        $destination = $response->payload;
+        $this->assertEquals('TEST_CASE_200_DESTINATION_ID', $destination->destination_id);
+        $this->assertEquals('SQSDestination', $destination->name);
+        $this->assertEquals('arn:aws:sqs:us-east-2:444455556666:queue1', $destination->resource->sqs->arn);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations', $request->url());
 
             return true;

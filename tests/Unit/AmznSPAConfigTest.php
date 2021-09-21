@@ -48,6 +48,7 @@ class AmznSPAConfigTest extends UnitTestCase
             lwa_access_token_expires_at: $lwa_access_token_expires_at,
             grantless_access_token: $grantless_access_token,
             grantless_access_token_expires_at: $grantless_access_token_expires_at,
+            use_test_endpoints: true,
         );
 
         $this->assertInstanceOf(Marketplace::class, $config->getMarketplace());
@@ -71,6 +72,8 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertEquals($grantless_access_token_expires_at, $grantless_token->expires_at);
 
         $this->assertEquals($redirect_url, $config->getRedirectUrl());
+
+        $this->assertTrue($config->shouldUseTestEndpoints());
     }
 
     public function testSetters()

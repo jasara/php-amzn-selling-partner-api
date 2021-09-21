@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\DTOs\Schemas;
 
+use ArrayObject;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class DestinationResourceSpecificationSchema extends DataTransferObject
@@ -10,11 +11,11 @@ class DestinationResourceSpecificationSchema extends DataTransferObject
 
     public ?EventBridgeResourceSpecificationSchema $event_bridge;
 
-    public function toArray(): array
+    public function toArrayObject(): ArrayObject
     {
-        return array_filter([
+        return new ArrayObject(array_filter([
             'sqs' => $this->sqs?->toArray(),
             'eventBridge' => $this->event_bridge?->toArray(),
-        ]);
+        ]));
     }
 }
