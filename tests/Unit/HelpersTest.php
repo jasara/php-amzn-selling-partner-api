@@ -38,7 +38,7 @@ class HelpersTest extends UnitTestCase
         $this->assertArrayHasKey('testallcaps', $array);
         $this->assertArrayHasKey('12345_abc', $array);
         $this->assertArrayHasKey('abc_12345_abc', $array);
-        // $this->assertArrayHasKey('a_b_c_12345_abc', $array); Failing
+        $this->assertArrayHasKey('a_bc_12345_abc', $array);
         $this->assertArrayHasKey('test_deep_camel', $array['test_camel']);
         $this->assertArrayHasKey('test_deep_array_with_objects', $array['test_camel']);
         $this->assertArrayHasKey('test_collection', $array['test_camel']['test_deep_array_with_objects'][0]);
