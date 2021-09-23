@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\DTOs\AuthTokensDTO;
-use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
-use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
+use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\HttpEventHandler;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 

@@ -8,13 +8,10 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @coversDefaultClass \Jasara\AmznSPA\Constants\MarketplacesList
+ * @covers \Jasara\AmznSPA\Constants\MarketplacesList
  */
 class MarketplacesListTest extends UnitTestCase
 {
-    /**
-     * @covers ::all
-     */
     public function testAll()
     {
         $marketplaces = MarketplacesList::all();
@@ -22,9 +19,6 @@ class MarketplacesListTest extends UnitTestCase
         $this->assertGreaterThan(19, count($marketplaces));
     }
 
-    /**
-     * @covers ::allIdentifiers
-     */
     public function testAllIdentifiers()
     {
         $identifiers = MarketplacesList::allIdentifiers();
@@ -34,9 +28,6 @@ class MarketplacesListTest extends UnitTestCase
         }
     }
 
-    /**
-     * @covers ::getMarketplaceById
-     */
     public function testGetMarketplaceFromIdentifier()
     {
         $identifier = 'A2EUQ1WTGCTBG2';

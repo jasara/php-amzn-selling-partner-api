@@ -5,16 +5,16 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateDestinationResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateSubscriptionResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\DeleteDestinationResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\DeleteSubscriptionByIdResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationsResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionByIdResponse;
-use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse;
-use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSpecificationSchema;
-use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationSchema;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\CreateDestinationResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\CreateSubscriptionResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\DeleteDestinationResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\DeleteSubscriptionByIdResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetDestinationResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetDestinationsResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionByIdResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**

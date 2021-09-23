@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DTOs\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class FulfillmentInboundResourceTest extends UnitTestCase

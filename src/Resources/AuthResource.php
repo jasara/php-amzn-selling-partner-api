@@ -5,9 +5,9 @@ namespace Jasara\AmznSPA\Resources;
 use Illuminate\Http\Client\Factory;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DTOs\ApplicationKeysDTO;
-use Jasara\AmznSPA\DTOs\AuthTokensDTO;
-use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
+use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
+use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 

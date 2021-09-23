@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\DTOs\ApplicationKeysDTO;
-use Jasara\AmznSPA\DTOs\AuthTokensDTO;
-use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
+use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
+use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 
 /**
  * @covers \Jasara\AmznSPA\AmznSPAConfig
