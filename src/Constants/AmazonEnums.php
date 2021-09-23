@@ -41,4 +41,13 @@ class AmazonEnums
         'ACCOUNT_STATUS_CHANGED',
         'EXTERNAL_FULFILLMENT_SHIPMENT_STATUS_CHANGE',
     ];
+
+    const PREP_INSTRUCTIONS = [
+        'Polybagging',
+        'BubbleWrapping',
+        'Taping',
+        'BlackShrinkWrapping',
+        'Labeling',
+        'HangGarment',
+    ];
 }

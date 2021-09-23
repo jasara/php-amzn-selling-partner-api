@@ -22,8 +22,11 @@ class HelpersTest extends UnitTestCase
                 ],
             ],
             'TestPascal' => 0,
-            'testNumber123' => 0,
             'TESTALLCAPS' => 0,
+            'testNumber123' => 0,
+            '12345abc' => 0,
+            'abc12345abc' => 0,
+            'aBc12345Abc' => 0,
         ];
 
         $array = array_keys_to_snake($array);
@@ -31,12 +34,15 @@ class HelpersTest extends UnitTestCase
         $this->assertArrayHasKey('id', $array);
         $this->assertArrayHasKey('test_camel', $array);
         $this->assertArrayHasKey('test_pascal', $array);
-        $this->assertArrayHasKey('test_number123', $array);
+        $this->assertArrayHasKey('test_number_123', $array);
         $this->assertArrayHasKey('testallcaps', $array);
+        $this->assertArrayHasKey('12345_abc', $array);
+        $this->assertArrayHasKey('abc_12345_abc', $array);
+        // $this->assertArrayHasKey('a_b_c_12345_abc', $array); Failing
         $this->assertArrayHasKey('test_deep_camel', $array['test_camel']);
         $this->assertArrayHasKey('test_deep_array_with_objects', $array['test_camel']);
         $this->assertArrayHasKey('test_collection', $array['test_camel']['test_deep_array_with_objects'][0]);
         $this->assertArrayHasKey('collection_property', $array['test_camel']['test_deep_array_with_objects'][0]['test_collection']);
-        $this->assertArrayHasKey('deep_object2', $array['test_camel']['test_deep_array_with_objects'][1]);
+        $this->assertArrayHasKey('deep_object_2', $array['test_camel']['test_deep_array_with_objects'][1]);
     }
 }

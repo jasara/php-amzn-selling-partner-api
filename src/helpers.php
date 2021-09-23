@@ -9,7 +9,7 @@ if (! function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
         $snakecased_array = [];
         foreach ($array as $key => $value) {
             if (is_string($key)) {
-                preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $key, $matches);
+                preg_match_all('/([A-Z0-9]+(?=$|[A-Z][a-z])|[A-Za-z][a-z]+)|[0-9]+/', $key, $matches);
                 $result = $matches[0];
                 foreach ($result as &$match) {
                     $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);

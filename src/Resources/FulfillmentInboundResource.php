@@ -5,6 +5,8 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -33,5 +35,14 @@ class FulfillmentInboundResource implements ResourceContract
         ]));
 
         return new GetInboundGuidanceResponse($response);
+    }
+
+    public function createInboundShipmentPlan(CreateInboundShipmentPlanRequest $request): CreateInboundShipmentPlanResponse
+    {
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'createInboundShipmentPlan', [
+            'body' => $request->toArray(),
+        ]);
+
+        return new CreateInboundShipmentPlanResponse($response);
     }
 }
