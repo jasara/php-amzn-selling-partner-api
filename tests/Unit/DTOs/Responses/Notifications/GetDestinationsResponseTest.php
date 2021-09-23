@@ -4,19 +4,17 @@ namespace Jasara\AmznSPA\Unit\DTOs\Responses\Notifications;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationsResponse;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationListSchema;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSchema;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationSchema;
-use Jasara\AmznSPA\DTOs\Schemas\EventBridgeResourceSchema;
-use Jasara\AmznSPA\DTOs\Schemas\SqsResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationListSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\EventBridgeResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class GetDestinationsResponseTest extends UnitTestCase
 {
     /**
      * @covers \Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationsResponse
-     * @covers \Jasara\AmznSPA\DTOs\Casts\DestinationListSchemaPayloadCaster
-     * @covers \Jasara\AmznSPA\DTOs\Casts\DestinationResourceSchemaCaster
      */
     public function testSetupClass()
     {
@@ -27,23 +25,27 @@ class GetDestinationsResponseTest extends UnitTestCase
         $event_bridge_account_id = Str::random();
         $destination_id = Str::random();
 
-        $dto = new GetDestinationsResponse(
-            payload: [
-                [
-                    'name' => $destination_name,
-                    'destinationId' => $destination_id,
-                    'resource' => [
-                        'sqs' => [
-                            'arn' => $arn,
-                        ],
-                        'eventBridge' => [
-                            'name' => $event_bridge_name,
-                            'region' => $event_bridge_region,
-                            'accountId' => $event_bridge_account_id,
-                        ],
+        $payload = [
+            [
+                'name' => $destination_name,
+                'destinationId' => $destination_id,
+                'resource' => [
+                    'sqs' => [
+                        'arn' => $arn,
+                    ],
+                    'eventBridge' => [
+                        'name' => $event_bridge_name,
+                        'region' => $event_bridge_region,
+                        'accountId' => $event_bridge_account_id,
                     ],
                 ],
             ],
+        ];
+
+        $payload = array_keys_to_snake($payload);
+
+        $dto = new GetDestinationsResponse(
+            payload: $payload,
         );
 
         $this->assertInstanceOf(DestinationListSchema::class, $dto->payload);

@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse;
 use Jasara\AmznSPA\DTOs\Schemas\ErrorListSchema;
 use Jasara\AmznSPA\DTOs\Schemas\ErrorSchema;
-use Jasara\AmznSPA\DTOs\Schemas\SubscriptionSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\SubscriptionSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class GetSubscriptionResponseTest extends UnitTestCase
@@ -16,8 +16,6 @@ class GetSubscriptionResponseTest extends UnitTestCase
      * @covers \Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse
      * @covers \Jasara\AmznSPA\DTOs\Schemas\ErrorListSchema
      * @covers \Jasara\AmznSPA\DTOs\Schemas\ErrorSchema
-     * @covers \Jasara\AmznSPA\DTOs\Casts\SubscriptionSchemaPayloadCaster
-     * @covers \Jasara\AmznSPA\DTOs\Casts\ErrorCollectionCaster
      */
     public function testSetupClass()
     {
@@ -36,11 +34,11 @@ class GetSubscriptionResponseTest extends UnitTestCase
                     'details' => $error_details,
                 ],
             ],
-            payload: [
+            payload: array_keys_to_snake([
                 'subscriptionId' => $subscription_id,
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
-            ]
+            ])
         );
 
         $this->assertInstanceOf(ErrorListSchema::class, $dto->error_list);

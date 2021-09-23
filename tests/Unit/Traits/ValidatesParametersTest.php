@@ -121,4 +121,23 @@ class ValidatesParametersTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
     }
+
+    public function testValidatesArrayOfStringsException()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('There is an invalid value in the array, the array can only contain strings.');
+
+        $amzn = new AmznSPA($this->setupMinimalConfig());
+        $amzn->fulfillment_inbound->getInboundGuidance('ATVPDKIKX0DER', [1]);
+    }
+
+    public function testValidatesArrayOfStringsPasses()
+    {
+        $this->expectException(AmznSPAException::class); // Testing it is not the invalid parameters exception
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->fulfillment_inbound->getInboundGuidance(Str::random(), ['string']);
+    }
 }

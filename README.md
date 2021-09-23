@@ -57,7 +57,9 @@ $config = new AmznSPAConfig(
 
 # License
 
-This project is not licensed for commercial usage, but you are hereby granted the right to use this project for commercial purposes as long as your annual revenue is under $100,000 USD. Above that level, please email support@jasaratech.com to obtain a commercial license.
+This project is not licensed for commercial usage, but you are hereby granted the right to use this project for commercial purposes as long as your annual revenue is under $100,000 USD. 
+
+Above that level, please [visit our Sponsors page](https://github.com/sponsors/jasara) to obtain an automatic commercial license.
 
 You are free to use the project for non-commercial purposes. 
 

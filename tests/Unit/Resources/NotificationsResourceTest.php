@@ -13,8 +13,8 @@ use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionByIdResponse;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\GetSubscriptionResponse;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSpecificationSchema;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**

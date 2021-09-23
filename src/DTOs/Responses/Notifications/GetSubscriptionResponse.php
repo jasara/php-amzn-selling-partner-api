@@ -2,13 +2,10 @@
 
 namespace Jasara\AmznSPA\DTOs\Responses\Notifications;
 
-use Jasara\AmznSPA\DTOs\Casts\SubscriptionSchemaPayloadCaster;
 use Jasara\AmznSPA\DTOs\Responses\BaseResponse;
-use Jasara\AmznSPA\DTOs\Schemas\SubscriptionSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\SubscriptionSchema;
 
 class GetSubscriptionResponse extends BaseResponse
 {
-    #[CastWith(SubscriptionSchemaPayloadCaster::class)]
     public ?SubscriptionSchema $payload;
 }

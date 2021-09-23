@@ -10,7 +10,7 @@ use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DTOs\AuthTokensDTO;
 use Jasara\AmznSPA\DTOs\GrantlessTokenDTO;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\HttpEventHandler;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 

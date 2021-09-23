@@ -3,14 +3,14 @@
 namespace Jasara\AmznSPA\Unit\DTOs\Schemas;
 
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSpecificationSchema;
-use Jasara\AmznSPA\DTOs\Schemas\EventBridgeResourceSpecificationSchema;
-use Jasara\AmznSPA\DTOs\Schemas\SqsResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\EventBridgeResourceSpecificationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @covers \Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSpecificationSchema
- * @covers \Jasara\AmznSPA\DTOs\Schemas\EventBridgeResourceSpecificationSchema
+ * @covers \Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSpecificationSchema
+ * @covers \Jasara\AmznSPA\DTOs\Schemas\Notifications\EventBridgeResourceSpecificationSchema
  */
 class DestinationResourceSpecificationSchemaTest extends UnitTestCase
 {

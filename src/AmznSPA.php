@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA;
 
 use Illuminate\Http\Client\Factory;
+use Illuminate\Support\Str;
 use Jasara\AmznSPA\Exceptions\InvalidResourceException;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
@@ -10,6 +11,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
 /**
  * @property \Jasara\AmznSPA\Resources\AuthResource $auth
  * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
+ * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
  */
 class AmznSPA
 {
@@ -22,7 +24,7 @@ class AmznSPA
 
     public function __get($name)
     {
-        $function = 'get' . ucfirst($name);
+        $function = 'get' . Str::of($name)->title()->remove('_');
 
         $resource_getter = new ResourceGetter($this->config);
 

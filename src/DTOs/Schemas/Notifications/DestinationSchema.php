@@ -1,9 +1,7 @@
 <?php
 
-namespace Jasara\AmznSPA\DTOs\Schemas;
+namespace Jasara\AmznSPA\DTOs\Schemas\Notifications;
 
-use Jasara\AmznSPA\DTOs\Casts\DestinationResourceSchemaCaster;
-use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class DestinationSchema extends DataTransferObject
@@ -12,6 +10,5 @@ class DestinationSchema extends DataTransferObject
 
     public string $destination_id;
 
-    #[CastWith(DestinationResourceSchemaCaster::class)]
     public DestinationResourceSchema $resource;
 }

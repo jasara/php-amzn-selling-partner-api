@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\DTOs\Responses\Notifications;
 
-use Jasara\AmznSPA\DTOs\Casts\DestinationListSchemaPayloadCaster;
 use Jasara\AmznSPA\DTOs\Responses\BaseResponse;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationListSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationListSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
+use Spatie\DataTransferObject\Casters\ArrayCaster;
 
 class GetDestinationsResponse extends BaseResponse
 {
-    #[CastWith(DestinationListSchemaPayloadCaster::class)]
+    #[CastWith(ArrayCaster::class, itemType: DestinationSchema::class)]
     public ?DestinationListSchema $payload;
 }

@@ -29,14 +29,29 @@ class ResourceGetter
 
     public function getNotifications(): NotificationsResource
     {
-        $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
-
-        $http = new AmznSPAHttp($this->config, 'notifications');
+        $http = $this->validateAndSetupHttpForStandardResource();
 
         return new NotificationsResource(
             $http,
             $this->config->getMarketplace()->getBaseUrl(),
         );
+    }
+
+    public function getFulfillmentInbound(): FulfillmentInboundResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new FulfillmentInboundResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
+    private function validateAndSetupHttpForStandardResource(): AmznSPAHttp
+    {
+        $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
+        $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
+
+        return new AmznSPAHttp($this->config, 'notifications');
     }
 }

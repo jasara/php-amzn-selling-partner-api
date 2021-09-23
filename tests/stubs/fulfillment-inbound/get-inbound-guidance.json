@@ -1,0 +1,35 @@
+{
+    "payload": {
+        "SKUInboundGuidanceList": [
+            {
+                "SellerSKU": "SellerSKU",
+                "ASIN": "ASIN",
+                "InboundGuidance": "InboundNotRecommended",
+                "GuidanceReasonList": [
+                    "SlowMovingASIN"
+                ]
+            }
+        ],
+        "InvalidSKUList": [
+            {
+                "SellerSKU": "SellerSKU",
+                "ErrorReason": "DoesNotExist"
+            }
+        ],
+        "ASINInboundGuidanceList": [
+            {
+                "ASIN": "ASIN",
+                "InboundGuidance": "InboundNotRecommended",
+                "GuidanceReasonList": [
+                    "SlowMovingASIN"
+                ]
+            }
+        ],
+        "InvalidASINList": [
+            {
+                "ASIN": "ASIN",
+                "ErrorReason": "DoesNotExist"
+            }
+        ]
+    }
+}

@@ -25,4 +25,12 @@ class ResourceGetterTest extends UnitTestCase
 
         $this->assertInstanceOf(Resources\NotificationsResource::class, $notifications);
     }
+
+    public function testGetFulfillmentInbound()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $notifications = $resource_getter->getFulfillmentInbound();
+
+        $this->assertInstanceOf(Resources\FulfillmentInboundResource::class, $notifications);
+    }
 }

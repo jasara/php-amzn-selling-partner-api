@@ -4,17 +4,16 @@ namespace Jasara\AmznSPA\Unit\DTOs\Responses\Notifications;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DTOs\Responses\Notifications\CreateDestinationResponse;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationResourceSchema;
-use Jasara\AmznSPA\DTOs\Schemas\DestinationSchema;
-use Jasara\AmznSPA\DTOs\Schemas\EventBridgeResourceSchema;
-use Jasara\AmznSPA\DTOs\Schemas\SqsResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\DestinationSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\EventBridgeResourceSchema;
+use Jasara\AmznSPA\DTOs\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class CreateDestinationResponseTest extends UnitTestCase
 {
     /**
      * @covers \Jasara\AmznSPA\DTOs\Responses\Notifications\CreateDestinationResponse
-     * @covers \Jasara\AmznSPA\DTOs\Casts\DestinationSchemaPayloadCaster
      */
     public function testSetupClass()
     {
@@ -26,7 +25,7 @@ class CreateDestinationResponseTest extends UnitTestCase
         $destination_id = Str::random();
 
         $dto = new CreateDestinationResponse(
-            payload: [
+            payload: array_keys_to_snake([
                 'name' => $destination_name,
                 'destinationId' => $destination_id,
                 'resource' => [
@@ -39,7 +38,7 @@ class CreateDestinationResponseTest extends UnitTestCase
                         'accountId' => $event_bridge_account_id,
                     ],
                 ],
-            ],
+            ]),
         );
 
         $this->assertInstanceOf(DestinationSchema::class, $dto->payload);

@@ -52,4 +52,13 @@ trait ValidatesParameters
             throw new InvalidParametersException($string . ' is not in the list of allowed values: ' . implode(',', $allowed_values));
         }
     }
+
+    private function validateIsArrayOfStrings(array $array)
+    {
+        foreach ($array as $value) {
+            if (! is_string($value)) {
+                throw new InvalidParametersException('There is an invalid value in the array, the array can only contain strings.');
+            }
+        }
+    }
 }

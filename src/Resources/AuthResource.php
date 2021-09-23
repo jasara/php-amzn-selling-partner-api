@@ -15,7 +15,7 @@ class AuthResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    private $endpoint = 'https://api.amazon.com/auth/o2/token';
+    const ENDPOINT = 'https://api.amazon.com/auth/o2/token';
 
     public function __construct(
         private Factory $http,
@@ -60,7 +60,7 @@ class AuthResource implements ResourceContract
 
     private function callGetTokens(string $spapi_oauth_code): AuthTokensDTO
     {
-        $response = $this->http->post($this->endpoint, [
+        $response = $this->http->post(self::ENDPOINT, [
             'grant_type' => 'authorization_code',
             'code' => $spapi_oauth_code,
             'redirect_uri' => $this->redirect_url,
@@ -73,7 +73,7 @@ class AuthResource implements ResourceContract
 
     public function getAccessTokenFromRefreshToken(string $refresh_token): AuthTokensDTO
     {
-        $response = $this->http->post($this->endpoint, [
+        $response = $this->http->post(self::ENDPOINT, [
             'grant_type' => 'refresh_token',
             'refresh_token' => $refresh_token,
             'client_id' => $this->application_keys->lwa_client_id,
@@ -85,7 +85,7 @@ class AuthResource implements ResourceContract
 
     public function getGrantlessAccessToken(string $scope): GrantlessTokenDTO
     {
-        $response = $this->http->post($this->endpoint, [
+        $response = $this->http->post(self::ENDPOINT, [
             'grant_type' => 'client_credentials',
             'scope' => $scope,
             'client_id' => $this->application_keys->lwa_client_id,

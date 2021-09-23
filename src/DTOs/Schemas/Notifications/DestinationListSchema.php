@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\DTOs\Schemas;
+namespace Jasara\AmznSPA\DTOs\Schemas\Notifications;
 
 use Illuminate\Support\Collection;
 

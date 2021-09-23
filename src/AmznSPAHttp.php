@@ -8,7 +8,6 @@ use GuzzleHttp\Middleware;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\RequestInterface;
 
@@ -24,17 +23,17 @@ class AmznSPAHttp
     ) {
     }
 
-    public function get(string $url): Response
+    public function get(string $url, array $data = []): array
     {
-        return $this->call('get', $url);
+        return $this->call('get', $url, $data);
     }
 
-    public function post(string $url, array $data): Response
+    public function post(string $url, array $data): array
     {
         return $this->call('post', $url, $data);
     }
 
-    public function getGrantless(string $url): Response
+    public function getGrantless(string $url): array
     {
         return $this->call(
             method: 'get',
@@ -43,7 +42,7 @@ class AmznSPAHttp
         );
     }
 
-    public function postGrantless(string $url, array $data): Response
+    public function postGrantless(string $url, array $data): array
     {
         return $this->call(
             method: 'post',
@@ -53,7 +52,7 @@ class AmznSPAHttp
         );
     }
 
-    public function deleteGrantless(string $url): Response
+    public function deleteGrantless(string $url): array
     {
         return $this->call(
             method: 'delete',
@@ -62,7 +61,7 @@ class AmznSPAHttp
         );
     }
 
-    private function call(string $method, string $url, array $data = [], bool $grantless = false): Response
+    private function call(string $method, string $url, array $data = [], bool $grantless = false): array
     {
         $this->setupHttp($this->config->getHttp(), $grantless);
 
@@ -71,20 +70,11 @@ class AmznSPAHttp
         }
 
         try {
-            return $this->http->$method($url, $data);
-        } catch (RequestException $e) {
-            if (! $this->shouldRefreshToken($e->response->json())) {
-                throw $e;
-            }
-            if (! $this->shouldRetry()) {
-                throw $e;
-            }
+            $response = $this->http->$method($url, $data);
 
-            if (! $grantless) {
-                $this->refreshTokens();
-            } else {
-                $this->refreshGrantlessToken();
-            }
+            return array_keys_to_snake($response->json());
+        } catch (RequestException $e) {
+            $this->handleRequestException($e, $grantless);
 
             return $this->call($method, $url, $data, $grantless);
         }
@@ -182,5 +172,21 @@ class AmznSPAHttp
         });
 
         $this->http = $this->http->withMiddleware($middleware);
+    }
+
+    private function handleRequestException(RequestException $e, bool $grantless)
+    {
+        if (! $this->shouldRefreshToken($e->response->json())) {
+            throw $e;
+        }
+        if (! $this->shouldRetry()) {
+            throw $e;
+        }
+
+        if (! $grantless) {
+            $this->refreshTokens();
+        } else {
+            $this->refreshGrantlessToken();
+        }
     }
 }
