@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Unit\Resources;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\InboundShipmentRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\ConfirmPreorderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPreorderInfoResponse;
@@ -150,6 +152,27 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/preorder?MarketplaceId=ATVPDKIKX0DER', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testConfirmPreorder()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/confirm-preorder');
+
+        $shipment_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->confirmPreorder($shipment_id, 'ATVPDKIKX0DER', CarbonImmutable::now());
+
+        $this->assertInstanceOf(ConfirmPreorderResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($shipment_id) {
+            $this->assertEquals('PUT', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/preorder/confirm', urldecode($request->url()));
+            $this->assertEquals(CarbonImmutable::now()->toDateString(), $request->data()['NeedByDate']);
 
             return true;
         });
