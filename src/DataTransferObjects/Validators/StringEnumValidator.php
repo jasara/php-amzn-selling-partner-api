@@ -19,6 +19,10 @@ class StringEnumValidator implements Validator
 
     public function validate(mixed $value): ValidationResult
     {
+        if (is_null($value)) {
+            return ValidationResult::valid();
+        }
+
         return $this->validateString($value, $this->enum);
     }
 

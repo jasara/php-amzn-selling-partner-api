@@ -6,8 +6,10 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\InboundShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\InboundShipmentResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FulfillmentInboundResource implements ResourceContract
@@ -44,5 +46,14 @@ class FulfillmentInboundResource implements ResourceContract
         ]);
 
         return new CreateInboundShipmentPlanResponse($response);
+    }
+
+    public function updateInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
+    {
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, [
+            'body' => $request->toArray(),
+        ]);
+
+        return new InboundShipmentResponse($response);
     }
 }

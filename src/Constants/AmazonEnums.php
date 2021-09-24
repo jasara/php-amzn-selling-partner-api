@@ -50,4 +50,17 @@ class AmazonEnums
         'Labeling',
         'HangGarment',
     ];
+
+    const SHIPMENT_STATUSES = [
+        'WORKING',
+        'SHIPPED',
+        'RECEIVING',
+        'CANCELLED',
+        'DELETED',
+        'CLOSED',
+        'ERROR',
+        'IN_TRANSIT',
+        'DELIVERED',
+        'CHECKED_IN',
+    ];
 }

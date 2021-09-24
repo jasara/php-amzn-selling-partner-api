@@ -28,6 +28,11 @@ class AmznSPAHttp
         return $this->call('get', $url, $data);
     }
 
+    public function put(string $url, array $data): array
+    {
+        return $this->call('put', $url, $data);
+    }
+
     public function post(string $url, array $data): array
     {
         return $this->call('post', $url, $data);
