@@ -7,5 +7,5 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class InboundShipmentResponse extends DataTransferObject
 {
-    public InboundShipmentResultSchema $payload;
+    public ?InboundShipmentResultSchema $payload;
 }

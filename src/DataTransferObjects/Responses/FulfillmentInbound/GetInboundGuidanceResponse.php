@@ -7,5 +7,5 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\GetInboundGuid
 
 class GetInboundGuidanceResponse extends BaseResponse
 {
-    public GetInboundGuidanceResultSchema $payload;
+    public ?GetInboundGuidanceResultSchema $payload;
 }

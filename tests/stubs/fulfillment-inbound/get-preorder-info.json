@@ -1,0 +1,8 @@
+{
+    "payload": {
+        "ShipmentContainsPreorderableItems": true,
+        "ShipmentConfirmedForPreorder": true,
+        "NeedByDate": "2020-04-23",
+        "ConfirmedFulfillableDate": "2020-04-23"
+    }
+}

@@ -26,7 +26,6 @@
     "prefer-stable": true,
     "require": {
         "php": "^8.0",
-        "ocramius/lazy-property": "^2.3",
         "guzzlehttp/guzzle": "^7.4",
         "illuminate/http": "^8",
         "spatie/data-transfer-object": "^3.7",

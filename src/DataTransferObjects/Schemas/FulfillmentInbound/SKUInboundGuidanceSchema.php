@@ -16,5 +16,5 @@ class SKUInboundGuidanceSchema extends DataTransferObject
     public string $inbound_guidance;
 
     #[StringArrayEnumValidator(['SlowMovingASIN', 'NoApplicableGuidance'])]
-    public array $guidance_reason_list;
+    public ?array $guidance_reason_list;
 }

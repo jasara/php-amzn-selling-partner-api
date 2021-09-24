@@ -122,6 +122,16 @@ class MarketplacesList
         return $identifiers;
     }
 
+    public static function allCountryCodes(): array
+    {
+        $codes = [];
+        foreach (self::all()->toArray() as $marketplace) {
+            $codes[] = $marketplace->getCountryCode();
+        }
+
+        return $codes;
+    }
+
     public static function getMarketplaceById(string $identifier): Marketplace
     {
         return self::all()->filter(function (Marketplace $marketplace) use ($identifier) {
