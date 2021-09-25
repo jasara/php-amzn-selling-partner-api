@@ -17,6 +17,6 @@ class WeightSchema extends DataTransferObject
 
     public function asMass(): Mass
     {
-        return new Mass($this->value, $this->unit_of_weight);
+        return new Mass($this->value, $this->unit);
     }
 }
