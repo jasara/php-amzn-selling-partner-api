@@ -12,8 +12,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\ConfirmPreor
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPreorderInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPrepInstructionsResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetTransportDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\InboundShipmentResponse;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\GetPrepInstructionsResultSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class FulfillmentInboundResourceTest extends UnitTestCase
@@ -188,11 +189,31 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_inbound->getPrepInstructions('US', [$sku]);
 
-        $this->assertInstanceOf(GetPrepInstructionsResultSchema::class, $response);
+        $this->assertInstanceOf(GetPrepInstructionsResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList[0]=' . $sku, urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testGetTransportDetails()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-transport-details');
+
+        $shipment_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getTransportDetails($shipment_id);
+
+        $this->assertInstanceOf(GetTransportDetailsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport', urldecode($request->url()));
 
             return true;
         });

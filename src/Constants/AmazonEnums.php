@@ -63,4 +63,49 @@ class AmazonEnums
         'DELIVERED',
         'CHECKED_IN',
     ];
+
+    const PACKAGE_STATUSES = [
+        'SHIPPED',
+        'IN_TRANSIT',
+        'DELIVERED',
+        'CHECKED_IN',
+        'RECEIVING',
+        'CLOSED',
+        'DELETED',
+    ];
+
+    const SELLER_FREIGHT_CLASSES = [
+        '50',
+        '55',
+        '60',
+        '65',
+        '70',
+        '77.5',
+        '85',
+        '92.5',
+        '100',
+        '110',
+        '125',
+        '150',
+        '175',
+        '200',
+        '250',
+        '300',
+        '400',
+        '500',
+    ];
+
+    const TRANSPORT_STATUSES = [
+        'WORKING',
+        'ESTIMATING',
+        'ESTIMATED',
+        'ERROR_ON_ESTIMATING',
+        'CONFIRMING',
+        'CONFIRMED',
+        'ERROR_ON_CONFIRMING',
+        'VOIDING',
+        'VOIDED',
+        'ERROR_IN_VOIDING',
+        'ERROR',
+    ];
 }

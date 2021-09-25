@@ -12,8 +12,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\ConfirmPreor
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPreorderInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPrepInstructionsResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetTransportDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\InboundShipmentResponse;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\GetPrepInstructionsResultSchema;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FulfillmentInboundResource implements ResourceContract
@@ -93,7 +94,7 @@ class FulfillmentInboundResource implements ResourceContract
         return new ConfirmPreorderResponse($response);
     }
 
-    public function getPrepInstructions(string $ship_to_country_code, array $seller_sku_list = [], array $asin_list = []): GetPrepInstructionsResultSchema
+    public function getPrepInstructions(string $ship_to_country_code, array $seller_sku_list = [], array $asin_list = []): GetPrepInstructionsResponse
     {
         $this->validateStringEnum($ship_to_country_code, MarketplacesList::allCountryCodes());
         $this->validateIsArrayOfStrings($seller_sku_list);
@@ -105,6 +106,13 @@ class FulfillmentInboundResource implements ResourceContract
             'ASINList' => $asin_list,
         ]));
 
-        return new GetPrepInstructionsResultSchema($response);
+        return new GetPrepInstructionsResponse($response);
+    }
+
+    public function getTransportDetails(string $shipment_id): GetTransportDetailsResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport');
+
+        return new GetTransportDetailsResponse($response);
     }
 }
