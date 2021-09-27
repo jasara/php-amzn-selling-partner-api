@@ -11,7 +11,7 @@ use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
-class AuthResource implements ResourceContract
+class LwaResource implements ResourceContract
 {
     use ValidatesParameters;
 

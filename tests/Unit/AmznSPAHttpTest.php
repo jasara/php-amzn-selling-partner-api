@@ -25,7 +25,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
-                ->push($this->loadHttpStub('auth/get-tokens'), 200)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
                 ->push($this->loadHttpStub('notifications/get-subscription'), 200),
         ]);
 
@@ -43,7 +43,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
-                ->push($this->loadHttpStub('auth/get-tokens'), 200)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
                 ->push($this->loadHttpStub('notifications/get-subscription'), 200),
         ]);
 
@@ -60,7 +60,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $http = new Factory(new HttpEventHandler);
         $http->fake([
             '*' => $http->sequence()
-                ->push($this->loadHttpStub('auth/get-tokens'), 200)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
                 ->push($this->loadHttpStub('notifications/get-subscription'), 200),
         ]);
 
@@ -80,7 +80,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $http = new Factory(new HttpEventHandler);
         $http->fake([
             '*' => $http->sequence()
-                ->push($this->loadHttpStub('auth/get-tokens'), 200)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
                 ->push($this->loadHttpStub('notifications/get-subscription'), 200),
         ]);
 
@@ -119,7 +119,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
-                ->push($this->loadHttpStub('auth/get-tokens'), 200)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
                 ->push($this->loadHttpStub('errors/token-expired'), 403),
         ]);
 
@@ -137,7 +137,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
-                ->push($this->loadHttpStub('auth/get-tokens'), 200)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
                 ->push($this->loadHttpStub('errors/token-expired'), 403),
         ]);
 

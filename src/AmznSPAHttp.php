@@ -38,12 +38,13 @@ class AmznSPAHttp
         return $this->call('post', $url, $data);
     }
 
-    public function getGrantless(string $url): array
+    public function getGrantless(string $url, array $data = []): array
     {
         return $this->call(
             method: 'get',
             url: $url,
-            grantless: true
+            grantless: true,
+            data: $data
         );
     }
 
@@ -104,7 +105,7 @@ class AmznSPAHttp
     private function refreshTokens(): void
     {
         $amzn = new AmznSPA($this->config);
-        $new_tokens = $amzn->auth->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
+        $new_tokens = $amzn->lwa->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
 
         $this->config->setTokens($new_tokens);
     }
@@ -114,7 +115,7 @@ class AmznSPAHttp
         $scope = 'sellingpartnerapi::' . $this->grantless_resource;
 
         $amzn = new AmznSPA($this->config);
-        $token = $amzn->auth->getGrantlessAccessToken($scope);
+        $token = $amzn->lwa->getGrantlessAccessToken($scope);
 
         $this->config->setGrantlessToken($token);
     }

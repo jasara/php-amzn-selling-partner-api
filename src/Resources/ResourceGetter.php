@@ -15,21 +15,32 @@ class ResourceGetter
     ) {
     }
 
-    public function getAuth(): AuthResource
+    public function getLwa(): LwaResource
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret']);
 
-        return new AuthResource(
+        return new LwaResource(
             $this->config->getHttp(),
             $this->config->getMarketplace(),
             $this->config->isPropertySet('redirect_url') ? $this->config->getRedirectUrl() : null,
             $this->config->getApplicationKeys(),
+            $this->config->getGrantlessToken(),
+        );
+    }
+
+    public function getAuthorization(): AuthorizationResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource('migration');
+
+        return new AuthorizationResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
         );
     }
 
     public function getNotifications(): NotificationsResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
+        $http = $this->validateAndSetupHttpForStandardResource('notifications');
 
         return new NotificationsResource(
             $http,
@@ -47,11 +58,13 @@ class ResourceGetter
         );
     }
 
-    private function validateAndSetupHttpForStandardResource(): AmznSPAHttp
+    private function validateAndSetupHttpForStandardResource($grantless_resource = null): AmznSPAHttp
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
+        if (! $grantless_resource) {
+            $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
+        }
 
-        return new AmznSPAHttp($this->config, 'notifications');
+        return new AmznSPAHttp($this->config, $grantless_resource);
     }
 }

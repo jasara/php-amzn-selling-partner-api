@@ -22,7 +22,7 @@ class HttpEventHandlerTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
-        $amzn->auth->getTokensFromRedirect($state, [
+        $amzn->lwa->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => Str::random(),
         ]);
@@ -37,7 +37,7 @@ class HttpEventHandlerTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 510);
 
         $amzn = new AmznSPA($config);
-        $amzn->auth->getTokensFromRedirect($state, [
+        $amzn->lwa->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => Str::random(),
         ]);
@@ -52,7 +52,7 @@ class HttpEventHandlerTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/no-error-in-data', 401);
 
         $amzn = new AmznSPA($config);
-        $amzn->auth->getTokensFromRedirect($state, [
+        $amzn->lwa->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => Str::random(),
         ]);
@@ -67,7 +67,7 @@ class HttpEventHandlerTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
 
         $amzn = new AmznSPA($config);
-        $amzn->auth->getTokensFromRedirect($state, [
+        $amzn->lwa->getTokensFromRedirect($state, [
             'state' => $state,
             'spapi_oauth_code' => Str::random(),
         ]);
