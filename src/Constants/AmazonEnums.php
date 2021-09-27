@@ -108,4 +108,26 @@ class AmazonEnums
         'ERROR_IN_VOIDING',
         'ERROR',
     ];
+
+    const PAGE_TYPES = [
+        'PackageLabel_Letter_2',
+        'PackageLabel_Letter_4',
+        'PackageLabel_Letter_6',
+        'PackageLabel_Letter_6_CarrierLeft',
+        'PackageLabel_A4_2',
+        'PackageLabel_A4_4',
+        'PackageLabel_Plain_Paper',
+        'PackageLabel_Plain_Paper_CarrierBottom',
+        'PackageLabel_Thermal',
+        'PackageLabel_Thermal_Unified',
+        'PackageLabel_Thermal_NonPCP',
+        'PackageLabel_Thermal_No_Carrier_Rotation',
+    ];
+
+    const BOX_CONTENTS_SOURCES = [
+        'NONE',
+        'FEED',
+        '2D_BARCODE',
+        'INTERACTIVE',
+    ];
 }
