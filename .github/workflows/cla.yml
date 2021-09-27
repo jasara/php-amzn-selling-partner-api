@@ -19,9 +19,9 @@ jobs:
           PERSONAL_ACCESS_TOKEN : ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with: 
           path-to-signatures: 'signatures/cla.json'
-          path-to-document: 'https://github.com/jasara/php-amzn-selling-partner-api/blob/master/CLA.html' # e.g. a CLA or a DCO document
+          path-to-document: 'https://github.com/jasara/php-amzn-selling-partner-api/blob/main/CLA.html' # e.g. a CLA or a DCO document
           # branch should not be protected
-          branch: 'master'
+          branch: 'main'
           allowlist: keithbrink
           use-dco-flag: false #'Set this to true if you want to use a dco instead of a cla'
           
