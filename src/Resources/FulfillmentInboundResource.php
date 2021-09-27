@@ -212,8 +212,8 @@ class FulfillmentInboundResource implements ResourceContract
             'QueryType' => $query_type,
             'ShipmentStatusList' => $shipment_status_list,
             'ShipmentIdList' => $shipment_id_list,
-            'LastUpdatedAfter' => $last_updated_after,
-            'LastUpdatedBefore' => $last_updated_before,
+            'LastUpdatedAfter' => $last_updated_after?->toIso8601String(),
+            'LastUpdatedBefore' => $last_updated_before?->toIso8601String(),
             'NextToken' => $next_token,
         ]));
 
@@ -227,6 +227,27 @@ class FulfillmentInboundResource implements ResourceContract
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/items', [
             'MarketplaceId' => $marketplace_id,
         ]);
+
+        return new GetShipmentItemsResponse($response);
+    }
+
+    public function getShipmentItems(
+        string $marketplace_id,
+        string $query_type,
+        CarbonImmutable $last_updated_after = null,
+        CarbonImmutable $last_updated_before = null,
+        string $next_token = null,
+    ): GetShipmentItemsResponse {
+        $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
+        $this->validateStringEnum($query_type, ['DATE_RANGE', 'NEXT_TOKEN']);
+
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipmentItems', array_filter([
+            'MarketplaceId' => $marketplace_id,
+            'QueryType' => $query_type,
+            'LastUpdatedAfter' => $last_updated_after?->toIso8601String(),
+            'LastUpdatedBefore' => $last_updated_before?->toIso8601String(),
+            'NextToken' => $next_token,
+        ]));
 
         return new GetShipmentItemsResponse($response);
     }

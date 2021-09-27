@@ -400,4 +400,30 @@ class FulfillmentInboundResourceTest extends UnitTestCase
             return true;
         });
     }
+
+    public function testGetShipmentItems()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipment-items');
+        $last_updated_after = CarbonImmutable::now();
+        $last_updated_before = CarbonImmutable::now();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getShipmentItems(
+            marketplace_id: 'ATVPDKIKX0DER',
+            query_type: 'DATE_RANGE',
+            last_updated_after: $last_updated_after,
+            last_updated_before: $last_updated_before,
+        );
+
+        $this->assertInstanceOf(GetShipmentItemsResponse::class, $response);
+        $this->assertEquals('X0014BIZ8T', $response->payload->item_data[0]->fulfillment_network_sku);
+
+        $http->assertSent(function (Request $request) use ($last_updated_after, $last_updated_before) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipmentItems?MarketplaceId=ATVPDKIKX0DER&QueryType=DATE_RANGE&LastUpdatedAfter=' . $last_updated_after->toIso8601String() . '&LastUpdatedBefore=' . $last_updated_before->toIso8601String(), urldecode($request->url()));
+
+            return true;
+        });
+    }
 }
