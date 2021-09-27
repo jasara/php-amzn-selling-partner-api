@@ -2,7 +2,7 @@
     "name": "jasara/php-amzn-selling-partner-api",
     "description": "A fluent interface for Amazon's Selling Partner API in PHP",
     "type": "library",
-    "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International Public License",
+    "license": " CC-BY-NC-SA-4.0",
     "authors": [
         {
             "name": "Jasara Technology Inc.",
