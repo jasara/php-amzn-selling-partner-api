@@ -86,6 +86,32 @@ class LwaResourceTest extends UnitTestCase
         });
     }
 
+    public function testGetTokensFromAuthorizationCode()
+    {
+        $auth_code = Str::random();
+
+        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+
+        $amzn = new AmznSPA($config);
+        $tokens = $amzn->lwa->getTokensFromAuthorizationCode($auth_code);
+
+        $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
+        $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
+        $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
+        $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', $tokens->refresh_token);
+
+        $http->assertSent(function (Request $request) use ($auth_code, $config) {
+            $this->assertEquals('authorization_code', Arr::get($request, 'grant_type'));
+            $this->assertEquals($auth_code, Arr::get($request, 'code'));
+            $this->assertEquals($config->getRedirectUrl(), Arr::get($request, 'redirect_uri'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_id, Arr::get($request, 'client_id'));
+            $this->assertEquals($config->getApplicationKeys()->lwa_client_secret, Arr::get($request, 'client_secret'));
+
+            return true;
+        });
+    }
+
     public function testGetAccessTokenFromRefreshToken()
     {
         $refresh_token = Str::random();

@@ -58,6 +58,13 @@ class LwaResource implements ResourceContract
         return $this->callGetTokens($parameters['spapi_oauth_code']);
     }
 
+    public function getTokensFromAuthorizationCode(string $authorization_code): AuthTokensDTO
+    {
+        $this->validateObjectProperties($this, ['redirect_url']);
+
+        return $this->callGetTokens($authorization_code);
+    }
+
     private function callGetTokens(string $spapi_oauth_code): AuthTokensDTO
     {
         $response = $this->http->post(self::ENDPOINT, [
