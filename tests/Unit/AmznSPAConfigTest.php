@@ -104,6 +104,13 @@ class AmznSPAConfigTest extends UnitTestCase
         ));
 
         $this->assertEquals($grantless_access_token, $config->getGrantlessToken()->access_token);
+
+        $save_lwa_tokens_callback = function () {
+            return 10;
+        };
+        $config->setSaveLwaTokensCallback($save_lwa_tokens_callback);
+
+        $this->assertEquals(10, $config->getSaveLwaTokensCallback()());
     }
 
     public function testIsPropertySet()

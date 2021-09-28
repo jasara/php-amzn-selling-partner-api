@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA;
 
 use Carbon\CarbonImmutable;
+use Closure;
 use Illuminate\Http\Client\Factory;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
@@ -28,6 +29,7 @@ class AmznSPAConfig
         string $application_id,
         private ?string $redirect_url = null,
         private bool $use_test_endpoints = false,
+        private ?Closure $save_lwa_tokens_callback = null,
         ?string $aws_access_key = null,
         ?string $aws_secret_key = null,
         ?string $lwa_client_id = null,
@@ -90,6 +92,11 @@ class AmznSPAConfig
         return $this->redirect_url;
     }
 
+    public function getSaveLwaTokensCallback(): Closure
+    {
+        return $this->save_lwa_tokens_callback;
+    }
+
     public function shouldUseTestEndpoints(): bool
     {
         return $this->use_test_endpoints;
@@ -108,6 +115,11 @@ class AmznSPAConfig
     public function setGrantlessToken(GrantlessTokenDTO $token): void
     {
         $this->grantless_token = $token;
+    }
+
+    public function setSaveLwaTokensCallback(Closure $callback): void
+    {
+        $this->save_lwa_tokens_callback = $callback;
     }
 
     public function setMarketplace(string $marketplace_id): void

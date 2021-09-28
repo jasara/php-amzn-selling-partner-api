@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Resources;
 
+use Closure;
 use Illuminate\Http\Client\Factory;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
@@ -22,6 +23,7 @@ class LwaResource implements ResourceContract
         private Marketplace $marketplace,
         private ?string $redirect_url,
         private ApplicationKeysDTO $application_keys,
+        private ?Closure $save_lwa_tokens_callback,
     ) {
     }
 
@@ -75,7 +77,11 @@ class LwaResource implements ResourceContract
             'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
 
-        return $this->formatTokenResponse($response->json());
+        $tokens = $this->formatTokenResponse($response->json());
+
+        $this->storeLwaTokens($tokens);
+
+        return $tokens;
     }
 
     public function getAccessTokenFromRefreshToken(string $refresh_token): AuthTokensDTO
@@ -87,7 +93,11 @@ class LwaResource implements ResourceContract
             'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
 
-        return $this->formatTokenResponse($response->json());
+        $tokens = $this->formatTokenResponse($response->json());
+
+        $this->storeLwaTokens($tokens);
+
+        return $tokens;
     }
 
     public function getGrantlessAccessToken(string $scope): GrantlessTokenDTO
@@ -109,6 +119,14 @@ class LwaResource implements ResourceContract
         }
 
         return false;
+    }
+
+    private function storeLwaTokens(AuthTokensDTO $tokens)
+    {
+        if ($this->save_lwa_tokens_callback) {
+            $callback = $this->save_lwa_tokens_callback;
+            $callback($tokens);
+        }
     }
 
     private function formatTokenResponse(array $response_data): AuthTokensDTO

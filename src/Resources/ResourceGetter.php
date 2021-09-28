@@ -24,7 +24,7 @@ class ResourceGetter
             $this->config->getMarketplace(),
             $this->config->isPropertySet('redirect_url') ? $this->config->getRedirectUrl() : null,
             $this->config->getApplicationKeys(),
-            $this->config->getGrantlessToken(),
+            $this->config->isPropertySet('save_lwa_tokens_callback') ? $this->config->getSaveLwaTokensCallback() : null,
         );
     }
 

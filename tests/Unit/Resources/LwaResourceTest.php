@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Carbon\CarbonImmutable;
+use Closure;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -174,6 +175,34 @@ class LwaResourceTest extends UnitTestCase
             'state' => $state,
             'spapi_oauth_code' => $spapi_oauth_code,
         ]);
+    }
+
+    public function testSaveTokensUsingCallback()
+    {
+        $refresh_token = Str::random();
+
+        $callback = $this->getMockBuilder(\stdClass::class)
+            ->addMethods(['__invoke'])
+            ->getMock();
+
+        $callback->expects($this->once())
+            ->method('__invoke')
+            ->with(
+                $this->callback(function (AuthTokensDTO $tokens) {
+                    $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
+                    $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
+                    $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
+                    $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', $tokens->refresh_token);
+
+                    return true;
+                }),
+            );
+
+        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+        $config->setSaveLwaTokensCallback(Closure::fromCallable([$callback, '__invoke']));
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
     }
 
     public function marketplaces(): array
