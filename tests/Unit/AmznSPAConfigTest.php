@@ -11,6 +11,8 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Psr\Log\LogLevel;
+use Symfony\Component\HttpKernel\Log\Logger;
 
 /**
  * @covers \Jasara\AmznSPA\AmznSPAConfig
@@ -111,6 +113,17 @@ class AmznSPAConfigTest extends UnitTestCase
         $config->setSaveLwaTokensCallback($save_lwa_tokens_callback);
 
         $this->assertEquals(10, $config->getSaveLwaTokensCallback()());
+
+        $logger_resource = fopen('php://memory', 'rw+');
+        $logger = new Logger(LogLevel::ERROR, $logger_resource);
+        $config->setLogger($logger);
+
+        $config->getLogger()->error('123');
+        $config->getLogger()->debug('abc');
+
+        rewind($logger_resource);
+        $this->assertStringContainsString('123', fgets($logger_resource));
+        $this->assertEquals('', fgets($logger_resource));
     }
 
     public function testIsPropertySet()

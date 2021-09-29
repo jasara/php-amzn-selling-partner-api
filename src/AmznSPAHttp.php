@@ -4,9 +4,11 @@ namespace Jasara\AmznSPA;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
+use Exception;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\RequestInterface;
@@ -14,6 +16,8 @@ use Psr\Http\Message\RequestInterface;
 class AmznSPAHttp
 {
     private PendingRequest $http;
+
+    private ?Request $request = null;
 
     private bool $retried = false;
 
@@ -76,13 +80,29 @@ class AmznSPAHttp
         }
 
         try {
+            /** @var \Illuminate\Http\Client\Response $response */
             $response = $this->http->$method($url, $data);
 
-            return array_keys_to_snake($response->json());
+            $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
+                'response_headers' => $response->headers(),
+                'response_data' => $response->json(),
+            ]);
+
+            return array_keys_to_snake($response->json() ?: []);
         } catch (RequestException $e) {
-            $this->handleRequestException($e, $grantless);
+            try {
+                $this->handleRequestException($e, $grantless);
+            } catch (Exception $e) {
+                $this->logException($e, $method, $url);
+
+                throw $e;
+            }
 
             return $this->call($method, $url, $data, $grantless);
+        } catch (\Exception $e) {
+            $this->logException($e, $method, $url);
+
+            throw $e;
         }
     }
 
@@ -126,6 +146,15 @@ class AmznSPAHttp
             'x-amz-access-token' => $this->getToken($grantless),
             'user-agent' => $this->buildUserAgent(),
         ]);
+
+        $this->http->beforeSending(function (Request $request) {
+            $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $request->url(), [
+                'unsigned_request_headers' => $request->headers(),
+                'request_data' => $request->data(),
+            ]);
+
+            $this->request = $request;
+        });
 
         $this->signRequest($this->config->getMarketplace()->getAwsRegion());
     }
@@ -194,5 +223,16 @@ class AmznSPAHttp
         } else {
             $this->refreshGrantlessToken();
         }
+    }
+
+    private function logException(Exception $e, $method, $url)
+    {
+        $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
+            'unsigned_request_headers' => $this->request ? $this->request->headers() : null,
+            'request_data' => $this->request ? $this->request->data() : null,
+            'response_headers' => isset($e->response) ? $e->response->headers() : null,
+            'response_data' => isset($e->response) ? $e->response->json() : null,
+            'response_code' => isset($e->response) ? $e->response->status() : null,
+        ]);
     }
 }

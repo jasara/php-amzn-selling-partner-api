@@ -111,6 +111,22 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
     }
 
+    public function testOtherExceptionThrown()
+    {
+        $this->expectException(\Exception::class);
+
+        $http = new Factory(new HttpEventHandler);
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/invalid-client'), 401),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+    }
+
     public function testRefreshTokenFails()
     {
         $this->expectException(RequestException::class);

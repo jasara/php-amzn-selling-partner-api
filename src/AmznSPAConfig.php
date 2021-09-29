@@ -11,6 +11,8 @@ use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpKernel\Log\Logger;
 
 class AmznSPAConfig
 {
@@ -24,12 +26,15 @@ class AmznSPAConfig
 
     private ApplicationKeysDTO $application_keys;
 
+    private LoggerInterface $logger;
+
     public function __construct(
         string $marketplace_id,
         string $application_id,
         private ?string $redirect_url = null,
         private bool $use_test_endpoints = false,
         private ?Closure $save_lwa_tokens_callback = null,
+        ?LoggerInterface $logger = null,
         ?string $aws_access_key = null,
         ?string $aws_secret_key = null,
         ?string $lwa_client_id = null,
@@ -60,6 +65,8 @@ class AmznSPAConfig
             lwa_client_id: $lwa_client_id,
             lwa_client_secret: $lwa_client_secret,
         );
+
+        $this->logger = $logger ?: new Logger();
     }
 
     public function getHttp(): Factory
@@ -97,6 +104,11 @@ class AmznSPAConfig
         return $this->save_lwa_tokens_callback;
     }
 
+    public function getLogger(): LoggerInterface
+    {
+        return $this->logger;
+    }
+
     public function shouldUseTestEndpoints(): bool
     {
         return $this->use_test_endpoints;
@@ -120,6 +132,11 @@ class AmznSPAConfig
     public function setSaveLwaTokensCallback(Closure $callback): void
     {
         $this->save_lwa_tokens_callback = $callback;
+    }
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
     }
 
     public function setMarketplace(string $marketplace_id): void
