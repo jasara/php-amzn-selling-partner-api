@@ -149,7 +149,7 @@ class AmznSPAHttp
 
         $this->http->beforeSending(function (Request $request) {
             $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $request->url(), [
-                'unsigned_request_headers' => $request->headers(),
+                'unsigned_request_headers' => Arr::except($request->headers(), 'x-amz-access-token'),
                 'request_data' => $request->data(),
             ]);
 
@@ -227,8 +227,12 @@ class AmznSPAHttp
 
     private function logException(Exception $e, $method, $url)
     {
+        $request_headers = $this->request ? $this->request->headers() : null;
+        if ($request_headers) {
+            Arr::forget($request_headers, 'x-amz-access-token');
+        }
         $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
-            'unsigned_request_headers' => $this->request ? $this->request->headers() : null,
+            'unsigned_request_headers' => $request_headers,
             'request_data' => $this->request ? $this->request->data() : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
             'response_data' => isset($e->response) ? $e->response->json() : null,
