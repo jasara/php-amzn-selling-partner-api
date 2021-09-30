@@ -41,7 +41,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/itemsGuidance?MarketplaceId=ATVPDKIKX0DER&SellerSKUList[0]=' . $sku, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/itemsGuidance?MarketplaceId=ATVPDKIKX0DER&SellerSKUList=' . $sku, urldecode($request->url()));
 
             return true;
         });
@@ -197,7 +197,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList[0]=' . $sku, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList=' . $sku, urldecode($request->url()));
 
             return true;
         });
@@ -351,22 +351,20 @@ class FulfillmentInboundResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipments');
 
-        $status = 'WORKING';
-
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_inbound->getShipments(
             marketplace_id: 'ATVPDKIKX0DER',
             query_type: 'SHIPMENT',
-            shipment_status_list: [$status],
+            shipment_status_list: ['WORKING', 'CLOSED'],
         );
 
         $this->assertInstanceOf(GetShipmentsResponse::class, $response);
         $this->assertEquals('501 Fairview Ave N', $response->payload->shipment_data[0]->ship_from_address->address_line_1);
 
-        $http->assertSent(function (Request $request) use ($status) {
+        $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments?MarketplaceId=ATVPDKIKX0DER&QueryType=SHIPMENT&ShipmentStatusList[0]=' . $status, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments?MarketplaceId=ATVPDKIKX0DER&QueryType=SHIPMENT&ShipmentStatusList=WORKING,CLOSED', urldecode($request->url()));
 
             return true;
         });

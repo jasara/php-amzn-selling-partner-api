@@ -29,6 +29,8 @@ class AmznSPAHttp
 
     public function get(string $url, array $data = []): array
     {
+        $data = $this->transformArraysToStrings($data);
+
         return $this->call('get', $url, $data);
     }
 
@@ -260,5 +262,18 @@ class AmznSPAHttp
             'response_data' => isset($e->response) ? $e->response->json() : null,
             'response_code' => isset($e->response) ? $e->response->status() : null,
         ]);
+    }
+
+    private function transformArraysToStrings(array $data): array
+    {
+        foreach ($data as $key => $param) {
+            if (is_array($param)) {
+                if (array_values($param) === $param) { // Is not an associative array
+                    $data[$key] = implode(',', $param);
+                }
+            }
+        }
+
+        return $data;
     }
 }

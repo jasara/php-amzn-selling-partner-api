@@ -63,14 +63,14 @@ class FulfillmentInboundResource implements ResourceContract
 
     public function updateInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
     {
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, $request->toArray());
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, (array) $request->toArrayObject());
 
         return new InboundShipmentResponse($response);
     }
 
     public function createInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, $request->toArray());
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, (array) $request->toArrayObject());
 
         return new InboundShipmentResponse($response);
     }
