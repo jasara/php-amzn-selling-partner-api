@@ -3,8 +3,11 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound;
 
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
+use Spatie\DataTransferObject\Attributes\CastWith;
+use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class CreateInboundShipmentPlanRequest extends DataTransferObject
@@ -19,5 +22,6 @@ class CreateInboundShipmentPlanRequest extends DataTransferObject
 
     public ?string $ship_to_country_subdivision_code;
 
+    #[CastWith(ArrayCaster::class, itemType: InboundShipmentPlanRequestItemSchema::class)]
     public $inbound_shipment_plan_request_items;
 }

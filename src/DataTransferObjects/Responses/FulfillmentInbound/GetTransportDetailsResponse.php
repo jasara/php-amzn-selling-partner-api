@@ -7,5 +7,5 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\GetTransportDe
 
 class GetTransportDetailsResponse extends BaseResponse
 {
-    public GetTransportDetailsResultSchema $payload;
+    public ?GetTransportDetailsResultSchema $payload;
 }
