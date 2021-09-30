@@ -10,5 +10,5 @@ class ErrorSchema extends DataTransferObject
 
     public string $message;
 
-    public string $details;
+    public ?string $details;
 }

@@ -27,7 +27,7 @@ class GetSubscriptionResponseTest extends UnitTestCase
         $destination_id = Str::random();
 
         $dto = new GetSubscriptionResponse(
-            error_list: [
+            errors: [
                 [
                     'code' => $error_code,
                     'message' => $error_message,
@@ -41,8 +41,8 @@ class GetSubscriptionResponseTest extends UnitTestCase
             ])
         );
 
-        $this->assertInstanceOf(ErrorListSchema::class, $dto->error_list);
-        $error_schema = $dto->error_list->first();
+        $this->assertInstanceOf(ErrorListSchema::class, $dto->errors);
+        $error_schema = $dto->errors->first();
         $this->assertInstanceOf(ErrorSchema::class, $error_schema);
         /** @var ErrorSchema $error_schema */
         $this->assertEquals($error_code, $error_schema->code);

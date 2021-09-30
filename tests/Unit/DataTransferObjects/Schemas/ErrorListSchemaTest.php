@@ -13,7 +13,7 @@ class ErrorListSchemaTest extends UnitTestCase
         $this->expectException(TypeError::class);
 
         new GetSubscriptionResponse(
-            error_list: [
+            errors: [
                 ['test' => 'test'],
             ],
         );

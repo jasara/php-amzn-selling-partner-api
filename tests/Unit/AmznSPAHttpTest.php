@@ -189,8 +189,6 @@ class AmznSPAHttpTest extends UnitTestCase
      */
     public function testSetupHttp()
     {
-        $this->expectException(RequestException::class);
-
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
@@ -204,6 +202,8 @@ class AmznSPAHttpTest extends UnitTestCase
         );
 
         $amzn = new AmznSPA($config);
-        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+        $response = $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+
+        $this->assertEquals('InvalidInput', $response->errors->first()->code);
     }
 }
