@@ -91,6 +91,10 @@ class AmznSPAHttp
             return array_keys_to_snake($response->json() ?: []);
         } catch (RequestException $e) {
             try {
+                if ($this->shouldReturnErrorResponse($e)) {
+                    return array_keys_to_snake($e->response->json());
+                }
+
                 $this->handleRequestException($e, $grantless);
             } catch (Exception $e) {
                 $this->logException($e, $method, $url);
@@ -223,6 +227,22 @@ class AmznSPAHttp
         } else {
             $this->refreshGrantlessToken();
         }
+    }
+
+    public function shouldReturnErrorResponse(RequestException $e): bool
+    {
+        $errors = Arr::get($e->response->json(), 'errors');
+        if (! $errors) {
+            return false;
+        }
+
+        foreach ($errors as $error) {
+            if ($error['code'] === 'InvalidInput') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function logException(Exception $e, $method, $url)

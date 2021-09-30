@@ -57,7 +57,6 @@ class FulfillmentInboundResource implements ResourceContract
     public function createInboundShipmentPlan(CreateInboundShipmentPlanRequest $request): CreateInboundShipmentPlanResponse
     {
         $response = $this->http->post($this->endpoint . self::BASE_PATH . 'plans', (array) $request->toArrayObject());
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'plans', (array) $request->toArrayObject());
 
         return new CreateInboundShipmentPlanResponse($response);
     }

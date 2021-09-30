@@ -10,6 +10,7 @@ use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\HttpEventHandler;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -161,6 +162,25 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->notifications->createDestination(Str::random(), new DestinationResourceSpecificationSchema());
+    }
+
+    public function testInvalidInputResponseReturned()
+    {
+        $http = new Factory(new HttpEventHandler);
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/create-inbound-shipment-plan-invalid-input'), 400),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->fulfillment_inbound->createInboundShipmentPlan($this->setupInboundShipmentPlanRequest());
+
+        $this->assertInstanceOf(CreateInboundShipmentPlanResponse::class, $response);
+        $this->assertNotNull($response->errors);
+        $this->assertCount(1, $response->errors);
+        $this->assertEquals('InvalidInput', $response->errors->first()->code);
     }
 
     /**

@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "code": "InvalidInput",
+            "message": "This operation may be partially successful, Please check the status. Reason: InvalidItems[ (skuType\u003dMSKU, sku\u003dmz17hISCLe, reason\u003dINVALID_MSKU_REMAP), (skuType\u003dMSKU, sku\u003dWrSUKcWjPC, reason\u003dINVALID_MSKU_REMAP)].",
+            "details": ""
+        }
+    ]
+}

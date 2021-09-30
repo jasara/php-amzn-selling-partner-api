@@ -11,5 +11,5 @@ use Spatie\DataTransferObject\DataTransferObject;
 class BaseResponse extends DataTransferObject
 {
     #[CastWith(ArrayCaster::class, itemType: ErrorSchema::class)]
-    public ?ErrorListSchema $error_list;
+    public ?ErrorListSchema $errors;
 }
