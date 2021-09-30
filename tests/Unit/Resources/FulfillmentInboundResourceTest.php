@@ -6,7 +6,6 @@ use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\InboundShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\PutTransportDetailsRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\ConfirmPreorderResponse;
@@ -52,10 +51,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/create-inbound-shipment-plan');
 
-        $request = new CreateInboundShipmentPlanRequest(
-            ship_from_address: $this->setupAddress(),
-            label_prep_preference: 'SELLER_LABEL',
-        );
+        $request = $this->setupInboundShipmentPlanRequest();
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
