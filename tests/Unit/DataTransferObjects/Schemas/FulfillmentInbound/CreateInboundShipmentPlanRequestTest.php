@@ -21,7 +21,7 @@ class CreateInboundShipmentPlanRequestTest extends UnitTestCase
         $this->assertArrayHasKey('ShipFromAddress', $array_object);
         $this->assertArrayHasKey('LabelPrepPreference', $array_object);
         $this->assertArrayHasKey('InboundShipmentPlanRequestItems', $array_object);
-        $this->assertArrayNotHasKey('ShipToCountryCode', $array_object);
+        $this->assertArrayHasKey('ShipToCountryCode', $array_object);
 
         $this->assertArrayHasKey('Name', $array_object['ShipFromAddress']);
         $this->assertArrayHasKey('AddressLine1', $array_object['ShipFromAddress']);

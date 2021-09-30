@@ -5,7 +5,6 @@ namespace Jasara\AmznSPA\Tests\Setup;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemSchema;
 
 trait SetupSchemas
 {
@@ -25,22 +24,7 @@ trait SetupSchemas
     public function setupInboundShipmentPlanRequest(): CreateInboundShipmentPlanRequest
     {
         return new CreateInboundShipmentPlanRequest(
-            ship_from_address: $this->setupAddress(),
-            label_prep_preference: 'SELLER_LABEL',
-            inbound_shipment_plan_request_items: [
-                new InboundShipmentPlanRequestItemSchema(
-                    seller_sku: Str::random(),
-                    asin: Str::random(),
-                    condition: 'NewItem',
-                    quantity: rand(1, 100),
-                    prep_details_list: [
-                        [
-                            'prep_instruction' => 'Polybagging',
-                            'prep_owner' => 'SELLER',
-                        ],
-                    ]
-                ),
-            ]
+            ...array_keys_to_snake($this->loadHttpStub('fulfillment-inbound/create-inbound-shipment-plan-request')),
         );
     }
 }

@@ -56,27 +56,22 @@ class FulfillmentInboundResource implements ResourceContract
 
     public function createInboundShipmentPlan(CreateInboundShipmentPlanRequest $request): CreateInboundShipmentPlanResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'plan', [
-            'body' => $request->toArray(),
-        ]);
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'plans', (array) $request->toArrayObject());
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'plans', (array) $request->toArrayObject());
 
         return new CreateInboundShipmentPlanResponse($response);
     }
 
     public function updateInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
     {
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, [
-            'body' => $request->toArray(),
-        ]);
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, $request->toArray());
 
         return new InboundShipmentResponse($response);
     }
 
     public function createInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, [
-            'body' => $request->toArray(),
-        ]);
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, $request->toArray());
 
         return new InboundShipmentResponse($response);
     }
@@ -128,9 +123,7 @@ class FulfillmentInboundResource implements ResourceContract
 
     public function putTransportDetails(string $shipment_id, PutTransportDetailsRequest $request): PutTransportDetailsResponse
     {
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport', [
-            'body' => $request->toArray(),
-        ]);
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport', $request->toArray());
 
         return new PutTransportDetailsResponse($response);
     }

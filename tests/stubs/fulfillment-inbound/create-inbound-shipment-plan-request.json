@@ -1,0 +1,30 @@
+{
+    "ShipFromAddress": {
+        "Name": "Name",
+        "AddressLine1": "123 any st",
+        "AddressLine2": "AddressLine2",
+        "DistrictOrCounty": "Washtenaw",
+        "City": "Ann Arbor",
+        "StateOrProvinceCode": "MI",
+        "CountryCode": "US",
+        "PostalCode": "48188"
+    },
+    "LabelPrepPreference": "SELLER_LABEL",
+    "ShipToCountryCode": "ShipToCountryCode",
+    "ShipToCountrySubdivisionCode": "ShipToCountrySubdivisionCode",
+    "InboundShipmentPlanRequestItems": [
+        {
+            "SellerSKU": "SellerSKU",
+            "ASIN": "ASIN",
+            "Condition": "NewItem",
+            "Quantity": 1,
+            "QuantityInCase": 1,
+            "PrepDetailsList": [
+                {
+                    "PrepInstruction": "Polybagging",
+                    "PrepOwner": "AMAZON"
+                }
+            ]
+        }
+    ]
+}

@@ -50,7 +50,6 @@ class FulfillmentInboundResourceTest extends UnitTestCase
     public function testCreateInboundShipmentPlan()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/create-inbound-shipment-plan');
-
         $request = $this->setupInboundShipmentPlanRequest();
 
         $amzn = new AmznSPA($config);
@@ -61,7 +60,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/plan', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/plans', urldecode($request->url()));
 
             return true;
         });

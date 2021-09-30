@@ -6,7 +6,6 @@ use ArrayObject;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemSchema;
-use Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
@@ -19,7 +18,6 @@ class CreateInboundShipmentPlanRequest extends DataTransferObject
     #[StringEnumValidator(['SELLER_LABEL', 'AMAZON_LABEL_ONLY', 'AMAZON_LABEL_PREFERRED'])]
     public string $label_prep_preference;
 
-    #[MaxLengthValidator(2)]
     public ?string $ship_to_country_code;
 
     public ?string $ship_to_country_subdivision_code;

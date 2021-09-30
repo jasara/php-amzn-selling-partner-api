@@ -95,7 +95,7 @@ class NotificationsResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($payload_version) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED', $request->url());
-            $this->assertEquals($payload_version, $request->data()['body']['payloadVersion']);
+            $this->assertEquals($payload_version, $request->data()['payloadVersion']);
 
             return true;
         });

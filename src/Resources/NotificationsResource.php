@@ -41,12 +41,13 @@ class NotificationsResource implements ResourceContract
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type, [
-            'body' => array_filter([
+        $response = $this->http->post(
+            $this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type,
+            array_filter([
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
             ]),
-        ]);
+        );
 
         return new CreateSubscriptionResponse($response);
     }
