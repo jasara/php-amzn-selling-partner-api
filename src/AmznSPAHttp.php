@@ -108,7 +108,7 @@ class AmznSPAHttp
 
     private function shouldRefreshToken(array $response): bool
     {
-        return Arr::get($response, 'error') === 'expired_token';
+        return Arr::get($response, 'errors.0.details') === 'The access token you provided has expired.';
     }
 
     private function shouldRetry(): bool

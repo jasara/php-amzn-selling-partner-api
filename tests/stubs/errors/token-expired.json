@@ -1,4 +1,9 @@
 {
-    "error_description": "This is a placeholder error until we can generate a real one TODO",
-    "error": "expired_token"
+    "errors": [
+        {
+            "message": "Access to requested resource is denied.",
+            "code": "Unauthorized",
+            "details": "The access token you provided has expired."
+        }
+    ]
 }
