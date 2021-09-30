@@ -27,7 +27,6 @@ class CreateInboundShipmentPlanRequest extends DataTransferObject
 
     public function toArrayObject(): ArrayObject
     {
-        /** @var InboundShipmentPlanRequestItemListSchema $items */
         $items = $this->inbound_shipment_plan_request_items->map(function ($item) {
             return $item->toArrayObject();
         })->toArray();

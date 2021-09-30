@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound;
 
+use ArrayObject;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
@@ -25,4 +26,17 @@ class InboundShipmentHeaderSchema extends DataTransferObject
 
     #[StringEnumValidator(['NONE', 'FEED', '2D_BARCODE'])]
     public ?string $intended_box_contents_source;
+
+    public function toArrayObject(): ArrayObject
+    {
+        return new ArrayObject(array_filter([
+            'ShipmentName' => $this->shipment_name,
+            'ShipmentFromAddress' => $this->shipment_from_address->toArrayObject(),
+            'DestinationFulfillmentCenterId' => $this->destination_fulfillment_center_id,
+            'AreCasesRequired' => $this->are_cases_required,
+            'ShipmentStatus' => $this->shipment_status,
+            'LabelPrepPreference' => $this->label_prep_preference,
+            'IntendedBoxContentsSource' => $this->intended_box_contents_source,
+        ]));
+    }
 }
