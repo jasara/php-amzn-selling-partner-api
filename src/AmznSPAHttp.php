@@ -83,6 +83,11 @@ class AmznSPAHttp
             /** @var \Illuminate\Http\Client\Response $response */
             $response = $this->http->$method($url, $data);
 
+            if ($response->failed()) {
+                // This only seems to be required in a Laravel environment
+                $response->throw(); // @codeCoverageIgnore
+            }
+
             $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
                 'response_headers' => $response->headers(),
                 'response_data' => $response->json(),
@@ -231,18 +236,15 @@ class AmznSPAHttp
 
     public function shouldReturnErrorResponse(RequestException $e): bool
     {
-        $errors = Arr::get($e->response->json(), 'errors');
-        if (! $errors) {
+        if ($e->response->status() !== 400) {
             return false;
         }
 
-        foreach ($errors as $error) {
-            if ($error['code'] === 'InvalidInput') {
-                return true;
-            }
+        if (! Arr::get($e->response->json(), 'errors')) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     private function logException(Exception $e, $method, $url)

@@ -183,12 +183,30 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertEquals('InvalidInput', $response->errors->first()->code);
     }
 
+    public function testInvalidResponseNotReturned()
+    {
+        $this->expectException(RequestException::class);
+
+        $http = new Factory(new HttpEventHandler);
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/no-error-in-data'), 400),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->fulfillment_inbound->createInboundShipmentPlan($this->setupInboundShipmentPlanRequest());
+    }
+
     /**
      * @group external
      * An actual API call is required here, in order to test the request signing and test endpoints.
      */
     public function testSetupHttp()
     {
+        $this->expectException(RequestException::class);
+
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
@@ -202,8 +220,6 @@ class AmznSPAHttpTest extends UnitTestCase
         );
 
         $amzn = new AmznSPA($config);
-        $response = $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
-
-        $this->assertEquals('InvalidInput', $response->errors->first()->code);
+        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
     }
 }
