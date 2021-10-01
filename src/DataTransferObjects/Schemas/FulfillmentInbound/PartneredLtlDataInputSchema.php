@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound;
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
+use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonToDateStringMapper;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AmountSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ContactSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
@@ -23,6 +24,7 @@ class PartneredLtlDataInputSchema extends DataTransferObject
     public ?string $seller_freight_class;
 
     #[CastWith(CarbonFromStringCaster::class)]
+    #[CarbonToDateStringMapper]
     public ?CarbonImmutable $freight_ready_date;
 
     #[CastWith(ArrayCaster::class, itemType: PalletSchema::class)]

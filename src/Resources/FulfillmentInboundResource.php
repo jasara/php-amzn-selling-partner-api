@@ -122,7 +122,7 @@ class FulfillmentInboundResource implements ResourceContract
 
     public function putTransportDetails(string $shipment_id, PutTransportDetailsRequest $request): PutTransportDetailsResponse
     {
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport', $request->toArray());
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport', (array) $request->toArrayObject());
 
         return new PutTransportDetailsResponse($response);
     }
