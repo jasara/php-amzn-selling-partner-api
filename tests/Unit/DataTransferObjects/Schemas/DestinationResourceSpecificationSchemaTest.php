@@ -9,8 +9,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema
- * @covers \Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\EventBridgeResourceSpecificationSchema
+ * @covers \Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest
  */
 class DestinationResourceSpecificationSchemaTest extends UnitTestCase
 {

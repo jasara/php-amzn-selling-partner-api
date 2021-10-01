@@ -2,7 +2,6 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas;
 
-use ArrayObject;
 use Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -30,18 +29,4 @@ class AddressSchema extends DataTransferObject
 
     #[MaxLengthValidator(30)]
     public string $postal_code;
-
-    public function toArrayObject(): ArrayObject
-    {
-        return new ArrayObject(array_filter([
-            'Name' => $this->name,
-            'AddressLine1' => $this->address_line_1,
-            'AddressLine2' => $this->address_line_2,
-            'DistrictOrCounty' => $this->district_or_county,
-            'City' => $this->city,
-            'StateOrProvinceCode' => $this->state_or_province_code,
-            'CountryCode' => $this->country_code,
-            'PostalCode' => $this->postal_code,
-        ]));
-    }
 }

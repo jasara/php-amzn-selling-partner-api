@@ -7,9 +7,7 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\InboundShipme
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @covers Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\InboundShipmentRequest
- * @covers Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentItemSchema
- * @covers Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentHeaderSchema
+ * @covers Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest
  */
 class InboundShipmentRequestTest extends UnitTestCase
 {
@@ -18,7 +16,7 @@ class InboundShipmentRequestTest extends UnitTestCase
         $request = new InboundShipmentRequest(
             inbound_shipment_header: [
                 'shipment_name' => Str::random(),
-                'shipment_from_address' => $this->setupAddress(),
+                'ship_from_address' => $this->setupAddress(),
                 'destination_fulfillment_center_id' => Str::random(4),
                 'shipment_status' => 'WORKING',
                 'label_prep_preference' => 'SELLER_LABEL',
@@ -46,7 +44,7 @@ class InboundShipmentRequestTest extends UnitTestCase
         $this->assertArrayHasKey('MarketplaceId', $array_object);
 
         $this->assertArrayHasKey('ShipmentName', $array_object['InboundShipmentHeader']);
-        $this->assertArrayHasKey('ShipmentFromAddress', $array_object['InboundShipmentHeader']);
+        $this->assertArrayHasKey('ShipFromAddress', $array_object['InboundShipmentHeader']);
 
         $this->assertArrayHasKey('SellerSKU', $array_object['InboundShipmentItems'][0]);
         $this->assertArrayHasKey('QuantityShipped', $array_object['InboundShipmentItems'][0]);

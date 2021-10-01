@@ -2,20 +2,11 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications;
 
-use ArrayObject;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
 
-class DestinationResourceSpecificationSchema extends DataTransferObject
+class DestinationResourceSpecificationSchema extends BaseRequest
 {
     public ?SqsResourceSchema $sqs;
 
     public ?EventBridgeResourceSpecificationSchema $event_bridge;
-
-    public function toArrayObject(): ArrayObject
-    {
-        return new ArrayObject(array_filter([
-            'sqs' => $this->sqs?->toArray(),
-            'eventBridge' => $this->event_bridge?->toArray(),
-        ]));
-    }
 }

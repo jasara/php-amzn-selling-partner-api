@@ -76,7 +76,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
             marketplace_id: 'ATVPDKIKX0DER',
             inbound_shipment_header: [
                 'shipment_name' => Str::random(),
-                'shipment_from_address' => $this->setupAddress(),
+                'ship_from_address' => $this->setupAddress(),
                 'destination_fulfillment_center_id' => Str::random(),
                 'shipment_status' => 'WORKING',
                 'label_prep_preference' => 'SELLER_LABEL',
@@ -114,7 +114,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
             marketplace_id: 'ATVPDKIKX0DER',
             inbound_shipment_header: [
                 'shipment_name' => Str::random(),
-                'shipment_from_address' => $this->setupAddress(),
+                'ship_from_address' => $this->setupAddress(),
                 'destination_fulfillment_center_id' => Str::random(),
                 'shipment_status' => 'WORKING',
                 'label_prep_preference' => 'SELLER_LABEL',

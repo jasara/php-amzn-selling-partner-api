@@ -5,10 +5,7 @@ namespace Jasara\AmznSPA\Unit\DataTransferObjects\Schemas\FulfillmentInbound;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @covers Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest
- * @covers Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema
- * @covers Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemSchema
- * @covers Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\PrepDetailsSchema
+ * @covers Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest
  */
 class CreateInboundShipmentPlanRequestTest extends UnitTestCase
 {

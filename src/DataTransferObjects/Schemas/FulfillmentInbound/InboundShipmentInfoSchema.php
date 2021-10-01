@@ -26,7 +26,7 @@ class InboundShipmentInfoSchema extends DataTransferObject
     #[StringEnumValidator(['NO_LABEL', 'SELLER_LABEL', 'AMAZON_LABEL'])]
     public ?string $label_prep_type;
 
-    public bool $are_cases_required;
+    public ?bool $are_cases_required;
 
     #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $confirmed_need_by_date;
