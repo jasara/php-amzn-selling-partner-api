@@ -4,13 +4,16 @@ namespace Jasara\AmznSPA\Tests\Unit;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\HttpEventHandler;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
@@ -113,17 +116,65 @@ class AmznSPAConfigTest extends UnitTestCase
         $config->setSaveLwaTokensCallback($save_lwa_tokens_callback);
 
         $this->assertEquals(10, $config->getSaveLwaTokensCallback()());
+    }
 
-        $logger_resource = fopen('php://memory', 'rw+');
-        $logger = new Logger(LogLevel::ERROR, $logger_resource);
+    /**
+     * @covers \Jasara\AmznSPA\AmznSPAConfig
+     * @covers \Jasara\AmznSPA\AmznSPAHttp::cleanData
+     */
+    public function testLogger()
+    {
+        $http = new Factory(new HttpEventHandler);
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
+                ->push($this->loadHttpStub('errors/invalid-client'), 403),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+        $config->setTokens(new AuthTokensDTO(
+            refresh_token: Str::random(),
+        ));
+
+        $error_filepath = __DIR__ . '/../error-log.txt';
+        touch($error_filepath);
+        $logger_resource = fopen($error_filepath, 'rw+');
+        $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
+            $log = sprintf('[%s] %s', $level, $message);
+            if (count($context)) {
+                $log .= ' Context: ' . json_encode($context);
+            }
+
+            $log = str_replace(["\n", "\r"], '', $log);
+
+            $log .= \PHP_EOL;
+
+            return $log;
+        });
         $config->setLogger($logger);
 
         $config->getLogger()->error('123');
-        $config->getLogger()->debug('abc');
 
-        rewind($logger_resource);
-        $this->assertStringContainsString('123', fgets($logger_resource));
-        $this->assertEquals('', fgets($logger_resource));
+        $caught = false;
+
+        try {
+            $amzn = new AmznSPA($config);
+            $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+        } catch (RequestException $e) {
+            $caught = true;
+            rewind($logger_resource);
+            $line_1 = fgets($logger_resource);
+            $line_2 = fgets($logger_resource);
+            $line_3 = fgets($logger_resource);
+
+            $this->assertStringContainsString('123', $line_1);
+            $this->assertStringNotContainsString('"access_token":"[filtered]"', $line_2);
+            $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
+            $this->assertStringContainsString('"error":"invalid_client"', $line_3);
+            $this->assertEquals('', fgets($logger_resource));
+        }
+
+        $this->assertTrue($caught);
     }
 
     public function testIsPropertySet()

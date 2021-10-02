@@ -85,7 +85,6 @@ class AmznSPAHttp
         }
 
         try {
-            /** @var \Illuminate\Http\Client\Response $response */
             $response = $this->http->$method($url, $data);
 
             if ($response->failed()) {
@@ -93,20 +92,11 @@ class AmznSPAHttp
                 $response->throw(); // @codeCoverageIgnore
             }
 
-            $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
-                'response_headers' => $response->headers(),
-                'response_data' => $response->json(),
-            ]);
-
-            return array_merge(array_keys_to_snake($response->json() ?: []), [
-                'metadata' => $this->getMetaData($response),
-            ]);
+            return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
             try {
                 if ($this->shouldReturnErrorResponse($e)) {
-                    return array_merge(array_keys_to_snake($e->response->json()), [
-                        'metadata' => $this->getMetadata($e->response),
-                    ]);
+                    return $this->handleResponse($e->response, $method, $url);
                 }
 
                 $this->handleRequestException($e, $grantless);
@@ -167,8 +157,8 @@ class AmznSPAHttp
 
         $this->http->beforeSending(function (Request $request) {
             $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $request->url(), [
-                'unsigned_request_headers' => Arr::except($request->headers(), 'x-amz-access-token'),
-                'request_data' => $request->data(),
+                'unsigned_request_headers' => $this->cleanData($request->headers()),
+                'request_data' => $this->cleanData($request->data()),
             ]);
 
             $this->request = $request;
@@ -258,15 +248,13 @@ class AmznSPAHttp
 
     private function logException(Exception $e, $method, $url)
     {
-        $request_headers = $this->request ? $this->request->headers() : null;
-        if ($request_headers) {
-            Arr::forget($request_headers, 'x-amz-access-token');
-        }
+        $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
+
         $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
             'unsigned_request_headers' => $request_headers,
-            'request_data' => $this->request ? $this->request->data() : null,
+            'request_data' => $this->request ? $this->cleanData($this->request->data()) : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
-            'response_data' => isset($e->response) ? $e->response->json() : null,
+            'response_data' => isset($e->response) ? $this->cleanData($e->response->json()) : null,
             'response_code' => isset($e->response) ? $e->response->status() : null,
         ]);
     }
@@ -296,5 +284,32 @@ class AmznSPAHttp
             jasara_notes: $jasara_notes,
             amzn_request_id:  $amzn_request_id,
         );
+    }
+
+    private function handleResponse(Response $response, string $method, string $url): array
+    {
+        $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
+            'response_headers' => $response->headers(),
+            'response_data' => $this->cleanData($response->json()),
+        ]);
+
+        return array_merge(array_keys_to_snake($response->json() ?: []), [
+            'metadata' => $this->getMetaData($response),
+        ]);
+    }
+
+    public function cleanData(array $data): array
+    {
+        $filtered_keys = [
+            'x-amz-access-token' => '[filtered]',
+            'mwsAuthToken' => '[filtered]',
+            'authorizationCode' => '[filtered]',
+            'access_token' => '[filtered]',
+            'refresh_token' => '[filtered]',
+        ];
+
+        $filtered_data = array_intersect_key($filtered_keys, $data) + $data;
+
+        return $filtered_data;
     }
 }
