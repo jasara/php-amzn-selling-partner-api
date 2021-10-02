@@ -11,6 +11,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\HttpEventHandler;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -197,6 +198,25 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->createInboundShipmentPlan($this->setupInboundShipmentPlanRequest());
+    }
+
+    public function testMetadata()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('errors/application-no-roles');
+
+        $seller_id = Str::random();
+        $developer_id = Str::random();
+        $mws_auth_token = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->authorization->getAuthorizationCodeFromMwsToken($seller_id, $developer_id, $mws_auth_token);
+
+        $this->assertInstanceOf(GetAuthorizationCodeResponse::class, $response);
+        $this->assertNotNull($response->metadata);
+        $this->assertNotNull($response->metadata->amzn_request_id);
+        $this->assertNotNull($response->metadata->jasara_notes);
+        $this->assertStringContainsString('approved but not published yet', $response->metadata->jasara_notes);
     }
 
     /**

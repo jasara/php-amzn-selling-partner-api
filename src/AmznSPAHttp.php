@@ -10,7 +10,10 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
+use Jasara\AmznSPA\Constants\JasaraNotes;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
 use Psr\Http\Message\RequestInterface;
 
 class AmznSPAHttp
@@ -95,11 +98,15 @@ class AmznSPAHttp
                 'response_data' => $response->json(),
             ]);
 
-            return array_keys_to_snake($response->json() ?: []);
+            return array_merge(array_keys_to_snake($response->json() ?: []), [
+                'metadata' => $this->getMetaData($response),
+            ]);
         } catch (RequestException $e) {
             try {
                 if ($this->shouldReturnErrorResponse($e)) {
-                    return array_keys_to_snake($e->response->json());
+                    return array_merge(array_keys_to_snake($e->response->json()), [
+                        'metadata' => $this->getMetadata($e->response),
+                    ]);
                 }
 
                 $this->handleRequestException($e, $grantless);
@@ -275,5 +282,19 @@ class AmznSPAHttp
         }
 
         return $data;
+    }
+
+    private function getMetadata(Response $response): MetadataSchema
+    {
+        $data = $response->json();
+        $headers = $response->headers();
+
+        $jasara_notes = JasaraNotes::findNote(Arr::get($data, 'errors.0.message', ''));
+        $amzn_request_id = Arr::get($headers, 'x-amzn-RequestId.0');
+
+        return new MetadataSchema(
+            jasara_notes: $jasara_notes,
+            amzn_request_id:  $amzn_request_id,
+        );
     }
 }

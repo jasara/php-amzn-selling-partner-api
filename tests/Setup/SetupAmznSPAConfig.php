@@ -61,7 +61,9 @@ trait SetupAmznSPAConfig
     {
         $http = new Factory(new HttpEventHandler);
         $http->fake([
-            '*' => $http->response($this->loadHttpStub($stub), $status_code),
+            '*' => $http->response($this->loadHttpStub($stub), $status_code, [
+                'x-amzn-RequestId' => Str::random(),
+            ]),
         ]);
 
         return $http;
