@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Schemas;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas;
 
 use Jasara\AmznSPA\DataTransferObjects\Schemas\DimensionsSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;

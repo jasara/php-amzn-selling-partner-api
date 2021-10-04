@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\Constants;
+namespace Jasara\AmznSPA\Tests\Unit\Constants;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\Marketplace;

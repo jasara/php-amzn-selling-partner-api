@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\Resources;
+namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;

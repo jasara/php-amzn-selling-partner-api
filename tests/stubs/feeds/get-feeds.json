@@ -1,0 +1,13 @@
+{
+    "feeds": [
+        {
+            "feedId": "FeedId1",
+            "feedType": "POST_PRODUCT_DATA",
+            "createdTime": "2019-12-11T13:16:24.630Z",
+            "processingStatus": "CANCELLED",
+            "processingStartTime": "2019-12-11T13:16:24.630Z",
+            "processingEndTime": "2019-12-11T13:16:24.630Z"
+        }
+    ],
+    "nextToken": "VGhpcyB0b2tlbiBpcyBvcGFxdWUgYW5kIGludGVudGlvbmFsbHkgb2JmdXNjYXRlZA=="
+}

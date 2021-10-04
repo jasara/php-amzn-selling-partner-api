@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Requests;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Requests;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;

@@ -10,6 +10,7 @@ use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
@@ -217,6 +218,21 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertNotNull($response->metadata->amzn_request_id);
         $this->assertNotNull($response->metadata->jasara_notes);
         $this->assertStringContainsString('approved but not published yet', $response->metadata->jasara_notes);
+    }
+
+    public function testDelete()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('errors/invalid-client');
+
+        $feed_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->feeds->cancelFeed($feed_id);
+
+        $this->assertInstanceOf(BaseResponse::class, $response);
+        $this->assertNotNull($response->metadata);
+        $this->assertNotNull($response->metadata->amzn_request_id);
     }
 
     /**

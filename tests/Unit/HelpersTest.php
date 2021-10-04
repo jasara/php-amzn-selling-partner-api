@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit;
+namespace Jasara\AmznSPA\Tests\Unit;
 
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 

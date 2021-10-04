@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Schemas\FulfillmentInbound;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas\FulfillmentInbound;
 
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 

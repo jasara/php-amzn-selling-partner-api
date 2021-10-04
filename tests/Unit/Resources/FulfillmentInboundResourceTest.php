@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\Resources;
+namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;

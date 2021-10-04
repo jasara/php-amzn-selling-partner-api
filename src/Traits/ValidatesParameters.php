@@ -53,11 +53,14 @@ trait ValidatesParameters
         }
     }
 
-    private function validateIsArrayOfStrings(array $array)
+    private function validateIsArrayOfStrings(array $array, ?array $allowed_values = null)
     {
         foreach ($array as $value) {
             if (! is_string($value)) {
                 throw new InvalidParametersException('There is an invalid value in the array, the array can only contain strings.');
+            }
+            if (is_array($allowed_values)) {
+                $this->validateStringEnum($value, $allowed_values);
             }
         }
     }

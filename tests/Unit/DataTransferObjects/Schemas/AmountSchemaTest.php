@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Schemas;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas;
 
 use Brick\Money\Money;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AmountSchema;

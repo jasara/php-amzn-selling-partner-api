@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Responses\Notifications;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Responses\Notifications;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;

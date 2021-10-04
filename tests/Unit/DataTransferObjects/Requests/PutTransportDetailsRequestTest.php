@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Requests;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Requests;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\PutTransportDetailsRequest;

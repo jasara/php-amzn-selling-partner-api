@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Unit\DataTransferObjects\Responses\FulfillmentInbound;
+namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Responses\FulfillmentInbound;
 
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\GetInboundGuidanceResultSchema;

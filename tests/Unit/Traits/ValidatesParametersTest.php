@@ -128,7 +128,16 @@ class ValidatesParametersTest extends UnitTestCase
         $this->expectExceptionMessage('There is an invalid value in the array, the array can only contain strings.');
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
-        $amzn->fulfillment_inbound->getInboundGuidance('ATVPDKIKX0DER', [1]);
+        $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', [231]);
+    }
+
+    public function testValidatesArrayOfStringsEnumException()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('is not in the list of allowed values');
+
+        $amzn = new AmznSPA($this->setupMinimalConfig());
+        $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', ['INVALID_STATUS']);
     }
 
     public function testValidatesArrayOfStringsPasses()
@@ -138,6 +147,6 @@ class ValidatesParametersTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
-        $amzn->fulfillment_inbound->getInboundGuidance(Str::random(), ['string']);
+        $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', ['WORKING']);
     }
 }

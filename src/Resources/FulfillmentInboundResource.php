@@ -193,10 +193,7 @@ class FulfillmentInboundResource implements ResourceContract
     ): GetShipmentsResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($query_type, ['SHIPMENT', 'DATE_RANGE', 'NEXT_TOKEN']);
-        $this->validateIsArrayOfStrings($shipment_status_list);
-        foreach ($shipment_status_list as $status) {
-            $this->validateStringEnum($status, AmazonEnums::SHIPMENT_STATUSES);
-        }
+        $this->validateIsArrayOfStrings($shipment_status_list, AmazonEnums::SHIPMENT_STATUSES);
         $this->validateIsArrayOfStrings($shipment_id_list);
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipments', array_filter([

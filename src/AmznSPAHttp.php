@@ -47,6 +47,11 @@ class AmznSPAHttp
         return $this->call('post', $url, $data);
     }
 
+    public function delete(string $url): array
+    {
+        return $this->call('delete', $url);
+    }
+
     public function getGrantless(string $url, array $data = []): array
     {
         return $this->call(
@@ -169,16 +174,16 @@ class AmznSPAHttp
 
     private function getToken(bool $grantless = false): string
     {
-        if (! $grantless) {
+        if (!$grantless) {
             $tokens = $this->config->getTokens();
-            if (! $tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
+            if (!$tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshTokens();
             }
 
             return $this->config->getTokens()->access_token;
         } else {
             $grantless_token = $this->config->getGrantlessToken();
-            if (! $grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
+            if (!$grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshGrantlessToken();
             }
 
@@ -219,14 +224,14 @@ class AmznSPAHttp
 
     private function handleRequestException(RequestException $e, bool $grantless)
     {
-        if (! $this->shouldRefreshToken($e->response->json())) {
+        if (!$this->shouldRefreshToken($e->response->json())) {
             throw $e;
         }
-        if (! $this->shouldRetry()) {
+        if (!$this->shouldRetry()) {
             throw $e;
         }
 
-        if (! $grantless) {
+        if (!$grantless) {
             $this->refreshTokens();
         } else {
             $this->refreshGrantlessToken();
@@ -239,7 +244,7 @@ class AmznSPAHttp
             return false;
         }
 
-        if (! Arr::get($e->response->json(), 'errors')) {
+        if (!Arr::get($e->response->json(), 'errors')) {
             return false;
         }
 
@@ -282,7 +287,7 @@ class AmznSPAHttp
 
         return new MetadataSchema(
             jasara_notes: $jasara_notes,
-            amzn_request_id:  $amzn_request_id,
+            amzn_request_id: $amzn_request_id,
         );
     }
 
@@ -298,7 +303,7 @@ class AmznSPAHttp
         ]);
     }
 
-    public function cleanData(array $data): array
+    private function cleanData(array $data): array
     {
         $filtered_keys = [
             'x-amz-access-token' => '[filtered]',
@@ -307,6 +312,12 @@ class AmznSPAHttp
             'access_token' => '[filtered]',
             'refresh_token' => '[filtered]',
         ];
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->cleanData($value);
+            }
+        }
 
         $filtered_data = array_intersect_key($filtered_keys, $data) + $data;
 

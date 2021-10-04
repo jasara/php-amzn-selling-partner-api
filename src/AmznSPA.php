@@ -13,6 +13,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\AuthorizationResource $authorization
  * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
  * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
+ * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
  */
 class AmznSPA
 {
@@ -29,7 +30,7 @@ class AmznSPA
 
         $resource_getter = new ResourceGetter($this->config);
 
-        if (! method_exists($resource_getter, $function)) {
+        if (!method_exists($resource_getter, $function)) {
             throw new InvalidResourceException($name . ' is not a supported resource.');
         }
 
