@@ -2,16 +2,12 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
-use Carbon\CarbonPeriod;
 use Illuminate\Http\Client\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportDocumentSpecification;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportScheduleSpecification;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportSpecification;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportDocumentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportScheduleResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportDocumentResponse;
@@ -20,7 +16,6 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportScheduleRespon
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportSchedulesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportsResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use stdClass;
 
 /**
  * @covers \Jasara\AmznSPA\Resources\ReportsResource

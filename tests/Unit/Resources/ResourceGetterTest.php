@@ -57,4 +57,12 @@ class ResourceGetterTest extends UnitTestCase
 
         $this->assertInstanceOf(Resources\ReportsResource::class, $feeds);
     }
+
+    public function testGetCatalogItems()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $catalog_items = $resource_getter->getCatalogItems();
+
+        $this->assertInstanceOf(Resources\CatalogItemsResource::class, $catalog_items);
+    }
 }

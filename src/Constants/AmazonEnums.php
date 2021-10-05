@@ -322,4 +322,41 @@ class AmazonEnums
         'IN_PROGRESS',
         'IN_QUEUE',
     ];
+
+    const INCLUDED_DATA_ITEMS = [
+        'attributes',
+        'identifiers',
+        'images',
+        'productTypes',
+        'salesRanks',
+        'summaries',
+        'variations',
+        'vendorDetails',
+    ];
+
+    const IMAGE_VARIANTS = [
+        'MAIN',
+        'PT01',
+        'PT02',
+        'PT03',
+        'PT04',
+        'PT05',
+        'PT06',
+        'PT07',
+        'PT08',
+        'SWCH',
+    ];
+
+    const REPLENISHMENT_CATEGORIES = [
+        'ALLOCATED',
+        'BASIC_REPLENISHMENT',
+        'IN_SEASON',
+        'LIMITED_REPLENISHMENT',
+        'MANUFACTURER_OUT_OF_STOCK',
+        'NEW_PRODUCT',
+        'NON_REPLENISHABLE',
+        'NON_STOCKUPABLE',
+        'OBSOLETE',
+        'PLANNED_REPLENISHMENT',
+    ];
 }
