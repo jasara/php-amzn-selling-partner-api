@@ -14,6 +14,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
  * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
  * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
+ * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
  */
 class AmznSPA
 {

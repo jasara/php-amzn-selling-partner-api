@@ -49,4 +49,12 @@ class ResourceGetterTest extends UnitTestCase
 
         $this->assertInstanceOf(Resources\FeedsResource::class, $feeds);
     }
+
+    public function testGetReports()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $feeds = $resource_getter->getReports();
+
+        $this->assertInstanceOf(Resources\ReportsResource::class, $feeds);
+    }
 }
