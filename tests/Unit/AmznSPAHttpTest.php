@@ -15,6 +15,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboun
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\HttpEventHandler;
+use Jasara\AmznSPA\Resources\NotificationsResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**

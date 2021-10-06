@@ -65,4 +65,12 @@ class ResourceGetterTest extends UnitTestCase
 
         $this->assertInstanceOf(Resources\CatalogItemsResource::class, $catalog_items);
     }
+
+    public function testGetFbaInventory()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $fba_inventory = $resource_getter->getFbaInventory();
+
+        $this->assertInstanceOf(Resources\FbaInventoryResource::class, $fba_inventory);
+    }
 }

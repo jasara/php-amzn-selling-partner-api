@@ -16,6 +16,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
  * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
  * @property \Jasara\AmznSPA\Resources\CatalogItemsResource $catalog_items
+ * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
  */
 class AmznSPA
 {

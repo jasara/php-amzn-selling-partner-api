@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems;
+namespace Jasara\AmznSPA\DataTransferObjects\Schemas;
 
 use Spatie\DataTransferObject\DataTransferObject;
 

@@ -46,7 +46,7 @@ class CatalogItemsResource implements ResourceContract
             $this->validateIsArrayOfStrings($classification_ids);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items', [
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items', array_filter([
             'keywords' => $keywords,
             'marketplaceIds' => $marketplace_ids,
             'includedData' => $included_data,
@@ -56,7 +56,7 @@ class CatalogItemsResource implements ResourceContract
             'pageToken' => $page_token,
             'keywordsLocale' => $keywords_locale,
             'locale' => $locale,
-        ]);
+        ]));
 
         return new ItemSearchResults($response);
     }
@@ -72,11 +72,11 @@ class CatalogItemsResource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA_ITEMS);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin, [
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin, array_filter([
             'marketplaceIds' => $marketplace_ids,
             'includedData' => $included_data,
             'locale' => $locale,
-        ]);
+        ]));
 
         $errors = Arr::get($response, 'errors');
 
