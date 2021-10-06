@@ -33,6 +33,7 @@ class FbaInventoryResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetInventorySummariesResponse::class, $response);
         $this->assertEquals('seed', $response->pagination->next_token);
         $this->assertEquals('B0020MLK00', $response->payload->inventory_summaries->first()->asin);
+        $this->assertEquals('B0020MLK00', $response->payload->inventory_summaries->first()->fnsku);
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());

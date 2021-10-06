@@ -3,13 +3,9 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
-use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\ItemSearchResults;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInventory\GetInventorySummariesResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 

@@ -3,7 +3,7 @@
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-if (! function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
+if (!function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
     function array_keys_to_snake(array $array): array
     {
         $snakecased_array = [];
@@ -15,7 +15,9 @@ if (! function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
                     $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
                 }
 
-                $key = Str::snake(implode('_', $result));
+                $key = (string) Str::of(implode('_', $result))
+                    ->snake()
+                    ->replace('fn_sku', 'fnsku');
             }
             if (is_array($value)) {
                 $value = array_keys_to_snake($value);
