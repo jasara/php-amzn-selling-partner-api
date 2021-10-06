@@ -34,8 +34,6 @@ class FbaInventoryResourceTest extends UnitTestCase
         $this->assertEquals('seed', $response->pagination->next_token);
         $this->assertEquals('B0020MLK00', $response->payload->inventory_summaries->first()->asin);
 
-        ray($response);
-
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?granularityType=Marketplace&granularityId=ATVPDKIKX0DER&sellerSkus=' . $sku . '&marketplaceIds=ATVPDKIKX0DER', $request->url());
