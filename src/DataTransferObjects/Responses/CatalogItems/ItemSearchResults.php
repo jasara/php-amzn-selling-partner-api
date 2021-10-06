@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\PaginationSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\PaginationSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\RefinementsSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;

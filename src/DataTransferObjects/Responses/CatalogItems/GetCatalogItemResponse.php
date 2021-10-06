@@ -7,5 +7,5 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemSchema;
 
 class GetCatalogItemResponse extends BaseResponse
 {
-    public ItemSchema $item;
+    public ?ItemSchema $item;
 }

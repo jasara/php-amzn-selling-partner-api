@@ -10,7 +10,7 @@ class ItemSchema extends DataTransferObject
 {
     public string $asin;
 
-    public ?string $attributes;
+    public ?array $attributes;
 
     #[CastWith(ArrayCaster::class, itemType: ItemIdentifiersByMarketplaceSchema::class)]
     public ?ItemIdentifiersByMarketplaceListSchema $identifiers;

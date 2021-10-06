@@ -344,6 +344,10 @@ class AmazonEnums
         'PT06',
         'PT07',
         'PT08',
+        'PT09',
+        'PT10',
+        'PT11',
+        'PT12',
         'SWCH',
     ];
 
