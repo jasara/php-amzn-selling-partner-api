@@ -54,7 +54,9 @@ class BaseRequest extends DataTransferObject
 
         Arr::forget($data, ['ExceptKeys', 'OnlyKeys']);
 
-        return new ArrayObject(array_filter($data));
+        return new ArrayObject(array_filter($data, function ($value) {
+            return ! is_null($value);
+        }));
     }
 
     private function camelCase(ReflectionProperty $property): string
