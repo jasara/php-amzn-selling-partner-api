@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Constants;
 
 class AmazonEnums
 {
-    const CONDITIONS = [
+    public const CONDITIONS = [
         'NewItem',
         'NewWithWarranty',
         'NewOEM',
@@ -25,7 +25,7 @@ class AmazonEnums
         'Club',
     ];
 
-    const NOTIFICATION_TYPES = [
+    public const NOTIFICATION_TYPES = [
         'ANY_OFFER_CHANGED',
         'FEED_PROCESSING_FINISHED',
         'FBA_OUTBOUND_SHIPMENT_STATUS',
@@ -42,7 +42,7 @@ class AmazonEnums
         'EXTERNAL_FULFILLMENT_SHIPMENT_STATUS_CHANGE',
     ];
 
-    const FEED_TYPES = [
+    public const FEED_TYPES = [
         // Listing feeds
         'JSON_LISTINGS_FEED',
         'POST_PRODUCT_DATA',
@@ -84,7 +84,7 @@ class AmazonEnums
         'POST_EASYSHIP_DOCUMENTS',
     ];
 
-    const REPORT_TYPES = [
+    public const REPORT_TYPES = [
         // Vendor retail analytics reports
         'GET_VENDOR_SALES_DIAGNOSTIC_REPORT',
         'GET_VENDOR_INVENTORY_HEALTH_AND_PLANNING_REPORT',
@@ -205,7 +205,7 @@ class AmazonEnums
         'GET_B2B_PRODUCT_OPPORTUNITIES_NOT_YET_ON_AMAZON',
     ];
 
-    const REPORT_PERIODS = [
+    public const REPORT_PERIODS = [
         'PT5M',
         'PT15M',
         'PT30M',
@@ -226,7 +226,7 @@ class AmazonEnums
         'P1M',
     ];
 
-    const PREP_INSTRUCTIONS = [
+    public const PREP_INSTRUCTIONS = [
         'Polybagging',
         'BubbleWrapping',
         'Taping',
@@ -235,7 +235,7 @@ class AmazonEnums
         'HangGarment',
     ];
 
-    const SHIPMENT_STATUSES = [
+    public const SHIPMENT_STATUSES = [
         'WORKING',
         'SHIPPED',
         'RECEIVING',
@@ -248,7 +248,7 @@ class AmazonEnums
         'CHECKED_IN',
     ];
 
-    const PACKAGE_STATUSES = [
+    public const PACKAGE_STATUSES = [
         'SHIPPED',
         'IN_TRANSIT',
         'DELIVERED',
@@ -258,7 +258,7 @@ class AmazonEnums
         'DELETED',
     ];
 
-    const SELLER_FREIGHT_CLASSES = [
+    public const SELLER_FREIGHT_CLASSES = [
         '50',
         '55',
         '60',
@@ -279,7 +279,7 @@ class AmazonEnums
         '500',
     ];
 
-    const TRANSPORT_STATUSES = [
+    public const TRANSPORT_STATUSES = [
         'WORKING',
         'ESTIMATING',
         'ESTIMATED',
@@ -293,7 +293,7 @@ class AmazonEnums
         'ERROR',
     ];
 
-    const PAGE_TYPES = [
+    public const PAGE_TYPES = [
         'PackageLabel_Letter_2',
         'PackageLabel_Letter_4',
         'PackageLabel_Letter_6',
@@ -308,14 +308,14 @@ class AmazonEnums
         'PackageLabel_Thermal_No_Carrier_Rotation',
     ];
 
-    const BOX_CONTENTS_SOURCES = [
+    public const BOX_CONTENTS_SOURCES = [
         'NONE',
         'FEED',
         '2D_BARCODE',
         'INTERACTIVE',
     ];
 
-    const PROCESSING_STATUSES = [
+    public const PROCESSING_STATUSES = [
         'CANCELLED',
         'DONE',
         'FATAL',
@@ -323,7 +323,7 @@ class AmazonEnums
         'IN_QUEUE',
     ];
 
-    const INCLUDED_DATA_ITEMS = [
+    public const INCLUDED_DATA_ITEMS = [
         'attributes',
         'identifiers',
         'images',
@@ -334,7 +334,7 @@ class AmazonEnums
         'vendorDetails',
     ];
 
-    const IMAGE_VARIANTS = [
+    public const IMAGE_VARIANTS = [
         'MAIN',
         'PT01',
         'PT02',
@@ -351,7 +351,7 @@ class AmazonEnums
         'SWCH',
     ];
 
-    const REPLENISHMENT_CATEGORIES = [
+    public const REPLENISHMENT_CATEGORIES = [
         'ALLOCATED',
         'BASIC_REPLENISHMENT',
         'IN_SEASON',
@@ -362,5 +362,228 @@ class AmazonEnums
         'NON_STOCKUPABLE',
         'OBSOLETE',
         'PLANNED_REPLENISHMENT',
+    ];
+
+    public const CARRIER_NAMES = [
+        'USPS',
+        'UPS',
+        'UPSMI',
+        'FedEx',
+        'DHL',
+        'Fastway',
+        'GLS',
+        'GO!',
+        'Hermes Logistik Gruppe',
+        'Royal Mail',
+        'Parcelforce',
+        'City Link',
+        'TNT',
+        'Target',
+        'SagawaExpress',
+        'NipponExpress',
+        'YamatoTransport',
+        'DHL Global Mail',
+        'UPS Mail Innovations',
+        'FedEx SmartPost',
+        'OSM',
+        'OnTrac',
+        'Streamlite',
+        'Newgistics',
+        'Canada Post',
+        'Blue Package',
+        'Chronopost',
+        'Deutsche Post',
+        'DPD',
+        'La Poste',
+        'Parcelnet',
+        'Poste Italiane',
+        'SDA',
+        'Smartmail',
+        'FEDEX_JP',
+        'JP_EXPRESS',
+        'NITTSU',
+        'SAGAWA',
+        'YAMATO',
+        'BlueDart',
+        'AFL/Fedex',
+        'Aramex',
+        'India Post',
+        'Professional',
+        'DTDC',
+        'Overnite Express',
+        'First Flight',
+        'Delhivery',
+        'Lasership',
+        'Yodel',
+        'Other',
+        'Amazon Shipping',
+        'Seur',
+        'Correos',
+        'MRW',
+        'Endopack',
+        'Chrono Express',
+        'Nacex',
+        'Otro',
+        'Correios',
+        'Toll Global Express',
+        'China Post',
+        'AUSSIE_POST',
+        'EUB',
+        'Australia Post',
+        'Yun Express',
+        'Fastway',
+        '4PX',
+        'YANWEN',
+        'SF Express',
+        'BRT',
+        'AustraliaPost-Consignment',
+        'AustraliaPost-ArticleId',
+        'Sendle',
+        'CouriersPlease',
+        'A-1',
+        'AAA Cooper',
+        'ABF',
+        'ALLJOY',
+        'Aras Kargo',
+        'Arkas',
+        'Arrow XL',
+        'Asendia',
+        'Asgard',
+        'Assett',
+        'AT POST',
+        'ATS',
+        'Balnak',
+        'Beijing Quanfeng Express',
+        'Best Buy',
+        'Best Express',
+        'BJS',
+        'Bombax',
+        'Cart2India',
+        'CDC',
+        'CELERITAS',
+        'CEVA',
+        'Ceva Lojistik',
+        'Cititrans',
+        'Coliposte',
+        'Colissimo',
+        'Conway',
+        'Correos Express',
+        'Couriers Please',
+        'CTTExpress',
+        'DB Schenker',
+        'DHL eCommerce',
+        'DHL Express',
+        'DHL Freight',
+        'DHL Home Delivery',
+        'DHL Kargo',
+        'DHL-Paket',
+        'DHLPL',
+        'Digital Delivery',
+        'DirectLog',
+        'Dotzot',
+        'DSV',
+        'DX Freight',
+        'ECMS',
+        'Ecom Express',
+        'Emirates Post',
+        'Energo',
+        'Envialia',
+        'Estafeta',
+        'Estes',
+        'Fedex Freight',
+        'Fillo Kargo',
+        'First Flight China',
+        'First Mile',
+        'Gati',
+        'GEL Express',
+        'geodis',
+        'Geodis Calberson',
+        'Geopost Kargo',
+        'Hermes Einrichtungsservice',
+        'Home Logistics',
+        'Hongkong Post',
+        'Horoz Lojistik',
+        'HS code',
+        'Hunter Logistics',
+        'ICC Worldwide',
+        'IDS Netzwerk',
+        'InPost',
+        'iParcel',
+        'Japan Post',
+        'JCEX',
+        'Kargokar',
+        'Kuehne+Nagel',
+        'Landmark',
+        'Metro Kargo',
+        'MNG Kargo',
+        'Narpost Kargo',
+        'Nexive',
+        'Ninjavan',
+        'Old Dominion',
+        'OneWorldExpress',
+        'Panther',
+        'Pilot',
+        'Pilot Freight',
+        'Polish Post',
+        'Post NL',
+        'PostNord',
+        'PTT Kargo',
+        'PUROLATOR',
+        'QExpress',
+        'Qxpress',
+        'R+L',
+        'Raben Group',
+        'Rhenus',
+        'Rieck',
+        'Rivigo',
+        'Roadrunner',
+        'Safexpress',
+        'Saia',
+        'Seino',
+        'SEINO TRANSPORTATION',
+        'Selem Kargo',
+        'Self Delivery',
+        'SENDLE',
+        'SFC',
+        'Ship Delight',
+        'Ship Global US',
+        'ShipEconomy',
+        'ShipGlobal',
+        'Shree Maruti Courier',
+        'Shree Tirupati Courier',
+        'Shunfeng Express',
+        'Singapore Post',
+        'South Eastern Freight Lines',
+        'Speedex',
+        'Spoton',
+        'StarTrack-ArticleID',
+        'StarTrack-Consignment',
+        'STO Express',
+        'Tezel Lojistik',
+        'The Professional Couriers',
+        'TIPSA',
+        'TNT Kargo',
+        'TNTIT',
+        'Total Express',
+        'Trackon',
+        'TransFolha',
+        'Tuffnells',
+        'UPS Freight',
+        'Urban Express',
+        'VIR',
+        'VNLIN',
+        'WanbExpress',
+        'Watkins and Shepard',
+        'Whizzard',
+        'WINIT',
+        'XDP',
+        'XPO Freight',
+        'Xpressbees',
+        'YDH',
+        'Yellow Freight',
+        'YTO Express',
+        'Yunda Express',
+        'ZTO Express',
+        'Tourline',
     ];
 }
