@@ -13,6 +13,5 @@ class PartneredSmallParcelDataInputSchema extends DataTransferObject
     #[CastWith(ArrayCaster::class, itemType: PartneredSmallParcelPackageInputSchema::class)]
     public ?PartneredSmallParcelPackageInputListSchema $package_list;
 
-    #[StringEnumValidator(AmazonEnums::CARRIER_NAMES)]
     public ?string $carrier_name;
 }
