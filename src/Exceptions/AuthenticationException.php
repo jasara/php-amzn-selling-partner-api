@@ -10,11 +10,11 @@ class AuthenticationException extends AmznSPAException
 {
     public function __construct(Response $response = null, ?Closure $callback = null)
     {
-        if ($callback) {
-            $callback($response);
-        }
-
         $message = $response ? $this->getMessageFromResponse($response) : '';
+
+        if ($callback) {
+            $callback($response, $message);
+        }
 
         parent::__construct($message);
     }
