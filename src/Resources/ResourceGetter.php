@@ -25,6 +25,7 @@ class ResourceGetter
             $this->config->isPropertySet('redirect_url') ? $this->config->getRedirectUrl() : null,
             $this->config->getApplicationKeys(),
             $this->config->isPropertySet('save_lwa_tokens_callback') ? $this->config->getSaveLwaTokensCallback() : null,
+            $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
         );
     }
 
@@ -101,7 +102,7 @@ class ResourceGetter
     private function validateAndSetupHttpForStandardResource($grantless_resource = null): AmznSPAHttp
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        if (!$grantless_resource) {
+        if (! $grantless_resource) {
             $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
         }
 

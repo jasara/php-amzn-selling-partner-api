@@ -26,6 +26,7 @@ class LwaResource implements ResourceContract
         private ?string $redirect_url,
         private ApplicationKeysDTO $application_keys,
         private ?Closure $save_lwa_tokens_callback,
+        private ?Closure $authentication_exception_callback,
     ) {
     }
 
@@ -168,7 +169,10 @@ class LwaResource implements ResourceContract
     private function handleError(Response $response)
     {
         if ($response->status() === 401) {
-            throw new AuthenticationException($response);
+            throw new AuthenticationException(
+                $response,
+                $this->authentication_exception_callback,
+            );
         }
 
         return $response->throw();

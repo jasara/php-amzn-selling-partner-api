@@ -34,6 +34,7 @@ class AmznSPAConfig
         private ?string $redirect_url = null,
         private bool $use_test_endpoints = false,
         private ?Closure $save_lwa_tokens_callback = null,
+        private ?Closure $authentication_exception_callback = null,
         ?LoggerInterface $logger = null,
         ?string $aws_access_key = null,
         ?string $aws_secret_key = null,
@@ -104,6 +105,11 @@ class AmznSPAConfig
         return $this->save_lwa_tokens_callback;
     }
 
+    public function getAuthenticationExceptionCallback(): Closure
+    {
+        return $this->authentication_exception_callback;
+    }
+
     public function getLogger(): LoggerInterface
     {
         return $this->logger;
@@ -132,6 +138,11 @@ class AmznSPAConfig
     public function setSaveLwaTokensCallback(Closure $callback): void
     {
         $this->save_lwa_tokens_callback = $callback;
+    }
+
+    public function setAuthenticationExceptionCallback(Closure $callback): void
+    {
+        $this->authentication_exception_callback = $callback;
     }
 
     public function setLogger(LoggerInterface $logger): void

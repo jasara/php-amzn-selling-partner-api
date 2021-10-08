@@ -2,14 +2,20 @@
 
 namespace Jasara\AmznSPA\Exceptions;
 
+use Closure;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 
 class AuthenticationException extends AmznSPAException
 {
-    public function __construct(Response $response = null)
+    public function __construct(Response $response = null, ?Closure $callback = null)
     {
+        if ($callback) {
+            $callback($response);
+        }
+
         $message = $response ? $this->getMessageFromResponse($response) : '';
+
         parent::__construct($message);
     }
 

@@ -6,6 +6,7 @@ use Carbon\CarbonImmutable;
 use Closure;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
@@ -262,6 +263,33 @@ class LwaResourceTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getGrantlessAccessToken('notifications');
+    }
+
+    public function testAuthenticationExceptionCallback()
+    {
+        $this->expectException(AuthenticationException::class);
+
+        $refresh_token = Str::random();
+
+        $callback = $this->getMockBuilder(\stdClass::class)
+            ->addMethods(['__invoke'])
+            ->getMock();
+
+        $callback->expects($this->once())
+            ->method('__invoke')
+            ->with(
+                $this->callback(function (Response $response) {
+                    $this->assertEquals('invalid_client', $response->json()['error']);
+
+                    return true;
+                }),
+            );
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
+        $config->setAuthenticationExceptionCallback(Closure::fromCallable([$callback, '__invoke']));
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
     }
 
     public function testNon401Error()

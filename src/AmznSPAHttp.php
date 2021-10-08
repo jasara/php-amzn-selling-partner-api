@@ -101,7 +101,10 @@ class AmznSPAHttp
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
             if ($e->getCode() === 401) {
-                throw new AuthenticationException($e->response);
+                throw new AuthenticationException(
+                    $e->response,
+                    $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
+                );
             }
 
             try {

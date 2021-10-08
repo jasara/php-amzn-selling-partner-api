@@ -115,6 +115,13 @@ class AmznSPAConfigTest extends UnitTestCase
         $config->setSaveLwaTokensCallback($save_lwa_tokens_callback);
 
         $this->assertEquals(10, $config->getSaveLwaTokensCallback()());
+
+        $authentication_exception_callback = function () {
+            return 99;
+        };
+        $config->setAuthenticationExceptionCallback($authentication_exception_callback);
+
+        $this->assertEquals(99, $config->getAuthenticationExceptionCallback()());
     }
 
     /**
