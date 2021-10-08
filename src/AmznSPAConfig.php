@@ -47,7 +47,7 @@ class AmznSPAConfig
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
-        $this->http = new Factory(new HttpEventHandler);
+        $this->http = new Factory;
         $this->tokens = new AuthTokensDTO(
             refresh_token: $lwa_refresh_token,
             access_token: $lwa_access_token,

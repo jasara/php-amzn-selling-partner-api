@@ -66,6 +66,7 @@ $rules = [
     'no_trailing_whitespace_in_comment' => true,
     'no_unreachable_default_argument_value' => true,
     'no_useless_return' => true,
+    'no_unused_imports' => true,
     'no_whitespace_before_comma_in_array' => true,
     'no_whitespace_in_blank_line' => true,
     'normalize_index_brace' => true,

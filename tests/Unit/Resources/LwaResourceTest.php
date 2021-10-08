@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Carbon\CarbonImmutable;
 use Closure;
 use Illuminate\Http\Client\Request;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
@@ -18,6 +19,7 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
  * @covers \Jasara\AmznSPA\Resources\LwaResource
+ * @covers \Jasara\AmznSPA\Exceptions\AuthenticationException
  */
 class LwaResourceTest extends UnitTestCase
 {
@@ -29,7 +31,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->lwa->getAuthUrl();
 
-        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl(), $url);
+        $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl(), $url);
     }
 
     /**
@@ -42,7 +44,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->lwa->getAuthUrl($state);
 
-        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl() . '&state=' . $state, $url);
+        $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl().'&state='.$state, $url);
     }
 
     public function testStateDoesNotMatch()
@@ -203,6 +205,75 @@ class LwaResourceTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
+    }
+
+    public function testHandle401()
+    {
+        $this->expectException(AuthenticationException::class);
+
+        $state = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getTokensFromRedirect($state, [
+            'state' => $state,
+            'spapi_oauth_code' => Str::random(),
+        ]);
+    }
+
+    public function testUnauthorized()
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Access to requested resource is denied.');
+
+        $state = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/unauthorized', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getTokensFromRedirect($state, [
+            'state' => $state,
+            'spapi_oauth_code' => Str::random(),
+        ]);
+    }
+
+    public function testErrorStatusWithNoErrorData()
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Description: Client authentication failed');
+
+        $refresh_token = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-in-data', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
+    }
+
+    public function testErrorStatusWithNoErrorDescriptionData()
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Error: invalid_client');
+
+        $state = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getGrantlessAccessToken('notifications');
+    }
+
+    public function testNon401Error()
+    {
+        $this->expectException(RequestException::class);
+
+        $state = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 400);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getGrantlessAccessToken('notifications');
     }
 
     public function marketplaces(): array

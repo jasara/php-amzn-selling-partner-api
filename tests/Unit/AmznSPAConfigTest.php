@@ -13,7 +13,6 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
-use Jasara\AmznSPA\HttpEventHandler;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
@@ -124,7 +123,7 @@ class AmznSPAConfigTest extends UnitTestCase
      */
     public function testLogger()
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('lwa/get-tokens'), 200)
@@ -136,13 +135,13 @@ class AmznSPAConfigTest extends UnitTestCase
             refresh_token: Str::random(),
         ));
 
-        $error_filepath = __DIR__ . '/../error-log.txt';
+        $error_filepath = __DIR__.'/../error-log.txt';
         touch($error_filepath);
         $logger_resource = fopen($error_filepath, 'rw+');
         $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
             $log = sprintf('[%s] %s', $level, $message);
             if (count($context)) {
-                $log .= ' Context: ' . json_encode($context);
+                $log .= ' Context: '.json_encode($context);
             }
 
             $log = str_replace(["\n", "\r"], '', $log);

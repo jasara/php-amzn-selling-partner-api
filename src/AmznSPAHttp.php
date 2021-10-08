@@ -14,6 +14,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
+use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Psr\Http\Message\RequestInterface;
 
 class AmznSPAHttp
@@ -99,6 +100,10 @@ class AmznSPAHttp
 
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
+            if ($e->getCode() === 401) {
+                throw new AuthenticationException($e->response);
+            }
+
             try {
                 if ($this->shouldReturnErrorResponse($e)) {
                     return $this->handleResponse($e->response, $method, $url);
@@ -112,10 +117,10 @@ class AmznSPAHttp
             }
 
             return $this->call($method, $url, $data, $grantless);
-        } catch (\Exception $e) {
-            $this->logException($e, $method, $url);
+        } catch (\Exception $e) { // @codeCoverageIgnore
+            $this->logException($e, $method, $url); // @codeCoverageIgnore
 
-            throw $e;
+            throw $e; // @codeCoverageIgnore
         }
     }
 
@@ -145,7 +150,7 @@ class AmznSPAHttp
 
     private function refreshGrantlessToken()
     {
-        $scope = 'sellingpartnerapi::' . $this->grantless_resource;
+        $scope = 'sellingpartnerapi::'.$this->grantless_resource;
 
         $amzn = new AmznSPA($this->config);
         $token = $amzn->lwa->getGrantlessAccessToken($scope);
@@ -161,7 +166,7 @@ class AmznSPAHttp
         ]);
 
         $this->http->beforeSending(function (Request $request) {
-            $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $request->url(), [
+            $this->config->getLogger()->debug('[AmznSPA] Pre-Request '.$request->method().' '.$request->url(), [
                 'unsigned_request_headers' => $this->cleanData($request->headers()),
                 'request_data' => $this->cleanData($request->data()),
             ]);
@@ -174,16 +179,16 @@ class AmznSPAHttp
 
     private function getToken(bool $grantless = false): string
     {
-        if (!$grantless) {
+        if (! $grantless) {
             $tokens = $this->config->getTokens();
-            if (!$tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
+            if (! $tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshTokens();
             }
 
             return $this->config->getTokens()->access_token;
         } else {
             $grantless_token = $this->config->getGrantlessToken();
-            if (!$grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
+            if (! $grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshGrantlessToken();
             }
 
@@ -224,14 +229,14 @@ class AmznSPAHttp
 
     private function handleRequestException(RequestException $e, bool $grantless)
     {
-        if (!$this->shouldRefreshToken($e->response->json())) {
+        if (! $this->shouldRefreshToken($e->response->json())) {
             throw $e;
         }
-        if (!$this->shouldRetry()) {
+        if (! $this->shouldRetry()) {
             throw $e;
         }
 
-        if (!$grantless) {
+        if (! $grantless) {
             $this->refreshTokens();
         } else {
             $this->refreshGrantlessToken();
@@ -244,7 +249,7 @@ class AmznSPAHttp
             return false;
         }
 
-        if (!Arr::get($e->response->json(), 'errors')) {
+        if (! Arr::get($e->response->json(), 'errors')) {
             return false;
         }
 
@@ -255,7 +260,7 @@ class AmznSPAHttp
     {
         $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
 
-        $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
+        $this->config->getLogger()->error('[AmznSPA] Response Error '.strtoupper($method).' '.$url.' -- '.$e->getMessage(), [
             'unsigned_request_headers' => $request_headers,
             'request_data' => $this->request ? $this->cleanData($this->request->data()) : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
@@ -293,7 +298,7 @@ class AmznSPAHttp
 
     private function handleResponse(Response $response, string $method, string $url): array
     {
-        $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
+        $this->config->getLogger()->debug('[AmznSPA] Response '.strtoupper($method).' '.$url, [
             'response_headers' => $response->headers(),
             'response_data' => $this->cleanData($response->json()),
         ]);

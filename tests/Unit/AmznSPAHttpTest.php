@@ -14,8 +14,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
-use Jasara\AmznSPA\HttpEventHandler;
-use Jasara\AmznSPA\Resources\NotificationsResource;
+use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -25,7 +24,7 @@ class AmznSPAHttpTest extends UnitTestCase
 {
     public function testRefreshToken()
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -43,7 +42,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testRefreshGrantlessToken()
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -61,7 +60,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testGetTokenIfNotSet()
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('lwa/get-tokens'), 200)
@@ -81,7 +80,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testGetGrantlessTokenIfNotSet()
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('lwa/get-tokens'), 200)
@@ -103,7 +102,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/invalid-client'), 403),
@@ -119,7 +118,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(\Exception::class);
 
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/invalid-client'), 401),
@@ -135,7 +134,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -153,7 +152,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -169,7 +168,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testInvalidInputResponseReturned()
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/create-inbound-shipment-plan-invalid-input'), 400),
@@ -190,7 +189,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/no-error-in-data'), 400),
@@ -234,6 +233,22 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertInstanceOf(BaseResponse::class, $response);
         $this->assertNotNull($response->metadata);
         $this->assertNotNull($response->metadata->amzn_request_id);
+    }
+
+    public function testUnauthorized()
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Access to requested resource is denied.');
+
+        $state = Str::random();
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/unauthorized', 401);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getTokensFromRedirect($state, [
+            'state' => $state,
+            'spapi_oauth_code' => Str::random(),
+        ]);
     }
 
     /**

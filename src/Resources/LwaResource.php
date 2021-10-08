@@ -4,19 +4,21 @@ namespace Jasara\AmznSPA\Resources;
 
 use Closure;
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\Response;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
+use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class LwaResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const ENDPOINT = 'https://api.amazon.com/auth/o2/token';
+    public const ENDPOINT = 'https://api.amazon.com/auth/o2/token';
 
     public function __construct(
         private Factory $http,
@@ -32,10 +34,10 @@ class LwaResource implements ResourceContract
         $redirect_url = $this->redirect_url;
 
         $params = http_build_query(compact('redirect_url', 'state'));
-        $url = $this->getBaseUrlFromMarketplace() . '/apps/authorize/consent';
+        $url = $this->getBaseUrlFromMarketplace().'/apps/authorize/consent';
 
         if ($params) {
-            $url .= '?' . $params;
+            $url .= '?'.$params;
         }
 
         return $url;
@@ -77,6 +79,10 @@ class LwaResource implements ResourceContract
             'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
 
+        if ($response->failed()) {
+            $this->handleError($response);
+        }
+
         $tokens = $this->formatTokenResponse($response->json());
 
         $this->storeLwaTokens($tokens);
@@ -93,6 +99,10 @@ class LwaResource implements ResourceContract
             'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
 
+        if ($response->failed()) {
+            $this->handleError($response);
+        }
+
         $tokens = $this->formatTokenResponse($response->json());
 
         $this->storeLwaTokens($tokens);
@@ -108,6 +118,10 @@ class LwaResource implements ResourceContract
             'client_id' => $this->application_keys->lwa_client_id,
             'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
+
+        if ($response->failed()) {
+            $this->handleError($response);
+        }
 
         return $this->formatGrantlessTokenResponse($response->json());
     }
@@ -149,5 +163,14 @@ class LwaResource implements ResourceContract
     private function getBaseUrlFromMarketplace(): string
     {
         return $this->marketplace->getBaseUrl();
+    }
+
+    private function handleError(Response $response)
+    {
+        if ($response->status() === 401) {
+            throw new AuthenticationException($response);
+        }
+
+        return $response->throw();
     }
 }

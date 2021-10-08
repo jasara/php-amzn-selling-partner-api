@@ -6,7 +6,6 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\HttpEventHandler;
 
 trait SetupAmznSPAConfig
 {
@@ -15,7 +14,7 @@ trait SetupAmznSPAConfig
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            redirect_url: Str::random() . '.com',
+            redirect_url: Str::random().'.com',
             lwa_refresh_token: Str::random(),
             lwa_access_token: Str::random(),
             grantless_access_token: Str::random(),
@@ -59,7 +58,7 @@ trait SetupAmznSPAConfig
 
     public function fakeHttpStub(string $stub, int $status_code = 200): Factory
     {
-        $http = new Factory(new HttpEventHandler);
+        $http = new Factory;
         $http->fake([
             '*' => $http->response($this->loadHttpStub($stub), $status_code, [
                 'x-amzn-RequestId' => Str::random(),
@@ -71,7 +70,7 @@ trait SetupAmznSPAConfig
 
     public function loadHttpStub(string $stub): array
     {
-        $stub_filepath = __DIR__ . '/../stubs/' . $stub . '.json';
+        $stub_filepath = __DIR__.'/../stubs/'.$stub.'.json';
 
         return json_decode(file_get_contents($stub_filepath), true);
     }
