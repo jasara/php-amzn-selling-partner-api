@@ -417,6 +417,32 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         });
     }
 
+    /**
+     * @dataProvider shipmentItemsDataProvider
+     */
+    public function testGetShipmentItemsByShipmentId_Issues($stub)
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/' . $stub);
+
+        $shipment_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getShipmentItemsByShipmentId(
+            marketplace_id: 'ATVPDKIKX0DER',
+            shipment_id: $shipment_id,
+        );
+
+        $this->assertInstanceOf(GetShipmentItemsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/items?MarketplaceId=ATVPDKIKX0DER', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
     public function testGetShipmentItems()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipment-items');
@@ -451,6 +477,13 @@ class FulfillmentInboundResourceTest extends UnitTestCase
             ['issue-6-tracking-id-null'],
             ['issue-7-pallet-list-array'],
             ['issue-8-amazon-calc-value-null'],
+        ];
+    }
+
+    public function shipmentItemsDataProvider()
+    {
+        return [
+            ['issue-9-prep-instruction-null'],
         ];
     }
 }

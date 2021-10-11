@@ -1,0 +1,22 @@
+{
+    "payload": {
+        "ItemData": [
+            {
+                "ShipmentId": "FBA16FPH60CX",
+                "SellerSKU": "FBP20",
+                "FulfillmentNetworkSKU": "B08CSYL9M8",
+                "QuantityShipped": 512,
+                "QuantityReceived": 0,
+                "QuantityInCase": 16,
+                "PrepDetailsList": [
+                    [],
+                    {
+                        "PrepInstruction": "Polybagging",
+                        "PrepOwner": "SELLER"
+                    }
+                ]
+            }
+        ],
+        "NextToken": "AAAAAAAAAACRXr5FcsSwmHkxOlEKYY8PTAEAAAAAAADMkYKvuGa5BrmcLDCJwzqhK3Czn6YdjtwVQtLO0BdpJMXrA0P+hFDdqzdVc5JXiyTHdic56aJIpWXFHEgsIxJSqFWEL4zm2tJVKXakd3Vhn5Klb95OX1MpqUgNZicg\/UXp1+acAojYLDr9oKpIc\/p6jIlwjwM4j5tavMKPH\/2H0h5vS9buZH9KOY8K+PV0NAzdfAy3OhzAK0uovFrVC1JL3kYJMeasFji2xREr4txGaP3GNPyoBViRMqakFtZQDtUWoPWPugeCL1XYQEyrmBkvhxgN3qfDa0ZUr+RiNsUNy7UzbJFOZ1YwOpKgsRHYYLr\/e\/VCpNjNxrVRShcx9nIACamGQ80OZkd0FNi6sKZqZVcCFX4Vu\/Ej\/ndOgOo8IB+sOoMSVc1FWdzl+KQyX8k5pyPDVN3hmi0oHH+LNsWiaRIbGT6K5\/2rob+goQ=="
+    }
+}
