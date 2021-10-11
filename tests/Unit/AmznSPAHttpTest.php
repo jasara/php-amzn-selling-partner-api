@@ -15,6 +15,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboun
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -273,5 +274,15 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+    }
+
+    public function testRateLimitExceptionIsThrownIfResponseHasCode429()
+    {
+        list($config) = $this->setupConfigWithFakeHttp('errors/rate-limit', 429);
+
+        $this->expectException(RateLimitException::class);
+
+        $amzn = new AmznSPA($config);
+        $amzn->feeds->cancelFeed('some-feed-id');
     }
 }
