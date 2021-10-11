@@ -1,0 +1,17 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "AABBCC",
+                "ShipmentId": "FBAAABBCC",
+                "ShipmentType": "LTL"
+            },
+            "TransportDetails": {
+                "NonPartneredLtlData": []
+            },
+            "TransportResult": {
+                "TransportStatus": "WORKING"
+            }
+        }
+    }
+}
