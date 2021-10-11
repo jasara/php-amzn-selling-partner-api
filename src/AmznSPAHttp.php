@@ -179,7 +179,7 @@ class AmznSPAHttp
 
             $this->config->getLogger()->debug('[AmznSPA] Pre-Request '.$request->method().' '.$url, [
                 'unsigned_request_headers' => $this->cleanData($request->headers()),
-                'request_data' => $this->cleanData($request->data()),
+                'request_data' => json_encode($this->cleanData($request->data())),
             ]);
 
             $this->request = $request;
@@ -274,9 +274,9 @@ class AmznSPAHttp
 
         $this->config->getLogger()->error('[AmznSPA] Response Error '.strtoupper($method).' '.$url.' -- '.$e->getMessage(), [
             'unsigned_request_headers' => $request_headers,
-            'request_data' => $this->request ? $this->cleanData($this->request->data()) : null,
+            'request_data' => $this->request ? json_encode($this->cleanData($this->request->data())) : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
-            'response_data' => isset($e->response) ? $this->cleanData($e->response->json()) : null,
+            'response_data' => isset($e->response) ? json_encode($this->cleanData($e->response->json())) : null,
             'response_code' => isset($e->response) ? $e->response->status() : null,
         ]);
     }
@@ -314,7 +314,7 @@ class AmznSPAHttp
 
         $this->config->getLogger()->debug('[AmznSPA] Response '.strtoupper($method).' '.$url, [
             'response_headers' => $response->headers(),
-            'response_data' => $this->cleanData($response->json()),
+            'response_data' => json_encode($this->cleanData($response->json())),
         ]);
 
         return array_merge(array_keys_to_snake($response->json() ?: []), [
