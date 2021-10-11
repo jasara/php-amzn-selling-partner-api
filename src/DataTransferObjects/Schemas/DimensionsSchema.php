@@ -18,21 +18,21 @@ class DimensionsSchema extends DataTransferObject
     #[StringIsNumberValidator]
     public string $height;
 
-    #[StringEnumValidator(['inches', 'centimeters'])]
+    #[StringEnumValidator(['inches', 'centimeters', 'CM', 'IN'])]
     public string $unit;
 
     public function lengthAsUom(): Length
     {
-        return new Length($this->length, $this->unit);
+        return new Length($this->length, strtolower($this->unit));
     }
 
     public function widthAsUom(): Length
     {
-        return new Length($this->width, $this->unit);
+        return new Length($this->width, strtolower($this->unit));
     }
 
     public function heightAsUom(): Length
     {
-        return new Length($this->height, $this->unit);
+        return new Length($this->height, strtolower($this->unit));
     }
 }

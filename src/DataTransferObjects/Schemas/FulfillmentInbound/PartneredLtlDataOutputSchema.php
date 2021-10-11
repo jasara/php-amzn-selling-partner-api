@@ -19,7 +19,7 @@ class PartneredLtlDataOutputSchema extends DataTransferObject
     public int $box_count;
 
     #[StringEnumValidator(AmazonEnums::SELLER_FREIGHT_CLASSES)]
-    public string $seller_freight_class;
+    public ?string $seller_freight_class;
 
     #[CastWith(CarbonFromStringCaster::class)]
     public CarbonImmutable $freight_ready_date;
