@@ -109,7 +109,7 @@ class AmznSPAHttp
             }
 
             if ($e->getCode() === 429) {
-                throw new RateLimitException(previous: $e);   
+                throw new RateLimitException(previous: $e);
             }
 
             try {
@@ -175,8 +175,9 @@ class AmznSPAHttp
 
         $this->http->beforeSending(function (Request $request) {
             $url = $request->url();
+            $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
 
-            $this->config->getLogger()->debug('[AmznSPA] Pre-Request '.$request->method().' '.substr($url, 0, strrpos($url, '?')), [
+            $this->config->getLogger()->debug('[AmznSPA] Pre-Request '.$request->method().' '.$url, [
                 'unsigned_request_headers' => $this->cleanData($request->headers()),
                 'request_data' => $this->cleanData($request->data()),
             ]);
@@ -268,7 +269,7 @@ class AmznSPAHttp
 
     private function logException(Exception $e, $method, $url)
     {
-        $url = substr($url, 0, strrpos($url, '?'));
+        $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
         $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
 
         $this->config->getLogger()->error('[AmznSPA] Response Error '.strtoupper($method).' '.$url.' -- '.$e->getMessage(), [
@@ -309,7 +310,7 @@ class AmznSPAHttp
 
     private function handleResponse(Response $response, string $method, string $url): array
     {
-        $url = substr($url, 0, strrpos($url, '?'));
+        $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
 
         $this->config->getLogger()->debug('[AmznSPA] Response '.strtoupper($method).' '.$url, [
             'response_headers' => $response->headers(),
