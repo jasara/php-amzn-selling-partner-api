@@ -31,7 +31,7 @@ class FulfillmentInboundResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/fba/inbound/v0/';
+    public const BASE_PATH = '/fba/inbound/v0/';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -159,7 +159,7 @@ class FulfillmentInboundResource implements ResourceContract
         int $page_start_index = null
     ): GetLabelsResponse {
         $this->validateStringEnum($page_type, AmazonEnums::PAGE_TYPES);
-        $this->validateStringEnum($label_type, ['BARCODE_2D', 'UNIQUE', 'PALLET']);
+        $this->validateStringEnum($label_type, ['BARCODE_2D', 'UNIQUE', 'PALLET', 'DEFAULT']);
         $this->validateIsArrayOfStrings($package_labels_to_print);
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/labels', array_filter([
