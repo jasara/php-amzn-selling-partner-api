@@ -1,0 +1,45 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "AABBCC",
+                "ShipmentId": "FBAAABBCC",
+                "IsPartnered": true,
+                "ShipmentType": "LTL"
+            },
+            "TransportDetails": {
+                "PartneredLtlData": {
+                    "Contact": {
+                        "Name": "x",
+                        "Phone": "1",
+                        "Email": "x@x.com",
+                        "Fax": "1"
+                    },
+                    "BoxCount": 33,
+                    "FreightReadyDate": "Wed Aug 18 00:00:00 GMT 2021",
+                    "PalletList": [
+                        {
+                            "Dimensions": {
+                                "Length": 48,
+                                "Width": 40,
+                                "Height": 56,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 458,
+                                "Unit": "pounds"
+                            }
+                        }
+                    ],
+                    "SellerDeclaredValue": {
+                        "CurrencyCode": "USD",
+                        "Value": 1595
+                    }
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "ERROR_ON_ESTIMATING"
+            }
+        }
+    }
+}

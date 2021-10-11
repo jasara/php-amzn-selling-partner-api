@@ -32,7 +32,7 @@ class PartneredLtlDataOutputSchema extends DataTransferObject
 
     public ?AmountSchema $seller_declared_value;
 
-    public AmountSchema $amazon_calculated_value;
+    public ?AmountSchema $amazon_calculated_value;
 
     #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $preview_pickup_date;

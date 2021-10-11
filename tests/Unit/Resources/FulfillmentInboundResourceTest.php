@@ -41,7 +41,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/itemsGuidance?MarketplaceId=ATVPDKIKX0DER&SellerSKUList='.$sku, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/itemsGuidance?MarketplaceId=ATVPDKIKX0DER&SellerSKUList=' . $sku, urldecode($request->url()));
 
             return true;
         });
@@ -98,7 +98,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id, urldecode($request->url()));
 
             return true;
         });
@@ -136,7 +136,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id, urldecode($request->url()));
 
             return true;
         });
@@ -156,7 +156,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/preorder?MarketplaceId=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/preorder?MarketplaceId=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });
@@ -176,7 +176,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/preorder/confirm', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/preorder/confirm', urldecode($request->url()));
             $this->assertEquals(CarbonImmutable::now()->toDateString(), $request->data()['NeedByDate']);
 
             return true;
@@ -197,7 +197,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList='.$sku, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList=' . $sku, urldecode($request->url()));
 
             return true;
         });
@@ -217,15 +217,18 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport', urldecode($request->url()));
 
             return true;
         });
     }
 
-    public function testGetTransportDetails_Issue2_IsPartneredNull()
+    /**
+     * @dataProvider transportDetailsDataProvider
+     */
+    public function testGetTransportDetails_Issue(string $stub)
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-2-is-partnered-null');
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/' . $stub);
 
         $shipment_id = Str::random();
 
@@ -237,67 +240,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
-
-            return true;
-        });
-    }
-
-    public function testGetTransportDetails_Issue3_CarrierNameNull()
-    {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-3-carrier-name-null');
-
-        $shipment_id = Str::random();
-
-        $amzn = new AmznSPA($config);
-        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->fulfillment_inbound->getTransportDetails($shipment_id);
-
-        $this->assertInstanceOf(GetTransportDetailsResponse::class, $response);
-
-        $http->assertSent(function (Request $request) use ($shipment_id) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
-
-            return true;
-        });
-    }
-
-    public function testGetTransportDetails_Issue6_TrackingIDNull()
-    {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-6-tracking-id-null');
-
-        $shipment_id = Str::random();
-
-        $amzn = new AmznSPA($config);
-        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->fulfillment_inbound->getTransportDetails($shipment_id);
-
-        $this->assertInstanceOf(GetTransportDetailsResponse::class, $response);
-
-        $http->assertSent(function (Request $request) use ($shipment_id) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
-
-            return true;
-        });
-    }
-
-    public function testGetTransportDetails_Issue7_PalletListArray()
-    {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-7-pallet-list-array');
-
-        $shipment_id = Str::random();
-
-        $amzn = new AmznSPA($config);
-        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->fulfillment_inbound->getTransportDetails($shipment_id);
-
-        $this->assertInstanceOf(GetTransportDetailsResponse::class, $response);
-
-        $http->assertSent(function (Request $request) use ($shipment_id) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport', urldecode($request->url()));
 
             return true;
         });
@@ -321,7 +264,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport', urldecode($request->url()));
 
             return true;
         });
@@ -341,7 +284,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport/void', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport/void', urldecode($request->url()));
 
             return true;
         });
@@ -361,7 +304,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport/estimate', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport/estimate', urldecode($request->url()));
 
             return true;
         });
@@ -381,7 +324,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport/confirm', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/transport/confirm', urldecode($request->url()));
 
             return true;
         });
@@ -401,7 +344,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/labels?PageType=PackageLabel_Letter_2&LabelType=BARCODE_2D', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/labels?PageType=PackageLabel_Letter_2&LabelType=BARCODE_2D', urldecode($request->url()));
 
             return true;
         });
@@ -421,7 +364,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/billOfLading', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/billOfLading', urldecode($request->url()));
 
             return true;
         });
@@ -468,7 +411,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/items?MarketplaceId=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/' . $shipment_id . '/items?MarketplaceId=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });
@@ -494,9 +437,20 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($last_updated_after, $last_updated_before) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipmentItems?MarketplaceId=ATVPDKIKX0DER&QueryType=DATE_RANGE&LastUpdatedAfter='.$last_updated_after->toIso8601String().'&LastUpdatedBefore='.$last_updated_before->toIso8601String(), urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipmentItems?MarketplaceId=ATVPDKIKX0DER&QueryType=DATE_RANGE&LastUpdatedAfter=' . $last_updated_after->toIso8601String() . '&LastUpdatedBefore=' . $last_updated_before->toIso8601String(), urldecode($request->url()));
 
             return true;
         });
+    }
+
+    public function transportDetailsDataProvider()
+    {
+        return [
+            ['issue-2-is-partnered-null'],
+            ['issue-3-carrier-name-null'],
+            ['issue-6-tracking-id-null'],
+            ['issue-7-pallet-list-array'],
+            ['issue-8-amazon-calc-value-null'],
+        ];
     }
 }
