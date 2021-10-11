@@ -12,5 +12,5 @@ class PalletSchema extends DataTransferObject
 
     public ?WeightSchema $weight;
 
-    public bool $is_stacked;
+    public ?bool $is_stacked;
 }

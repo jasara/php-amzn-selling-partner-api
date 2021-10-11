@@ -10,6 +10,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\ContactSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
+use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class PartneredLtlDataOutputSchema extends DataTransferObject
@@ -24,28 +25,29 @@ class PartneredLtlDataOutputSchema extends DataTransferObject
     #[CastWith(CarbonFromStringCaster::class)]
     public CarbonImmutable $freight_ready_date;
 
+    #[CastWith(ArrayCaster::class, itemType: PalletSchema::class)]
     public PalletListSchema $pallet_list;
 
-    public WeightSchema $total_weight;
+    public ?WeightSchema $total_weight;
 
     public ?AmountSchema $seller_declared_value;
 
     public AmountSchema $amazon_calculated_value;
 
     #[CastWith(CarbonFromStringCaster::class)]
-    public CarbonImmutable $preview_pickup_date;
+    public ?CarbonImmutable $preview_pickup_date;
 
     #[CastWith(CarbonFromStringCaster::class)]
-    public CarbonImmutable $preview_delivery_date;
+    public ?CarbonImmutable $preview_delivery_date;
 
     #[StringEnumValidator(AmazonEnums::SELLER_FREIGHT_CLASSES)]
-    public string $preview_freight_class;
+    public ?string $preview_freight_class;
 
-    public string $amazon_reference_id;
+    public ?string $amazon_reference_id;
 
-    public bool $is_bill_of_lading_available;
+    public ?bool $is_bill_of_lading_available;
 
     public ?PartneredEstimateSchema $partnered_estimate;
 
-    public string $carrier_name;
+    public ?string $carrier_name;
 }

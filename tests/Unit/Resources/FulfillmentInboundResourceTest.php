@@ -283,6 +283,26 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         });
     }
 
+    public function testGetTransportDetails_Issue7_PalletListArray()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-7-pallet-list-array');
+
+        $shipment_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getTransportDetails($shipment_id);
+
+        $this->assertInstanceOf(GetTransportDetailsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments/'.$shipment_id.'/transport', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
     public function testPutTransportDetails()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/put-transport-details');

@@ -1,0 +1,141 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "AABBCC",
+                "ShipmentId": "FBAAABBCC",
+                "IsPartnered": true,
+                "ShipmentType": "LTL"
+            },
+            "TransportDetails": {
+                "PartneredLtlData": {
+                    "Contact": {
+                        "Name": "x",
+                        "Phone": "1",
+                        "Email": "x@x.com",
+                        "Fax": "1"
+                    },
+                    "BoxCount": 108,
+                    "FreightReadyDate": "Sun Jul 18 00:00:00 GMT 2021",
+                    "PalletList": [
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 64,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 451,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 58,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 372,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 66,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 325,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 66,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 520,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 66,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 366,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 67,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 372,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 64,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 438,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 59,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 420,
+                                "Unit": "pounds"
+                            }
+                        },
+                        {
+                            "Dimensions": {
+                                "Length": 40,
+                                "Width": 48,
+                                "Height": 58,
+                                "Unit": "IN"
+                            },
+                            "Weight": {
+                                "Value": 275,
+                                "Unit": "pounds"
+                            }
+                        }
+                    ],
+                    "AmazonCalculatedValue": {
+                        "CurrencyCode": "USD",
+                        "Value": 122.5
+                    }
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "WORKING"
+            }
+        }
+    }
+}
