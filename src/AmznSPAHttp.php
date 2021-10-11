@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Psr\Http\Message\RequestInterface;
 
 class AmznSPAHttp
@@ -105,6 +106,10 @@ class AmznSPAHttp
                     $e->response,
                     $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
                 );
+            }
+
+            if ($e->getCode() === 429) {
+                throw new RateLimitException(previous: $e);   
             }
 
             try {
