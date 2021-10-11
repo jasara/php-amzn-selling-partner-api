@@ -11,7 +11,7 @@ class TransportHeaderSchema extends DataTransferObject
 
     public string $shipment_id;
 
-    public bool $is_partnered;
+    public ?bool $is_partnered;
 
     #[StringEnumValidator(['SP', 'LTL'])]
     public string $shipment_type;

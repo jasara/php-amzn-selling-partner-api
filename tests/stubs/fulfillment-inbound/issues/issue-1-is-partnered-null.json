@@ -1,0 +1,68 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "ABUJ8CF8XQYCF",
+                "ShipmentId": "FBA166P3GBKR",
+                "ShipmentType": "SP"
+            },
+            "TransportDetails": {
+                "NonPartneredSmallParcelData": {
+                    "PackageList": [
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        },
+                        {
+                            "PackageStatus": "SHIPPED"
+                        }
+                    ]
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "WORKING"
+            }
+        }
+    }
+}
