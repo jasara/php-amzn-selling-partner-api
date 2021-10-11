@@ -1,0 +1,35 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "AABBCC",
+                "ShipmentId": "FBAAABBCC",
+                "IsPartnered": true,
+                "ShipmentType": "SP"
+            },
+            "TransportDetails": {
+                "PartneredSmallParcelData": {
+                    "PackageList": [
+                        {
+                            "Dimensions": {
+                                "Length": "5",
+                                "Width": "5",
+                                "Height": "5",
+                                "Unit": "CM"
+                            },
+                            "Weight": {
+                                "Value": "5",
+                                "Unit": "kilograms"
+                            },
+                            "CarrierName": "UNITED_PARCEL_SERVICE_INC",
+                            "PackageStatus": "SHIPPED"
+                        }
+                    ]
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "ERROR_ON_ESTIMATING"
+            }
+        }
+    }
+}
