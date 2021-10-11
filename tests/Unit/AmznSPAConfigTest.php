@@ -145,6 +145,7 @@ class AmznSPAConfigTest extends UnitTestCase
         $error_filepath = __DIR__.'/../error-log.txt';
         touch($error_filepath);
         $logger_resource = fopen($error_filepath, 'rw+');
+        ftruncate($logger_resource, 0);
         $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
             $log = sprintf('[%s] %s', $level, $message);
             if (count($context)) {
