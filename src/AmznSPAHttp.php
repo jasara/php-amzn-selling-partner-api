@@ -158,7 +158,7 @@ class AmznSPAHttp
 
     private function refreshGrantlessToken()
     {
-        $scope = 'sellingpartnerapi::'.$this->grantless_resource;
+        $scope = 'sellingpartnerapi::' . $this->grantless_resource;
 
         $amzn = new AmznSPA($this->config);
         $token = $amzn->lwa->getGrantlessAccessToken($scope);
@@ -177,7 +177,7 @@ class AmznSPAHttp
             $url = $request->url();
             $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
 
-            $this->config->getLogger()->debug('[AmznSPA] Pre-Request '.$request->method().' '.$url, [
+            $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $url, [
                 'unsigned_request_headers' => $this->cleanData($request->headers()),
                 'request_data' => json_encode($this->cleanData($request->data())),
             ]);
@@ -256,7 +256,7 @@ class AmznSPAHttp
 
     public function shouldReturnErrorResponse(RequestException $e): bool
     {
-        if ($e->response->status() !== 400) {
+        if (! in_array($e->response->status(), [400, 404])) {
             return false;
         }
 
@@ -272,7 +272,7 @@ class AmznSPAHttp
         $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
         $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
 
-        $this->config->getLogger()->error('[AmznSPA] Response Error '.strtoupper($method).' '.$url.' -- '.$e->getMessage(), [
+        $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
             'unsigned_request_headers' => $request_headers,
             'request_data' => $this->request ? json_encode($this->cleanData($this->request->data())) : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
@@ -312,7 +312,7 @@ class AmznSPAHttp
     {
         $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
 
-        $this->config->getLogger()->debug('[AmznSPA] Response '.strtoupper($method).' '.$url, [
+        $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
             'response_headers' => $response->headers(),
             'response_data' => json_encode($this->cleanData($response->json())),
         ]);
