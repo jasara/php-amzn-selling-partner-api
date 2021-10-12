@@ -95,20 +95,20 @@ class AmznSPAHttp
             $response = $this->http->$method($url, $data);
 
             if ($response->failed()) {
-                // This only seems to be required in a Laravel environment
-                $response->throw(); // @codeCoverageIgnore
+                // Not sure why some responses don't throw request exceptions
+                $response->throw();
             }
 
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
-            if ($e->getCode() === 401) {
+            if ($this->isAuthenticationException($e)) {
                 throw new AuthenticationException(
                     $e->response,
                     $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
                 );
             }
 
-            if ($e->getCode() === 429) {
+            if ($e->response->status() === 429) {
                 throw new RateLimitException(previous: $e);
             }
 
@@ -265,6 +265,20 @@ class AmznSPAHttp
         }
 
         return true;
+    }
+
+    private function isAuthenticationException(RequestException $e): bool
+    {
+        if (in_array($e->response->status(), [401, 403])) {
+            if (str_contains(Arr::get($e->response->json(), 'errors.0.details', ''), 'token you provided has expired')) {
+                return false;
+            }
+            if (str_contains(Arr::get($e->response->json(), 'errors.0.message', ''), 'Access to requested resource is denied')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function logException(Exception $e, $method, $url)

@@ -142,14 +142,14 @@ class AmznSPAConfigTest extends UnitTestCase
             refresh_token: Str::random(),
         ));
 
-        $error_filepath = __DIR__.'/../error-log.txt';
+        $error_filepath = __DIR__ . '/../error-log.txt';
         touch($error_filepath);
         $logger_resource = fopen($error_filepath, 'rw+');
         ftruncate($logger_resource, 0);
         $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
             $log = sprintf('[%s] %s', $level, $message);
             if (count($context)) {
-                $log .= ' Context: '.json_encode($context);
+                $log .= ' Context: ' . json_encode($context);
             }
 
             $log = str_replace(["\n", "\r"], '', $log);
@@ -177,7 +177,7 @@ class AmznSPAConfigTest extends UnitTestCase
             $this->assertStringContainsString('123', $line_1);
             $this->assertStringNotContainsString('"access_token":"[filtered]"', $line_2);
             $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
-            $this->assertStringContainsString('"error":"invalid_client"', $line_3);
+            $this->assertStringContainsString('\"error\":\"invalid_client\"', $line_3);
             $this->assertEquals('', fgets($logger_resource));
         }
 
