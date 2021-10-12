@@ -23,7 +23,7 @@ class PartneredLtlDataOutputSchema extends DataTransferObject
     public ?string $seller_freight_class;
 
     #[CastWith(CarbonFromStringCaster::class)]
-    public CarbonImmutable $freight_ready_date;
+    public ?CarbonImmutable $freight_ready_date;
 
     #[CastWith(ArrayCaster::class, itemType: PalletSchema::class)]
     public PalletListSchema $pallet_list;
