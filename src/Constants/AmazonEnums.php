@@ -376,7 +376,7 @@ class AmazonEnums
         'OBSOLETE',
         'PLANNED_REPLENISHMENT',
     ];
-
+    
     public const CARRIER_NAMES = [
         'USPS',
         'UPS',
@@ -598,5 +598,14 @@ class AmazonEnums
         'Yunda Express',
         'ZTO Express',
         'Tourline',
+    ];
+
+    const ITEM_CONDITION = [
+        'NEW',
+        'USED',
+        'COLLECTIBLE',
+        'REFURISHED',
+        'CLUB',
+
     ];
 }

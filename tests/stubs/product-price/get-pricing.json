@@ -1,0 +1,21 @@
+{
+    "payload": [
+        {
+            "status": "Success",
+            "ASIN": "B00V5DG6IQ",
+            "Product": {
+                "Identifiers": {
+                    "MarketplaceASIN": {
+                        "MarketplaceId": "ATVPDKIKX0DER",
+                        "ASIN": "B00V5DG6IQ"
+                    },
+                    "SKUIdentifier": {
+                        "MarketplaceId": "",
+                        "SellerId": "",
+                        "SellerSKU": ""
+                    }
+                }
+            }
+        }
+    ]
+}
