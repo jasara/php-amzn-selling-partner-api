@@ -351,7 +351,23 @@ class AmazonEnums
         'PLANNED_REPLENISHMENT',
     ];
 
-    public const CARRIER_NAMES = [
+    public const INBOUND_CARRIER_NAMES = [
+        'DHL_EXPRESS_USA_INC',
+        'FEDERAL_EXPRESS_CORP',
+        'UNITED_STATES_POSTAL_SERVICE',
+        'UNITED_PARCEL_SERVICE_INC',
+        'OTHER',
+        'BUSINESS_POST',
+        'DHL_AIRWAYS_INC',
+        'DHL_UK',
+        'PARCELFORCE',
+        'DPD',
+        'TNT_LOGISTICS_CORPORATION',
+        'TNT',
+        'YODEL',
+    ];
+
+    public const MF_CARRIER_CODES = [
         'USPS',
         'UPS',
         'UPSMI',
