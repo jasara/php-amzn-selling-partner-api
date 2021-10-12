@@ -234,6 +234,9 @@ class AmazonEnums
         'Labeling',
         'HangGarment',
         'Boxing',
+        'SetCreation',
+        'SetStickering',
+        'SuffocationStickering',
     ];
 
     public const SHIPMENT_STATUSES = [
