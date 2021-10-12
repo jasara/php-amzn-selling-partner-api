@@ -7,8 +7,9 @@ namespace Jasara\AmznSPA\Constants;
  */
 class JasaraNotes
 {
-    const NOTES_MAP = [
+    public const NOTES_MAP = [
         'The application isn\'t configured with roles.' => 'Your developer application listing on Seller Central has been approved but not published yet. It takes up to 10 days for an application to fully publish after approval. This applies to listing revisions as well. See this Github issue for more details: https://github.com/amzn/selling-partner-api-docs/issues/347#issuecomment-855153228',
+        'Invalid partyId' => 'The Seller ID for this Seller is not valid.',
     ];
 
     public static function findNote(string $error_message): string | null

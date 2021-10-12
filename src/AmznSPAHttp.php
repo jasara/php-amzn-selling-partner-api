@@ -276,6 +276,9 @@ class AmznSPAHttp
             if (str_contains(Arr::get($e->response->json(), 'errors.0.message', ''), 'Access to requested resource is denied')) {
                 return true;
             }
+            if (str_contains(Arr::get($e->response->json(), 'errors.0.message', ''), 'Invalid partyId')) {
+                return true;
+            }
         }
 
         return false;
