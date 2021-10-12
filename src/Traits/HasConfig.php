@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Traits;
 
 use Jasara\AmznSPA\AmznSPAConfig;
+use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 
 trait HasConfig
@@ -22,6 +23,11 @@ trait HasConfig
         }
 
         return $tokens->access_token;
+    }
+
+    public function getMarketplace(): Marketplace
+    {
+        return $this->config->getMarketplace();
     }
 
     public function getMarketplaceId(): string

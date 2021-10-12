@@ -10,13 +10,10 @@ use Jasara\AmznSPA\Exceptions\InvalidResourceException;
 use Jasara\AmznSPA\Resources\LwaResource;
 
 /**
- * @coversDefaultClass \Jasara\AmznSPA\AmznSPA
+ * @covers \Jasara\AmznSPA\AmznSPA
  */
 class AmznSPATest extends UnitTestCase
 {
-    /**
-     * @covers ::__get
-     */
     public function testInvalidResource()
     {
         $this->expectException(InvalidResourceException::class);
@@ -25,9 +22,6 @@ class AmznSPATest extends UnitTestCase
         $amzn->not_a_resource;
     }
 
-    /**
-     * @covers ::__get
-     */
     public function testValidResource()
     {
         $amzn = new AmznSPA($this->setupMinimalConfig());
@@ -36,10 +30,6 @@ class AmznSPATest extends UnitTestCase
         $this->assertInstanceOf(LwaResource::class, $auth);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::usingMarketplace
-     */
     public function testUsingMarketplace()
     {
         $config = $this->setupMinimalConfig();
@@ -52,13 +42,9 @@ class AmznSPATest extends UnitTestCase
         // Doesn't change original object
         $this->assertEquals($config->getMarketplace()->getIdentifier(), $amzn->getMarketplaceId());
 
-        $this->assertEquals($new_marketplace_id, $new_amzn->getMarketplaceId());
+        $this->assertEquals($new_marketplace_id, $new_amzn->getMarketplace()->getIdentifier());
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::usingHttp
-     */
     public function testUsingHttp()
     {
         $state = Str::random();
