@@ -255,7 +255,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectException(AuthenticationException::class);
         $this->expectExceptionMessage('Invalid partyId: 12345678 Additional Notes: The Seller ID for this Seller is not valid.');
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-party-id', 403);
+        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-party-id', 400);
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);

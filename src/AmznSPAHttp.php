@@ -12,6 +12,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -269,14 +270,17 @@ class AmznSPAHttp
 
     private function isAuthenticationException(RequestException $e): bool
     {
-        if (in_array($e->response->status(), [401, 403])) {
+        if (in_array($e->response->status(), [400, 401, 403])) {
             if (str_contains(Arr::get($e->response->json(), 'errors.0.details', ''), 'token you provided has expired')) {
                 return false;
             }
-            if (str_contains(Arr::get($e->response->json(), 'errors.0.message', ''), 'Access to requested resource is denied')) {
-                return true;
-            }
-            if (str_contains(Arr::get($e->response->json(), 'errors.0.message', ''), 'Invalid partyId')) {
+
+            $message = Arr::get($e->response->json(), 'errors.0.message', '');
+            if (Str::contains($message, [
+                'Access to requested resource is denied',
+                'Invalid partyId',
+                'hasn\'t registered in FBA in marketplace',
+            ])) {
                 return true;
             }
         }
