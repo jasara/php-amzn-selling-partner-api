@@ -352,6 +352,7 @@ class AmazonEnums
     ];
 
     public const INBOUND_CARRIER_NAMES = [
+        'USPS',
         'DHL_EXPRESS_USA_INC',
         'FEDERAL_EXPRESS_CORP',
         'UNITED_STATES_POSTAL_SERVICE',
