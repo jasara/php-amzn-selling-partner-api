@@ -233,6 +233,7 @@ class AmazonEnums
         'BlackShrinkWrapping',
         'Labeling',
         'HangGarment',
+        'Boxing',
     ];
 
     public const SHIPMENT_STATUSES = [
