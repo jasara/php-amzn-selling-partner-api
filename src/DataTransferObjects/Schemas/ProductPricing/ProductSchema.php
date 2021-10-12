@@ -2,6 +2,8 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
 
+use Spatie\DataTransferObject\Attributes\CastWith;
+use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class ProductSchema extends DataTransferObject
@@ -12,9 +14,10 @@ class ProductSchema extends DataTransferObject
 
     public ?array $relationships;
 
-    public ?CompetitivePricingTypeSchema $competitive_pricing; //schema
+    public ?CompetitivePricingTypeSchema $competitive_pricing;
 
     public ?SalesRankListSchema $sales_rankings;
 
+    #[CastWith(ArrayCaster::class, itemType: OfferSchema::class)]
     public ?OffersListSchema $offers;
 }

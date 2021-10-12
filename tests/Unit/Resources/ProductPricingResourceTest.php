@@ -20,7 +20,7 @@ class ProductPricingResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->product_pricing->getPricing(
             marketplace_id: $marketplace_id,
-            item_type:  $item_type
+            item_type:  $item_type,
         );
 
         $this->assertInstanceOf(GetPricingResponse::class, $response);

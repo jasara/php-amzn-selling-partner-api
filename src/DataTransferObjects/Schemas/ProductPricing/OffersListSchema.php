@@ -9,7 +9,7 @@ class OffersListSchema extends Collection
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): OfferTypeSchema
+    public function offsetGet($key): OfferSchema
     {
         return parent::offsetGet($key);
     }
