@@ -247,6 +247,9 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
     }
 
+    /**
+     *  @covers \Jasara\AmznSPA\Exceptions\AuthenticationException
+     */
     public function testInvalidPartyId()
     {
         $this->expectException(AuthenticationException::class);
