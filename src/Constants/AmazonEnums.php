@@ -348,7 +348,19 @@ class AmazonEnums
         'PT10',
         'PT11',
         'PT12',
+        'PT13',
+        'PT14',
+        'PT15',
+        'PT88',
+        'EV01',
+        'EV02',
         'SWCH',
+        'SPIN',
+        'SRCH',
+        'FRNT',
+        'DTLS',
+        'BACK',
+        'FACT',
     ];
 
     public const REPLENISHMENT_CATEGORIES = [
