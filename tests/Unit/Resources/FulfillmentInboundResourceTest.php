@@ -188,10 +188,11 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
 
         $sku = Str::random();
+        $sku_with_comma = 'Body Fat Measuring Tape, Pack of 2'; // This will be excluded because it contains a comma, impossible to handle
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->fulfillment_inbound->getPrepInstructions('US', [$sku]);
+        $response = $amzn->fulfillment_inbound->getPrepInstructions('US', [$sku, $sku_with_comma]);
 
         $this->assertInstanceOf(GetPrepInstructionsResponse::class, $response);
 

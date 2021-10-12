@@ -286,6 +286,11 @@ class AmznSPAHttp
         foreach ($data as $key => $param) {
             if (is_array($param)) {
                 if (array_values($param) === $param) { // Is not an associative array
+                    // Amazon cannot handle commas in string arrays in GET calls
+                    $param = array_filter($param, function ($value) {
+                        return ! str_contains($value, ',');
+                    });
+
                     $data[$key] = implode(',', $param);
                 }
             }
