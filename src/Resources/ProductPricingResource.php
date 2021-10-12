@@ -38,4 +38,19 @@ class ProductPricingResource implements ResourceContract
 
         return new GetPricingResponse($response);
     }
+
+    public function getCompetitivePricing(string $marketplace_id, string $item_type, ?array $asins = [], ?array $skus = [], ?string $customer_type = null, ): GetPricingResponse
+    {
+        $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
+        $this->validateIsArrayOfStrings($asins);
+        $this->validateIsArrayOfStrings($skus);
+        $this->validateStringEnum($item_type, ['asin', 'sku']);
+        if ($customer_type) {
+            $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
+        }
+
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'competitivePrice');
+
+        return new GetPricingResponse($response);
+    }
 }
