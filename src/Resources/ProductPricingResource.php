@@ -82,4 +82,20 @@ class ProductPricingResource implements ResourceContract
 
         return new GetOffersResponse($response);
     }
+
+    public function getItemOffers(
+        string $marketplace_id,
+        string $item_condition,
+        string $asin,
+        ?string $customer_type = null
+    ): GetOffersResponse {
+        $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
+        $this->validateStringEnum($item_condition, AmazonEnums::ITEM_CONDITION);
+        if ($customer_type) {
+            $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
+        }
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/offers');
+
+        return new GetOffersResponse($response);
+    }
 }

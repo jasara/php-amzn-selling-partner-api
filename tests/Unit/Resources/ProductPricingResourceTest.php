@@ -87,7 +87,6 @@ class ProductPricingResourceTest extends UnitTestCase
             seller_sku: $seller_sku,
         );
 
-        // dd($response);
         $this->assertInstanceOf(GetOffersResponse::class, $response);
 
         $offers = $response->payload;
@@ -99,6 +98,38 @@ class ProductPricingResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/' . $seller_sku . '/offers', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGetItemOffers()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('/product-price/get-item-offers');
+
+        $marketplace_id = 'ATVPDKIKX0DER';
+        $item_condition = 'NEW';
+        $asin = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->product_pricing->getItemOffers(
+            marketplace_id: $marketplace_id,
+            item_condition: $item_condition,
+            asin: $asin,
+        );
+
+        $this->assertInstanceOf(GetOffersResponse::class, $response);
+
+        $items = $response->payload;
+
+        $this->assertEquals('ATVPDKIKX0DER', $items->marketplace_id);
+        $this->assertEquals('NEW', $items->item_condition);
+        $this->assertEquals('B00V5DG6IQ', $items->identifier->asin);
+
+        $http->assertSent(function (Request $request) use ($asin) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/' . $asin . '/offers', $request->url());
 
             return true;
         });
