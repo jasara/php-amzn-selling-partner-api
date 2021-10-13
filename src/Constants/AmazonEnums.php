@@ -234,6 +234,9 @@ class AmazonEnums
         'Labeling',
         'HangGarment',
         'Boxing',
+        'SetCreation',
+        'SetStickering',
+        'SuffocationStickering',
     ];
 
     public const SHIPMENT_STATUSES = [
@@ -335,35 +338,6 @@ class AmazonEnums
         'vendorDetails',
     ];
 
-    public const IMAGE_VARIANTS = [
-        'MAIN',
-        'PT01',
-        'PT02',
-        'PT03',
-        'PT04',
-        'PT05',
-        'PT06',
-        'PT07',
-        'PT08',
-        'PT09',
-        'PT10',
-        'PT11',
-        'PT12',
-        'PT13',
-        'PT14',
-        'PT15',
-        'PT88',
-        'EV01',
-        'EV02',
-        'SWCH',
-        'SPIN',
-        'SRCH',
-        'FRNT',
-        'DTLS',
-        'BACK',
-        'FACT',
-    ];
-
     public const REPLENISHMENT_CATEGORIES = [
         'ALLOCATED',
         'BASIC_REPLENISHMENT',
@@ -376,8 +350,25 @@ class AmazonEnums
         'OBSOLETE',
         'PLANNED_REPLENISHMENT',
     ];
-    
-    public const CARRIER_NAMES = [
+
+    public const INBOUND_CARRIER_NAMES = [
+        'USPS',
+        'DHL_EXPRESS_USA_INC',
+        'FEDERAL_EXPRESS_CORP',
+        'UNITED_STATES_POSTAL_SERVICE',
+        'UNITED_PARCEL_SERVICE_INC',
+        'OTHER',
+        'BUSINESS_POST',
+        'DHL_AIRWAYS_INC',
+        'DHL_UK',
+        'PARCELFORCE',
+        'DPD',
+        'TNT_LOGISTICS_CORPORATION',
+        'TNT',
+        'YODEL',
+    ];
+
+    public const MF_CARRIER_CODES = [
         'USPS',
         'UPS',
         'UPSMI',

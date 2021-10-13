@@ -10,7 +10,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class NonPartneredSmallParcelDataInputSchema extends DataTransferObject
 {
-    #[StringEnumValidator(AmazonEnums::CARRIER_NAMES)]
+    #[StringEnumValidator(AmazonEnums::INBOUND_CARRIER_NAMES)]
     public string $carrier_name;
 
     #[CastWith(ArrayCaster::class, itemType: NonPartneredSmallParcelPackageInputSchema::class)]

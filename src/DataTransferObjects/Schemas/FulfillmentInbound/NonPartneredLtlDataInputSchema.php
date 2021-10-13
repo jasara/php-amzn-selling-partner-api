@@ -8,7 +8,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class NonPartneredLtlDataInputSchema extends DataTransferObject
 {
-    #[StringEnumValidator(AmazonEnums::CARRIER_NAMES)]
+    #[StringEnumValidator(AmazonEnums::INBOUND_CARRIER_NAMES)]
     public string $carrier_name;
 
     public string $pro_number;

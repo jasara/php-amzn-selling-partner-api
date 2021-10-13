@@ -241,15 +241,24 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectException(AuthenticationException::class);
         $this->expectExceptionMessage('Access to requested resource is denied.');
 
-        $state = Str::random();
-
-        list($config) = $this->setupConfigWithFakeHttp('errors/unauthorized', 401);
+        list($config) = $this->setupConfigWithFakeHttp('errors/unauthorized', 403);
 
         $amzn = new AmznSPA($config);
-        $amzn->lwa->getTokensFromRedirect($state, [
-            'state' => $state,
-            'spapi_oauth_code' => Str::random(),
-        ]);
+        $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
+    }
+
+    /**
+     *  @covers \Jasara\AmznSPA\Exceptions\AuthenticationException
+     */
+    public function testInvalidPartyId()
+    {
+        $this->expectException(AuthenticationException::class);
+        $this->expectExceptionMessage('Invalid partyId: 12345678 Additional Notes: The Seller ID for this Seller is not valid.');
+
+        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-party-id', 400);
+
+        $amzn = new AmznSPA($config);
+        $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
     }
 
     /**

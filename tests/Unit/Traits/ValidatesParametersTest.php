@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
@@ -114,7 +115,7 @@ class ValidatesParametersTest extends UnitTestCase
 
     public function testValidatesStringEnumPasses()
     {
-        $this->expectException(AmznSPAException::class); // Testing it is not the invalid parameters exception
+        $this->expectException(RequestException::class); // Testing it is not the invalid parameters exception
 
         list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
@@ -142,7 +143,7 @@ class ValidatesParametersTest extends UnitTestCase
 
     public function testValidatesArrayOfStringsPasses()
     {
-        $this->expectException(AmznSPAException::class); // Testing it is not the invalid parameters exception
+        $this->expectException(RequestException::class); // Testing it is not the invalid parameters exception
 
         list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
