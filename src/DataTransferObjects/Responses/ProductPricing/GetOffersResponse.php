@@ -7,5 +7,5 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing\GetOffersResultSch
 
 class GetOffersResponse extends BaseResponse
 {
-    public GetOffersResultSchema $payload;
+    public ?GetOffersResultSchema $payload;
 }

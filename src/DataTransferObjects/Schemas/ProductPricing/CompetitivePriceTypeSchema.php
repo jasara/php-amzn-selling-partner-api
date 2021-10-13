@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
 
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
-
 use Spatie\DataTransferObject\DataTransferObject;
 
 class CompetitivePriceTypeSchema extends DataTransferObject
@@ -16,7 +15,8 @@ class CompetitivePriceTypeSchema extends DataTransferObject
 
     public ?string $subcondition;
 
-    public ?OfferCustomerTypeSchema $offer_type;
+    #[StringEnumValidator(['B2C', 'B2B'])]
+    public ?string $offer_customer_type;
 
     public ?int $quantity_tier;
 

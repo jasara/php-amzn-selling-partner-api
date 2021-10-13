@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
 
+use Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class CompetitivePricingTypeSchema extends DataTransferObject
@@ -10,5 +11,5 @@ class CompetitivePricingTypeSchema extends DataTransferObject
 
     public NumberOfOfferListingsListSchema $number_of_offer_listing;
 
-    public ?MoneyTypeSchema $trade_in_value;
+    public ?MoneySchema $trade_in_value;
 }

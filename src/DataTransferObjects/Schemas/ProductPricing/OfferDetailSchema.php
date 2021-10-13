@@ -2,13 +2,16 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
 
+use Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema;
+use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class OfferDetailSchema extends DataTransferObject
 {
     public ?bool $my_offer;
 
-    public ?OfferCustomerTypeSchema $offer_type;
+    #[StringEnumValidator(['B2C', 'B2B'])]
+    public ?string $offer_customer_type;
 
     public string $sub_condition;
 
@@ -20,13 +23,13 @@ class OfferDetailSchema extends DataTransferObject
 
     public DetailedShippingTimeTypeSchema $shipping_time;
 
-    public MoneyTypeSchema $listing_price;
+    public MoneySchema $listing_price;
 
     public ?QuantityDiscountPriceTypeSchema $quantity_discount_prices;
 
     public ?PointsSchema $points;
 
-    public MoneyTypeSchema $shipping;
+    public MoneySchema $shipping;
 
     public ?ShipsFromTypeShema $ships_from;
 
@@ -34,7 +37,7 @@ class OfferDetailSchema extends DataTransferObject
 
     public ?PrimeInformationTypeSchema $prime_information;
 
-    public ?bool $is_buyBox_winner;
+    public ?bool $is_buy_box_winner;
 
     public ?bool $is_featured_merchant;
 }

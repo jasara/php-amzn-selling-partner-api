@@ -35,7 +35,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/price', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/price?MarketplaceId=ATVPDKIKX0DER&ItemType=asin', $request->url());
 
             return true;
         });
@@ -65,7 +65,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/competitivePrice', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/competitivePrice?MarketplaceId=ATVPDKIKX0DER&ItemType=asin', $request->url());
 
             return true;
         });
@@ -97,7 +97,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/' . $seller_sku . '/offers', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/' . $seller_sku . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=CLUB', $request->url());
 
             return true;
         });
@@ -129,7 +129,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/' . $asin . '/offers', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/' . $asin . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=NEW', $request->url());
 
             return true;
         });

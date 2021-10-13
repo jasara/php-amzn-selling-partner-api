@@ -18,9 +18,6 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\CatalogItemsResource $catalog_items
  * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
  * @property \Jasara\AmznSPA\Resources\ProductPricingResource $$product_price
-
-
-
  **/
 class AmznSPA
 {

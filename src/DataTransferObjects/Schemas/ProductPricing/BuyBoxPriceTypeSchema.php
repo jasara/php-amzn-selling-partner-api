@@ -2,23 +2,26 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
 
+use Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema;
+use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class BuyBoxPriceTypeSchema extends DataTransferObject
 {
     public string $condition;
 
-    public ?OfferCustomerTypeSchema $offer_type;
+    #[StringEnumValidator(['B2C', 'B2B'])]
+    public ?string $offer_customer_type;
 
-    public ?INT $quantity_tier;
+    public ?int $quantity_tier;
 
     public ?QuantityDiscountTypeSchema $quantity_discount_type;
 
-    public MoneyTypeSchema $landed_price;
+    public MoneySchema $landed_price;
 
-    public MoneyTypeSchema $listing_price;
+    public MoneySchema $listing_price;
 
-    public MoneyTypeSchema $shipping;
+    public MoneySchema $shipping;
 
     public PointsSchema $points;
 

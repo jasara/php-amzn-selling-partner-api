@@ -41,7 +41,14 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($offer_type, ['B2C', 'B2B']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'price');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'price', array_filter([
+            'MarketplaceId' => $marketplace_id,
+            'ItemType' => $item_type,
+            'Asins' => $asins,
+            'Skus' =>$skus,
+            'ItemCondition' =>$item_condition,
+            'OfferType' => $offer_type,
+        ]));
 
         return new GetPricingResponse($response);
     }
@@ -61,7 +68,13 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'competitivePrice');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'competitivePrice', array_filter([
+            'MarketplaceId' => $marketplace_id,
+            'ItemType' => $item_type,
+            'Asins' => $asins,
+            'Skus' =>$skus,
+            'CustomerType' => $customer_type,
+        ]));
 
         return new GetPricingResponse($response);
     }
@@ -78,7 +91,11 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/offers');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/offers', array_filter([
+            'MarketplaceId' => $marketplace_id,
+            'ItemCondition' => $item_condition,
+            'CustomerType' => $customer_type,
+        ]));
 
         return new GetOffersResponse($response);
     }
@@ -94,7 +111,12 @@ class ProductPricingResource implements ResourceContract
         if ($customer_type) {
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/offers');
+
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/offers', array_filter([
+            'MarketplaceId' => $marketplace_id,
+            'ItemCondition' => $item_condition,
+            'CustomerType' => $customer_type,
+        ]));
 
         return new GetOffersResponse($response);
     }

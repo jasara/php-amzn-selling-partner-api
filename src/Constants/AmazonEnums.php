@@ -591,12 +591,11 @@ class AmazonEnums
         'Tourline',
     ];
 
-    const ITEM_CONDITION = [
+    public const ITEM_CONDITION = [
         'NEW',
         'USED',
         'COLLECTIBLE',
         'REFURISHED',
         'CLUB',
-
     ];
 }

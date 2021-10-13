@@ -8,5 +8,5 @@ class IdentifierTypeSchema extends DataTransferObject
 {
     public AsinIdentifierSchema $marketplace_asin;
 
-    public ?SellerSKUIdentifierSchema $SKU_identifier;
+    public ?SellerSKUIdentifierSchema $sku_identifier;
 }

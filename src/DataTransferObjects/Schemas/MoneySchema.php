@@ -1,10 +1,10 @@
 <?php
 
-namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
+namespace Jasara\AmznSPA\DataTransferObjects\Schemas;
 
 use Spatie\DataTransferObject\DataTransferObject;
 
-class MoneyTypeSchema extends DataTransferObject
+class MoneySchema extends DataTransferObject
 {
     public ?string $currency_code;
 
