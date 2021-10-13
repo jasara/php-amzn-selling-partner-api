@@ -22,5 +22,5 @@ class LowestPriceTypeSchema extends DataTransferObject
 
     public MoneyTypeSchema $shipping;
 
-    public PointsSchema $points;
+    public ?PointsSchema $points;
 }
