@@ -15,6 +15,12 @@ jobs:
           php_extensions: pcov
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
+      - name: Check test coverage
+        id: test-coverage
+        uses: johanvanhelden/gha-clover-test-coverage-check@v1
+        with:
+          percentage: "100"
+          filename: "./tests/resources/clover.xml"
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.0
         with:
