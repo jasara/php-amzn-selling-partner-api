@@ -4,10 +4,10 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AmountSchema;
+use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringArrayEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Attributes\MapFrom;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
@@ -21,14 +21,16 @@ class ShippingServiceSchema extends DataTransferObject
 
     public string $shipping_service_offer_id;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public CarbonImmutable $ship_date;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $earliest_estimated_delivery_date;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $latest_etimated_delivery_date;
 
-    #[MapFrom('value')]
-    public AmountSchema $rate;
+    public MoneySchema $rate;
 
     public ShippingServiceOptionsSchema $shipping_service_options;
 

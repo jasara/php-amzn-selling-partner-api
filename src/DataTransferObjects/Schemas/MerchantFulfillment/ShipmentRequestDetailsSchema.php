@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Carbon\CarbonImmutable;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringIsNumberValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;

@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment;
 
 use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment\ShipmentRequestDetailsSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFullfillment\ShippingOfferingFilterSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment\ShippingOfferingFilterSchema;
 
 class GetEligibleShipmentServicesRequest extends BaseRequest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFullfillment;
+namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;

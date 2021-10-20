@@ -109,7 +109,7 @@ class ResourceGetter
         );
     }
 
-    public function getMerchantFullFillment(): MerchantFulFillmentResource
+    public function getMerchantFulFillment(): MerchantFulFillmentResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();
 

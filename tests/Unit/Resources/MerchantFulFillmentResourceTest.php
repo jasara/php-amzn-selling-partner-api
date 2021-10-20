@@ -6,10 +6,10 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\GetEligibleShipmentServicesRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFullfillment\GetEligibleShipmentServicesResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligibleShipmentServicesResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
-class MerchantFullFillmentResourceTest extends UnitTestCase
+class MerchantFulFillmentResourceTest extends UnitTestCase
 {
     public function testGetEligibleShipmentServicesOld()
     {
@@ -54,7 +54,7 @@ class MerchantFullFillmentResourceTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->Merchant_fullfillment->getEligibleShipmentServicesOld($request);
+        $response = $amzn->Merchant_fulfillment->getEligibleShipmentServicesOld($request);
 
         $this->assertInstanceOf(GetEligibleShipmentServicesResponse::class, $response);
 
