@@ -49,4 +49,11 @@ class MerchantFulFillmentResource implements ResourceContract
 
         return new CancelShipmentResponse($response);
     }
+
+    public function cancelShipmentOld(string $shipment_id): CancelShipmentResponse
+    {
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/cancel', []);
+
+        return new CancelShipmentResponse($response);
+    }
 }

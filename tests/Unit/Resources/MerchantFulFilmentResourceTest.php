@@ -151,4 +151,28 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
             return true;
         });
     }
+
+    public function testCancelShipmentOld()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/cancel-shipment');
+
+        $shipment_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->merchant_fulfillment->cancelShipmentOld($shipment_id);
+
+        $this->assertInstanceOf(CancelShipmentResponse::class, $response);
+
+        $shipment = $response->payload;
+
+        $this->assertEquals('be7a0a53-00c3-4f6f-a63a-639f76ee9253', $shipment->shipment_id);
+
+        $http->assertSent(function (Request $request) use ($shipment_id) {
+            $this->assertEquals('PUT', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id . '/cancel', $request->url());
+
+            return true;
+        });
+    }
 }
