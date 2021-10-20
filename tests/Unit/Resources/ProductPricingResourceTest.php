@@ -13,7 +13,7 @@ class ProductPricingResourceTest extends UnitTestCase
 {
     public function testGetPricing()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/product-price/get-pricing');
+        list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-pricing');
 
         $item_type = 'asin';
         $marketplace_id = 'ATVPDKIKX0DER';
@@ -43,7 +43,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
     public function testGetCompetitivePricing()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/product-price/get-competitive-pricing');
+        list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-competitive-pricing');
 
         $item_type = 'asin';
         $marketplace_id = 'ATVPDKIKX0DER';
@@ -73,7 +73,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
     public function testGetListingOffers()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/product-price/get-listing-offers');
+        list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-listing-offers');
 
         $marketplace_id = 'ATVPDKIKX0DER';
         $item_condition = 'CLUB';
@@ -105,7 +105,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
     public function testGetItemOffers()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/product-price/get-item-offers');
+        list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-item-offers');
 
         $marketplace_id = 'ATVPDKIKX0DER';
         $item_condition = 'NEW';
