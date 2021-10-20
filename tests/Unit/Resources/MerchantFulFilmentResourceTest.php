@@ -6,6 +6,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\GetEligibleShipmentServicesRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CancelShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligibleShipmentServicesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -121,6 +122,30 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id, $request->url());
+
+            return true;
+        });
+    }
+
+    public function testCancelShipment()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/cancel-shipment');
+
+        $shipment_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->merchant_fulfillment->cancelShipment($shipment_id);
+
+        $this->assertInstanceOf(CancelShipmentResponse::class, $response);
+
+        $shipment = $response->payload;
+
+        $this->assertEquals('be7a0a53-00c3-4f6f-a63a-639f76ee9253', $shipment->shipment_id);
+
+        $http->assertSent(function (Request $request) use ($shipment_id) {
+            $this->assertEquals('DELETE', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id, $request->url());
 
             return true;

@@ -13,7 +13,7 @@ class MerchantFulFillmentResourceTest extends UnitTestCase
 {
     public function testGetEligibleShipmentServicesOld()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fullfillment/get-eligible-shipment-services-old');
+        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-eligible-shipment-services-old');
 
         $request = new GetEligibleShipmentServicesRequest(
             shipment_request_details: [
