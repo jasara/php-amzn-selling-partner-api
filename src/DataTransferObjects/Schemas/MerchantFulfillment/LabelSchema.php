@@ -12,7 +12,7 @@ class LabelSchema extends DataTransferObject
     #[MaxLengthValidator(14)]
     public ?string $custom_text_for_label;
 
-    public DimensionsSchema $dimensions;
+    public PackageDimensionsSchema $dimensions;
 
     public FileContentsSchema $file_contents;
 

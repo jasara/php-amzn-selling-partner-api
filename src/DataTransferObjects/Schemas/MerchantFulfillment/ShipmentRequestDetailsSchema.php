@@ -23,7 +23,7 @@ class ShipmentRequestDetailsSchema extends DataTransferObject
 
     public AddressSchema $ship_from_address;
 
-    public PackageDimensions $package_dimensions;
+    public PackageDimensionsSchema $package_dimensions;
 
     public WeightSchema $weight;
 

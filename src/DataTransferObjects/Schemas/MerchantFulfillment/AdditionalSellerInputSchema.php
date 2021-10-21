@@ -27,7 +27,7 @@ class AdditionalSellerInputSchema extends DataTransferObject
 
     public ?WeightSchema $value_as_weight;
 
-    public LengthSchema $value_as_dimension;
+    public PackageDimensionsSchema $value_as_dimension;
 
     public MoneySchema $value_as_currency;
 }
