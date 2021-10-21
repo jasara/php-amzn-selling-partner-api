@@ -6,9 +6,11 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\CreateShipmentRequest;
+use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\GetAdditionalSellerInputsRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\GetEligibleShipmentServicesRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CancelShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CreateShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetAdditionalSellerInputsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligibleShipmentServicesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -20,31 +22,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-eligible-shipment-services-old');
 
         $request = new GetEligibleShipmentServicesRequest(
-            shipment_request_details:
-            [
-                'amazon_order_id' => '52986411826454',
-                'item_list' => [
-                    'item' =>[
-                        'order_item_id'=> Str::random(),
-                        'quantity'=> rand(1, 10),
-                    ],
-                ],
-                'ship_from_address' => $this->setupAddress()->toArray(),
-                'package_dimensions' =>[
-                    'length' => 88,
-                ],
-                'weight' =>[
-                    'value'=>77,
-                    'unit'=>'oz',
-                ],
-                'shipping_service_options'=>[
-                    'delivery_experience'=>'DeliveryConfirmationWithAdultSignature',
-                    'carrier_will_pick_up'=>false,
-                ],
-                'label_customization'=>[
-                    'custom_text_for_label'=>'988989i',
-                ],
-            ]
+            shipment_request_details:$this->shipmentRequestDetails(),
         );
 
         $amzn = new AmznSPA($config);
@@ -52,6 +30,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         $response = $amzn->merchant_fulfillment->getEligibleShipmentServicesOld($request);
 
         $this->assertInstanceOf(GetEligibleShipmentServicesResponse::class, $response);
+        $this->assertEquals('UPS', $response->payload->shipping_service_list[0]->carrier_name);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
@@ -66,30 +45,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-eligible-shipment-services-old');
 
         $request = new GetEligibleShipmentServicesRequest(
-            shipment_request_details: [
-                'amazon_order_id' => '52986411826454',
-                'item_list' => [
-                    'item' =>[
-                        'order_item_id'=> Str::random(),
-                        'quantity'=> rand(1, 10),
-                    ],
-                ],
-                'ship_from_address' => $this->setupAddress()->toArray(),
-                'package_dimensions' =>[
-                    'length' => 88,
-                ],
-                'weight' =>[
-                    'value'=>77,
-                    'unit'=>'oz',
-                ],
-                'shipping_service_options'=>[
-                    'delivery_experience'=>'DeliveryConfirmationWithAdultSignature',
-                    'carrier_will_pick_up'=>false,
-                ],
-                'label_customization'=>[
-                    'custom_text_for_label'=>'988989i',
-                ],
-            ]
+            shipment_request_details:$this->shipmentRequestDetails(),
         );
 
         $amzn = new AmznSPA($config);
@@ -97,6 +53,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         $response = $amzn->merchant_fulfillment->getEligibleShipmentServices($request);
 
         $this->assertInstanceOf(GetEligibleShipmentServicesResponse::class, $response);
+        $this->assertEquals('UPS', $response->payload->shipping_service_list[0]->carrier_name);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
@@ -117,10 +74,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         $response = $amzn->merchant_fulfillment->getShipment($shipment_id);
 
         $this->assertInstanceOf(GetShipmentResponse::class, $response);
-
-        $shipment = $response->payload;
-
-        $this->assertEquals('abcddcba-00c3-4f6f-a63a-639f76ee9253', $shipment->shipment_id);
+        $this->assertEquals('abcddcba-00c3-4f6f-a63a-639f76ee9253', $response->payload->shipment_id);
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
@@ -141,10 +95,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         $response = $amzn->merchant_fulfillment->cancelShipment($shipment_id);
 
         $this->assertInstanceOf(CancelShipmentResponse::class, $response);
-
-        $shipment = $response->payload;
-
-        $this->assertEquals('be7a0a53-00c3-4f6f-a63a-639f76ee9253', $shipment->shipment_id);
+        $this->assertEquals('be7a0a53-00c3-4f6f-a63a-639f76ee9253', $response->payload->shipment_id);
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('DELETE', $request->method());
@@ -165,10 +116,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         $response = $amzn->merchant_fulfillment->cancelShipmentOld($shipment_id);
 
         $this->assertInstanceOf(CancelShipmentResponse::class, $response);
-
-        $shipment = $response->payload;
-
-        $this->assertEquals('be7a0a53-00c3-4f6f-a63a-639f76ee9253', $shipment->shipment_id);
+        $this->assertEquals('be7a0a53-00c3-4f6f-a63a-639f76ee9253', $response->payload->shipment_id);
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('PUT', $request->method());
@@ -182,32 +130,7 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/create-shipment');
         $request = new CreateShipmentRequest(
-            shipment_request_details: [
-                'amazon_order_id' => '52986411826454',
-                'item_list' => [
-                    'item' =>[
-                        'order_item_id'=> Str::random(),
-                        'quantity'=> rand(1, 10),
-                    ],
-                ],
-                'ship_from_address' => $this->setupAddress()->toArray(),
-                'package_dimensions' =>[
-                    'length' => 88,
-                ],
-                'weight' =>[
-                    'value'=>77,
-                    'unit'=>'oz',
-                ],
-                'shipping_service_options'=>[
-                    'delivery_experience'=>'DeliveryConfirmationWithAdultSignature',
-                    'carrier_will_pick_up'=>false,
-                ],
-                'shipping_service_id'=>Str::random(),
-                'label_customization'=>[
-                    'custom_text_for_label'=>'988989i',
-                ],
-
-            ],
+            shipment_request_details:$this->shipmentRequestDetails(),
             shipping_service_id:Str::random(),
         );
 
@@ -216,10 +139,59 @@ class MerchantFulFilmentResourceTest extends UnitTestCase
         $response = $amzn->merchant_fulfillment->createShipment($request);
 
         $this->assertInstanceOf(CreateShipmentResponse::class, $response);
+        $this->assertEquals('903-5563053-5647845', $response->payload->amazon_order_id);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testGetAdditionalSellerInputsOld()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-additional-seller-inputs-old');
+        $request = new GetAdditionalSellerInputsRequest(
+            shipping_service_id:Str::random(),
+            ship_from_address:$this->setupAddress(),
+            order_id:STR::random()
+        );
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->merchant_fulfillment->getAdditionalSellerInputsOld($request);
+
+        $this->assertInstanceOf(GetAdditionalSellerInputsResponse::class, $response);
+        $this->assertEquals('John Doe', $response->payload->shipment_level_fields[0]->additional_input_field_name);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/sellerInputs', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testGetAdditionalSellerInputs()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-additional-seller-inputs-old');
+        $request = new GetAdditionalSellerInputsRequest(
+            shipping_service_id:Str::random(),
+            ship_from_address:$this->setupAddress(),
+            order_id:STR::random()
+        );
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->merchant_fulfillment->getAdditionalSellerInputs($request);
+
+        $this->assertInstanceOf(GetAdditionalSellerInputsResponse::class, $response);
+        $this->assertEquals('John Doe', $response->payload->shipment_level_fields[0]->additional_input_field_name);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/additionalSellerInputs', urldecode($request->url()));
 
             return true;
         });

@@ -19,6 +19,5 @@ class LabelSchema extends DataTransferObject
     #[StringEnumValidator(AmazonEnums::LABEL_FORMAT)]
     public ?string $label_format;
 
-    #[StringEnumValidator(['AmazonOrderId'])]
     public ?string $standard_id_for_label;
 }
