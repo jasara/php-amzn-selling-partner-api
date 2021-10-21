@@ -6,14 +6,12 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
-use Jasara\AmznSPA\DataTransferObjects\Validators\StringIsNumberValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class ShipmentRequestDetailsSchema extends DataTransferObject
 {
-    #[StringIsNumberValidator]
     public string $amazon_order_id;
 
     public ?string $seller_order_id;
@@ -35,5 +33,5 @@ class ShipmentRequestDetailsSchema extends DataTransferObject
 
     public ShippingServiceOptionsSchema $shipping_service_options;
 
-    public LabelCustomizationSchema $label_customization;
+    public ?LabelCustomizationSchema $label_customization;
 }

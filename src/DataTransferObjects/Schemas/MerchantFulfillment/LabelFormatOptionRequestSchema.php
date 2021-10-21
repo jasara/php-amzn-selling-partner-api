@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Spatie\DataTransferObject\DataTransferObject;
 
-class TransparencyCodeSchema extends DataTransferObject
+class LabelFormatOptionRequestSchema extends DataTransferObject
 {
-    public string $transparency_code;
+    public ?bool $include_packing_slip_with_label;
 }

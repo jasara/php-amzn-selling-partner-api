@@ -40,7 +40,7 @@ class ShippingServiceSchema extends DataTransferObject
     public ?array $available_label_formats;
 
     #[CastWith(ArrayCaster::class, itemType: LabelFormatOptionSchema::class)]
-    public ?AvailableFormatOptionsForLabelList $available_format_options_for_label;
+    public ?AvailableFormatOptionsForLabelListSchema $available_format_options_for_label;
 
     public bool $requires_additional_seller_inputs;
 }

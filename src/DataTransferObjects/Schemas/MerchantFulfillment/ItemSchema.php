@@ -15,7 +15,7 @@ class ItemSchema extends DataTransferObject
 
     public ?string $item_description;
 
-    public ?TransparencyCodeList $transparency_code_list;
+    public ?TransparencyCodeListSchema $transparency_code_list;
 
     public ?AdditionalSellerInputsListSchema $item_level_seller_inputs_list;
 }

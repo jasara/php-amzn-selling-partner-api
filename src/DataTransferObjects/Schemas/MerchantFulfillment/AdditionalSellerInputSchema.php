@@ -12,7 +12,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class AdditionalSellerInputSchema extends DataTransferObject
 {
-    public ?string $date_type;
+    public ?string $data_type;
 
     public ?string $value_as_string;
 
@@ -27,7 +27,7 @@ class AdditionalSellerInputSchema extends DataTransferObject
 
     public ?WeightSchema $value_as_weight;
 
-    public PackageDimensionsSchema $value_as_dimension;
+    public ?PackageDimensionsSchema $value_as_dimension;
 
-    public MoneySchema $value_as_currency;
+    public ?MoneySchema $value_as_currency;
 }
