@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Carbon\CarbonImmutable;
+use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringIsNumberValidator;
@@ -26,8 +27,10 @@ class ShipmentRequestDetailsSchema extends DataTransferObject
 
     public WeightSchema $weight;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $must_arrive_by_date;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $ship_date;
 
     public ShippingServiceOptionsSchema $shipping_service_options;

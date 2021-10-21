@@ -1,165 +1,36 @@
 {
-    "200": {
-        "description": "Success",
-        "schema": {
-            "description": "Response schema.",
-            "$ref": "#/definitions/GetEligibleShipmentServicesResponse"
-        },
-        "headers": {
-            "x-amzn-RateLimit-Limit": {
-                "type": "string",
-                "description": "Your rate limit (requests per second) for this operation."
-            },
-            "x-amzn-RequestId": {
-                "type": "string",
-                "description": "Unique request reference identifier."
+    "ShipmentRequestDetails": {
+        "AmazonOrderId": "903-5563053-5647845",
+        "ItemList": [
+            {
+                "OrderItemId": "52986411826454",
+                "Quantity": 1
             }
+        ],
+        "ShipFromAddress": {
+            "Name": "John Doe",
+            "AddressLine1": "300 Turnbull Ave",
+            "Email": "jdoeasdfllkj@yahoo.com",
+            "City": "Detroit",
+            "StateOrProvinceCode": "MI",
+            "PostalCode": "48123",
+            "CountryCode": "US",
+            "Phone": "7132341234"
         },
-        "x-amzn-api-sandbox": {
-            "static": [
-                {
-                    "request": {
-                        "parameters": {
-                            "body": {
-                                "value": {
-                                    "ShipmentRequestDetails": {
-                                        "AmazonOrderId": "903-5563053-5647845",
-                                        "ItemList": [
-                                            {
-                                                "OrderItemId": "52986411826454",
-                                                "Quantity": 1
-                                            }
-                                        ],
-                                        "ShipFromAddress": {
-                                            "Name": "John Doe",
-                                            "AddressLine1": "300 Turnbull Ave",
-                                            "Email": "jdoeasdfllkj@yahoo.com",
-                                            "City": "Detroit",
-                                            "StateOrProvinceCode": "MI",
-                                            "PostalCode": "48123",
-                                            "CountryCode": "US",
-                                            "Phone": "7132341234"
-                                        },
-                                        "PackageDimensions": {
-                                            "Length": 10,
-                                            "Width": 10,
-                                            "Height": 10,
-                                            "Unit": "inches"
-                                        },
-                                        "Weight": {
-                                            "Value": 10,
-                                            "Unit": "oz"
-                                        },
-                                        "ShippingServiceOptions": {
-                                            "DeliveryExperience": "NoTracking",
-                                            "CarrierWillPickUp": false,
-                                            "CarrierWillPickUpOption": "ShipperWillDropOff"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "response": {
-                        "payload": {
-                            "ShippingServiceList": [
-                                {
-                                    "ShippingServiceName": "UPS 2nd Day Air",
-                                    "CarrierName": "UPS",
-                                    "ShippingServiceId": "UPS_PTP_2ND_DAY_AIR",
-                                    "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t",
-                                    "ShipDate": "2019-10-28T16:36:36Z",
-                                    "EarliestEstimatedDeliveryDate": "2019-10-31T06:00:00Z",
-                                    "LatestEstimatedDeliveryDate": "2019-10-31T06:00:00Z",
-                                    "Rate": {
-                                        "CurrencyCode": "USD",
-                                        "Amount": 34.73
-                                    },
-                                    "ShippingServiceOptions": {
-                                        "DeliveryExperience": "NoTracking",
-                                        "CarrierWillPickUp": false,
-                                        "LabelFormat": ""
-                                    },
-                                    "AvailableLabelFormats": [
-                                        "ZPL203",
-                                        "ShippingServiceDefault",
-                                        "PDF",
-                                        "PNG"
-                                    ],
-                                    "AvailableFormatOptionsForLabel": [
-                                        {
-                                            "LabelFormat": "ZPL203"
-                                        },
-                                        {
-                                            "LabelFormat": "ShippingServiceDefault"
-                                        },
-                                        {
-                                            "LabelFormat": "PDF"
-                                        },
-                                        {
-                                            "LabelFormat": "PNG"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "ShippingServiceName": "UPS Next Day Air Saver",
-                                    "CarrierName": "UPS",
-                                    "ShippingServiceId": "UPS_PTP_NEXT_DAY_AIR_SAVER",
-                                    "ShippingServiceOfferId": "WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKqqhKGQ2YZmuxsXKVXmdgdWNvfxb1qfm5bGm8NuqlqnNT3eTiJ4viTctepggbeUKUSykClJ+Qmw43zdA8wsgREhQCmb4Bbo/skapLQS1F9uwH2FgY5SfMsj/egudyocpVRT45KSQAT0H5YiXW3OyyRAae9fZ0RzDJAABHiisOyYyXnB1mtWOZqc7rlGR4yyqN7jmiT4t8dmuGPX7ptY4qskrN+6VHZO9bM9tdDS0ysHhAVv4jO3Q5sWFg4nEPaARWSsrpa6zSGMLxAOj56O3tcP",
-                                    "ShipDate": "2019-10-28T16:36:36Z",
-                                    "EarliestEstimatedDeliveryDate": "2019-10-30T06:00:00Z",
-                                    "LatestEstimatedDeliveryDate": "2019-10-30T06:00:00Z",
-                                    "Rate": {
-                                        "CurrencyCode": "USD",
-                                        "Amount": 98.75
-                                    },
-                                    "ShippingServiceOptions": {
-                                        "DeliveryExperience": "NoTracking",
-                                        "CarrierWillPickUp": false,
-                                        "LabelFormat": ""
-                                    },
-                                    "AvailableLabelFormats": [
-                                        "ZPL203",
-                                        "ShippingServiceDefault",
-                                        "PDF",
-                                        "PNG"
-                                    ],
-                                    "AvailableFormatOptionsForLabel": [
-                                        {
-                                            "LabelFormat": "ZPL203"
-                                        },
-                                        {
-                                            "LabelFormat": "ShippingServiceDefault"
-                                        },
-                                        {
-                                            "LabelFormat": "PDF"
-                                        },
-                                        {
-                                            "LabelFormat": "PNG"
-                                        }
-                                    ]
-                                }
-                            ],
-                            "TemporarilyUnavailableCarrierList": [
-                                {
-                                    "CarrierName": "UPS"
-                                },
-                                {
-                                    "CarrierName": "DHLECOMMERCE"
-                                }
-                            ],
-                            "TermsAndConditionsNotAcceptedCarrierList": [
-                                {
-                                    "CarrierName": "YANWEN"
-                                },
-                                {
-                                    "CarrierName": "CHINA_POST"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
+        "PackageDimensions": {
+            "Length": 10,
+            "Width": 10,
+            "Height": 10,
+            "Unit": "inches"
+        },
+        "Weight": {
+            "Value": 10,
+            "Unit": "oz"
+        },
+        "ShippingServiceOptions": {
+            "DeliveryExperience": "NoTracking",
+            "CarrierWillPickUp": false,
+            "CarrierWillPickUpOption": "ShipperWillDropOff"
         }
     }
 }

@@ -4,8 +4,10 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\CreateShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\MerchantFulfillment\GetEligibleShipmentServicesRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CancelShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CreateShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligibleShipmentServicesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -55,5 +57,12 @@ class MerchantFulFillmentResource implements ResourceContract
         $response = $this->http->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/cancel', []);
 
         return new CancelShipmentResponse($response);
+    }
+
+    public function createShipment(CreateShipmentRequest $request): CreateShipmentResponse
+    {
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'shipments/', (array) $request->toArrayObject());
+
+        return new CreateShipmentResponse($response);
     }
 }
