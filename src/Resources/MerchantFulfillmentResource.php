@@ -14,7 +14,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligible
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
-class MerchantFulFillmentResource implements ResourceContract
+class MerchantFulfillmentResource implements ResourceContract
 {
     use ValidatesParameters;
 

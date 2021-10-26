@@ -27,8 +27,8 @@ class ProductPricingResource implements ResourceContract
         string $item_type,
         ?array $asins = [],
         ?array $skus = [],
-        ?string $item_condition = null,
-        ?string $offer_type = null
+        ?string $item_condition = 'USED',
+        ?string $offer_type = 'B2C'
     ): GetPricingResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($asins);
@@ -58,7 +58,7 @@ class ProductPricingResource implements ResourceContract
         string $item_type,
         ?array $asins = [],
         ?array $skus = [],
-        ?string $customer_type = null,
+        ?string $customer_type = 'Consumer',
     ): GetPricingResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($asins);
@@ -83,7 +83,7 @@ class ProductPricingResource implements ResourceContract
         string $marketplace_id,
         string $item_condition,
         string $seller_sku,
-        ?string $customer_type = null
+        ?string $customer_type = 'Business'
     ): GetOffersResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($item_condition, AmazonEnums::ITEM_CONDITION);
@@ -104,7 +104,7 @@ class ProductPricingResource implements ResourceContract
         string $marketplace_id,
         string $item_condition,
         string $asin,
-        ?string $customer_type = null
+        ?string $customer_type = 'Consumer'
     ): GetOffersResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($item_condition, AmazonEnums::ITEM_CONDITION);

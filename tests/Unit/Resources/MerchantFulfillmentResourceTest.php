@@ -15,7 +15,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligible
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
-class MerchantFulFilmentResourceTest extends UnitTestCase
+class MerchantFulfillmentResourceTest extends UnitTestCase
 {
     public function testGetEligibleShipmentServicesOld()
     {

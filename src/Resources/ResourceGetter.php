@@ -109,11 +109,11 @@ class ResourceGetter
         );
     }
 
-    public function getMerchantFulFillment(): MerchantFulFillmentResource
+    public function getMerchantFulfillment(): MerchantFulfillmentResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();
 
-        return new MerchantFulFillmentResource(
+        return new MerchantFulfillmentResource(
             $http,
             $this->config->getMarketplace()->getBaseUrl(),
         );
