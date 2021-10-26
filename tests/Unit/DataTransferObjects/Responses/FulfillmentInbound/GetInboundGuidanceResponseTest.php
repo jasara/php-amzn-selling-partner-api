@@ -50,8 +50,6 @@ class GetInboundGuidanceResponseTest extends UnitTestCase
             ],
         ];
 
-        ray(array_keys_to_snake($payload));
-
         $dto = new GetInboundGuidanceResponse(
             payload: array_keys_to_snake($payload),
         );

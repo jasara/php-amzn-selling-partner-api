@@ -1,0 +1,75 @@
+{
+    "payload": {
+        "ASIN": "B00V5DG6IQ",
+        "status": "Success",
+        "ItemCondition": "NEW",
+        "Identifier": {
+            "MarketplaceId": "ATVPDKIKX0DER",
+            "ItemCondition": "NEW",
+            "ASIN": "B00V5DG6IQ"
+        },
+        "Summary": {
+            "LowestPrices": [
+                {
+                    "condition": "new",
+                    "fulfillmentChannel": "Merchant",
+                    "LandedPrice": {
+                        "CurrencyCode": "USD",
+                        "Amount": 10.00
+                    },
+                    "ListingPrice": {
+                        "CurrencyCode": "USD",
+                        "Amount": 10.00
+                    },
+                    "Shipping": {
+                        "CurrencyCode": "USD",
+                        "Amount": 0.00
+                    }
+                }
+            ],
+            "NumberOfOffers": [
+                {
+                    "condition": "new",
+                    "fulfillmentChannel": "Merchant"
+                }
+            ],
+            "BuyBoxEligibleOffers": [
+                {
+                    "condition": "new",
+                    "fulfillmentChannel": "Merchant"
+                }
+            ],
+            "TotalOfferCount": 1
+        },
+        "Offers": [
+            {
+                "Shipping": {
+                    "CurrencyCode": "USD",
+                    "Amount": 0.00
+                },
+                "ListingPrice": {
+                    "CurrencyCode": "USD",
+                    "Amount": 10.00
+                },
+                "ShippingTime": {
+                    "maximumHours": 48,
+                    "minimumHours": 24,
+                    "availabilityType": "NOW"
+                },
+                "SellerFeedbackRating": {
+                    "FeedbackCount": 0,
+                    "SellerPositiveFeedbackRating": 0.0
+                },
+                "ShipsFrom": {
+                    "State": "WA",
+                    "Country": "US"
+                },
+                "SubCondition": "new",
+                "IsFeaturedMerchant": false,
+                "SellerId": "ATVPDKIKX0DER",
+                "IsFulfilledByAmazon": false
+            }
+        ],
+        "MarketplaceID": "ATVPDKIKX0DER"
+    }
+}

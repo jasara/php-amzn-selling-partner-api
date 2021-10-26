@@ -17,7 +17,8 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
  * @property \Jasara\AmznSPA\Resources\CatalogItemsResource $catalog_items
  * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
- */
+ * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
+ **/
 class AmznSPA
 {
     use HasConfig;
@@ -33,7 +34,7 @@ class AmznSPA
 
         $resource_getter = new ResourceGetter($this->config);
 
-        if (!method_exists($resource_getter, $function)) {
+        if (! method_exists($resource_getter, $function)) {
             throw new InvalidResourceException($name . ' is not a supported resource.');
         }
 

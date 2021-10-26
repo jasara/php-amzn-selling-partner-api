@@ -12,7 +12,7 @@ class WeightSchema extends DataTransferObject
     #[StringIsNumberValidator]
     public string $value;
 
-    #[StringEnumValidator(['pounds', 'kilograms'])]
+    #[StringEnumValidator(['pounds', 'kilograms', 'oz', 'g'])]
     public string $unit;
 
     public function asMass(): Mass
