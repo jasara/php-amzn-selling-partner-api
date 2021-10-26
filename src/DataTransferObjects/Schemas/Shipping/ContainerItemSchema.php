@@ -2,15 +2,16 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\Shipping;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
+use Spatie\DataTransferObject\DataTransferObject;
 
-class ContainerItemSchema extends Collection
+class ContainerItemSchema extends DataTransferObject
 {
-    /**
-     * @codeCoverageIgnore
-     */
-    public function offsetGet($key): ContainerItem
-    {
-        return parent::offsetGet($key);
-    }
+    public int $quantity;
+
+    public CurrencySchema $unit_price;
+
+    public WeightSchema $unit_weight;
+
+    public string $title;
 }

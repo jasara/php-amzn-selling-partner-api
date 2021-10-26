@@ -22,8 +22,8 @@ class ContainerSchema extends DataTransferObject
 
     public PackageDimensionsSchema $dimensions;
 
-    #[CastWith(ArrayCaster::class, itemType: ContainerItem::class)]
-    public ContainerItemSchema $items;
+    #[CastWith(ArrayCaster::class, itemType: ContainerItemSchema::class)]
+    public ContainerItemListSchema $items;
 
     public WeightSchema $weight;
 }
