@@ -89,4 +89,12 @@ class ResourceGetterTest extends UnitTestCase
 
         $this->assertInstanceOf(Resources\MerchantFulFillmentResource::class, $merchant_fulfillment);
     }
+
+    public function testGetShipping()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $shipping = $resource_getter->getShipping();
+
+        $this->assertInstanceOf(Resources\ShippingResource::class, $shipping);
+    }
 }
