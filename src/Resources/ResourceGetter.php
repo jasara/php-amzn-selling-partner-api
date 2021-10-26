@@ -129,6 +129,16 @@ class ResourceGetter
         );
     }
 
+    public function getShipping(): ShippingResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new ShippingResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     private function validateAndSetupHttpForStandardResource($grantless_resource = null): AmznSPAHttp
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
