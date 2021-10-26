@@ -674,4 +674,23 @@ class AmazonEnums
         'ZPL300',
         'ShippingServiceDefault',
     ];
+
+    public const ORDER_STATUS = [
+        'Pending',
+        'Unshipped',
+        'PartiallyShipped',
+        'Shipped',
+        'Canceled',
+        'Unfulfillable',
+        'InvoiceUnconfirmed',
+        'PendingAvailability',
+    ];
+
+    public const ORDER_TYPE = [
+        'StandardOrder',
+        'LongLeadTimeOrder',
+        'Preorder',
+        'BackOrder',
+        'SourcingOnDemandOrder',
+    ];
 }
