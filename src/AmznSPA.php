@@ -18,6 +18,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\CatalogItemsResource $catalog_items
  * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
  * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
+ * @property \Jasara\AmznSPA\Resources\MerchantFulfillmentResource $merchant_fulfillment
  * @property \Jasara\AmznSPA\Resources\OrdersResource $orders
  **/
 class AmznSPA
