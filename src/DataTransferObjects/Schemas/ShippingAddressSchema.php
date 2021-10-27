@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas;
 use Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator;
 use Spatie\DataTransferObject\DataTransferObject;
 
-class OrderAddressSchema extends DataTransferObject
+class ShippingAddressSchema extends DataTransferObject
 {
     #[MaxLengthValidator(50)]
     public string $name;

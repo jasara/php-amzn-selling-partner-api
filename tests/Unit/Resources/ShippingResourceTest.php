@@ -29,8 +29,8 @@ class ShippingResourceTest extends UnitTestCase
 
         $request = new CreateShipmentRequest(
             client_reference_id:Str::random(),
-            ship_to: $this->setupOrderAddress(),
-            ship_from: $this->setupOrderAddress(),
+            ship_to: $this->setupShippingAddress(),
+            ship_from: $this->setupShippingAddress(),
             containers:[
                 ['container_type'=> 'PACKAGE',
                     'container_reference_id'=> Str::random(),
@@ -182,8 +182,8 @@ class ShippingResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/purchase-shipment');
         $request = new PurchaseShipmentRequest(
             client_reference_id:Str::random(),
-            ship_to:$this->setupOrderAddress(),
-            ship_from:$this->setupOrderAddress(),
+            ship_to:$this->setupShippingAddress(),
+            ship_from:$this->setupShippingAddress(),
             service_type:'Amazon Shipping Ground',
             containers:[
                 [
@@ -243,8 +243,8 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/get-rates');
         $request = new GetRatesRequest(
-            ship_to:$this->setupOrderAddress(),
-            ship_from:$this->setupOrderAddress(),
+            ship_to:$this->setupShippingAddress(),
+            ship_from:$this->setupShippingAddress(),
             service_types:[
                 ['service_type'=>'Amazon Shipping Ground'],
             ],
