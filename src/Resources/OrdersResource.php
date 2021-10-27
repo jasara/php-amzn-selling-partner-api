@@ -8,6 +8,8 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderBuyerInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsBuyerInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -87,5 +89,19 @@ class OrdersResource implements ResourceContract
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/address');
 
         return new GetOrderAddressResponse($response);
+    }
+
+    public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
+
+        return new GetOrderItemsResponse($response);
+    }
+
+    public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems/buyerInfo');
+
+        return new GetOrderItemsBuyerInfoResponse($response);
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderBuyerInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsBuyerInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -113,11 +115,53 @@ class OrdersResourceTest extends UnitTestCase
         $response = $amzn->orders->getOrderAddress($order_id);
 
         $this->assertInstanceOf(GetOrderAddressResponse::class, $response);
-        // $this->assertEquals('902-1845936-5435065', $response->payload->amazon_order_id);
+        $this->assertEquals('902-1845936-5435065', $response->payload->amazon_order_id);
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/address', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGetOrderItems()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order-items');
+
+        $order_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->getOrderItems($order_id);
+
+        $this->assertInstanceOf(GetOrderItemsResponse::class, $response);
+        $this->assertEquals('902-1845936-5435065', $response->payload->amazon_order_id);
+
+        $http->assertSent(function (Request $request) use ($order_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGetOrderItemsBuyerInfo()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order-items-buyer-info');
+
+        $order_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->getOrderItemsBuyerInfo($order_id);
+
+        $this->assertInstanceOf(GetOrderItemsBuyerInfoResponse::class, $response);
+        $this->assertEquals('JPY', $response->payload->order_items[0]->gift_wrap_price->currency_code);
+
+        $http->assertSent(function (Request $request) use ($order_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems/buyerInfo', $request->url());
 
             return true;
         });
