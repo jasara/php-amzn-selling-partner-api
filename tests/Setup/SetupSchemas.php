@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ContactSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\OrderAddressSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
 
 trait SetupSchemas
 {
@@ -32,9 +32,9 @@ trait SetupSchemas
         );
     }
 
-    public function setupOrderAddress(): OrderAddressSchema
+    public function setupShippingAddress(): ShippingAddressSchema
     {
-        return new OrderAddressSchema(
+        return new ShippingAddressSchema(
             name: Str::random(),
             address_line_1: Str::random(),
             address_line_2: Str::random(),
