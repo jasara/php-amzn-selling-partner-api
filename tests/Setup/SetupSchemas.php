@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ContactSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\OrderAddressSchema;
 
 trait SetupSchemas
 {
@@ -28,6 +29,19 @@ trait SetupSchemas
             name: Str::random(),
             phone: Str::random(),
             email: Str::random(),
+        );
+    }
+
+    public function setupOrderAddress(): OrderAddressSchema
+    {
+        return new OrderAddressSchema(
+            name: Str::random(),
+            address_line_1: Str::random(),
+            address_line_2: Str::random(),
+            city: Str::random(),
+            state_or_region: 'NY',
+            country_code: 'US',
+            postal_code: '21222',
         );
     }
 

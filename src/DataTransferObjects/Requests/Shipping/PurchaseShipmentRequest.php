@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Requests\Shipping;
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\OrderAddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Shipping\ContainerListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Shipping\ContainerSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Shipping\LabelSpecificationSchema;
@@ -19,9 +19,9 @@ class PurchaseShipmentRequest extends BaseRequest
     #[MaxLengthValidator(40)]
     public string $client_reference_id;
 
-    public AddressSchema $ship_to;
+    public OrderAddressSchema $ship_to;
 
-    public AddressSchema $ship_from;
+    public OrderAddressSchema $ship_from;
 
     #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $ship_date;

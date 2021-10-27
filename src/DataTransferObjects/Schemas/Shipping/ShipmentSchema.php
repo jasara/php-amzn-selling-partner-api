@@ -2,7 +2,7 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\Shipping;
 
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\OrderAddressSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
@@ -13,9 +13,9 @@ class ShipmentSchema extends DataTransferObject
 
     public string $client_reference_id;
 
-    public AddressSchema $ship_from;
+    public OrderAddressSchema $ship_from;
 
-    public AddressSchema $ship_to;
+    public OrderAddressSchema $ship_to;
 
     public ?AcceptedRateSchema $accepted_rate;
 
