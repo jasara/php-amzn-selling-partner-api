@@ -6,6 +6,9 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderAddressResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderBuyerInfoResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -63,5 +66,26 @@ class OrdersResource implements ResourceContract
         ]));
 
         return new GetOrdersResponse($response);
+    }
+
+    public function getOrder(string $order_id): GetOrderResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
+
+        return new GetOrderResponse($response);
+    }
+
+    public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/buyerInfo');
+
+        return new GetOrderBuyerInfoResponse($response);
+    }
+
+    public function getOrderAddress(string $order_id): GetOrderAddressResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/address');
+
+        return new GetOrderAddressResponse($response);
     }
 }

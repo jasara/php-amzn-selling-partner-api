@@ -119,21 +119,21 @@ class ResourceGetter
         );
     }
 
-    public function getOrders(): OrdersResource
-    {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new OrdersResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
-    }
-
     public function getShipping(): ShippingResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();
 
         return new ShippingResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
+    public function getOrders(): OrdersResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new OrdersResource(
             $http,
             $this->config->getMarketplace()->getBaseUrl(),
         );

@@ -42,13 +42,13 @@ class OrderSchema extends DataTransferObject
 
     public ?int $number_of_items_unshipped;
 
+    #[CastWith(ArrayCaster::class, itemType: PaymentExecutionDetailItemSchema::class)]
     public ?PaymentExecutionDetailItemListSchema $payment_execution_detail;
 
     #[StringEnumValidator(['COD', 'CVS', 'Other'])]
     public ?string $payment_method;
 
-    #[CastWith(ArrayCaster::class)]
-    public ?PaymentMethodDetailItemListSchema $payment_method_details;
+    public ?array $payment_method_details;
 
     public ?string $marketplace_id;
 
@@ -104,5 +104,5 @@ class OrderSchema extends DataTransferObject
 
     public ?AddressSchema $shipping_address;
 
-    public BuyerInfoSchema $buyer_info;
+    public ?BuyerInfoSchema $buyer_info;
 }

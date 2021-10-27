@@ -1,0 +1,48 @@
+{
+    "payload": {
+        "AmazonOrderId": "921-3175655-0452641",
+        "PurchaseDate": "2019-05-07T15:42:57.058Z",
+        "LastUpdateDate": "2019-05-08T21:59:59Z",
+        "OrderStatus": "Shipped",
+        "FulfillmentChannel": "AFN",
+        "SalesChannel": "Amazon.de",
+        "ShipServiceLevel": "Standard",
+        "OrderTotal": {
+            "CurrencyCode": "EUR",
+            "Amount": "100.00"
+        },
+        "NumberOfItemsShipped": 1,
+        "NumberOfItemsUnshipped": 0,
+        "PaymentMethod": "Other",
+        "PaymentMethodDetails": [
+            "Invoice"
+        ],
+        "IsReplacementOrder": false,
+        "MarketplaceId": "A1PA6795UKMFR9",
+        "ShipmentServiceLevelCategory": "Standard",
+        "OrderType": "StandardOrder",
+        "EarliestShipDate": "1970-01-19T03:59:27Z",
+        "LatestShipDate": "2019-05-08T21:59:59Z",
+        "EarliestDeliveryDate": "2019-05-10T21:59:59Z",
+        "LatestDeliveryDate": "2019-05-12T21:59:59Z",
+        "IsBusinessOrder": true,
+        "IsPrime": false,
+        "IsGlobalExpressEnabled": false,
+        "IsPremiumOrder": false,
+        "IsSoldByAB": true,
+        "DefaultShipFromLocationAddress": {
+            "Name": "MFNIntegrationTestMerchant",
+            "AddressLine1": "2201 WESTLAKE AVE",
+            "City": "SEATTLE",
+            "StateOrProvinceCode": "WA",
+            "PostalCode": "98121-2778",
+            "CountryCode": "US",
+            "Phone": "+1 480-386-0930 ext. 73824",
+            "AddressType": "Commercial"
+        },
+        "FulfillmentInstruction": {
+            "FulfillmentSupplySourceId": "sampleSupplySourceId"
+        },
+        "IsISPU": false
+    }
+}
