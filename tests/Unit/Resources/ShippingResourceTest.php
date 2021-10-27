@@ -29,39 +29,41 @@ class ShippingResourceTest extends UnitTestCase
 
         $request = new CreateShipmentRequest(
             client_reference_id:Str::random(),
-            ship_to: $this->setupAddress(),
-            ship_from: $this->setupAddress(),
-            containers:[[
-                'container_type'=> 'PACKAGE',
-                'container_reference_id'=> Str::random(),
-                'value'=>[
-                    'unit'=> 'USD',
-                    'value'=> 29.98,
-                ],
-                'dimensions'=>[
-                    'height'=> 12,
-                    'length'=> 36,
-                    'width'=> 15,
-                    'unit'=> 'CM',
-                ],
-                'items'=>[
-                    'item'=>  [
-                        'title'=> Str::random(),
-                        'quantity'=> 2,
-                        'unit_price'=> [
-                            'unit'=> 'USD',
-                            'value'=> 14.99,
+            ship_to: $this->setupOrderAddress(),
+            ship_from: $this->setupOrderAddress(),
+            containers:[
+                ['container_type'=> 'PACKAGE',
+                    'container_reference_id'=> Str::random(),
+                    'value'=>[
+                        'unit'=> 'USD',
+                        'value'=> 25,
+                    ],
+                    'dimensions'=>[
+                        'height'=> 12,
+                        'length'=> 36,
+                        'width'=> 15,
+                        'unit'=> 'CM',
+                    ],
+                    'items'=>[
+
+                        ['title'=> Str::random(),
+                            'quantity'=> 2,
+                            'unit_price'=> [
+                                'unit'=> 'USD',
+                                'value'=> 14.99,
+                            ],
+                            'unit_weight'=> [
+                                'unit'=> 'lb',
+                                'value'=> 0.08164656,
+                            ],
                         ],
-                        'unit_weight'=> [
-                            'unit'=> 'lb',
-                            'value'=> 0.08164656,
-                        ],
-                    ], ],
-                'weight'=>[
-                    'unit'=> 'lb',
-                    'value'=> 0.08164656,
-                ],
-            ]]
+                    ],
+
+                    'weight'=>[
+                        'unit'=> 'lb',
+                        'value'=> 0.08164656,
+                    ],
+                ], ]
         );
 
         $amzn = new AmznSPA($config);
@@ -180,8 +182,8 @@ class ShippingResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/purchase-shipment');
         $request = new PurchaseShipmentRequest(
             client_reference_id:Str::random(),
-            ship_to:$this->setupAddress(),
-            ship_from:$this->setupAddress(),
+            ship_to:$this->setupOrderAddress(),
+            ship_from:$this->setupOrderAddress(),
             service_type:'Amazon Shipping Ground',
             containers:[
                 [
@@ -241,8 +243,8 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/get-rates');
         $request = new GetRatesRequest(
-            ship_to:$this->setupAddress(),
-            ship_from:$this->setupAddress(),
+            ship_to:$this->setupOrderAddress(),
+            ship_from:$this->setupOrderAddress(),
             service_types:[
                 ['service_type'=>'Amazon Shipping Ground'],
             ],

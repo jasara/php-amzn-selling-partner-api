@@ -9,7 +9,6 @@
             "city": "Los Angeles",
             "countryCode": "US",
             "stateOrRegion": "CA",
-            "stateOrProvinceCode": "CA",
             "email": "testEmail1@amazon.com",
             "phoneNumber": "1234567890"
         },
@@ -20,7 +19,6 @@
             "city": "Los Angeles",
             "countryCode": "US",
             "stateOrRegion": "CA",
-            "stateOrProvinceCode": "CA",
             "email": "testEmail2@amazon.com",
             "phoneNumber": "1234567890"
         },
