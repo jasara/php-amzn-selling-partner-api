@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Resources;
 
+use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
@@ -26,4 +27,14 @@ class FulfillmentOutboundResource implements ResourceContract
 
         return new GetFulfillmentPreviewResponse($response);
     }
+
+    // public function listAllFulfillmentOrders(?CarbonImmutable $query_start_date = null, ?string $next_token = null): ListAllFulfillmentOrdersResponse
+    // {
+    //     $response = $this->http->get($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', [
+    //         'queryStartDate'=> $query_start_date->toDateString(),
+    //         'nextToken'=>$next_token,
+    //     ]);
+
+    //     return new ListAllFulfillmentOrdersResponse($response);
+    // }
 }
