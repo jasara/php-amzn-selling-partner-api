@@ -36,7 +36,7 @@ class OrdersResourceTest extends UnitTestCase
             marketplace_ids: ['ATVPDKIKX0DER'],
             fulfillment_channels:[],
             payment_methods:null,
-            buyer_email:'',
+            buyer_email:'tagrid@gmail.com',
             seller_order_id :'',
             max_results_per_page:10,
             easy_ship_shipment_statuses:[],
@@ -56,7 +56,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?max_results_per_page=10&store_chain_store_id=ISPU_StoreId', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?buyer_email=tagrid%40gmail.com&max_results_per_page=10&store_chain_store_id=ISPU_StoreId', $request->url());
 
             return true;
         });
