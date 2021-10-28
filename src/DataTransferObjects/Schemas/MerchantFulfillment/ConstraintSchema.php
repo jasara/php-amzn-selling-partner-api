@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Spatie\DataTransferObject\DataTransferObject;
 
-class constraintSchema extends DataTransferObject
+class ConstraintSchema extends DataTransferObject
 {
     public ?string $validation_reg_ex;
 

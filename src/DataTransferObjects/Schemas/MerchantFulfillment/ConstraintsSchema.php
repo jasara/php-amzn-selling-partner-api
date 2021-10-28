@@ -9,7 +9,7 @@ class ConstraintsSchema extends Collection
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): constraintSchema
+    public function offsetGet($key): ConstraintSchema
     {
         return parent::offsetGet($key);
     }

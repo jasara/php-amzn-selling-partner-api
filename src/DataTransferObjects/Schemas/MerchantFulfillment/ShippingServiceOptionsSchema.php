@@ -16,7 +16,7 @@ class ShippingServiceOptionsSchema extends DataTransferObject
 
     public bool $carrier_will_pick_up;
 
-    #[StringEnumValidator(['CarrierWillPickUp', 'ShipperWillDropOff', 'NoPreference	'])]
+    #[StringEnumValidator(['CarrierWillPickUp', 'ShipperWillDropOff', 'NoPreference'])]
     public ?string $carrier_will_pick_up_option;
 
     #[StringEnumValidator(AmazonEnums::LABEL_FORMAT)]
