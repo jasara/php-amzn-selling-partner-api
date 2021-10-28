@@ -1,0 +1,56 @@
+{
+    "payload": {
+        "fulfillmentPreviews": [
+            {
+                "shippingSpeedCategory": "Standard",
+                "isFulfillable": true,
+                "isCODCapable": true,
+                "estimatedShippingWeight": {
+                    "unit": "KG",
+                    "value": "22"
+                },
+                "estimatedFees": [
+                    {
+                        "name": "FBAPerUnitFulfillmentFee",
+                        "amount": {
+                            "currencyCode": "USD",
+                            "value": "19.71"
+                        }
+                    }
+                ],
+                "fulfillmentPreviewShipments": [
+                    {
+                        "earliestShipDate": "2020-02-11T18:16:16Z",
+                        "latestShipDate": "2020-02-11T18:16:16Z",
+                        "earliestArrivalDate": "2020-02-17T18:16:16Z",
+                        "latestArrivalDate": "2020-02-17T18:16:16Z",
+                        "fulfillmentPreviewItems": [
+                            {
+                                "sellerSku": "PSMM-TEST-SKU-Jan-21_19_39_23-0788",
+                                "quantity": 1,
+                                "sellerFulfillmentOrderItemId": "OrderItemID2",
+                                "estimatedShippingWeight": {
+                                    "unit": "POUNDS",
+                                    "value": "20"
+                                },
+                                "shippingWeightCalculationMethod": "Package"
+                            }
+                        ]
+                    }
+                ],
+                "unfulfillablePreviewItems": [],
+                "marketplaceId": "ATVPDKIKX0DER",
+                "featureConstraints": [
+                    {
+                        "featureName": "BLANK_BOX",
+                        "featureFulfillmentPolicy": "Required"
+                    },
+                    {
+                        "featureName": "BLOCK_AMZL",
+                        "featureFulfillmentPolicy": "Required"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -4,6 +4,8 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FulfillmentOutboundResource implements ResourceContract
@@ -16,5 +18,12 @@ class FulfillmentOutboundResource implements ResourceContract
         private AmznSPAHttp $http,
         private string $endpoint,
     ) {
+    }
+
+    public function getFulfillmentPreview(GetFulfillmentPreviewRequest $request): GetFulfillmentPreviewResponse
+    {
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/preview', (array) $request->toArrayObject());
+
+        return new GetFulfillmentPreviewResponse($response);
     }
 }

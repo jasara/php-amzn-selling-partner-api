@@ -675,4 +675,11 @@ class AmazonEnums
         'ZPL300',
         'ShippingServiceDefault',
     ];
+
+    public const NAME = [
+        'FBAPerUnitFulfillmentFee',
+        'FBAPerOrderFulfillmentFee',
+        'FBATransportationFee',
+        'FBAFulfillmentCODFee',
+    ];
 }
