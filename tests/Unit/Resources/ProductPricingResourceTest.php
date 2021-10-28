@@ -13,7 +13,7 @@ class ProductPricingResourceTest extends UnitTestCase
 {
     public function testGetPricing()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-pricing');
+        list($config, $http) = $this->setupConfigWithFakeHttp('product-pricing/get-pricing');
 
         $item_type = 'asin';
         $marketplace_id = 'ATVPDKIKX0DER';
