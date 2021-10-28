@@ -90,7 +90,7 @@ class OrderSchema extends DataTransferObject
 
     public ?bool $is_estimated_ship_date_set;
 
-    public ?bool $is_sold_by_ab; //check IsSoldByAB if it is camel case
+    public ?bool $is_sold_by_ab;
 
     public ?ShippingAddressSchema $default_ship_from_location_address;
 

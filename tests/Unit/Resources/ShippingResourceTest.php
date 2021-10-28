@@ -45,7 +45,6 @@ class ShippingResourceTest extends UnitTestCase
                         'unit'=> 'CM',
                     ],
                     'items'=>[
-
                         ['title'=> Str::random(),
                             'quantity'=> 2,
                             'unit_price'=> [
