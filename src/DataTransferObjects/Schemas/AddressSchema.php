@@ -29,4 +29,9 @@ class AddressSchema extends DataTransferObject
 
     #[MaxLengthValidator(30)]
     public string $postal_code;
+
+    public ?string $email;
+
+    #[MaxLengthValidator(30)]
+    public ?string $phone;
 }
