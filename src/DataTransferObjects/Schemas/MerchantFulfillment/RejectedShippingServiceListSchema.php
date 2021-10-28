@@ -4,12 +4,12 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Illuminate\Support\Collection;
 
-class ConstraintsSchema extends Collection
+class RejectedShippingServiceListSchema extends Collection
 {
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): ConstraintSchema
+    public function offsetGet($key): RejectedShippingServiceSchema
     {
         return parent::offsetGet($key);
     }

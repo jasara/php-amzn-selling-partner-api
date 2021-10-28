@@ -20,7 +20,7 @@ class CreateShipmentRequest extends BaseRequest
     public ?string $shipping_service_offer_id;
 
     #[StringEnumValidator(['None', 'LQHazmat'])]
-     public ?string $hazmat_type;
+    public ?string $hazmat_type;
 
     public ?LabelFormatOptionRequestSchema $label_format_option;
 

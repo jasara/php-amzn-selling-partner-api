@@ -4,12 +4,12 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 
 use Illuminate\Support\Collection;
 
-class ConstraintsSchema extends Collection
+class TemporarilyUnavailableCarrierListSchema extends Collection
 {
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): ConstraintSchema
+    public function offsetGet($key): TemporarilyUnavailableCarrierSchema
     {
         return parent::offsetGet($key);
     }
