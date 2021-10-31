@@ -109,6 +109,16 @@ class ResourceGetter
         );
     }
 
+    public function getMerchantFulfillment(): MerchantFulfillmentResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new MerchantFulfillmentResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     public function getFbaInboundEligibility(): FbaInboundEligibilityResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();

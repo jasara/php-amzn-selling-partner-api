@@ -33,7 +33,7 @@ class ProductPricingResource implements ResourceContract
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($asins);
         $this->validateIsArrayOfStrings($skus);
-        $this->validateStringEnum($item_type, ['asin', 'sku']);
+        $this->validateStringEnum($item_type, ['Asin', 'Sku']);
         if ($item_condition) {
             $this->validateStringEnum($item_condition, AmazonEnums::ITEM_CONDITION);
         }
@@ -63,7 +63,7 @@ class ProductPricingResource implements ResourceContract
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($asins);
         $this->validateIsArrayOfStrings($skus);
-        $this->validateStringEnum($item_type, ['asin', 'sku']);
+        $this->validateStringEnum($item_type, ['Asin', 'Sku']);
         if ($customer_type) {
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
