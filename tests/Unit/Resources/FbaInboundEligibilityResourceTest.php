@@ -13,16 +13,12 @@ class FbaInboundEligibilityResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fba-inbound-eligibility/get-item-eligibility-preview');
 
-        $marketplace_ids = ['ATVPDKIKX0DER'];
-        $asin = 'hello';
-        $program = 'INBOUND';
-
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fba_inbound_eligibility->getItemEligibilityPreview(
-            marketplace_ids:$marketplace_ids,
-            asin:$asin,
-            program:$program
+            marketplace_ids:['ATVPDKIKX0DER'],
+            asin: 'hello',
+            program: 'INBOUND'
         );
 
         $this->assertInstanceOf(GetItemEligibilityPreviewResponse::class, $response);

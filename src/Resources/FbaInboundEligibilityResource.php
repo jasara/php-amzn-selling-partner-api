@@ -33,6 +33,6 @@ class FbaInboundEligibilityResource implements ResourceContract
             'program'=>$program,
         ]));
 
-        return new  GetItemEligibilityPreviewResponse($response);
+        return new GetItemEligibilityPreviewResponse($response);
     }
 }
