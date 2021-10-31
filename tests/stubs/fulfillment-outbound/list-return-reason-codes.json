@@ -1,0 +1,54 @@
+{
+    "payload": {
+        "reasonCodeDetails": [
+            {
+                "returnReasonCode": "CR-UNWANTED_ITEM",
+                "description": "No longer needed/wanted"
+            },
+            {
+                "returnReasonCode": "AMZ-PG-BAD-DESC",
+                "description": "Different from website description"
+            },
+            {
+                "returnReasonCode": "CR-DEFECTIVE",
+                "description": "Defective/Does not work properly"
+            },
+            {
+                "returnReasonCode": "CR-ORDERED_WRONG_ITEM",
+                "description": "Accidental order"
+            },
+            {
+                "returnReasonCode": "CR-FOUND_BETTER_PRICE",
+                "description": "Better price available"
+            },
+            {
+                "returnReasonCode": "CR-DAMAGED_BY_FC",
+                "description": "Damaged due to inappropriate packaging"
+            },
+            {
+                "returnReasonCode": "CR-MISSED_ESTIMATED_DELIVERY",
+                "description": "Missed estimated delivery date"
+            },
+            {
+                "returnReasonCode": "CR-MISSING_PARTS",
+                "description": "Missing parts or accessories"
+            },
+            {
+                "returnReasonCode": "CR-DAMAGED_BY_CARRIER",
+                "description": "Damaged during shipping"
+            },
+            {
+                "returnReasonCode": "CR-SWITCHEROO",
+                "description": "Different from what was ordered"
+            },
+            {
+                "returnReasonCode": "CR-EXTRA_ITEM",
+                "description": "Arrived in addition to what was ordered"
+            },
+            {
+                "returnReasonCode": "CR-UNAUTHORIZED_PURCHASE",
+                "description": "Unauthorized purchase"
+            }
+        ]
+    }
+}

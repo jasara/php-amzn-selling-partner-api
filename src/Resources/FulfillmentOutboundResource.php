@@ -4,9 +4,15 @@ namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\AmznSPAHttp;
+use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentOrderRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FulfillmentOutboundResource implements ResourceContract
@@ -28,13 +34,40 @@ class FulfillmentOutboundResource implements ResourceContract
         return new GetFulfillmentPreviewResponse($response);
     }
 
-    // public function listAllFulfillmentOrders(?CarbonImmutable $query_start_date = null, ?string $next_token = null): ListAllFulfillmentOrdersResponse
-    // {
-    //     $response = $this->http->get($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', [
-    //         'queryStartDate'=> $query_start_date->toDateString(),
-    //         'nextToken'=>$next_token,
-    //     ]);
+    public function listAllFulfillmentOrders(?CarbonImmutable $query_start_date = null, ?string $next_token = null): ListAllFulfillmentOrdersResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', [
+            'queryStartDate'=> $query_start_date->toDateString(),
+            'nextToken'=>$next_token,
+        ]);
 
-    //     return new ListAllFulfillmentOrdersResponse($response);
-    // }
+        return new ListAllFulfillmentOrdersResponse($response);
+    }
+
+    public function createFulfillmentOrder(CreateFulfillmentOrderRequest $request): CreateFulfillmentOrderResponse
+    {
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', (array) $request->toArrayObject());
+
+        return new CreateFulfillmentOrderResponse($response);
+    }
+
+    public function getPackageTrackingDetails(int $package_number): GetPackageTrackingDetailsResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'tracking');
+
+        return new GetPackageTrackingDetailsResponse($response);
+    }
+
+    public function listReturnReasonCodes(string $seller_sku, ?string $marketplace_id, ?string $seller_fulfillment_order_id, string $language): ListReturnReasonCodesResponse
+    {
+        $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'returnReasonCodes', array_filter([
+            'MarketplaceId' => $marketplace_id,
+            'sellerSku' => $seller_sku,
+            'sellerFulfillmentOrderId'=> $seller_fulfillment_order_id,
+            'language' => $language,
+        ]));
+
+        return new ListReturnReasonCodesResponse($response);
+    }
 }

@@ -682,4 +682,56 @@ class AmazonEnums
         'FBATransportationFee',
         'FBAFulfillmentCODFee',
     ];
+
+    public const FULFILLMENTORDERSTATUS = [
+        'NEW',
+        'RECEIVED',
+        'PLANNING',
+        'PROCESSING',
+        'CANCELLED',
+        'COMPLETE',
+        'COMPLETEPARTIALLED',
+        'UNFULFILLABLE',
+        'INVALID',
+    ];
+
+    public const CURRENTSTATUS = [
+        'IN_TRANSIT',
+        'DELIVERED',
+        'RETURNING',
+        'RETURNED',
+        'UNDELIVERABLE',
+        'DELAYED',
+        'AVAILABLE_FOR_PICKUP',
+        'CUSTOMER_ACTION',
+    ];
+
+    public const ADDITIONALLOCATIONINFO = [
+        'AS_INSTRUCTED',
+        'CARPORT',
+        'CUSTOMER_PICKUP',
+        'DECK',
+        'DOOR_PERSON',
+        'FRONT_DESK',
+        'FRONT_DOOR',
+        'GARAGE',
+        'GUARD',
+        'MAIL_ROOM',
+        'MAIL_SLOT',
+        'MAILBOX',
+        'MC_BOY',
+        'MC_GIRL',
+        'MC_MAN',
+        'MC_WOMAN',
+        'NEIGHBOR',
+        'OFFICE',
+        'OUTBUILDING',
+        'PATIO',
+        'PORCH',
+        'REAR_DOOR',
+        'RECEPTIONIST',
+        'RECEIVER',
+        'SECURE_LOCATION',
+        'SIDE_DOOR',
+    ];
 }

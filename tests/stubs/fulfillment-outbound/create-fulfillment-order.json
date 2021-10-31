@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "code": "InvalidInput",
+            "message": "Value  for parameter CountryCode is invalid. Reason: InvalidValue.",
+            "details": ""
+        }
+    ]
+}
