@@ -1,0 +1,8 @@
+{
+    "payload": {
+        "asin": "TEST_CASE_200",
+        "marketplaceId": "TEST_CASE_200",
+        "program": "INBOUND",
+        "isEligibleForProgram": true
+    }
+}

@@ -4,7 +4,6 @@ namespace Jasara\AmznSPA\DataTransferObjects\Requests\Feeds;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
-use Jasara\AmznSPA\DataTransferObjects\Validators\StringArrayEnumValidator;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 
 class CreateFeedSpecification extends BaseRequest
