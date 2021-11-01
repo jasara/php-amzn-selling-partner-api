@@ -13,9 +13,9 @@ class ProductPricingResourceTest extends UnitTestCase
 {
     public function testGetPricing()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-pricing');
+        list($config, $http) = $this->setupConfigWithFakeHttp('product-pricing/get-pricing');
 
-        $item_type = 'asin';
+        $item_type = 'Asin';
         $marketplace_id = 'ATVPDKIKX0DER';
 
         $amzn = new AmznSPA($config);
@@ -35,7 +35,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/price?MarketplaceId=ATVPDKIKX0DER&ItemType=asin&ItemCondition=USED&OfferType=B2C', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/price?MarketplaceId=ATVPDKIKX0DER&ItemType=Asin&ItemCondition=USED&OfferType=B2C', $request->url());
 
             return true;
         });
@@ -45,7 +45,7 @@ class ProductPricingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-competitive-pricing');
 
-        $item_type = 'asin';
+        $item_type = 'Asin';
         $marketplace_id = 'ATVPDKIKX0DER';
 
         $amzn = new AmznSPA($config);
@@ -65,7 +65,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/competitivePrice?MarketplaceId=ATVPDKIKX0DER&ItemType=asin&CustomerType=Consumer', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/competitivePrice?MarketplaceId=ATVPDKIKX0DER&ItemType=Asin&CustomerType=Consumer', $request->url());
 
             return true;
         });
