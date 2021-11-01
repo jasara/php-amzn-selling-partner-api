@@ -280,6 +280,7 @@ class AmznSPAHttp
                 'Access to requested resource is denied',
                 'Invalid partyId',
                 'hasn\'t registered in FBA in marketplace',
+                'No MWS Authorization exists',
             ])) {
                 return true;
             }
