@@ -15,7 +15,7 @@ class FulfillmentOrderSchema extends DataTransferObject
 {
     public string $seller_fulfillment_order_id;
 
-    public ?string $marketplace_id; //should be required
+    public string $marketplace_id; //should be required
 
     public string $displayable_order_id;
 
