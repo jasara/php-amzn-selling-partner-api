@@ -734,4 +734,12 @@ class AmazonEnums
         'SECURE_LOCATION',
         'SIDE_DOOR',
     ];
+
+    public const RETURNITEMDISPOSITION = [
+        'Sellable',
+        'Defective',
+        'CustomerDamaged',
+        'CarrierDamaged',
+        'FulfillerDamaged',
+    ];
 }

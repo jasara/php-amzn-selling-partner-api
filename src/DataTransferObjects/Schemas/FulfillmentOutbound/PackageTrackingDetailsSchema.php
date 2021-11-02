@@ -4,7 +4,9 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
+use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
+use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class PackageTrackingDetailsSchema extends DataTransferObject
@@ -21,8 +23,10 @@ class PackageTrackingDetailsSchema extends DataTransferObject
 
     public ?string $carrier_url;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $ship_date;
 
+    #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $estimated_arrival_date;
 
     public ?TrackingAddressSchema $ship_to_address;

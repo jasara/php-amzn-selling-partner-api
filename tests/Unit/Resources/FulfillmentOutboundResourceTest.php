@@ -7,12 +7,16 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentOrderRequest;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
+// CreateFulfillmentOrderRequest      CreateFulfillmentReturnRequest
+
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class FulfillmentOutboundResourceTest extends UnitTestCase
@@ -151,6 +155,36 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/returnReasonCodes?MarketplaceId=ATVPDKIKX0DER', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testCreateFulfillmentReturn()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-outbound/create-fulfillment-return');
+
+        $seller_fulfillment_order_id = Str::random();
+        $request = new CreateFulfillmentReturnRequest(
+            items:[
+                'item'=>[
+                    'seller_return_item_id'=>'testReturn11',
+                    'seller_fulfillment_order_item_id' => 'OrderItemID2',
+                    'amazon_shipment_id' => 'D4yZjWZVN',
+                    'return_comment'=> 'TestReturn',
+                    'return_reason_code' =>'UNKNOWN_OTHER_REASON',
+                ],
+            ]
+        );
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_outbound->createFulfillmentReturn($seller_fulfillment_order_id, $request);
+
+        $this->assertInstanceOf(CreateFulfillmentReturnResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
+            $this->assertEquals('PUT', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', urldecode($request->url()));
 
             return true;
         });

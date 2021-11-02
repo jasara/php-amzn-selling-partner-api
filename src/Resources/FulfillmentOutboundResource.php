@@ -7,8 +7,10 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentOrderRequest;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
@@ -69,5 +71,12 @@ class FulfillmentOutboundResource implements ResourceContract
         ]));
 
         return new ListReturnReasonCodesResponse($response);
+    }
+
+    public function createFulfillmentReturn(string $seller_fulfillment_order_id, CreateFulfillmentReturnRequest $request): CreateFulfillmentReturnResponse
+    {
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', []);
+
+        return new CreateFulfillmentReturnResponse($response);
     }
 }
