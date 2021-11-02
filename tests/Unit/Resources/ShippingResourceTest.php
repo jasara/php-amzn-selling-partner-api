@@ -31,38 +31,7 @@ class ShippingResourceTest extends UnitTestCase
             client_reference_id: Str::random(),
             ship_to: $this->setupShippingAddress(),
             ship_from: $this->setupShippingAddress(),
-            containers: [
-                ['container_type' => 'PACKAGE',
-                    'container_reference_id' => Str::random(),
-                    'value' => [
-                        'unit' => 'USD',
-                        'value' => 25,
-                    ],
-                    'dimensions' => [
-                        'height' => 12,
-                        'length' => 36,
-                        'width' => 15,
-                        'unit' => 'CM',
-                    ],
-                    'items' => [
-                        ['title' => Str::random(),
-                            'quantity' => 2,
-                            'unit_price' => [
-                                'unit' => 'USD',
-                                'value' => 14.99,
-                            ],
-                            'unit_weight' => [
-                                'unit' => 'lb',
-                                'value' => 0.08164656,
-                            ],
-                        ],
-                    ],
-
-                    'weight' => [
-                        'unit' => 'lb',
-                        'value' => 0.08164656,
-                    ],
-                ], ]
+            containers: $this->setupContainers(),
         );
 
         $amzn = new AmznSPA($config);
@@ -184,40 +153,8 @@ class ShippingResourceTest extends UnitTestCase
             ship_to: $this->setupShippingAddress(),
             ship_from: $this->setupShippingAddress(),
             service_type: 'Amazon Shipping Ground',
-            containers: [
-                [
-                    'container_type' => 'PACKAGE',
-                    'container_reference_id' => Str::random(),
-                    'value' => [
-                        'unit' => 'USD',
-                        'value' => 29.98,
-                    ],
-                    'dimensions' => [
-                        'height' => 12,
-                        'length' => 36,
-                        'width' => 15,
-                        'unit' => 'CM',
-                    ],
-                    'items' => [
-                        'item' => [
-                            'title' => Str::random(),
-                            'quantity' => 2,
-                            'unit_price' => [
-                                'unit' => 'USD',
-                                'value' => 14.99,
-                            ],
-                            'unit_weight' => [
-                                'unit' => 'lb',
-                                'value' => 0.08164656,
-                            ],
-                        ],
-                    ],
-                    'weight' => [
-                        'unit' => 'lb',
-                        'value' => 0.08164656,
-                    ],
-                ], ],
-            Label_specification: [
+            containers: $this->setupContainers(),
+            label_specification: [
                 'label_format' => 'PNG',
                 'label_stock_size' => '4x6',
             ]
