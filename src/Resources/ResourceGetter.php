@@ -129,6 +129,16 @@ class ResourceGetter
         );
     }
 
+    public function getFbaInboundEligibility(): FbaInboundEligibilityResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new FbaInboundEligibilityResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     public function getOrders(): OrdersResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();
@@ -142,7 +152,7 @@ class ResourceGetter
     private function validateAndSetupHttpForStandardResource($grantless_resource = null): AmznSPAHttp
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        if (! $grantless_resource) {
+        if (!$grantless_resource) {
             $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
         }
 

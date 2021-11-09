@@ -32,5 +32,5 @@ class PurchaseShipmentRequest extends BaseRequest
     #[CastWith(ArrayCaster::class, itemType: ContainerSchema::class)]
     public ContainerListSchema $containers;
 
-    public LabelSpecificationSchema $Label_specification;
+    public LabelSpecificationSchema $label_specification;
 }

@@ -28,41 +28,10 @@ class ShippingResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/create-shipment');
 
         $request = new CreateShipmentRequest(
-            client_reference_id:Str::random(),
+            client_reference_id: Str::random(),
             ship_to: $this->setupShippingAddress(),
             ship_from: $this->setupShippingAddress(),
-            containers:[
-                ['container_type'=> 'PACKAGE',
-                    'container_reference_id'=> Str::random(),
-                    'value'=>[
-                        'unit'=> 'USD',
-                        'value'=> 25,
-                    ],
-                    'dimensions'=>[
-                        'height'=> 12,
-                        'length'=> 36,
-                        'width'=> 15,
-                        'unit'=> 'CM',
-                    ],
-                    'items'=>[
-                        ['title'=> Str::random(),
-                            'quantity'=> 2,
-                            'unit_price'=> [
-                                'unit'=> 'USD',
-                                'value'=> 14.99,
-                            ],
-                            'unit_weight'=> [
-                                'unit'=> 'lb',
-                                'value'=> 0.08164656,
-                            ],
-                        ],
-                    ],
-
-                    'weight'=>[
-                        'unit'=> 'lb',
-                        'value'=> 0.08164656,
-                    ],
-                ], ]
+            containers: $this->setupContainers(),
         );
 
         $amzn = new AmznSPA($config);
@@ -94,7 +63,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id, $request->url());
 
             return true;
         });
@@ -114,7 +83,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/cancel', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/cancel', $request->url());
 
             return true;
         });
@@ -124,10 +93,10 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/purchase-labels');
         $request = new PurchaseLabelsRequest(
-            rate_id:Str::random(),
-            label_specification:[
-                'label_format'=>'PNG',
-                'label_stock_size'=>'4x6',
+            rate_id: Str::random(),
+            label_specification: [
+                'label_format' => 'PNG',
+                'label_stock_size' => '4x6',
             ]
         );
 
@@ -142,7 +111,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/purchaseLabels', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/purchaseLabels', $request->url());
 
             return true;
         });
@@ -152,9 +121,9 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/retrieve-shipping-label');
         $request = new RetrieveShippingLabelRequest(
-            label_specification:[
-                'label_format'=>'PNG',
-                'label_stock_size'=>'4x6',
+            label_specification: [
+                'label_format' => 'PNG',
+                'label_stock_size' => '4x6',
             ]
         );
 
@@ -170,7 +139,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id, $tracking_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/containers' . '/' . $tracking_id . '/label', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/containers'.'/'.$tracking_id.'/label', $request->url());
 
             return true;
         });
@@ -180,46 +149,14 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/purchase-shipment');
         $request = new PurchaseShipmentRequest(
-            client_reference_id:Str::random(),
-            ship_to:$this->setupShippingAddress(),
-            ship_from:$this->setupShippingAddress(),
-            service_type:'Amazon Shipping Ground',
-            containers:[
-                [
-                    'container_type'=> 'PACKAGE',
-                    'container_reference_id'=> Str::random(),
-                    'value'=>[
-                        'unit'=> 'USD',
-                        'value'=> 29.98,
-                    ],
-                    'dimensions'=>[
-                        'height'=> 12,
-                        'length'=> 36,
-                        'width'=> 15,
-                        'unit'=> 'CM',
-                    ],
-                    'items'=>[
-                        'item'=>  [
-                            'title'=> Str::random(),
-                            'quantity'=> 2,
-                            'unit_price'=> [
-                                'unit'=> 'USD',
-                                'value'=> 14.99,
-                            ],
-                            'unit_weight'=> [
-                                'unit'=> 'lb',
-                                'value'=> 0.08164656,
-                            ],
-                        ],
-                    ],
-                    'weight'=>[
-                        'unit'=> 'lb',
-                        'value'=> 0.08164656,
-                    ],
-                ], ],
-            Label_specification:[
-                'label_format'=>'PNG',
-                'label_stock_size'=>'4x6',
+            client_reference_id: Str::random(),
+            ship_to: $this->setupShippingAddress(),
+            ship_from: $this->setupShippingAddress(),
+            service_type: 'Amazon Shipping Ground',
+            containers: $this->setupContainers(),
+            label_specification: [
+                'label_format' => 'PNG',
+                'label_stock_size' => '4x6',
             ]
         );
 
@@ -242,22 +179,22 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/get-rates');
         $request = new GetRatesRequest(
-            ship_to:$this->setupShippingAddress(),
-            ship_from:$this->setupShippingAddress(),
-            service_types:[
-                ['service_type'=>'Amazon Shipping Ground'],
+            ship_to: $this->setupShippingAddress(),
+            ship_from: $this->setupShippingAddress(),
+            service_types: [
+                ['service_type' => 'Amazon Shipping Ground'],
             ],
-            container_specifications:[
+            container_specifications: [
                 [
-                    'dimensions'=> [
-                        'height'=> 10,
-                        'length'=> 10,
-                        'width'=> 15,
-                        'unit'=> 'CM',
+                    'dimensions' => [
+                        'height' => 10,
+                        'length' => 10,
+                        'width' => 15,
+                        'unit' => 'CM',
                     ],
-                    'weight'=> [
-                        'unit'=>'lb',
-                        'value'=> 10,
+                    'weight' => [
+                        'unit' => 'lb',
+                        'value' => 10,
                     ],
                 ],
             ]
@@ -310,7 +247,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($tracking_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/tracking/' . $tracking_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/tracking/'.$tracking_id, $request->url());
 
             return true;
         });

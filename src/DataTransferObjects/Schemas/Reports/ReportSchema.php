@@ -35,5 +35,8 @@ class ReportSchema extends DataTransferObject
     #[CastWith(CarbonFromStringCaster::class)]
     public ?CarbonImmutable $processing_end_time;
 
+    #[StringEnumValidator(AmazonEnums::PROCESSING_STATUSES)]
+    public string $processing_status;
+
     public ?string $report_document_id;
 }

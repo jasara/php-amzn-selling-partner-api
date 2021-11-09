@@ -11,7 +11,7 @@ class AuthorizationResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/authorization/v1/';
+    public const BASE_PATH = '/authorization/v1/';
 
     public function __construct(
         private AmznSPAHttp $http,

@@ -241,6 +241,10 @@ class AmznSPAHttp
 
     private function handleRequestException(RequestException $e, bool $grantless)
     {
+        if (! $e->response->json()) {
+            throw $e;
+        }
+
         if (! $this->shouldRefreshToken($e->response->json())) {
             throw $e;
         }
@@ -280,6 +284,7 @@ class AmznSPAHttp
                 'Access to requested resource is denied',
                 'Invalid partyId',
                 'hasn\'t registered in FBA in marketplace',
+                'No MWS Authorization exists',
             ])) {
                 return true;
             }
@@ -293,11 +298,13 @@ class AmznSPAHttp
         $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
         $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
 
+        $response_data = (isset($e->response) && $e->response->json()) ? json_encode($this->cleanData($e->response->json())) : null;
+
         $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
             'unsigned_request_headers' => $request_headers,
             'request_data' => $this->request ? json_encode($this->cleanData($this->request->data())) : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
-            'response_data' => isset($e->response) ? json_encode($this->cleanData($e->response->json())) : null,
+            'response_data' => $response_data,
             'response_code' => isset($e->response) ? $e->response->status() : null,
         ]);
     }

@@ -32,8 +32,6 @@ class AddressSchema extends DataTransferObject
 
     public ?string $email;
 
-    public ?array $copy_emails;
-
     #[MaxLengthValidator(30)]
     public ?string $phone;
 }

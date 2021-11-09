@@ -8,5 +8,5 @@ class ShippingPromiseSetSchema extends DataTransferObject
 {
     public ?TimeRangeSchema $delivery_window;
 
-    public ?TimeRangeSchema  $receive_window;
+    public ?TimeRangeSchema $receive_window;
 }
