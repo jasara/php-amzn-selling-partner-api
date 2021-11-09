@@ -6,7 +6,6 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
@@ -92,7 +91,7 @@ class OrderSchema extends DataTransferObject
 
     public ?bool $is_sold_by_ab;
 
-    public ?ShippingAddressSchema $default_ship_from_location_address;
+    public ?OrderAddressDetailSchema $default_ship_from_location_address;
 
     public ?FulfillmentInstructionSchema $fulfillment_instruction;
 
@@ -102,7 +101,7 @@ class OrderSchema extends DataTransferObject
 
     public ?string $seller_display_name;
 
-    public ?ShippingAddressSchema $shipping_address;
+    public ?OrderAddressDetailSchema $shipping_address;
 
     public ?BuyerInfoSchema $buyer_info;
 }

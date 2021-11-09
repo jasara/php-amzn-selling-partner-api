@@ -48,23 +48,23 @@ class OrdersResource implements ResourceContract
         $this->validateIsArrayOfStrings($order_statuses);
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
-            'created_after'=>$created_after,
-            'created_before'=>$created_before,
-            'last_updated_after'=>$last_updated_after,
-            'last_updated_before'=>$last_updated_before,
-            'order_statuses'=>$order_statuses,
-            'fulfillment_channels'=>$fulfillment_channels,
-            'payment_methods'=>$payment_methods,
-            'buyer_email'=>$buyer_email,
-            'seller_order_id'=>$seller_order_id,
-            'max_results_per_page'=>$max_results_per_page,
-            'easy_ship_shipment_statuses'=>$easy_ship_shipment_statuses,
-            'next_token'=>$next_token,
-            'amazon_order_ids'=>$amazon_order_ids,
-            'actual_fulfillment_supply_source_id'=>$actual_fulfillment_supply_source_id,
-            'is_ispu'=>$is_ispu,
-            'store_chain_store_id'=>$store_chain_store_id,
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders', array_filter([
+            'created_after' => $created_after,
+            'created_before' => $created_before,
+            'last_updated_after' => $last_updated_after,
+            'last_updated_before' => $last_updated_before,
+            'order_statuses' => $order_statuses,
+            'fulfillment_channels' => $fulfillment_channels,
+            'payment_methods' => $payment_methods,
+            'buyer_email' => $buyer_email,
+            'seller_order_id' => $seller_order_id,
+            'max_results_per_page' => $max_results_per_page,
+            'easy_ship_shipment_statuses' => $easy_ship_shipment_statuses,
+            'next_token' => $next_token,
+            'amazon_order_ids' => $amazon_order_ids,
+            'actual_fulfillment_supply_source_id' => $actual_fulfillment_supply_source_id,
+            'is_ispu' => $is_ispu,
+            'store_chain_store_id' => $store_chain_store_id,
         ]));
 
         return new GetOrdersResponse($response);
@@ -72,35 +72,35 @@ class OrdersResource implements ResourceContract
 
     public function getOrder(string $order_id): GetOrderResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id);
 
         return new GetOrderResponse($response);
     }
 
     public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/buyerInfo');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/buyerInfo');
 
         return new GetOrderBuyerInfoResponse($response);
     }
 
     public function getOrderAddress(string $order_id): GetOrderAddressResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/address');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/address');
 
         return new GetOrderAddressResponse($response);
     }
 
     public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems');
 
         return new GetOrderItemsResponse($response);
     }
 
     public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems/buyerInfo');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems/buyerInfo');
 
         return new GetOrderItemsBuyerInfoResponse($response);
     }
