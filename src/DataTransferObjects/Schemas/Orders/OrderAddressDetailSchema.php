@@ -8,7 +8,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class OrderAddressDetailSchema extends DataTransferObject
 {
-    public string $name;
+    public ?string $name;
 
     public ?string $address_line_1;
 
