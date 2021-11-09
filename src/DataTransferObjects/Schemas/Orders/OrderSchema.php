@@ -36,7 +36,7 @@ class OrderSchema extends DataTransferObject
 
     public ?string $ship_service_level;
 
-    public MoneySchema $order_total;
+    public ?MoneySchema $order_total;
 
     public ?int $number_of_items_shipped;
 

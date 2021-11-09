@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas;
 
 use Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator;
+use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class ShippingAddressSchema extends DataTransferObject
@@ -11,24 +12,28 @@ class ShippingAddressSchema extends DataTransferObject
     public string $name;
 
     #[MaxLengthValidator(180)]
-    public string $address_line_1;
+    public ?string $address_line_1;
 
     #[MaxLengthValidator(60)]
     public ?string $address_line_2;
 
+    #[MaxLengthValidator(30)]
+    public ?string $city;
+
     #[MaxLengthValidator(25)]
-    public ?string $district_or_county;
+    public ?string $county;
+
+    public ?string $district;
+
+    public ?string $state_or_region;
+
+    public ?string $municipality;
 
     #[MaxLengthValidator(30)]
-    public string $city;
-
-    public string $state_or_region;
+    public ?string $postal_code;
 
     #[MaxLengthValidator(2)]
-    public string $country_code;
-
-    #[MaxLengthValidator(30)]
-    public string $postal_code;
+    public ?string $country_code;
 
     public ?string $email;
 
@@ -36,4 +41,7 @@ class ShippingAddressSchema extends DataTransferObject
 
     #[MaxLengthValidator(30)]
     public ?string $phone;
+
+    #[StringEnumValidator(['Residential', 'Commercial'])]
+    public ?string $address_type;
 }
