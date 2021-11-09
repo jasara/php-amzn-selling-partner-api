@@ -20,6 +20,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
  * @property \Jasara\AmznSPA\Resources\FbaInboundEligibilityResource $fba_inbound_eligibility
  * @property \Jasara\AmznSPA\Resources\MerchantFulfillmentResource $merchant_fulfillment
+ * @property \Jasara\AmznSPA\Resources\ShippingResource $shipping
  **/
 class AmznSPA
 {

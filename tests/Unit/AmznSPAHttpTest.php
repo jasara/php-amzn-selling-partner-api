@@ -294,4 +294,19 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn->feeds->cancelFeed('some-feed-id');
     }
+
+    public function testExceptionIsThrownIfResponseHasNoData()
+    {
+        $this->expectException(RequestException::class);
+
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->response('', 400),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->feeds->cancelFeed('some-feed-id');
+    }
 }
