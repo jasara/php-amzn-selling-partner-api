@@ -15,6 +15,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboun
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -77,6 +78,23 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertInstanceOf(GetOrdersResponse::class, $response);
 
         $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
+    }
+
+    public function testExceptionIfCantGetRestrictedToken()
+    {
+        $this->expectException(AmznSPAException::class);
+        $this->expectExceptionMessage('Application does not have access to one or more requested data elements: [shippingAddress]');
+
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/restricted-no-access'), 400),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->orders->getOrders(marketplace_ids: ['ATVPDKIKX0DER']);
     }
 
     public function testGetTokenIfNotSet()

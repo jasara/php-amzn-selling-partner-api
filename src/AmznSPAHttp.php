@@ -17,6 +17,7 @@ use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Tokens\CreateRestrictedDataTokenRequest;
 use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
+use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Psr\Http\Message\RequestInterface;
@@ -185,6 +186,10 @@ class AmznSPAHttp
 
         $amzn = new AmznSPA($this->config);
         $response = $amzn->tokens->createRestrictedDataToken($request);
+
+        if ($response->errors) {
+            throw new AmznSPAException(implode(',', $response->errors->pluck('message')->toArray() ?: []));
+        }
 
         $this->config->setRestrictedDataToken(new RestrictedDataTokenDTO(
             access_token: $response->restricted_data_token,
