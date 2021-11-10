@@ -5,3 +5,4 @@ vendor
 .env
 /build_local
 /source
+composer.lock
