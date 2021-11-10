@@ -65,7 +65,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
 
     public function testGetShipment()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-shipment');
+        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'merchant-fulfillment/get-shipment']);
 
         $shipment_id = Str::random();
 
@@ -76,12 +76,22 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetShipmentResponse::class, $response);
         $this->assertEquals('abcddcba-00c3-4f6f-a63a-639f76ee9253', $response->payload->shipment_id);
 
-        $http->assertSent(function (Request $request) use ($shipment_id) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id, $request->url());
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
 
-            return true;
-        });
+                return true;
+            },
+            function (Request $request) use ($shipment_id) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id, $request->url());
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
     }
 
     public function testCancelShipment()

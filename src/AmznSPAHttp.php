@@ -14,7 +14,10 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\JasaraNotes;
+use Jasara\AmznSPA\DataTransferObjects\Requests\Tokens\CreateRestrictedDataTokenRequest;
+use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
+use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Psr\Http\Message\RequestInterface;
@@ -86,7 +89,7 @@ class AmznSPAHttp
 
     private function call(string $method, string $url, array $data = [], bool $grantless = false): array
     {
-        $this->setupHttp($this->config->getHttp(), $grantless);
+        $this->setupHttp($this->config->getHttp(), $grantless, $url, $method);
 
         if ($this->config->shouldUseTestEndpoints()) {
             $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
@@ -167,10 +170,37 @@ class AmznSPAHttp
         $this->config->setGrantlessToken($token);
     }
 
-    private function setupHttp(Factory $http, bool $grantless = false): void
+    private function refreshRdtToken(string $url, string $method)
+    {
+        $path = Str::replace($this->config->getMarketplace()->getBaseUrl(), '', $url);
+
+        $request = new CreateRestrictedDataTokenRequest(
+            restricted_resources: [
+                [
+                    'method' => strtoupper($method),
+                    'path' => $path,
+                    'data_elements' => ['buyerInfo', 'shippingAddress'],
+                ],
+            ],
+        );
+
+        $amzn = new AmznSPA($this->config);
+        $response = $amzn->tokens->createRestrictedDataToken($request);
+
+        if ($response->errors) {
+            throw new AmznSPAException(implode(',', $response->errors->pluck('message')->toArray() ?: []));
+        }
+
+        $this->config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+            access_token: $response->restricted_data_token,
+            expires_at: $response->expires_in,
+        ));
+    }
+
+    private function setupHttp(Factory $http, bool $grantless = false, string $url = '', string $method = ''): void
     {
         $this->http = $http->withHeaders([
-            'x-amz-access-token' => $this->getToken($grantless),
+            'x-amz-access-token' => $this->getToken($grantless, $url, $method),
             'user-agent' => $this->buildUserAgent(),
         ]);
 
@@ -189,9 +219,16 @@ class AmznSPAHttp
         $this->signRequest($this->config->getMarketplace()->getAwsRegion());
     }
 
-    private function getToken(bool $grantless = false): string
+    private function getToken(bool $grantless, string $url, string $method): string
     {
-        if (! $grantless) {
+        if ($this->config->shouldGetRdtTokens() && $this->isRestrictedDataPath($url, $method)) {
+            $restricted_token = $this->config->getRestrictedDataToken();
+            if (! $restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
+                $this->refreshRdtToken($url, $method);
+            }
+
+            return $this->config->getRestrictedDataToken()->access_token;
+        } elseif (! $grantless) {
             $tokens = $this->config->getTokens();
             if (! $tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshTokens();
@@ -206,6 +243,26 @@ class AmznSPAHttp
 
             return $this->config->getGrantlessToken()->access_token;
         }
+    }
+
+    private function isRestrictedDataPath(string $url, string $method): bool
+    {
+        $patterns = [
+            '#.*orders/v0/orders$#',
+            '#.*orders/v0/orders/[^/]*$#',
+            '#.*orders/v0/orders/.*/orderItems$#',
+        ];
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $url) === 1) {
+                return true;
+            }
+        }
+
+        if (preg_match('#.*mfn/v0/shipments/[^/]*$#', $url) === 1 && $method === 'get') {
+            return true;
+        }
+
+        return false;
     }
 
     private function buildUserAgent(): string
