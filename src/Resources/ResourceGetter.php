@@ -149,10 +149,20 @@ class ResourceGetter
         );
     }
 
+    public function getTokens(): TokensResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new TokensResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     private function validateAndSetupHttpForStandardResource($grantless_resource = null): AmznSPAHttp
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        if (!$grantless_resource) {
+        if (! $grantless_resource) {
             $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
         }
 

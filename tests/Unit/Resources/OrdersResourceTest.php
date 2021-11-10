@@ -18,7 +18,7 @@ class OrdersResourceTest extends UnitTestCase
 {
     public function testGetOrders()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-orders');
+        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', '/orders/get-orders']);
 
         $created_after = CarbonImmutable::now();
         $created_before = CarbonImmutable::now();
@@ -54,17 +54,27 @@ class OrdersResourceTest extends UnitTestCase
         $this->assertEquals('902-1845936-5435065', $orders->orders[0]->amazon_order_id);
         $this->assertEquals('Unshipped', $orders->orders[0]->order_status);
 
-        $http->assertSent(function (Request $request) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?buyer_email=tagrid%40gmail.com&max_results_per_page=10&store_chain_store_id=ISPU_StoreId', $request->url());
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
 
-            return true;
-        });
+                return true;
+            },
+            function (Request $request) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?buyer_email=tagrid%40gmail.com&max_results_per_page=10&store_chain_store_id=ISPU_StoreId', $request->url());
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
     }
 
     public function testGetOrder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order');
+        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', '/orders/get-order']);
 
         $order_id = Str::random();
 
@@ -75,12 +85,22 @@ class OrdersResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetOrderResponse::class, $response);
         $this->assertEquals('921-3175655-0452641', $response->payload->amazon_order_id);
 
-        $http->assertSent(function (Request $request) use ($order_id) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id, $request->url());
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
 
-            return true;
-        });
+                return true;
+            },
+            function (Request $request) use ($order_id) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id, $request->url());
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
     }
 
     public function testGetOrderBuyerInfo()
@@ -98,7 +118,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/buyerInfo', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/buyerInfo', $request->url());
 
             return true;
         });
@@ -119,7 +139,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/address', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/address', $request->url());
 
             return true;
         });
@@ -127,7 +147,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetOrderItems()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order-items');
+        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'orders/get-order-items']);
 
         $order_id = Str::random();
 
@@ -138,12 +158,22 @@ class OrdersResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetOrderItemsResponse::class, $response);
         $this->assertEquals('902-1845936-5435065', $response->payload->amazon_order_id);
 
-        $http->assertSent(function (Request $request) use ($order_id) {
-            $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/orderItems', $request->url());
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
 
-            return true;
-        });
+                return true;
+            },
+            function (Request $request) use ($order_id) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems', $request->url());
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
     }
 
     public function testGetOrderItemsBuyerInfo()
@@ -161,7 +191,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/orderItems/buyerInfo', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems/buyerInfo', $request->url());
 
             return true;
         });

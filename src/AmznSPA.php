@@ -9,19 +9,20 @@ use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
 
 /**
- * @property \Jasara\AmznSPA\Resources\LwaResource $lwa
  * @property \Jasara\AmznSPA\Resources\AuthorizationResource $authorization
- * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
- * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
- * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
- * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
  * @property \Jasara\AmznSPA\Resources\CatalogItemsResource $catalog_items
- * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
- * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
  * @property \Jasara\AmznSPA\Resources\FbaInboundEligibilityResource $fba_inbound_eligibility
+ * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
+ * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
+ * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
+ * @property \Jasara\AmznSPA\Resources\LwaResource $lwa
  * @property \Jasara\AmznSPA\Resources\MerchantFulfillmentResource $merchant_fulfillment
- * @property \Jasara\AmznSPA\Resources\ShippingResource $shipping
+ * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
  * @property \Jasara\AmznSPA\Resources\OrdersResource $orders
+ * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
+ * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
+ * @property \Jasara\AmznSPA\Resources\ShippingResource $shipping
+ * @property \Jasara\AmznSPA\Resources\TokensResource $tokens
  **/
 class AmznSPA
 {

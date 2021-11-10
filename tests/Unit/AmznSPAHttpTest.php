@@ -13,6 +13,7 @@ use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
@@ -57,6 +58,25 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn->notifications->getSubscriptionById('ANY_OFFER_CHANGED', Str::random());
 
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getGrantlessToken()->access_token);
+    }
+
+    public function testRefreshRestrictedDataToken()
+    {
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('tokens/create-restricted-data-token'), 200)
+                ->push($this->loadHttpStub('orders/get-orders'), 200),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->orders->getOrders(marketplace_ids: ['ATVPDKIKX0DER']);
+
+        $this->assertInstanceOf(GetOrdersResponse::class, $response);
+
+        $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
     }
 
     public function testGetTokenIfNotSet()

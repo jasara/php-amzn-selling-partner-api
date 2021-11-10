@@ -27,12 +27,12 @@ class OrdersResource implements ResourceContract
     }
 
     public function getOrders(
-        ?CarbonImmutable $created_after,
-        ?CarbonImmutable $created_before,
-        ?CarbonImmutable $last_updated_after,
-        ?CarbonImmutable $last_updated_before,
-        ?array $order_statuses,
         array $marketplace_ids,
+        ?CarbonImmutable $created_after = null,
+        ?CarbonImmutable $created_before = null,
+        ?CarbonImmutable $last_updated_after = null,
+        ?CarbonImmutable $last_updated_before = null,
+        ?array $order_statuses = null,
         ?array $fulfillment_channels = [],
         ?array $payment_methods = [],
         ?string $buyer_email = null,
@@ -45,10 +45,13 @@ class OrdersResource implements ResourceContract
         ?bool $is_ispu = null,
         ?string $store_chain_store_id = null,
     ): GetOrdersResponse {
-        $this->validateIsArrayOfStrings($order_statuses);
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders', array_filter([
+        if ($order_statuses) {
+            $this->validateIsArrayOfStrings($order_statuses);
+        }
+
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
             'created_after' => $created_after,
             'created_before' => $created_before,
             'last_updated_after' => $last_updated_after,
@@ -72,35 +75,35 @@ class OrdersResource implements ResourceContract
 
     public function getOrder(string $order_id): GetOrderResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id);
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
 
         return new GetOrderResponse($response);
     }
 
     public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/buyerInfo');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/buyerInfo');
 
         return new GetOrderBuyerInfoResponse($response);
     }
 
     public function getOrderAddress(string $order_id): GetOrderAddressResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/address');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/address');
 
         return new GetOrderAddressResponse($response);
     }
 
     public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
 
         return new GetOrderItemsResponse($response);
     }
 
     public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems/buyerInfo');
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems/buyerInfo');
 
         return new GetOrderItemsBuyerInfoResponse($response);
     }
