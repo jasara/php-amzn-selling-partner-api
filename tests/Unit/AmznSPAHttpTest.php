@@ -13,7 +13,9 @@ use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -57,6 +59,42 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn->notifications->getSubscriptionById('ANY_OFFER_CHANGED', Str::random());
 
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getGrantlessToken()->access_token);
+    }
+
+    public function testRefreshRestrictedDataToken()
+    {
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('tokens/create-restricted-data-token'), 200)
+                ->push($this->loadHttpStub('orders/get-orders'), 200),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->orders->getOrders(marketplace_ids: ['ATVPDKIKX0DER']);
+
+        $this->assertInstanceOf(GetOrdersResponse::class, $response);
+
+        $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
+    }
+
+    public function testExceptionIfCantGetRestrictedToken()
+    {
+        $this->expectException(AmznSPAException::class);
+        $this->expectExceptionMessage('Application does not have access to one or more requested data elements: [shippingAddress]');
+
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/restricted-no-access'), 400),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->orders->getOrders(marketplace_ids: ['ATVPDKIKX0DER']);
     }
 
     public function testGetTokenIfNotSet()
@@ -290,6 +328,21 @@ class AmznSPAHttpTest extends UnitTestCase
         list($config) = $this->setupConfigWithFakeHttp('errors/rate-limit', 429);
 
         $this->expectException(RateLimitException::class);
+
+        $amzn = new AmznSPA($config);
+        $amzn->feeds->cancelFeed('some-feed-id');
+    }
+
+    public function testExceptionIsThrownIfResponseHasNoData()
+    {
+        $this->expectException(RequestException::class);
+
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->response('', 400),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
 
         $amzn = new AmznSPA($config);
         $amzn->feeds->cancelFeed('some-feed-id');

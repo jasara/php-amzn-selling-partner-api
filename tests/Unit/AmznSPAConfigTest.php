@@ -13,6 +13,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
@@ -38,6 +39,8 @@ class AmznSPAConfigTest extends UnitTestCase
         $lwa_access_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
         $grantless_access_token = Str::random();
         $grantless_access_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
+        $restricted_data_token = Str::random();
+        $restricted_data_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
 
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id,
@@ -52,6 +55,8 @@ class AmznSPAConfigTest extends UnitTestCase
             lwa_access_token_expires_at: $lwa_access_token_expires_at,
             grantless_access_token: $grantless_access_token,
             grantless_access_token_expires_at: $grantless_access_token_expires_at,
+            restricted_data_token: $restricted_data_token,
+            restricted_data_token_expires_at: $restricted_data_token_expires_at,
             use_test_endpoints: true,
         );
 
@@ -75,9 +80,14 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertEquals($grantless_access_token, $grantless_token->access_token);
         $this->assertEquals($grantless_access_token_expires_at, $grantless_token->expires_at);
 
+        $restricted_data_token_data = $config->getRestrictedDataToken();
+        $this->assertEquals($restricted_data_token, $restricted_data_token_data->access_token);
+        $this->assertEquals($restricted_data_token_expires_at, $restricted_data_token_data->expires_at);
+
         $this->assertEquals($redirect_url, $config->getRedirectUrl());
 
         $this->assertTrue($config->shouldUseTestEndpoints());
+        $this->assertTrue($config->shouldGetRdtTokens());
     }
 
     public function testSetters()
@@ -107,7 +117,12 @@ class AmznSPAConfigTest extends UnitTestCase
             access_token: $grantless_access_token,
         ));
 
-        $this->assertEquals($grantless_access_token, $config->getGrantlessToken()->access_token);
+        $restricted_data_token = Str::random();
+        $config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+            access_token: $restricted_data_token,
+        ));
+
+        $this->assertEquals($restricted_data_token, $config->getRestrictedDataToken()->access_token);
 
         $save_lwa_tokens_callback = function () {
             return 10;

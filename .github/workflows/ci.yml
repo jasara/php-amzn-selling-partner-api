@@ -15,6 +15,11 @@ jobs:
           php_extensions: pcov
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: tests/resources/clover.xml
       - name: Check test coverage
         id: test-coverage
         uses: johanvanhelden/gha-clover-test-coverage-check@v1

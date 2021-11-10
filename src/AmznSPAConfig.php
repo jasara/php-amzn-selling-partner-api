@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Log\Logger;
@@ -26,6 +27,10 @@ class AmznSPAConfig
 
     private ApplicationKeysDTO $application_keys;
 
+    private GrantlessTokenDTO $grantless_token;
+
+    private RestrictedDataTokenDTO $restricted_data_token;
+
     private LoggerInterface $logger;
 
     public function __construct(
@@ -33,6 +38,7 @@ class AmznSPAConfig
         string $application_id,
         private ?string $redirect_url = null,
         private bool $use_test_endpoints = false,
+        private ?bool $get_rdt_tokens = true,
         private ?Closure $save_lwa_tokens_callback = null,
         private ?Closure $authentication_exception_callback = null,
         ?LoggerInterface $logger = null,
@@ -45,6 +51,8 @@ class AmznSPAConfig
         ?CarbonImmutable $lwa_access_token_expires_at = null,
         ?string $grantless_access_token = null,
         ?CarbonImmutable $grantless_access_token_expires_at = null,
+        ?string $restricted_data_token = null,
+        ?CarbonImmutable $restricted_data_token_expires_at = null,
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -57,6 +65,10 @@ class AmznSPAConfig
         $this->grantless_token = new GrantlessTokenDTO(
             access_token: $grantless_access_token,
             expires_at: $grantless_access_token_expires_at,
+        );
+        $this->restricted_data_token = new RestrictedDataTokenDTO(
+            access_token: $restricted_data_token,
+            expires_at: $restricted_data_token_expires_at,
         );
         $this->marketplace = MarketplacesList::getMarketplaceById($marketplace_id);
         $this->application_keys = new ApplicationKeysDTO(
@@ -83,6 +95,11 @@ class AmznSPAConfig
     public function getGrantlessToken(): GrantlessTokenDTO
     {
         return $this->grantless_token;
+    }
+
+    public function getRestrictedDataToken(): RestrictedDataTokenDTO
+    {
+        return $this->restricted_data_token;
     }
 
     public function getMarketplace(): Marketplace
@@ -120,6 +137,11 @@ class AmznSPAConfig
         return $this->use_test_endpoints;
     }
 
+    public function shouldGetRdtTokens(): bool
+    {
+        return $this->get_rdt_tokens;
+    }
+
     public function setHttp(Factory $http): void
     {
         $this->http = $http;
@@ -128,6 +150,11 @@ class AmznSPAConfig
     public function setTokens(AuthTokensDTO $tokens): void
     {
         $this->tokens = $tokens;
+    }
+
+    public function setRestrictedDataToken(RestrictedDataTokenDTO $token): void
+    {
+        $this->restricted_data_token = $token;
     }
 
     public function setGrantlessToken(GrantlessTokenDTO $token): void

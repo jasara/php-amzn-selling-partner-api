@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "code": "InvalidInput",
+            "message": "Application does not have access to one or more requested data elements: [shippingAddress]",
+            "details": ""
+        }
+    ]
+}

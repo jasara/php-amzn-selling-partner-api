@@ -14,7 +14,7 @@ trait SetupAmznSPAConfig
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            redirect_url: Str::random().'.com',
+            redirect_url: Str::random() . '.com',
             lwa_refresh_token: Str::random(),
             lwa_access_token: Str::random(),
             grantless_access_token: Str::random(),
@@ -47,22 +47,32 @@ trait SetupAmznSPAConfig
         return $config;
     }
 
-    public function setupConfigWithFakeHttp(string $stub, int $status_code = 200): array
+    public function setupConfigWithFakeHttp(string | array $stubs, int $status_code = 200): array
     {
-        $http = $this->fakeHttpStub($stub, $status_code);
+        if (is_string($stubs)) {
+            $stubs = [$stubs];
+        }
+
+        $http = $this->fakeHttpStub($stubs, $status_code);
 
         $config = $this->setupMinimalConfig(null, $http);
 
         return [$config, $http];
     }
 
-    public function fakeHttpStub(string $stub, int $status_code = 200): Factory
+    public function fakeHttpStub(array $stubs, int $status_code = 200): Factory
     {
         $http = new Factory;
-        $http->fake([
-            '*' => $http->response($this->loadHttpStub($stub), $status_code, [
+
+        $sequence = $http->sequence();
+        foreach ($stubs as $stub) {
+            $sequence = $sequence->push($this->loadHttpStub($stub), $status_code, [
                 'x-amzn-RequestId' => Str::random(),
-            ]),
+            ]);
+        }
+
+        $http->fake([
+            '*' => $sequence,
         ]);
 
         return $http;
@@ -70,7 +80,7 @@ trait SetupAmznSPAConfig
 
     public function loadHttpStub(string $stub): array
     {
-        $stub_filepath = __DIR__.'/../stubs/'.$stub.'.json';
+        $stub_filepath = __DIR__ . '/../stubs/' . $stub . '.json';
 
         return json_decode(file_get_contents($stub_filepath), true);
     }
