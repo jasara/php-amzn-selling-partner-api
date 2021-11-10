@@ -63,7 +63,7 @@ class OrdersResourceTest extends UnitTestCase
             },
             function (Request $request) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?order_statuses=Pending&buyer_email=tagrid%40gmail.com&max_results_per_page=10&store_chain_store_id=ISPU_StoreId', $request->url());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER&OrderStatuses=Pending&BuyerEmail=tagrid%40gmail.com&MaxResultsPerPage=10&StoreChainStoreId=ISPU_StoreId', $request->url());
 
                 return true;
             },
