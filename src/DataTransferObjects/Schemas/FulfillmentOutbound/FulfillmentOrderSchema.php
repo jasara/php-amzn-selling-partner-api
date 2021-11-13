@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound;
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
@@ -15,7 +15,7 @@ class FulfillmentOrderSchema extends DataTransferObject
 {
     public string $seller_fulfillment_order_id;
 
-    public string $marketplace_id; //should be required
+    public ?string $marketplace_id;
 
     public string $displayable_order_id;
 
@@ -29,7 +29,7 @@ class FulfillmentOrderSchema extends DataTransferObject
 
     public ?DeliveryWindowSchema $delivery_window;
 
-    public AddressSchema $destination_address; //state ot region
+    public ShippingAddressSchema $destination_address;
 
     #[StringEnumValidator(['Ship', 'Hold'])]
     public ?string $fulfillment_action;
@@ -48,7 +48,7 @@ class FulfillmentOrderSchema extends DataTransferObject
     #[CastWith(CarbonFromStringCaster::class)]
     public CarbonImmutable $status_updated_date;
 
-    public ?NotificationEmailListSchema $notification_emails;
+    public ?array $notification_emails;
 
     #[CastWith(ArrayCaster::class, itemType:FeatureSettingShema::class)]
     public ?FeatureSettingsSchema $feature_constraints;

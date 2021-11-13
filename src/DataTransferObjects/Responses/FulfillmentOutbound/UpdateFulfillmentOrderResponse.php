@@ -8,8 +8,8 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\ErrorSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 
-class CreateFulfillmentOrderResponse extends BaseResponse
+class UpdateFulfillmentOrderResponse extends BaseResponse
 {
     #[CastWith(ArrayCaster::class, itemType: ErrorSchema::class)]
-    public ?ErrorListSchema $payload;
+    public ?ErrorListSchema $errors;
 }

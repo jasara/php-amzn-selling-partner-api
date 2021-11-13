@@ -1,0 +1,16 @@
+{
+    "payload": {
+        "features": [
+            {
+                "featureName": "BLANK_BOX",
+                "featureDescription": "Provides the ability to ship in non-Amazon branded packaging (blank boxes).",
+                "sellerEligible": true
+            },
+            {
+                "featureName": "PSLIP",
+                "featureDescription": "Provides the ability to insert customized packing slips with messages.",
+                "sellerEligible": true
+            }
+        ]
+    }
+}

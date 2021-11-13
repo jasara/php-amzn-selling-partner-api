@@ -11,7 +11,6 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\CreateFulfill
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\CreateFulfillmentOrderItemSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\DeliveryWindowSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingsSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\NotificationEmailListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
@@ -46,7 +45,7 @@ class CreateFulfillmentOrderRequest extends BaseRequest
 
     public ?string $ship_from_country_code;
 
-    public ?NotificationEmailListSchema $notification_emails;
+    public ?array $notification_emails;
 
     public ?FeatureSettingsSchema $feature_settings;
 

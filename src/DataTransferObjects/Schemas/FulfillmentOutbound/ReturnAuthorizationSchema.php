@@ -2,7 +2,7 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound;
 
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class ReturnAuthorizationSchema extends DataTransferObject
@@ -11,7 +11,7 @@ class ReturnAuthorizationSchema extends DataTransferObject
 
     public string $fulfillment_center_id;
 
-    public AddressSchema $return_to_address; //change this to shipping address after merge from main.
+    public ShippingAddressSchema $return_to_address;
 
     public string $amazon_rma_id;
 

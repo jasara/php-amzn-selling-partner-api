@@ -5,13 +5,12 @@
                 "sellerReturnItemId": "testReturn11",
                 "sellerFulfillmentOrderItemId": "OrderItemID2",
                 "amazonShipmentId": "D4yZjWZVN",
+                "sellerReturnReasonCode": "",
                 "returnComment": "TestReturn",
                 "amazonReturnReasonCode": "UNKNOWN_OTHER_REASON",
                 "status": "New",
                 "statusChangedDate": "2020-02-07T04:14:38Z",
-                "returnAuthorizationId": "RMA3JTIPBJM42UU6",
-                "sellerReturnReasonCode": "8888",
-                "returnReceivedCondition": "Sellable"
+                "returnAuthorizationId": "RMA3JTIPBJM42UU6"
             }
         ],
         "invalidReturnItems": [],
@@ -23,7 +22,7 @@
                     "name": "Returns Department",
                     "addressLine1": "5333 W. Lower Buckeye Road",
                     "city": "Phoenix",
-                    "stateOrProvinceCode": "AZ",
+                    "stateOrRegion": "AZ",
                     "countryCode": "US",
                     "postalCode": "85043"
                 },

@@ -9,12 +9,18 @@ use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentOrderRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
+use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\UpdateFulfillmentOrderRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CancelFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeaturesResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FulfillmentOutboundResource implements ResourceContract
@@ -78,5 +84,40 @@ class FulfillmentOutboundResource implements ResourceContract
         $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', []);
 
         return new CreateFulfillmentReturnResponse($response);
+    }
+
+    public function getFulfillmentOrder(string $seller_fulfillment_order_id): GetFulfillmentOrderResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id);
+
+        return new GetFulfillmentOrderResponse($response);
+    }
+
+    public function updateFulfillmentOrder(UpdateFulfillmentOrderRequest $request, string $seller_fulfillment_order_id): UpdateFulfillmentOrderResponse
+    {
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id, []);
+
+        return new UpdateFulfillmentOrderResponse($response);
+    }
+
+    public function cancelFulfillmentOrder(string $seller_fulfillment_order_id): CancelFulfillmentOrderResponse
+    {
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/cancel', []);
+
+        return new CancelFulfillmentOrderResponse($response);
+    }
+
+    public function getFeatures(string $marketplace_id): GetFeaturesResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'features');
+
+        return new GetFeaturesResponse($response);
+    }
+
+    public function getFeatureInventory(string $marketplace_id, string $feature_name, ?string $next_token = null): GetFeatureInventoryResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name);
+
+        return new GetFeatureInventoryResponse($response);
     }
 }

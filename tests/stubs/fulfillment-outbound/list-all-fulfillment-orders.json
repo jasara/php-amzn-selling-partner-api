@@ -12,7 +12,7 @@
                     "addressLine1": "1234 Amazon Way",
                     "addressLine2": "Suite 123",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -43,7 +43,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -74,7 +74,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -96,7 +96,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -118,7 +118,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -140,7 +140,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -162,7 +162,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -184,7 +184,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -206,7 +206,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -228,7 +228,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -250,7 +250,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -272,7 +272,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -294,7 +294,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -316,7 +316,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -338,7 +338,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },
@@ -360,7 +360,7 @@
                     "addressLine2": "Suite 123",
                     "addressLine3": "Lane1",
                     "city": "Troy",
-                    "stateOrProvinceCode": "MI",
+                    "stateOrRegion": "MI",
                     "countryCode": "US",
                     "postalCode": "48084"
                 },

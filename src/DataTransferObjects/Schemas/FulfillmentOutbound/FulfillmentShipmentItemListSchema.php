@@ -4,12 +4,12 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound;
 
 use Illuminate\Support\Collection;
 
-class NotificationEmailListSchema extends Collection
+class FulfillmentShipmentItemListSchema extends Collection
 {
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): string
+    public function offsetGet($key): FulfillmentShipmentItemSchema
     {
         return parent::offsetGet($key);
     }
