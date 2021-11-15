@@ -132,6 +132,15 @@ class ValidatesParametersTest extends UnitTestCase
         $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', [231]);
     }
 
+    public function testValidatesArrayOfStringsNotSequentialException()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('Arrays of strings must not be associative arrays (they must be sequential).');
+
+        $amzn = new AmznSPA($this->setupMinimalConfig());
+        $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', [0 => 31, 3 => 231]);
+    }
+
     public function testValidatesArrayOfStringsEnumException()
     {
         $this->expectException(InvalidParametersException::class);
