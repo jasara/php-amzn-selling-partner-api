@@ -14,6 +14,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CancelFulfi
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureSkuResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeaturesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
@@ -119,5 +120,12 @@ class FulfillmentOutboundResource implements ResourceContract
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name);
 
         return new GetFeatureInventoryResponse($response);
+    }
+
+    public function getFeatureSKU(string $marketplace_id, string $feature_name, ?string $seller_sku): GetFeatureSkuResponse
+    {
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name . '/' . $seller_sku);
+
+        return new GetFeatureSkuResponse($response);
     }
 }

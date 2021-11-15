@@ -14,6 +14,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CancelFulfi
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureSkuResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeaturesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
@@ -293,6 +294,28 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($feature_name) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/features/inventory/' . $feature_name, $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGetFeatureSku()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-outbound/get-feature-sku');
+
+        $marketplace_id = 'ATVPDKIKX0DER';
+        $feature_name = Str::random();
+        $seller_sku = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_outbound->getFeatureSku($marketplace_id, $feature_name, $seller_sku);
+
+        $this->assertInstanceOf(GetFeatureSkuResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($feature_name, $seller_sku) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/features/inventory/' . $feature_name . '/' . $seller_sku, $request->url());
 
             return true;
         });
