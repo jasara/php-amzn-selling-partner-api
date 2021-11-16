@@ -3,11 +3,11 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound;
 
 use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingShema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingsSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\GetFulfillmentPreviewItemListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\GetFulfillmentPreviewItemSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringArrayEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
@@ -16,7 +16,7 @@ class GetFulfillmentPreviewRequest extends BaseRequest
 {
     public ?string $marketplace_id;
 
-    public AddressSchema $address; //to be change to the shipping address schema
+    public ShippingAddressSchema $address;
 
     #[CastWith(ArrayCaster::class, itemType: GetFulfillmentPreviewItemSchema::class)]
     public GetFulfillmentPreviewItemListSchema $items;

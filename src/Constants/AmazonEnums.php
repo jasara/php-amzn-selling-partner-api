@@ -683,7 +683,7 @@ class AmazonEnums
         'FBAFulfillmentCODFee',
     ];
 
-    public const FULFILLMENTORDERSTATUS = [
+    public const FULFILLMENT_ORDER_STATUS = [
         'NEW',
         'RECEIVED',
         'PLANNING',
@@ -695,7 +695,7 @@ class AmazonEnums
         'INVALID',
     ];
 
-    public const CURRENTSTATUS = [
+    public const CURRENT_STATUS = [
         'IN_TRANSIT',
         'DELIVERED',
         'RETURNING',
@@ -706,7 +706,7 @@ class AmazonEnums
         'CUSTOMER_ACTION',
     ];
 
-    public const ADDITIONALLOCATIONINFO = [
+    public const ADDITIONAL_LOCATION_INFO = [
         'AS_INSTRUCTED',
         'CARPORT',
         'CUSTOMER_PICKUP',
@@ -735,7 +735,7 @@ class AmazonEnums
         'SIDE_DOOR',
     ];
 
-    public const RETURNITEMDISPOSITION = [
+    public const RETURN_ITEM_DISPOSITION = [
         'Sellable',
         'Defective',
         'CustomerDamaged',

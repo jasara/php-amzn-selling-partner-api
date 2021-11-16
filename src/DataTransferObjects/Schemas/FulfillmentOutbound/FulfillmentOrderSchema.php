@@ -42,7 +42,7 @@ class FulfillmentOrderSchema extends DataTransferObject
     #[CastWith(CarbonFromStringCaster::class)]
     public CarbonImmutable $received_date;
 
-    #[StringEnumValidator(AmazonEnums::FULFILLMENTORDERSTATUS)]
+    #[StringEnumValidator(AmazonEnums::FULFILLMENT_ORDER_STATUS)]
     public string $fulfillment_order_status;
 
     #[CastWith(CarbonFromStringCaster::class)]

@@ -10,8 +10,7 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfil
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\UpdateFulfillmentOrderRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CancelFulfillmentOrderResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureSkuResponse;
@@ -21,7 +20,6 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillm
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class FulfillmentOutboundResourceTest extends UnitTestCase
@@ -32,18 +30,19 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $request = new GetFulfillmentPreviewRequest(
             marketplace_id: 'ATVPDKIKX0DER',
-            address:$this->setupAddress(),
-            items:[
+            address: $this->setupShippingAddress(),
+            items: [
                 [
-                    'seller_sku'=> 'PSMM-TEST-SKU-Jan-21_19_39_23-0788',
-                    'seller_fulfillment_order_item_id'=> 'OrderItemID2',
-                    'quantity'=> 1, ],
+                    'seller_sku' => 'PSMM-TEST-SKU-Jan-21_19_39_23-0788',
+                    'seller_fulfillment_order_item_id' => 'OrderItemID2',
+                    'quantity' => 1,
+                ],
             ],
-            shipping_speed_categories:['Standard'],
-            feature_constraints:[
+            shipping_speed_categories: ['Standard'],
+            feature_constraints: [
                 [
-                    'feature_name'=> 'BLANK_BOX',
-                    'feature_fulfillment_policy'=> 'Required',
+                    'feature_name' => 'BLANK_BOX',
+                    'feature_fulfillment_policy' => 'Required',
                 ],
             ]
         );
@@ -83,30 +82,31 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
     public function testCreateFulfillmentOrder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-outbound/create-fulfillment-order');
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty');
 
         $request = new CreateFulfillmentOrderRequest(
             marketplace_id: 'ATVPDKIKX0DER',
-            seller_fulfillmen_order_id:Str::random(),
-            displayable_order_id:Str::random(),
+            seller_fulfillmen_order_id: Str::random(),
+            displayable_order_id: Str::random(),
             displayable_order_date: CarbonImmutable::now(),
-            displayable_order_comment:Str::random(),
-            shipping_speed_category:'Expedited',
-            destination_address:$this->setupAddress(),
-            fulfillment_action:'Hold',
-            fulfillment_policy:'fulfillment_policy',
-            cod_settings:[
-                'is_cod_required'=> false,
-                'cod_charge'=> [
-                    'currency_code'=> 'USD',
-                    'value'=> '10.00',
+            displayable_order_comment: Str::random(),
+            shipping_speed_category: 'Expedited',
+            destination_address: $this->setupAddress(),
+            fulfillment_action: 'Hold',
+            fulfillment_policy: 'fulfillment_policy',
+            cod_settings: [
+                'is_cod_required' => false,
+                'cod_charge' => [
+                    'currency_code' => 'USD',
+                    'value' => '10.00',
                 ],
             ],
-            items:[
+            items: [
                 [
-                    'seller_sku'=> 'PSMM-TEST-SKU-Jan-21_19_39_23-0788',
-                    'seller_fulfillment_order_item_id'=> 'OrderItemID2',
-                    'quantity'=> 1, ],
+                    'seller_sku' => 'PSMM-TEST-SKU-Jan-21_19_39_23-0788',
+                    'seller_fulfillment_order_item_id' => 'OrderItemID2',
+                    'quantity' => 1,
+                ],
             ],
         );
 
@@ -114,7 +114,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->createFulfillmentOrder($request);
 
-        $this->assertInstanceOf(CreateFulfillmentOrderResponse::class, $response);
+        $this->assertInstanceOf(BaseResponse::class, $response);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
@@ -152,7 +152,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
             marketplace_id: 'ATVPDKIKX0DER',
             seller_sku: '',
             seller_fulfillment_order_id: '',
-            language:'',
+            language: '',
         );
 
         $this->assertInstanceOf(ListReturnReasonCodesResponse::class, $response);
@@ -171,13 +171,13 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $seller_fulfillment_order_id = Str::random();
         $request = new CreateFulfillmentReturnRequest(
-            items:[
-                'item'=>[
-                    'seller_return_item_id'=>'testReturn11',
+            items: [
+                'item' => [
+                    'seller_return_item_id' => 'testReturn11',
                     'seller_fulfillment_order_item_id' => 'OrderItemID2',
                     'amazon_shipment_id' => 'D4yZjWZVN',
-                    'return_comment'=> 'TestReturn',
-                    'return_reason_code' =>'UNKNOWN_OTHER_REASON',
+                    'return_comment' => 'TestReturn',
+                    'return_reason_code' => 'UNKNOWN_OTHER_REASON',
                 ],
             ]
         );
@@ -217,18 +217,18 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
     public function testUpdateFulfillmentOrder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-outbound/update-fulfillment-order');
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty');
 
         $seller_fulfillment_order_id = Str::random();
         $request = new UpdateFulfillmentOrderRequest(
             marketplace_id: 'ATVPDKIKX0DER',
-            destination_address :$this->setupShippingAddress(),
+            destination_address: $this->setupShippingAddress(),
         );
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->updateFulfillmentOrder($request, $seller_fulfillment_order_id);
 
-        $this->assertInstanceOf(UpdateFulfillmentOrderResponse::class, $response);
+        $this->assertInstanceOf(BaseResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());
@@ -240,7 +240,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
     public function testCancelFulfillmentOrder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-outbound/update-fulfillment-order');
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty');
 
         $seller_fulfillment_order_id = Str::random();
 
@@ -248,7 +248,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->cancelFulfillmentOrder($seller_fulfillment_order_id);
 
-        $this->assertInstanceOf(CancelFulfillmentOrderResponse::class, $response);
+        $this->assertInstanceOf(BaseResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());

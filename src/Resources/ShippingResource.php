@@ -9,7 +9,7 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\GetRatesRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\PurchaseLabelsRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\PurchaseShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\RetrieveShippingLabelRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\CancelShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\CreateShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetAccountResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetRatesResponse;
@@ -46,11 +46,11 @@ class ShippingResource implements ResourceContract
         return new GetShipmentResponse($response);
     }
 
-    public function cancelShipment(string $shipment_id): CancelShipmentResponse
+    public function cancelShipment(string $shipment_id): BaseResponse
     {
         $response = $this->http->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/cancel', []);
 
-        return new CancelShipmentResponse($response);
+        return new BaseResponse($response);
     }
 
     public function purchaseLabels(string $shipment_id, PurchaseLabelsRequest $request): PurchaseLabelsResponse

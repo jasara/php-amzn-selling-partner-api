@@ -47,7 +47,7 @@ class CreateFulfillmentOrderRequest extends BaseRequest
 
     public ?array $notification_emails;
 
-    public ?FeatureSettingsSchema $feature_settings;
+    public ?FeatureSettingsSchema $feature_constraints;
 
     #[CastWith(ArrayCaster::class, itemType:CreateFulfillmentOrderItemSchema::class)]
     public CreateFulfillmentOrderItemListSchema $items;

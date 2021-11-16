@@ -31,7 +31,7 @@ class ReturnItemSchema extends DataTransferObject
 
     public ?string $return_authorization_id;
 
-    #[StringEnumValidator(AmazonEnums::RETURNITEMDISPOSITION)]
+    #[StringEnumValidator(AmazonEnums::RETURN_ITEM_DISPOSITION)]
     public ?string $return_received_condition;
 
     public ?string $fulfillment_center_id;

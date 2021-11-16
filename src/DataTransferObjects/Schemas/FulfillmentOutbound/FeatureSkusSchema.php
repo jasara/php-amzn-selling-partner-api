@@ -9,7 +9,7 @@ class FeatureSkusSchema extends Collection
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): self
+    public function offsetGet($key): FeatureSkuSchema
     {
         return parent::offsetGet($key);
     }

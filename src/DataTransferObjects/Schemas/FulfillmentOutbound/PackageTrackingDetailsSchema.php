@@ -31,13 +31,13 @@ class PackageTrackingDetailsSchema extends DataTransferObject
 
     public ?TrackingAddressSchema $ship_to_address;
 
-    #[StringEnumValidator(AmazonEnums::CURRENTSTATUS)]
+    #[StringEnumValidator(AmazonEnums::CURRENT_STATUS)]
     public ?string $current_status;
 
     public ?string $current_status_description;
 
     public ?string $signed_for_by;
 
-    #[StringEnumValidator(AmazonEnums::ADDITIONALLOCATIONINFO)]
+    #[StringEnumValidator(AmazonEnums::ADDITIONAL_LOCATION_INFO)]
     public ?string $additional_location_info;
 }
