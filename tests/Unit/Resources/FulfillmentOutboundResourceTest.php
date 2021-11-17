@@ -10,7 +10,8 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfil
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\UpdateFulfillmentOrderRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CancelFulfillmentOrderResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureSkuResponse;
@@ -20,6 +21,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillm
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class FulfillmentOutboundResourceTest extends UnitTestCase
@@ -114,7 +116,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->createFulfillmentOrder($request);
 
-        $this->assertInstanceOf(BaseResponse::class, $response);
+        $this->assertInstanceOf(CreateFulfillmentOrderResponse::class, $response);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
@@ -228,7 +230,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->updateFulfillmentOrder($request, $seller_fulfillment_order_id);
 
-        $this->assertInstanceOf(BaseResponse::class, $response);
+        $this->assertInstanceOf(UpdateFulfillmentOrderResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());
@@ -248,7 +250,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->cancelFulfillmentOrder($seller_fulfillment_order_id);
 
-        $this->assertInstanceOf(BaseResponse::class, $response);
+        $this->assertInstanceOf(CancelFulfillmentOrderResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());
