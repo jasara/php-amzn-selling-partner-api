@@ -677,6 +677,73 @@ class AmazonEnums
         'ShippingServiceDefault',
     ];
 
+    public const NAME = [
+        'FBAPerUnitFulfillmentFee',
+        'FBAPerOrderFulfillmentFee',
+        'FBATransportationFee',
+        'FBAFulfillmentCODFee',
+    ];
+
+    public const FULFILLMENT_ORDER_STATUS = [
+        'NEW',
+        'RECEIVED',
+        'PLANNING',
+        'PROCESSING',
+        'CANCELLED',
+        'COMPLETE',
+        'COMPLETEPARTIALLED',
+        'UNFULFILLABLE',
+        'INVALID',
+    ];
+
+    public const CURRENT_STATUS = [
+        'IN_TRANSIT',
+        'DELIVERED',
+        'RETURNING',
+        'RETURNED',
+        'UNDELIVERABLE',
+        'DELAYED',
+        'AVAILABLE_FOR_PICKUP',
+        'CUSTOMER_ACTION',
+    ];
+
+    public const ADDITIONAL_LOCATION_INFO = [
+        'AS_INSTRUCTED',
+        'CARPORT',
+        'CUSTOMER_PICKUP',
+        'DECK',
+        'DOOR_PERSON',
+        'FRONT_DESK',
+        'FRONT_DOOR',
+        'GARAGE',
+        'GUARD',
+        'MAIL_ROOM',
+        'MAIL_SLOT',
+        'MAILBOX',
+        'MC_BOY',
+        'MC_GIRL',
+        'MC_MAN',
+        'MC_WOMAN',
+        'NEIGHBOR',
+        'OFFICE',
+        'OUTBUILDING',
+        'PATIO',
+        'PORCH',
+        'REAR_DOOR',
+        'RECEPTIONIST',
+        'RECEIVER',
+        'SECURE_LOCATION',
+        'SIDE_DOOR',
+    ];
+
+    public const RETURN_ITEM_DISPOSITION = [
+        'Sellable',
+        'Defective',
+        'CustomerDamaged',
+        'CarrierDamaged',
+        'FulfillerDamaged',
+    ];
+
     public const IN_ELIGIBILITY_REASON_LIST = [
         'FBA_INB_0004',
         'FBA_INB_0006',

@@ -109,6 +109,16 @@ class ResourceGetter
         );
     }
 
+    public function getFulfillmentOutbound(): FulfillmentOutboundResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new FulfillmentOutboundResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     public function getMerchantFulfillment(): MerchantFulfillmentResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();

@@ -1,0 +1,89 @@
+{
+    "payload": {
+        "fulfillmentOrder": {
+            "sellerFulfillmentOrderId": "FBATestOrder-1",
+            "marketplaceId": "ATVPDKIKX0DER",
+            "displayableOrderId": "TestOrder-FBAOutbound",
+            "displayableOrderDate": "2020-01-09T19:46:45Z",
+            "displayableOrderComment": "TestOrder",
+            "shippingSpeedCategory": "Standard",
+            "destinationAddress": {
+                "name": "Amazon",
+                "addressLine1": "1234 Amazon Way",
+                "addressLine2": "Suite 123",
+                "city": "Troy",
+                "stateOrRegion": "MI",
+                "countryCode": "US",
+                "postalCode": "48084"
+            },
+            "fulfillmentAction": "Ship",
+            "fulfillmentPolicy": "FillOrKill",
+            "receivedDate": "2020-02-07T01:23:30Z",
+            "fulfillmentOrderStatus": "PROCESSING",
+            "statusUpdatedDate": "2020-02-07T02:33:31Z",
+            "notificationEmails": [
+                "test2@amazon.com",
+                "test1@amazon.com"
+            ]
+        },
+        "fulfillmentOrderItems": [
+            {
+                "sellerSku": "PSMM-TEST-SKU-Jan-21_19_59_44-0738",
+                "sellerFulfillmentOrderItemId": "OrderItemID2",
+                "quantity": 1,
+                "fulfillmentNetworkSku": "B07CGHKWZP",
+                "orderItemDisposition": "Sellable",
+                "cancelledQuantity": 0,
+                "unfulfillableQuantity": 0,
+                "estimatedShipDate": "2020-02-08T01:23:31Z",
+                "estimatedArrivalDate": "2020-02-15T01:23:31Z",
+                "perUnitDeclaredValue": {
+                    "currencyCode": "USD",
+                    "value": "18.99"
+                }
+            },
+            {
+                "sellerSku": "CR-47K6-H6QN",
+                "sellerFulfillmentOrderItemId": "OrderItemID1",
+                "quantity": 3,
+                "fulfillmentNetworkSku": "X0014BIZ8T",
+                "orderItemDisposition": "Sellable",
+                "cancelledQuantity": 0,
+                "unfulfillableQuantity": 0,
+                "estimatedShipDate": "2020-02-08T01:23:31Z",
+                "estimatedArrivalDate": "2020-02-15T01:23:31Z",
+                "perUnitDeclaredValue": {
+                    "currencyCode": "USD",
+                    "value": "2.00"
+                }
+            }
+        ],
+        "fulfillmentShipments": [
+            {
+                "amazonShipmentId": "DchKfcZ9N",
+                "fulfillmentCenterId": "RNO1",
+                "fulfillmentShipmentStatus": "PENDING",
+                "shippingDate": "2020-02-07T02:33:23Z",
+                "estimatedArrivalDate": "2020-02-07T02:33:23Z",
+                "fulfillmentShipmentItem": [
+                    {
+                        "sellerSku": "PSMM-TEST-SKU-Jan-21_19_59_44-0738",
+                        "sellerFulfillmentOrderItemId": "OrderItemID2",
+                        "quantity": 1,
+                        "packageNumber": 0,
+                        "serialNumber": "a1b2c"
+                    },
+                    {
+                        "sellerSku": "CR-47K6-H6QN",
+                        "sellerFulfillmentOrderItemId": "OrderItemID1",
+                        "quantity": 3,
+                        "packageNumber": 0,
+                        "serialNumber": ""
+                    }
+                ]
+            }
+        ],
+        "returnItems": [],
+        "returnAuthorizations": []
+    }
+}

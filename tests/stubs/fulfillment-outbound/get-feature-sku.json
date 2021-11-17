@@ -1,0 +1,11 @@
+{
+    "payload": {
+        "marketplaceId": "ATVPDKIKX0DER",
+        "featureName": "BLANK_BOX",
+        "isEligible": false,
+        "ineligibleReasons": [
+            "SKU_NOT_ELIGIBLE"
+        ],
+        "skuInfo": {}
+    }
+}
