@@ -1,0 +1,30 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "ABC123",
+                "ShipmentId": "FBA123ABC",
+                "IsPartnered": true,
+                "ShipmentType": "LTL"
+            },
+            "TransportDetails": {
+                "PartneredLtlData": {
+                    "Contact": {
+                        "Name": "ABC",
+                        "Phone": "123",
+                        "Email": "test@test.com",
+                        "Fax": "123"
+                    },
+                    "BoxCount": 71,
+                    "AmazonCalculatedValue": {
+                        "CurrencyCode": "USD",
+                        "Value": 0
+                    }
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "WORKING"
+            }
+        }
+    }
+}

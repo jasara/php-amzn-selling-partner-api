@@ -362,6 +362,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         $response = $amzn->fulfillment_inbound->getBillOfLading($shipment_id);
 
         $this->assertInstanceOf(GetBillOfLadingResponse::class, $response);
+        $this->assertNotNull($response->payload->download_url);
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
@@ -478,6 +479,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
             ['issue-6-tracking-id-null'],
             ['issue-7-pallet-list-array'],
             ['issue-8-amazon-calc-value-null'],
+            ['issue-47-null-pallet-list'],
         ];
     }
 

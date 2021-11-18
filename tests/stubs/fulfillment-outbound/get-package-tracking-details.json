@@ -1,0 +1,38 @@
+{
+    "payload": {
+        "packageNumber": 212794778,
+        "trackingNumber": "1Z50V7420354708051",
+        "customerTrackingLink": "https%3A%2F%2Fwww.swiship.com%2Ftrack%3Fid%3D1Z50V7420354708051%0A",
+        "carrierCode": "UPS",
+        "shipToAddress": {
+            "city": "Troy",
+            "state": "MI",
+            "country": "US"
+        },
+        "currentStatus": "DELIVERED",
+        "currentStatusDescription": "Delivered to the destination address",
+        "additionalLocationInfo": "AS_INSTRUCTED",
+        "trackingEvents": [
+            {
+                "eventDate": "2020-01-22T00:15:55Z",
+                "eventAddress": {
+                    "city": "Troy",
+                    "state": "MI",
+                    "country": "US"
+                },
+                "eventCode": "EVENT_301",
+                "eventDescription": "Delivered."
+            },
+            {
+                "eventDate": "2019-10-30T23:33:28Z",
+                "eventAddress": {
+                    "city": "Phoenix",
+                    "state": "AZ",
+                    "country": "US"
+                },
+                "eventCode": "EVENT_206",
+                "eventDescription": "In transit to pickup location"
+            }
+        ]
+    }
+}

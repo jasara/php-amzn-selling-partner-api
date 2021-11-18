@@ -9,7 +9,7 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\GetRatesRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\PurchaseLabelsRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\PurchaseShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\RetrieveShippingLabelRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\CancelShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CancelShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\CreateShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetAccountResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetRatesResponse;

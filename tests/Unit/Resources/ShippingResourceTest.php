@@ -10,7 +10,7 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\GetRatesRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\PurchaseLabelsRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\PurchaseShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\RetrieveShippingLabelRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\CancelShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\CreateShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetAccountResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetRatesResponse;
@@ -63,7 +63,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id, $request->url());
 
             return true;
         });
@@ -71,7 +71,7 @@ class ShippingResourceTest extends UnitTestCase
 
     public function testCancelShipment()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('shipping/cancel-shipment');
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty');
 
         $shipment_id = Str::random();
 
@@ -79,11 +79,11 @@ class ShippingResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->shipping->cancelShipment($shipment_id);
 
-        $this->assertInstanceOf(CancelShipmentResponse::class, $response);
+        $this->assertInstanceOf(BaseResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/cancel', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/cancel', $request->url());
 
             return true;
         });
@@ -111,7 +111,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/purchaseLabels', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/purchaseLabels', $request->url());
 
             return true;
         });
@@ -139,7 +139,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id, $tracking_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/containers'.'/'.$tracking_id.'/label', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/containers' . '/' . $tracking_id . '/label', $request->url());
 
             return true;
         });
@@ -247,7 +247,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($tracking_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/tracking/'.$tracking_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/tracking/' . $tracking_id, $request->url());
 
             return true;
         });

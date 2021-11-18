@@ -22,6 +22,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
  * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
  * @property \Jasara\AmznSPA\Resources\ShippingResource $shipping
+ * @property \Jasara\AmznSPA\Resources\FulfillmentOutboundResource $fulfillment_outbound
  * @property \Jasara\AmznSPA\Resources\TokensResource $tokens
  **/
 class AmznSPA
