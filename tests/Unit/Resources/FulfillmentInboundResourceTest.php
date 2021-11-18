@@ -473,7 +473,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetShipments_Issues()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-12-city-null');
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-48-city-null');
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
