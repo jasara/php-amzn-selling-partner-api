@@ -1,0 +1,88 @@
+{
+    "payload": {
+        "ShipmentData": [
+            {
+                "ShipmentId": "kjh897787111",
+                "ShipmentName": "FBA (8\/25\/21, 10:06 PM) - 1",
+                "ShipFromAddress": {
+                    "Name": "kkkkkkkkkkkkkkk",
+                    "AddressLine1": "fffff",
+                    "AddressLine2": "fffffffffffff",
+                    "StateOrProvinceCode": "\u5343\u8449\u770c",
+                    "CountryCode": "JP",
+                    "PostalCode": "4444444"
+                },
+                "DestinationFulfillmentCenterId": "YYZ7",
+                "ShipmentStatus": "WORKING",
+                "LabelPrepType": "SELLER_LABEL",
+                "BoxContentsSource": "INTERACTIVE"
+            },
+            {
+                "ShipmentId": "tttt11112222",
+                "ShipmentName": "FBA (9\/26\/21, 8:47 PM) - 1",
+                "ShipFromAddress": {
+                    "Name": "kkkkkkkkkkkkkkk",
+                    "AddressLine1": "fffff",
+                    "AddressLine2": "fffffffffffff",
+                    "StateOrProvinceCode": "\u5343\u8449\u770c",
+                    "CountryCode": "JP",
+                    "PostalCode": "2730001"
+                },
+                "DestinationFulfillmentCenterId": "SBD1",
+                "ShipmentStatus": "WORKING",
+                "LabelPrepType": "SELLER_LABEL",
+                "AreCasesRequired": true,
+                "BoxContentsSource": "INTERACTIVE"
+            },
+            {
+                "ShipmentId": "FBA16FKLJT7L",
+                "ShipmentName": "FBA (10\/6\/21, 6:14 PM) - 1",
+                "ShipFromAddress": {
+                    "Name": "kkkkkkkkkkkkkkk",
+                    "AddressLine1": "fffff",
+                    "AddressLine2": "fffffffffffff",
+                    "StateOrProvinceCode": "\u5343\u8449\u770c",
+                    "CountryCode": "JP",
+                    "PostalCode": "2730001"
+                },
+                "DestinationFulfillmentCenterId": "RDU1",
+                "ShipmentStatus": "WORKING",
+                "LabelPrepType": "SELLER_LABEL"
+            },
+            {
+                "ShipmentId": "FBA16FKH9R34",
+                "ShipmentName": "FBA (10\/6\/21, 6:14 PM) - 2",
+                "ShipFromAddress": {
+                    "Name": "kkkkkkkkkkkkkkk",
+                    "AddressLine1": "fffff",
+                    "AddressLine2": "fffffffffffff",
+                    "StateOrProvinceCode": "\u5343\u8449\u770c",
+                    "CountryCode": "JP",
+                    "PostalCode": "2730001"
+                },
+                "DestinationFulfillmentCenterId": "SBD1",
+                "ShipmentStatus": "WORKING",
+                "LabelPrepType": "SELLER_LABEL",
+                "BoxContentsSource": "INTERACTIVE"
+            },
+            {
+                "ShipmentId": "F4416GVQX566",
+                "ShipmentName": "FBA (11\/8\/21, 2:44 AM) - 3",
+                "ShipFromAddress": {
+                    "Name": "kkkkkkkkkkkkkkk",
+                    "AddressLine1": "fffff",
+                    "AddressLine2": "fffffffffffff",
+                    "StateOrProvinceCode": "\u5343\u8449\u770c",
+                    "CountryCode": "JP",
+                    "PostalCode": "2730001"
+                },
+                "DestinationFulfillmentCenterId": "OAK4",
+                "ShipmentStatus": "WORKING",
+                "LabelPrepType": "SELLER_LABEL"
+            },
+            {
+                "ShipmentId": "2564543ytyty"
+            }
+        ]
+    }
+}
