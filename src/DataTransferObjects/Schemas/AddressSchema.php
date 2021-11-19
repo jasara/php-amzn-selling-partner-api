@@ -20,7 +20,7 @@ class AddressSchema extends DataTransferObject
     public ?string $district_or_county;
 
     #[MaxLengthValidator(30)]
-    public string $city;
+    public ?string $city;
 
     public string $state_or_province_code;
 
