@@ -471,6 +471,28 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         });
     }
 
+    public function testGetShipments_Issues()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-48-city-null');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getShipments(
+            marketplace_id: 'ATVPDKIKX0DER',
+            query_type: 'SHIPMENT',
+            shipment_status_list: ['WORKING', 'CLOSED'],
+        );
+
+        $this->assertInstanceOf(GetShipmentsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments?MarketplaceId=ATVPDKIKX0DER&QueryType=SHIPMENT&ShipmentStatusList=WORKING,CLOSED', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
     public function transportDetailsDataProvider()
     {
         return [
