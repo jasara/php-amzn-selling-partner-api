@@ -22,7 +22,14 @@ class ProductFeesResource implements ResourceContract
 
     public function getMyFeesEstimateForSku(GetMyFeesEstimateRequest $request, string $seller_sku): GetMyFeesEstimateResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/feesEstimate');
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/feesEstimate', []);
+
+        return new GetMyFeesEstimateResponse($response);
+    }
+
+    public function getMyFeesEstimateForAsin(GetMyFeesEstimateRequest $request, string $asin): GetMyFeesEstimateResponse
+    {
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/feesEstimate', []);
 
         return new GetMyFeesEstimateResponse($response);
     }
