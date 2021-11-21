@@ -1,0 +1,39 @@
+{
+    "sku": "GM-ZDPI-9B4E",
+    "summaries": [
+        {
+            "marketplaceId": "ATVPDKIKX0DER",
+            "asin": "B071VG5N9D",
+            "productType": "LUGGAGE",
+            "conditionType": "new_new",
+            "status": [
+                "BUYABLE"
+            ],
+            "itemName": "Hardside Carry-On Spinner Suitcase Luggage",
+            "createdDate": "2021-02-01T00:00:00Z",
+            "lastUpdatedDate": "2021-03-01T00:00:00Z",
+            "mainImage": {
+                "link": "https://www.example.com/luggage.png",
+                "height": 500,
+                "width": 500
+            }
+        }
+    ],
+    "offers": [
+        {
+            "marketplaceId": "ATVPDKIKX0DER",
+            "offerType": "B2C",
+            "price": {
+                "currencyCode": "USD",
+                "amount": "100.00"
+            }
+        }
+    ],
+    "fulfillmentAvailability": [
+        {
+            "fulfillmentChannelCode": "DEFAULT",
+            "quantity": 100
+        }
+    ],
+    "issues": []
+}

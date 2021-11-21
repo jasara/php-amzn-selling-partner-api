@@ -803,4 +803,29 @@ class AmazonEnums
         'BackOrder',
         'SourcingOnDemandOrder',
     ];
+
+    public const INCLUDED_DATA = [
+        'summaries',
+        'attributes',
+        'issues',
+        'offers',
+        'fulfillmentAvailability',
+        'procurement',
+    ];
+
+    public const CONDITION_TYPE = [
+        'new_new',
+        'new_open_box',
+        'new_oem',
+        'refurbished_refurbished',
+        'used_like_new',
+        'used_very_good',
+        'used_good',
+        'used_acceptable',
+        'collectible_like_new',
+        'collectible_very_good',
+        'collectible_good',
+        'collectible_acceptable',
+        'club_club',
+    ];
 }

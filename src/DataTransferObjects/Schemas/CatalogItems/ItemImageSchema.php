@@ -6,7 +6,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class ItemImageSchema extends DataTransferObject
 {
-    public string $variant;
+    public ?string $variant;
 
     public string $link;
 
