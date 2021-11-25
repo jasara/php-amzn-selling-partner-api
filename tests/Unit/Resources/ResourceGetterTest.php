@@ -127,6 +127,6 @@ class ResourceGetterTest extends UnitTestCase
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
         $uploads = $resource_getter->getUploads();
 
-        $this->assertInstanceOf(Resources\OrdersResource::class, $uploads);
+        $this->assertInstanceOf(Resources\UploadsResource::class, $uploads);
     }
 }

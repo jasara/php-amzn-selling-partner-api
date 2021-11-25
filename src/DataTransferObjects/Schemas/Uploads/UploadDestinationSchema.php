@@ -10,5 +10,5 @@ class UploadDestinationSchema extends DataTransferObject
 
     public ?string $url;
 
-    public ?object $headers; //this line fail bcoz it get an error thats array not object
+    public ?array $headers;
 }
