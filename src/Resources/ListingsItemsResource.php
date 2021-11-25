@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Resources;
 
+use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPutRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\Item;
+use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\ListingsItemSubmissionResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -30,11 +31,11 @@ class ListingsItemsResource implements ResourceContract
         array $marketplace_ids,
         ?string $issue_locale = null,
         ?array $included_data = null,
-    ): Item {
+    ): GetListingsItemResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         if ($included_data) {
-            $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA); // can i use it like this?
+            $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
         }
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . $sku, array_filter([
@@ -45,7 +46,13 @@ class ListingsItemsResource implements ResourceContract
             'IncludedData' => $included_data,
         ]));
 
-        return new Item($response);
+        $errors = Arr::get($response, 'errors');
+
+        return new GetListingsItemResponse(
+            errors: $errors,
+            item: $errors ? null : $response,
+            metadata: Arr::get($response, 'metadata'),
+        );
     }
 
     public function putListingsItem(

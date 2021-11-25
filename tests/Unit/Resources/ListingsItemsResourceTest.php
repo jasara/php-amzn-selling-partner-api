@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPutRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\Item;
+use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\ListingsItemSubmissionResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
@@ -27,7 +27,7 @@ class ListingsItemsResourceTest extends UnitTestCase
             $included_data = null,
         );
 
-        $this->assertInstanceOf(Item::class, $response);
+        $this->assertInstanceOf(GetListingsItemResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('GET', $request->method());

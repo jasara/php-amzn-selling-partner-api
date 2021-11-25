@@ -12,5 +12,5 @@ class ListingsItemPutRequest extends BaseRequest
     #[StringEnumValidator(['LISTING', 'LISTING_PRODUCT_ONLY', 'LISTING_OFFER_ONLY'])]
     public ?string $requirements;
 
-    public array $attributes; //this should be type object
+    public array $attributes;
 }

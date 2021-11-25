@@ -6,7 +6,6 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemImageSchema;
-use Jasara\AmznSPA\DataTransferObjects\Validators\StringArrayEnumValidator;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\DataTransferObject;
@@ -22,7 +21,6 @@ class ItemSummaryByMarketplaceSchema extends DataTransferObject
     #[StringEnumValidator(AmazonEnums::CONDITION_TYPE)]
     public ?string $condition_type;
 
-    // #[StringArrayEnumValidator()] it is array of string enum
     public array $status;
 
     public ?string $fn_sku;

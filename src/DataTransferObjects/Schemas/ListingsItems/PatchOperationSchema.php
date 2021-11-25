@@ -12,5 +12,5 @@ class PatchOperationSchema extends DataTransferObject
 
     public string $path;
 
-    public ?array $value; //array of objects
+    public ?array $value;
 }

@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems;
 
 use Illuminate\Support\Collection;
 
-class ItemIssuesSchema extends Collection
+class IssuesSchema extends Collection
 {
     /**
      * @codeCoverageIgnore
