@@ -33,7 +33,6 @@ class ListingsItemsResource implements ResourceContract
         ?array $included_data = null,
     ): GetListingsItemResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
-
         if ($included_data) {
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
         }

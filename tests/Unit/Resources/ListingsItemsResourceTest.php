@@ -17,21 +17,25 @@ class ListingsItemsResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');
 
+        $sku = Str::random();
+        $seller_id = Str::random();
+
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->listings_items->getListingsItem(
-            $seller_id = Str::random(),
-            $sku = Str::random(),
-            $marketplace_ids = ['ATVPDKIKX0DER'],
-            $issue_locale = '',
-            $included_data = null,
+            sku: $sku,
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            issue_locale : '',
+            included_data: ['summaries'],
         );
 
         $this->assertInstanceOf(GetListingsItemResponse::class, $response);
+        $this->assertEquals('GM-ZDPI-9B4E', $response->item->sku);
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . $sku . '?SellerIs=' . $seller_id . '&Sku=' . $sku . '&MarketplaceIds=ATVPDKIKX0DER', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . $sku . '?SellerIs=' . $seller_id . '&Sku=' . $sku . '&MarketplaceIds=ATVPDKIKX0DER&IncludedData=summaries', $request->url());
 
             return true;
         });
