@@ -1,0 +1,24 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "A2T355QWAX7WUQ",
+                "ShipmentId": "FBA16HWGVXBS",
+                "IsPartnered": true,
+                "ShipmentType": "LTL"
+            },
+            "TransportDetails": {
+                "PartneredLtlData": {
+                    "BoxCount": 0,
+                    "AmazonCalculatedValue": {
+                        "CurrencyCode": "USD",
+                        "Value": 0
+                    }
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "WORKING"
+            }
+        }
+    }
+}
