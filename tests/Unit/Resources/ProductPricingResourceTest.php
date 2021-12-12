@@ -22,7 +22,9 @@ class ProductPricingResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->product_pricing->getPricing(
             marketplace_id: $marketplace_id,
-            item_type:  $item_type,
+            item_type: $item_type,
+            item_condition: 'Used',
+            offer_type: 'B2C',
         );
 
         $this->assertInstanceOf(GetPricingResponse::class, $response);
@@ -35,7 +37,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/price?MarketplaceId=ATVPDKIKX0DER&ItemType=Asin&ItemCondition=USED&OfferType=B2C', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/price?MarketplaceId=ATVPDKIKX0DER&ItemType=Asin&ItemCondition=Used&OfferType=B2C', $request->url());
 
             return true;
         });
@@ -52,7 +54,8 @@ class ProductPricingResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->product_pricing->getCompetitivePricing(
             marketplace_id: $marketplace_id,
-            item_type:  $item_type,
+            item_type: $item_type,
+            customer_type: 'Consumer',
         );
 
         $this->assertInstanceOf(GetPricingResponse::class, $response);
@@ -76,7 +79,7 @@ class ProductPricingResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-listing-offers');
 
         $marketplace_id = 'ATVPDKIKX0DER';
-        $item_condition = 'CLUB';
+        $item_condition = 'Club';
         $seller_sku = Str::random();
 
         $amzn = new AmznSPA($config);
@@ -84,6 +87,7 @@ class ProductPricingResourceTest extends UnitTestCase
         $response = $amzn->product_pricing->getListingOffers(
             marketplace_id: $marketplace_id,
             item_condition: $item_condition,
+            customer_type: 'Business',
             seller_sku: $seller_sku,
         );
 
@@ -97,7 +101,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/' . $seller_sku . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=CLUB&CustomerType=Business', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/' . $seller_sku . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=Club&CustomerType=Business', $request->url());
 
             return true;
         });
@@ -108,7 +112,7 @@ class ProductPricingResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('/product-pricing/get-item-offers');
 
         $marketplace_id = 'ATVPDKIKX0DER';
-        $item_condition = 'NEW';
+        $item_condition = 'New';
         $asin = Str::random();
 
         $amzn = new AmznSPA($config);
@@ -116,6 +120,7 @@ class ProductPricingResourceTest extends UnitTestCase
         $response = $amzn->product_pricing->getItemOffers(
             marketplace_id: $marketplace_id,
             item_condition: $item_condition,
+            customer_type: 'Consumer',
             asin: $asin,
         );
 
@@ -129,7 +134,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/' . $asin . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=NEW&CustomerType=Consumer', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/' . $asin . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=New&CustomerType=Consumer', $request->url());
 
             return true;
         });
