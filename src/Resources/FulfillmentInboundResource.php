@@ -201,8 +201,8 @@ class FulfillmentInboundResource implements ResourceContract
             'QueryType' => $query_type,
             'ShipmentStatusList' => $shipment_status_list,
             'ShipmentIdList' => $shipment_id_list,
-            'LastUpdatedAfter' => $last_updated_after?->toIso8601String(),
-            'LastUpdatedBefore' => $last_updated_before?->toIso8601String(),
+            'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+            'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
             'NextToken' => $next_token,
         ]));
 
@@ -233,8 +233,8 @@ class FulfillmentInboundResource implements ResourceContract
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipmentItems', array_filter([
             'MarketplaceId' => $marketplace_id,
             'QueryType' => $query_type,
-            'LastUpdatedAfter' => $last_updated_after?->toIso8601String(),
-            'LastUpdatedBefore' => $last_updated_before?->toIso8601String(),
+            'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+            'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
             'NextToken' => $next_token,
         ]));
 

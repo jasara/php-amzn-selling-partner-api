@@ -16,16 +16,13 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\CreateFeedResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedDocumentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\ErrorListSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\Feeds\FeedSchema;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FeedsResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/feeds/2021-06-30/';
+    public const BASE_PATH = '/feeds/2021-06-30/';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -57,8 +54,8 @@ class FeedsResource implements ResourceContract
             'marketplaceIds' => $marketplace_ids,
             'pageSize' => $page_size,
             'processingStatuses' => $processing_statuses,
-            'createdSince' => $created_since?->toIso8601String(),
-            'createdUntil' => $created_until?->toIso8601String(),
+            'createdSince' => $created_since?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+            'createdUntil' => $created_until?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
             'nextToken' => $next_token,
         ]));
 

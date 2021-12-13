@@ -25,6 +25,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\FulfillmentOutboundResource $fulfillment_outbound
  * @property \Jasara\AmznSPA\Resources\TokensResource $tokens
  * @property \Jasara\AmznSPA\Resources\UploadsResource $uploads
+ * @property \Jasara\AmznSPA\Resources\SellersResource $sellers
  **/
 class AmznSPA
 {

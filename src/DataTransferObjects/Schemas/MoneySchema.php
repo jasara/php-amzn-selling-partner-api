@@ -9,7 +9,7 @@ class MoneySchema extends DataTransferObject
 {
     public ?string $currency_code;
 
-    public ?int $amount;
+    public ?string $amount;
 
     public function asMoney(): Money
     {
