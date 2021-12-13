@@ -93,6 +93,7 @@ $rules = [
     'single_line_comment_style' => [
         'comment_types' => ['hash'],
     ],
+    'single_space_after_construct' => true,
     'single_quote' => true,
     'space_after_semicolon' => true,
     'standardize_not_equals' => true,
@@ -150,8 +151,8 @@ $rules = [
 
 $finder = Finder::create()
     ->in([
-        __DIR__.'/src',
-        __DIR__.'/tests',
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
     ])
     ->name('*.php')
     ->notName('*.blade.php')

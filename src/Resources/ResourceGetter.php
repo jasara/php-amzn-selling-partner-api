@@ -169,6 +169,16 @@ class ResourceGetter
         );
     }
 
+    public function getSellers(): SellersResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new SellersResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     public function getProductFees(): ProductFeesResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();

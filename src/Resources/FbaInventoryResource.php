@@ -13,7 +13,7 @@ class FbaInventoryResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/fba/inventory/v1/';
+    public const BASE_PATH = '/fba/inventory/v1/';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -40,7 +40,7 @@ class FbaInventoryResource implements ResourceContract
             'details' => $details,
             'granularityType' => $granularity_type,
             'granularityId' => $granularity_id,
-            'startDateTime' => $start_date_time?->toIso8601String(),
+            'startDateTime' => $start_date_time?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
             'sellerSkus' => $seller_skus,
             'nextToken' => $next_token,
             'marketplaceIds' => $marketplace_ids,

@@ -465,7 +465,29 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($last_updated_after, $last_updated_before) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipmentItems?MarketplaceId=ATVPDKIKX0DER&QueryType=DATE_RANGE&LastUpdatedAfter=' . $last_updated_after->toIso8601String() . '&LastUpdatedBefore=' . $last_updated_before->toIso8601String(), urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipmentItems?MarketplaceId=ATVPDKIKX0DER&QueryType=DATE_RANGE&LastUpdatedAfter=' . $last_updated_after->tz('UTC')->format('Y-m-d\TH:i:s\Z') . '&LastUpdatedBefore=' . $last_updated_before->tz('UTC')->format('Y-m-d\TH:i:s\Z'), urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testGetShipments_Issues()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-48-city-null');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getShipments(
+            marketplace_id: 'ATVPDKIKX0DER',
+            query_type: 'SHIPMENT',
+            shipment_status_list: ['WORKING', 'CLOSED'],
+        );
+
+        $this->assertInstanceOf(GetShipmentsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments?MarketplaceId=ATVPDKIKX0DER&QueryType=SHIPMENT&ShipmentStatusList=WORKING,CLOSED', urldecode($request->url()));
 
             return true;
         });
