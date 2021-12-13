@@ -45,7 +45,7 @@ class BaseRequest extends DataTransferObject
                 if ($to_date_string) {
                     $data[$this->$case_function($property)] = $value->tz('UTC')->toDateString();
                 } else {
-                    $data[$this->$case_function($property)] = $value->tz('UTC')->toIso8601String();
+                    $data[$this->$case_function($property)] = $value->tz('UTC')->format('Y-m-d\TH:i:s\Z');
                 }
             } else {
                 $data[$this->$case_function($property)] = $value;
