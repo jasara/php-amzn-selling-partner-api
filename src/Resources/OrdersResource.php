@@ -50,6 +50,9 @@ class OrdersResource implements ResourceContract
         if ($order_statuses) {
             $this->validateIsArrayOfStrings($order_statuses);
         }
+        if ($fulfillment_channels) {
+            $this->validateIsArrayOfStrings($fulfillment_channels, ['AFN', 'MFN']);
+        }
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
             'MarketplaceIds' => $marketplace_ids,

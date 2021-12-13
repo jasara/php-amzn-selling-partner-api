@@ -28,7 +28,7 @@ class OrdersResourceTest extends UnitTestCase
             created_after: $created_after,
             order_statuses: ['Pending'],
             marketplace_ids: ['ATVPDKIKX0DER'],
-            fulfillment_channels: [],
+            fulfillment_channels: ['MFN'],
             payment_methods: null,
             buyer_email: 'tagrid@gmail.com',
             seller_order_id : '',
@@ -57,7 +57,7 @@ class OrdersResourceTest extends UnitTestCase
             },
             function (Request $request) use ($created_after) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER&CreatedAfter=' . $created_after->tz('UTC')->format('Y-m-d\TH:i:s\Z') . '&OrderStatuses=Pending&BuyerEmail=tagrid@gmail.com&MaxResultsPerPage=10&StoreChainStoreId=ISPU_StoreId', urldecode($request->url()));
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER&CreatedAfter=' . $created_after->tz('UTC')->format('Y-m-d\TH:i:s\Z') . '&OrderStatuses=Pending&FulfillmentChannels=MFN&BuyerEmail=tagrid@gmail.com&MaxResultsPerPage=10&StoreChainStoreId=ISPU_StoreId', urldecode($request->url()));
 
                 return true;
             },
