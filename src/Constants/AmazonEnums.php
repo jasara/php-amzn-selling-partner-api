@@ -599,6 +599,11 @@ class AmazonEnums
         'COLLECTIBLE',
         'REFURISHED',
         'CLUB',
+        'New',
+        'Used',
+        'Collectible',
+        'Refurbished',
+        'Club',
     ];
 
     public const DELIVERY_EXPERIENCE_OPTION = [

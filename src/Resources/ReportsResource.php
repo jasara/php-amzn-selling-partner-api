@@ -8,28 +8,23 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportDocumentSpecification;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportScheduleSpecification;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportSpecification;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportDocumentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportScheduleResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportDocumentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportScheduleResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportScheduleResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportSchedulesResponse;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\ErrorListSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\Reports\ReportSchema;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportsResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class ReportsResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/reports/2021-06-30/';
+    public const BASE_PATH = '/reports/2021-06-30/';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -61,8 +56,8 @@ class ReportsResource implements ResourceContract
             'marketplaceIds' => $marketplace_ids,
             'pageSize' => $page_size,
             'processingStatuses' => $processing_statuses,
-            'createdSince' => $created_since?->toIso8601String(),
-            'createdUntil' => $created_until?->toIso8601String(),
+            'createdSince' => $created_since?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+            'createdUntil' => $created_until?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
             'nextToken' => $next_token,
         ]));
 
