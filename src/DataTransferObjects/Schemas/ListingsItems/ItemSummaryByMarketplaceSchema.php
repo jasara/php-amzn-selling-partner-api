@@ -23,7 +23,7 @@ class ItemSummaryByMarketplaceSchema extends DataTransferObject
 
     public array $status;
 
-    public ?string $fn_sku;
+    public ?string $fnsku;
 
     public string $item_name;
 

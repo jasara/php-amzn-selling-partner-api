@@ -37,9 +37,7 @@ class ListingsItemsResource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . $sku, array_filter([
-            'SellerIs' => $seller_id,
-            'Sku' => $sku,
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku, array_filter([
             'MarketplaceIds'=> $marketplace_ids,
             'IssueLocale' => $issue_locale,
             'IncludedData' => $included_data,
@@ -63,12 +61,15 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . $sku, array_filter([
-            'SellerIs' => $seller_id,
-            'Sku' => $sku,
-            'MarketplaceIds'=> $marketplace_ids,
-            'IssueLocale' => $issue_locale,
-        ]));
+        $response = $this->http->put(
+            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku . '?' . http_build_query(
+                array_filter([
+                    'MarketplaceIds' => $marketplace_ids,
+                    'IssueLocale' => $issue_locale,
+                ])
+            ),
+            (array) $request->toArrayObject()
+        );
 
         return new ListingsItemSubmissionResponse($response);
     }
@@ -81,9 +82,7 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . $sku, array_filter([
-            'SellerIs' => $seller_id,
-            'Sku' => $sku,
+        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku, array_filter([
             'MarketplaceIds'=> $marketplace_ids,
             'IssueLocale' => $issue_locale,
         ]));
@@ -101,13 +100,13 @@ class ListingsItemsResource implements ResourceContract
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http->put(
-            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . $sku,
-            array_filter([
-                'SellerIs' => $seller_id,
-                'Sku' => $sku,
-                'MarketplaceIds'=> $marketplace_ids,
-                'IssueLocale' => $issue_locale,
-            ])
+            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku . '?' . http_build_query(
+                array_filter([
+                    'MarketplaceIds' => $marketplace_ids,
+                    'IssueLocale' => $issue_locale,
+                ])
+            ),
+            (array) $request->toArrayObject()
         );
 
         return new ListingsItemSubmissionResponse($response);
