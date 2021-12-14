@@ -82,7 +82,7 @@ class FulfillmentOutboundResource implements ResourceContract
 
     public function createFulfillmentReturn(string $seller_fulfillment_order_id, CreateFulfillmentReturnRequest $request): CreateFulfillmentReturnResponse
     {
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', []);
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', (array) $request->toArrayObject());
 
         return new CreateFulfillmentReturnResponse($response);
     }
@@ -96,7 +96,7 @@ class FulfillmentOutboundResource implements ResourceContract
 
     public function updateFulfillmentOrder(UpdateFulfillmentOrderRequest $request, string $seller_fulfillment_order_id): UpdateFulfillmentOrderResponse
     {
-        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id, []);
+        $response = $this->http->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id, (array) $request->toArrayObject());
 
         return new UpdateFulfillmentOrderResponse($response);
     }
