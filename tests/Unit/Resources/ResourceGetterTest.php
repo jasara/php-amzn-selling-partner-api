@@ -122,6 +122,14 @@ class ResourceGetterTest extends UnitTestCase
         $this->assertInstanceOf(Resources\TokensResource::class, $tokens);
     }
 
+    public function testGetProductFees()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $product_fees = $resource_getter->getProductFees();
+
+        $this->assertInstanceOf(Resources\ProductFeesResource::class, $product_fees);
+    }
+
     public function testGetUploads()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
