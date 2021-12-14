@@ -1,0 +1,10 @@
+{
+    "payload": {
+        "uploadDestinationId": "5d4e42b5-1d6e-44e8-a89c-2abfca0625bb",
+        "url": "https://s3.amazonaws.com/buyer-seller-messaging-test-draft-attachment-namarketplace/%2F067/5d4e42b5-1d6e-44e8-a89c-2abfca0625bb?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20190701T214102Z&X-Amz-SignedHeaders=content-md5%3Bhost%3Bx-amz-server-side-encryption&X-Amz-Expires=900&X-Amz-Credential=AKIAW5VUA47ENEOYT7RC%2F20190701%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d4f85c5f1a32a788a8d54e3f00a2a08af45be5b83551cdd81c82ae353dfcdfd4",
+        "headers": {
+            "Content-MD5": "5d41402abc4b2a76b9719d911017c592",
+            "x-amz-server-side-encryption": "aws:kms"
+        }
+    }
+}

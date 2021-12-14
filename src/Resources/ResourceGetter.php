@@ -179,6 +179,26 @@ class ResourceGetter
         );
     }
 
+    public function getUploads(): UploadsResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new UploadsResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
+    public function getProductFees(): ProductFeesResource
+    {
+        $http = $this->validateAndSetupHttpForStandardResource();
+
+        return new ProductFeesResource(
+            $http,
+            $this->config->getMarketplace()->getBaseUrl(),
+        );
+    }
+
     public function getListingsItems(): ListingsItemsResource
     {
         $http = $this->validateAndSetupHttpForStandardResource();
