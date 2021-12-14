@@ -1,0 +1,24 @@
+{
+    "payload": {
+        "TransportContent": {
+            "TransportHeader": {
+                "SellerId": "YYDGHH87787EY3UH",
+                "ShipmentId": "KLJKJKLJJUOI",
+                "IsPartnered": true,
+                "ShipmentType": "LTL"
+            },
+            "TransportDetails": {
+                "PartneredLtlData": {
+                    "BoxCount": 0,
+                    "AmazonCalculatedValue": {
+                        "CurrencyCode": "USD",
+                        "Value": 0
+                    }
+                }
+            },
+            "TransportResult": {
+                "TransportStatus": "WORKING"
+            }
+        }
+    }
+}

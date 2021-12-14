@@ -15,7 +15,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class PartneredLtlDataOutputSchema extends DataTransferObject
 {
-    public ContactSchema $contact;
+    public ?ContactSchema $contact;
 
     public int $box_count;
 
