@@ -27,6 +27,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\UploadsResource $uploads
  * @property \Jasara\AmznSPA\Resources\SellersResource $sellers
  * @property \Jasara\AmznSPA\Resources\ProductFeesResource $product_fees
+ * @property \Jasara\AmznSPA\Resources\ListingsItemsResource $listings_items
  **/
 class AmznSPA
 {
