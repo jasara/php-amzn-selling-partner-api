@@ -252,6 +252,7 @@ class AmazonEnums
         'DELIVERED',
         'CHECKED_IN',
         'READY_TO_SHIP',
+        'CREATING',
     ];
 
     public const PACKAGE_STATUSES = [

@@ -1,0 +1,22 @@
+{
+    "payload": {
+        "ShipmentData": [
+            {
+                "ShipmentId": "JHY675676Y",
+                "ShipmentName": "KJKJJIPOPOPO44",
+                "ShipFromAddress": {
+                    "Name": "LKLKJKJJJF",
+                    "AddressLine1": "JHDUU897887FF",
+                    "City": "LKDLKOII",
+                    "StateOrProvinceCode": "CA",
+                    "CountryCode": "US",
+                    "PostalCode": "92556"
+                },
+                "DestinationFulfillmentCenterId": "LFK99",
+                "ShipmentStatus": "CREATING",
+                "LabelPrepType": "NO_LABEL",
+                "BoxContentsSource": "FEED"
+            }
+        ]
+    }
+}
