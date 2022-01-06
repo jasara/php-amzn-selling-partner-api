@@ -20,15 +20,20 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
+use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Http\Message\RequestInterface;
 
 class AmznSPAHttp
 {
+    use ValidatesParameters;
+
     private PendingRequest $http;
 
     private ?Request $request = null;
 
     private bool $retried = false;
+
+    private array $restricted_data_elements = [];
 
     public function __construct(
         private AmznSPAConfig $config,
@@ -85,6 +90,13 @@ class AmznSPAHttp
             url: $url,
             grantless: true
         );
+    }
+
+    public function setRestrictedDataElements(array $restricted_data_elements): void
+    {
+        $this->validateIsArrayOfStrings($restricted_data_elements, ['buyerInfo', 'shippingAddress']);
+
+        $this->restricted_data_elements = $restricted_data_elements;
     }
 
     private function call(string $method, string $url, array $data = [], bool $grantless = false): array
@@ -179,7 +191,7 @@ class AmznSPAHttp
                 [
                     'method' => strtoupper($method),
                     'path' => $path,
-                    'data_elements' => ['buyerInfo', 'shippingAddress'],
+                    'data_elements' => $this->restricted_data_elements,
                 ],
             ],
         );

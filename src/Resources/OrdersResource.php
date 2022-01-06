@@ -54,6 +54,8 @@ class OrdersResource implements ResourceContract
             $this->validateIsArrayOfStrings($fulfillment_channels, ['AFN', 'MFN']);
         }
 
+        $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
+
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
             'MarketplaceIds' => $marketplace_ids,
             'CreatedAfter' => $created_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
@@ -79,6 +81,8 @@ class OrdersResource implements ResourceContract
 
     public function getOrder(string $order_id): GetOrderResponse
     {
+        $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
+
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
 
         return new GetOrderResponse($response);
@@ -100,6 +104,8 @@ class OrdersResource implements ResourceContract
 
     public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse
     {
+        $this->http->setRestrictedDataElements(['buyerInfo']);
+
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
 
         return new GetOrderItemsResponse($response);

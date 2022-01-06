@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
@@ -283,6 +284,34 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
+    }
+
+    public function testSetRestrictedDataElements()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'orders/get-orders']);
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $amzn->orders->getOrders(
+            marketplace_ids: ['ATVPDKIKX0DER'],
+        );
+
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
+
+                return true;
+            },
+            function (Request $request) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
     }
 
     /**

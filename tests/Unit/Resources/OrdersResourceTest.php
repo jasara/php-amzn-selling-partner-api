@@ -52,6 +52,7 @@ class OrdersResourceTest extends UnitTestCase
             function (Request $request) {
                 $this->assertEquals('POST', $request->method());
                 $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
+                $this->assertEquals(['buyerInfo', 'shippingAddress'], json_decode($request->body(), true)['restrictedResources'][0]['dataElements']);
 
                 return true;
             },
