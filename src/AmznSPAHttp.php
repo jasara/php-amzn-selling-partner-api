@@ -111,9 +111,12 @@ class AmznSPAHttp
             /** @var Response $response */
             $response = $this->http->$method($url, $data);
 
-            $this->logResponse($response, $method, $url);
+            if ($response->failed()) {
+                // Not sure why some responses don't throw request exceptions
+                $response->throw();
+            }
 
-            $response->throw();
+            $this->logResponse($response, $method, $url);
 
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
@@ -125,7 +128,7 @@ class AmznSPAHttp
             }
 
             if ($e->response->status() === 429) {
-                throw new RateLimitException;
+                throw new RateLimitException(previous: $e);
             }
 
             try {
