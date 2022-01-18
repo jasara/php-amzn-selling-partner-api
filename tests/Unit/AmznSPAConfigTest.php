@@ -188,11 +188,13 @@ class AmznSPAConfigTest extends UnitTestCase
             $line_1 = fgets($logger_resource);
             $line_2 = fgets($logger_resource);
             $line_3 = fgets($logger_resource);
+            $line_4 = fgets($logger_resource);
 
             $this->assertStringContainsString('123', $line_1);
             $this->assertStringNotContainsString('"access_token":"[filtered]"', $line_2);
             $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
             $this->assertStringContainsString('\"error\":\"invalid_client\"', $line_3);
+            $this->assertStringContainsString('Response Error GET', $line_4);
             $this->assertEquals('', fgets($logger_resource));
         }
 

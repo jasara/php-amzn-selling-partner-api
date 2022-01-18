@@ -108,12 +108,12 @@ class AmznSPAHttp
         }
 
         try {
+            /** @var Response $response */
             $response = $this->http->$method($url, $data);
 
-            if ($response->failed()) {
-                // Not sure why some responses don't throw request exceptions
-                $response->throw();
-            }
+            $this->logResponse($response, $method, $url);
+
+            $response->throw();
 
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
@@ -125,7 +125,7 @@ class AmznSPAHttp
             }
 
             if ($e->response->status() === 429) {
-                throw new RateLimitException(previous: $e);
+                throw new RateLimitException;
             }
 
             try {
@@ -218,7 +218,7 @@ class AmznSPAHttp
 
         $this->http->beforeSending(function (Request $request) {
             $url = $request->url();
-            $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
+            $url = $this->cleanUrl($url);
 
             $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $url, [
                 'unsigned_request_headers' => $this->cleanData($request->headers()),
@@ -362,9 +362,9 @@ class AmznSPAHttp
         return false;
     }
 
-    private function logException(Exception $e, $method, $url)
+    private function logException(Exception $e, string $method, string $url): void
     {
-        $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
+        $url = $this->cleanUrl($url);
         $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
 
         $response_data = (isset($e->response) && $e->response->json()) ? json_encode($this->cleanData($e->response->json())) : null;
@@ -375,6 +375,18 @@ class AmznSPAHttp
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
             'response_data' => $response_data,
             'response_code' => isset($e->response) ? $e->response->status() : null,
+        ]);
+    }
+
+    private function logResponse(Response $response, string $method, string $url): void
+    {
+        $url = $this->cleanUrl($url);
+
+        $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
+            'response_headers' => $response->headers(),
+            'response_data' => json_encode(
+                $this->cleanData($response->json() ?: [])
+            ),
         ]);
     }
 
@@ -410,15 +422,8 @@ class AmznSPAHttp
         );
     }
 
-    private function handleResponse(Response $response, string $method, string $url): array
+    private function handleResponse(Response $response): array
     {
-        $url = substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
-
-        $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
-            'response_headers' => $response->headers(),
-            'response_data' => json_encode($this->cleanData($response->json())),
-        ]);
-
         return array_merge(array_keys_to_snake($response->json() ?: []), [
             'metadata' => $this->getMetaData($response),
         ]);
@@ -443,5 +448,10 @@ class AmznSPAHttp
         $filtered_data = array_intersect_key($filtered_keys, $data) + $data;
 
         return $filtered_data;
+    }
+
+    private function cleanUrl(string $url): string
+    {
+        return substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
     }
 }
