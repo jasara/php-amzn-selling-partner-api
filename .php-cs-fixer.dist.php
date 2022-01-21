@@ -150,10 +150,12 @@ $rules = [
 ];
 
 $finder = Finder::create()
+    ->notPath('vendor')
     ->in([
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
+    ->ignoreUnreadableDirs()
     ->name('*.php')
     ->notName('*.blade.php')
     ->ignoreDotFiles(true)

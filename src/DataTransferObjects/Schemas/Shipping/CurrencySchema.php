@@ -7,7 +7,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class CurrencySchema extends DataTransferObject
 {
-    public int $value;
+    public float $value;
 
     #[MaxLengthValidator(3)]
     public string $unit;
