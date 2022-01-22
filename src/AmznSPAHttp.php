@@ -357,6 +357,7 @@ class AmznSPAHttp
                 'Invalid partyId',
                 'hasn\'t registered in FBA in marketplace',
                 'No MWS Authorization exists',
+                'No MWS Authorization found',
             ])) {
                 return true;
             }
