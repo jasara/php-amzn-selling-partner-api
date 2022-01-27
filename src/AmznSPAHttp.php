@@ -111,6 +111,8 @@ class AmznSPAHttp
             /** @var Response $response */
             $response = $this->http->$method($url, $data);
 
+            $this->callResponseCallback($response);
+
             if ($response->failed()) {
                 // Not sure why some responses don't throw request exceptions
                 $response->throw();
@@ -309,6 +311,15 @@ class AmznSPAHttp
         });
 
         $this->http = $this->http->withMiddleware($middleware);
+    }
+
+    private function callResponseCallback(Response $response): void
+    {
+        if ($this->config->isPropertySet('response_callback')) {
+            $callback = $this->config->getResponseCallback();
+
+            $callback($response);
+        }
     }
 
     private function handleRequestException(RequestException $e, bool $grantless)

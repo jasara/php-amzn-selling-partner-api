@@ -32,7 +32,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->lwa->getAuthUrl();
 
-        $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl(), $url);
+        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl(), $url);
     }
 
     /**
@@ -45,7 +45,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->lwa->getAuthUrl($state);
 
-        $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl().'&state='.$state, $url);
+        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl() . '&state=' . $state, $url);
     }
 
     public function testStateDoesNotMatch()
@@ -171,7 +171,7 @@ class LwaResourceTest extends UnitTestCase
         $state = Str::random();
         $spapi_oauth_code = Str::random();
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getTokensFromRedirect($state, [
@@ -214,7 +214,7 @@ class LwaResourceTest extends UnitTestCase
 
         $state = Str::random();
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getTokensFromRedirect($state, [
@@ -230,7 +230,7 @@ class LwaResourceTest extends UnitTestCase
 
         $state = Str::random();
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/unauthorized', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/unauthorized', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getTokensFromRedirect($state, [
@@ -246,7 +246,7 @@ class LwaResourceTest extends UnitTestCase
 
         $refresh_token = Str::random();
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-in-data', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/no-error-in-data', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
@@ -259,7 +259,7 @@ class LwaResourceTest extends UnitTestCase
 
         $state = Str::random();
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getGrantlessAccessToken('notifications');
@@ -285,7 +285,7 @@ class LwaResourceTest extends UnitTestCase
                 }),
             );
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
         $config->setAuthenticationExceptionCallback(Closure::fromCallable([$callback, '__invoke']));
 
         $amzn = new AmznSPA($config);
@@ -298,7 +298,7 @@ class LwaResourceTest extends UnitTestCase
 
         $state = Str::random();
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 400);
+        [$config] = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 400);
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getGrantlessAccessToken('notifications');

@@ -19,6 +19,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResource
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
+use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -280,7 +281,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectException(AuthenticationException::class);
         $this->expectExceptionMessage('Access to requested resource is denied.');
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/unauthorized', 403);
+        [$config] = $this->setupConfigWithFakeHttp('errors/unauthorized', 403);
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
@@ -322,7 +323,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectException(AuthenticationException::class);
         $this->expectExceptionMessage('Invalid partyId: 12345678 Additional Notes: The Seller ID for this Seller is not valid.');
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-party-id', 400);
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-party-id', 400);
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
@@ -354,7 +355,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testRateLimitExceptionIsThrownIfResponseHasCode429()
     {
-        list($config) = $this->setupConfigWithFakeHttp('errors/rate-limit', 429);
+        [$config] = $this->setupConfigWithFakeHttp('errors/rate-limit', 429);
 
         $this->expectException(RateLimitException::class);
 
@@ -375,5 +376,21 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->feeds->cancelFeed('some-feed-id');
+    }
+
+    public function testResponseCallbackIsCalled()
+    {
+        $this->expectException(CallbackTestException::class);
+
+        /** @var AmznSPAConfig $config */
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-grant', 400);
+
+        $response_callback = function () {
+            throw new CallbackTestException;
+        };
+        $config->setResponseCallback($response_callback);
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->feeds->cancelFeed('some-feed-id');
     }
 }

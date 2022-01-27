@@ -137,6 +137,13 @@ class AmznSPAConfigTest extends UnitTestCase
         $config->setAuthenticationExceptionCallback($authentication_exception_callback);
 
         $this->assertEquals(99, $config->getAuthenticationExceptionCallback()());
+
+        $response_callback = function () {
+            return 98;
+        };
+        $config->setResponseCallback($response_callback);
+
+        $this->assertEquals(98, $config->getResponseCallback()());
     }
 
     /**

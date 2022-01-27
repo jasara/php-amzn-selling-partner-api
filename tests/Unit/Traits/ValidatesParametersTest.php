@@ -117,7 +117,7 @@ class ValidatesParametersTest extends UnitTestCase
     {
         $this->expectException(RequestException::class); // Testing it is not the invalid parameters exception
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
@@ -154,7 +154,7 @@ class ValidatesParametersTest extends UnitTestCase
     {
         $this->expectException(RequestException::class); // Testing it is not the invalid parameters exception
 
-        list($config) = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-client', 401);
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', ['WORKING']);

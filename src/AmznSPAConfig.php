@@ -41,6 +41,7 @@ class AmznSPAConfig
         private ?bool $get_rdt_tokens = true,
         private ?Closure $save_lwa_tokens_callback = null,
         private ?Closure $authentication_exception_callback = null,
+        private ?Closure $response_callback = null,
         ?LoggerInterface $logger = null,
         ?string $aws_access_key = null,
         ?string $aws_secret_key = null,
@@ -127,6 +128,11 @@ class AmznSPAConfig
         return $this->authentication_exception_callback;
     }
 
+    public function getResponseCallback(): Closure
+    {
+        return $this->response_callback;
+    }
+
     public function getLogger(): LoggerInterface
     {
         return $this->logger;
@@ -170,6 +176,11 @@ class AmznSPAConfig
     public function setAuthenticationExceptionCallback(Closure $callback): void
     {
         $this->authentication_exception_callback = $callback;
+    }
+
+    public function setResponseCallback(Closure $callback): void
+    {
+        $this->response_callback = $callback;
     }
 
     public function setLogger(LoggerInterface $logger): void
