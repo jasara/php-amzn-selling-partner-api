@@ -111,17 +111,19 @@ class AmznSPAHttp
             /** @var Response $response */
             $response = $this->http->$method($url, $data);
 
-            $this->callResponseCallback($response);
-
             if ($response->failed()) {
                 // Not sure why some responses don't throw request exceptions
                 $response->throw();
             }
 
+            $this->callResponseCallback($response);
+
             $this->logResponse($response, $method, $url);
 
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
+            $this->callResponseCallback($e->response);
+
             if ($this->isAuthenticationException($e)) {
                 throw new AuthenticationException(
                     $e->response,
