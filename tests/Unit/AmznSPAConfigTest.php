@@ -144,6 +144,10 @@ class AmznSPAConfigTest extends UnitTestCase
         $config->setResponseCallback($response_callback);
 
         $this->assertEquals(98, $config->getResponseCallback()());
+
+        $config->setGetRdtTokens(false);
+
+        $this->assertFalse($config->shouldGetRdtTokens());
     }
 
     /**

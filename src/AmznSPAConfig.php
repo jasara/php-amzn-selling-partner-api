@@ -188,6 +188,11 @@ class AmznSPAConfig
         $this->logger = $logger;
     }
 
+    public function setGetRdtTokens(bool $value): void
+    {
+        $this->get_rdt_tokens = $value;
+    }
+
     public function setMarketplace(string $marketplace_id): void
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
