@@ -452,6 +452,7 @@ class AmznSPAHttp
             'x-amz-access-token' => '[filtered]',
             'mwsAuthToken' => '[filtered]',
             'authorizationCode' => '[filtered]',
+            'restrictedDataToken' => '[filtered]',
             'access_token' => '[filtered]',
             'refresh_token' => '[filtered]',
         ];
