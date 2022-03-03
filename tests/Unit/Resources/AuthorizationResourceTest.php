@@ -6,7 +6,7 @@ use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
-use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 class AuthorizationResourceTest extends UnitTestCase
@@ -35,7 +35,7 @@ class AuthorizationResourceTest extends UnitTestCase
 
     public function testGetAuthorizationCodeNoAuthorizationExistsError()
     {
-        $this->expectException(AuthenticationException::class);
+        $this->expectException(GrantlessAuthenticationException ::class);
 
         list($config, $http) = $this->setupConfigWithFakeHttp('authorization/no-authorization-exists-error', 400);
 
@@ -57,7 +57,7 @@ class AuthorizationResourceTest extends UnitTestCase
 
     public function testGetAuthorizationCodeNoAuthorizationFoundError()
     {
-        $this->expectException(AuthenticationException::class);
+        $this->expectException(GrantlessAuthenticationException::class);
 
         list($config, $http) = $this->setupConfigWithFakeHttp('authorization/no-authorization-found-error', 400);
 

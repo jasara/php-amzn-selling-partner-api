@@ -18,6 +18,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -285,6 +286,17 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getPrepInstructions('US', [Str::random()]);
+    }
+
+    public function testUnauthorizedGrantless()
+    {
+        $this->expectException(GrantlessAuthenticationException::class);
+        $this->expectExceptionMessage('Access to requested resource is denied.');
+
+        [$config] = $this->setupConfigWithFakeHttp('errors/unauthorized', 403);
+
+        $amzn = new AmznSPA($config);
+        $amzn->notifications->deleteDestination(Str::random());
     }
 
     public function testSetRestrictedDataElements()

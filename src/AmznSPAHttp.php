@@ -19,6 +19,7 @@ use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Http\Message\RequestInterface;
@@ -125,6 +126,12 @@ class AmznSPAHttp
             $this->callResponseCallback($e->response);
 
             if ($this->isAuthenticationException($e)) {
+                if ($grantless) {
+                    throw new GrantlessAuthenticationException(
+                        $e->response,
+                    );
+                }
+
                 throw new AuthenticationException(
                     $e->response,
                     $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
