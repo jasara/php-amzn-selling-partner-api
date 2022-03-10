@@ -22,7 +22,7 @@ class AddressSchema extends DataTransferObject
     #[MaxLengthValidator(30)]
     public ?string $city;
 
-    public string $state_or_province_code;
+    public ?string $state_or_province_code;
 
     #[MaxLengthValidator(2)]
     public string $country_code;
