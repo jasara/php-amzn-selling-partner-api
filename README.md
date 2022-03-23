@@ -27,12 +27,13 @@ The best way to understand how to use this SDK is by reading the documentation f
 use Jasara\AmazonSPA\AmznSPA;
 
 $amazon = new AmznSPA($config);
-$feed = $amazon->feeds->feedId($feed_id)->getFeed();
-if($feed->failed) {
-    $errors = $amazon->errors();
+$response = $amzn->feeds->getFeed($feed_id);
+if($response->errors) {
+    return $response->errors; // ErrorListSchema
 }
-if($feed->completed) {
-    $document = $feed->getFeedDocument();
+
+if($response->feed) {
+    $document = $amazon->feeds->getFeedDocument($feed->result_feed_document_id);
 }
 ```
 
