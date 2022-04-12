@@ -27,6 +27,7 @@ class LwaResource implements ResourceContract
         private ApplicationKeysDTO $application_keys,
         private ?Closure $save_lwa_tokens_callback,
         private ?Closure $authentication_exception_callback,
+        private ?Closure $response_callback,
     ) {
     }
 
@@ -35,10 +36,10 @@ class LwaResource implements ResourceContract
         $redirect_url = $this->redirect_url;
 
         $params = http_build_query(compact('redirect_url', 'state'));
-        $url = $this->getBaseUrlFromMarketplace().'/apps/authorize/consent';
+        $url = $this->getBaseUrlFromMarketplace() . '/apps/authorize/consent';
 
         if ($params) {
-            $url .= '?'.$params;
+            $url .= '?' . $params;
         }
 
         return $url;
@@ -99,6 +100,12 @@ class LwaResource implements ResourceContract
             'client_id' => $this->application_keys->lwa_client_id,
             'client_secret' => $this->application_keys->lwa_client_secret,
         ]);
+
+        if ($this->response_callback) {
+            $callback = $this->response_callback;
+
+            $callback($response);
+        }
 
         if ($response->failed()) {
             $this->handleError($response);

@@ -10,12 +10,14 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -313,5 +315,23 @@ class LwaResourceTest extends UnitTestCase
         }
 
         return $marketplaces;
+    }
+
+    public function testResponseInvalidGrantCallbackIsCalled()
+    {
+        $this->expectException(CallbackTestException::class);
+
+        $refresh_token = Str::random();
+
+        $callback = function () {
+            throw new CallbackTestException;
+        };
+
+        /** @var AmznSPAConfig $config */
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-grant', 400);
+        $config->setResponseCallback(Closure::fromCallable($callback));
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
     }
 }
