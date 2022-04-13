@@ -26,6 +26,7 @@ class ResourceGetter
             $this->config->getApplicationKeys(),
             $this->config->isPropertySet('save_lwa_tokens_callback') ? $this->config->getSaveLwaTokensCallback() : null,
             $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
+            $this->config->isPropertySet('response_callback') ? $this->config->getResponseCallback() : null,
         );
     }
 
