@@ -2,7 +2,6 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems;
 
-use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemSummaryByMarketplaceSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
@@ -14,7 +13,7 @@ class ListingsItemSchema extends DataTransferObject
     #[CastWith(ArrayCaster::class, itemType: ItemSummaryByMarketplaceSchema::class)]
     public ?ItemSummariesSchema $summaries;
 
-    public ?object $attributes;
+    public ?array $attributes;
 
     #[CastWith(ArrayCaster::class, itemType: IssueSchema::class)]
     public ?IssuesSchema $issues;
