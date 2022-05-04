@@ -38,9 +38,9 @@ class ListingsItemsResource implements ResourceContract
         }
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku, array_filter([
-            'MarketplaceIds'=> $marketplace_ids,
-            'IssueLocale' => $issue_locale,
-            'IncludedData' => $included_data,
+            'marketplaceIds'=> $marketplace_ids,
+            'issueLocale' => $issue_locale,
+            'includedData' => $included_data,
         ]));
 
         $errors = Arr::get($response, 'errors');
@@ -64,8 +64,8 @@ class ListingsItemsResource implements ResourceContract
         $response = $this->http->put(
             $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku . '?' . http_build_query(
                 array_filter([
-                    'MarketplaceIds' => $marketplace_ids,
-                    'IssueLocale' => $issue_locale,
+                    'marketplaceIds' => $marketplace_ids,
+                    'issueLocale' => $issue_locale,
                 ])
             ),
             (array) $request->toArrayObject()
@@ -83,8 +83,8 @@ class ListingsItemsResource implements ResourceContract
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku, array_filter([
-            'MarketplaceIds'=> $marketplace_ids,
-            'IssueLocale' => $issue_locale,
+            'marketplaceIds'=> $marketplace_ids,
+            'issueLocale' => $issue_locale,
         ]));
 
         return new ListingsItemSubmissionResponse($response);
@@ -102,8 +102,8 @@ class ListingsItemsResource implements ResourceContract
         $response = $this->http->put(
             $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku . '?' . http_build_query(
                 array_filter([
-                    'MarketplaceIds' => $marketplace_ids,
-                    'IssueLocale' => $issue_locale,
+                    'marketplaceIds' => $marketplace_ids,
+                    'issueLocale' => $issue_locale,
                 ])
             ),
             (array) $request->toArrayObject()

@@ -35,7 +35,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?MarketplaceIds=ATVPDKIKX0DER&IncludedData=summaries', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER&includedData=summaries', $request->url());
 
             return true;
         });
@@ -64,7 +64,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?MarketplaceIds[0]=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds[0]=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });
@@ -127,7 +127,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?MarketplaceIds[0]=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds[0]=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });
