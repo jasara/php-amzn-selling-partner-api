@@ -104,6 +104,8 @@ class AmznSPAHttp
     {
         $this->setupHttp($this->config->getHttp(), $grantless, $url, $method);
 
+        $url = str_replace('#', '%23', $url);
+
         if ($this->config->shouldUseTestEndpoints()) {
             $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
         }

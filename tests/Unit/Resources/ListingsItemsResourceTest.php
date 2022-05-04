@@ -132,4 +132,28 @@ class ListingsItemsResourceTest extends UnitTestCase
             return true;
         });
     }
+
+    /**
+     * @testWith ["amzn.gr.CW - #4 Brown-5gI2bvgCaM-7Cz8-VG"]
+     */
+    public function testGetListingsItemSkuIssues(string $sku): void
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->listings_items->getListingsItem(
+            sku: $sku,
+            seller_id: $seller_id = Str::random(),
+            marketplace_ids: ['ATVPDKIKX0DER'],
+        );
+
+        $this->assertInstanceOf(GetListingsItemResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($sku, $seller_id) {
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+
+            return true;
+        });
+    }
 }
