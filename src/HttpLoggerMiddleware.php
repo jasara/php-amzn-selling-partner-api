@@ -22,18 +22,37 @@ class HttpLoggerMiddleware
                 $request_url = (string) $request->getUri();
                 // Remove url parameters so URL displays cleanly in logs
                 $url = substr($request_url, 0, (strrpos($request_url, '?') ?: strlen($request_url)));
-                $request_data = json_decode($request->getBody()->getContents(), true);
+
                 $response_data = json_decode($response->getBody()->getContents(), true);
 
                 $this->logger->debug('[AmznSPA] Request ' . $request->getMethod() . ' ' . $url, [
                     'unsigned_request_headers' => $this->cleanData($request->getHeaders()),
-                    'request_data' => json_encode($this->cleanData($request_data ?: [])),
+                    'request_data' => $this->parseRequestData($request),
                     'response_headers' => $this->cleanData($response->getHeaders()),
                     'response_data' => json_encode($this->cleanData($response_data ?: [])),
                     'response_code' => $response->getStatusCode(),
                 ]);
             });
         });
+    }
+
+    private function parseRequestData(RequestInterface $request): string
+    {
+        $body = json_decode($request->getBody()->getContents(), true) ?: [];
+
+        $params = explode('&', $request->getUri()->getQuery());
+        for ($i = 0; $i < count($params); $i++) {
+            $parts = explode('=', $params[$i]);
+            if (count($parts) === 2) {
+                $params[$i] = [$parts[0] => $parts[1]];
+            }
+        }
+
+        return json_encode(
+            $this->cleanData(
+                array_merge($body, $params) ?: []
+            ),
+        );
     }
 
     private function cleanData(array $data): array

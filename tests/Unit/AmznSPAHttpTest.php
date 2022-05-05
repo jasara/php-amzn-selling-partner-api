@@ -381,7 +381,7 @@ class AmznSPAHttpTest extends UnitTestCase
         );
 
         $amzn = new AmznSPA($config);
-        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+        $amzn->listings_items->getListingsItem(Str::random(), Str::random(), ['ATVPDKIKX0DER']);
     }
 
     public function testRateLimitExceptionIsThrownIfResponseHasCode429()
