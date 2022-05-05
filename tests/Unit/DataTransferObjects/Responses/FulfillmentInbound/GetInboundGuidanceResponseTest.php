@@ -116,4 +116,24 @@ class GetInboundGuidanceResponseTest extends UnitTestCase
             payload: array_keys_to_snake($payload),
         );
     }
+
+    public function testSetupDtoStringArrayValidationNull()
+    {
+        $payload = [
+            'SKUInboundGuidanceList' => [
+                [
+                    'SellerSKU' => 'SellerSKU',
+                    'ASIN' => 'ASIN',
+                    'InboundGuidance' => 'InboundNotRecommended',
+                    'GuidanceReasonList' => null,
+                ],
+            ],
+        ];
+
+        $dto = new GetInboundGuidanceResponse(
+            payload: array_keys_to_snake($payload),
+        );
+
+        $this->assertInstanceOf(GetInboundGuidanceResultSchema::class, $dto->payload);
+    }
 }

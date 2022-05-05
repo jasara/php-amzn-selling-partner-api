@@ -4,7 +4,6 @@ namespace Jasara\AmznSPA;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
-use Exception;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
@@ -121,8 +120,6 @@ class AmznSPAHttp
 
             $this->callResponseCallback($response);
 
-            $this->logResponse($response, $method, $url);
-
             return $this->handleResponse($response, $method, $url);
         } catch (RequestException $e) {
             $this->callResponseCallback($e->response);
@@ -143,23 +140,14 @@ class AmznSPAHttp
             if ($e->response->status() === 429) {
                 throw new RateLimitException(previous: $e);
             }
-            try {
-                if ($this->shouldReturnErrorResponse($e)) {
-                    return $this->handleResponse($e->response, $method, $url);
-                }
 
-                $this->handleRequestException($e, $grantless);
-            } catch (Exception $e) {
-                $this->logException($e, $method, $url);
-
-                throw $e;
+            if ($this->shouldReturnErrorResponse($e)) {
+                return $this->handleResponse($e->response, $method, $url);
             }
 
-            return $this->call($method, $url, $data, $grantless);
-        } catch (\Exception $e) { // @codeCoverageIgnore
-            $this->logException($e, $method, $url); // @codeCoverageIgnore
+            $this->handleRequestException($e, $grantless);
 
-            throw $e; // @codeCoverageIgnore
+            return $this->call($method, $url, $data, $grantless);
         }
     }
 
@@ -239,17 +227,9 @@ class AmznSPAHttp
             'user-agent' => $this->buildUserAgent(),
         ]);
 
-        $this->http->beforeSending(function (Request $request) {
-            $url = $request->url();
-            $url = $this->removeParamsFromUrlForLogging($url);
+        $middleware = new HttpLoggerMiddleware($this->config->getLogger());
 
-            $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $url, [
-                'unsigned_request_headers' => $this->cleanData($request->headers()),
-                'request_data' => json_encode($this->cleanData($request->data())),
-            ]);
-
-            $this->request = $request;
-        });
+        $this->http->withMiddleware($middleware->buildCallable());
 
         $this->signRequest($this->config->getMarketplace()->getAwsRegion());
     }
@@ -328,7 +308,7 @@ class AmznSPAHttp
                 ->withHeader('X-Amz-Date', $signed_request->getHeader('X-Amz-Date'));
         });
 
-        $this->http = $this->http->withMiddleware($middleware);
+        $this->http->withMiddleware($middleware);
     }
 
     private function callResponseCallback(Response $response): void
@@ -395,34 +375,6 @@ class AmznSPAHttp
         return false;
     }
 
-    private function logException(Exception $e, string $method, string $url): void
-    {
-        $url = $this->removeParamsFromUrlForLogging($url);
-        $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
-
-        $response_data = (isset($e->response) && $e->response->json()) ? json_encode($this->cleanData($e->response->json())) : null;
-
-        $this->config->getLogger()->error('[AmznSPA] Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
-            'unsigned_request_headers' => $request_headers,
-            'request_data' => $this->request ? json_encode($this->cleanData($this->request->data())) : null,
-            'response_headers' => isset($e->response) ? $e->response->headers() : null,
-            'response_data' => $response_data,
-            'response_code' => isset($e->response) ? $e->response->status() : null,
-        ]);
-    }
-
-    private function logResponse(Response $response, string $method, string $url): void
-    {
-        $url = $this->removeParamsFromUrlForLogging($url);
-
-        $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
-            'response_headers' => $response->headers(),
-            'response_data' => json_encode(
-                $this->cleanData($response->json() ?: [])
-            ),
-        ]);
-    }
-
     private function transformArraysToStrings(array $data): array
     {
         foreach ($data as $key => $param) {
@@ -460,32 +412,5 @@ class AmznSPAHttp
         return array_merge(array_keys_to_snake($response->json() ?: []), [
             'metadata' => $this->getMetaData($response),
         ]);
-    }
-
-    private function cleanData(array $data): array
-    {
-        $filtered_keys = [
-            'x-amz-access-token' => '[filtered]',
-            'mwsAuthToken' => '[filtered]',
-            'authorizationCode' => '[filtered]',
-            'restrictedDataToken' => '[filtered]',
-            'access_token' => '[filtered]',
-            'refresh_token' => '[filtered]',
-        ];
-
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = $this->cleanData($value);
-            }
-        }
-
-        $filtered_data = array_intersect_key($filtered_keys, $data) + $data;
-
-        return $filtered_data;
-    }
-
-    private function removeParamsFromUrlForLogging(string $url): string
-    {
-        return substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
     }
 }

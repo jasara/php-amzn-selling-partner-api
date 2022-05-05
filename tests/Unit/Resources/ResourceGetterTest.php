@@ -74,6 +74,14 @@ class ResourceGetterTest extends UnitTestCase
         $this->assertInstanceOf(Resources\FbaInventoryResource::class, $fba_inventory);
     }
 
+    public function testGetFbaInboundEligibility()
+    {
+        $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());
+        $fba_inbound = $resource_getter->getFbaInboundEligibility();
+
+        $this->assertInstanceOf(Resources\FbaInboundEligibilityResource::class, $fba_inbound);
+    }
+
     public function testGetProductPricing()
     {
         $resource_getter = new Resources\ResourceGetter($this->setupMinimalConfig());

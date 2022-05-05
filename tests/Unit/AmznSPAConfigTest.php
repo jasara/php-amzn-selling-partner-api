@@ -152,21 +152,10 @@ class AmznSPAConfigTest extends UnitTestCase
 
     /**
      * @covers \Jasara\AmznSPA\AmznSPAConfig
-     * @covers \Jasara\AmznSPA\AmznSPAHttp::cleanData
      */
     public function testLogger()
     {
-        $http = new Factory;
-        $http->fake([
-            '*' => $http->sequence()
-                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
-                ->push($this->loadHttpStub('errors/invalid-client'), 403),
-        ]);
-
-        $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokensDTO(
-            refresh_token: Str::random(),
-        ));
+        $config = $this->setupMinimalConfig();
 
         $error_filepath = __DIR__ . '/../error-log.txt';
         touch($error_filepath);
@@ -198,12 +187,11 @@ class AmznSPAConfigTest extends UnitTestCase
             rewind($logger_resource);
             $line_1 = fgets($logger_resource);
             $line_2 = fgets($logger_resource);
-            $line_3 = fgets($logger_resource);
 
             $this->assertStringContainsString('123', $line_1);
             $this->assertStringNotContainsString('"access_token":"[filtered]"', $line_2);
             $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
-            $this->assertStringContainsString('\"error\":\"invalid_client\"', $line_3);
+            $this->assertStringContainsString('\"code\":\"InvalidInput\"', $line_2);
             $this->assertEquals('', fgets($logger_resource));
         }
 
