@@ -123,7 +123,6 @@ class AmznSPAHttp
             $this->callResponseCallback($e->response);
 
             if ($this->isAuthenticationException($e)) {
-                ray('here');
                 if ($grantless) {
                     throw new GrantlessAuthenticationException(
                         $e->response,
