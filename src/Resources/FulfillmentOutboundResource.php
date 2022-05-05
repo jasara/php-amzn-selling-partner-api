@@ -124,7 +124,7 @@ class FulfillmentOutboundResource implements ResourceContract
 
     public function getFeatureSKU(string $marketplace_id, string $feature_name, ?string $seller_sku): GetFeatureSkuResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name . '/' . $seller_sku);
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name . '/' . urlencode($seller_sku));
 
         return new GetFeatureSkuResponse($response);
     }

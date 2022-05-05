@@ -103,8 +103,6 @@ class AmznSPAHttp
     {
         $this->setupHttp($this->config->getHttp(), $grantless, $url, $method);
 
-        $url = str_replace('#', '%23', $url);
-
         if ($this->config->shouldUseTestEndpoints()) {
             $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
         }
@@ -125,6 +123,7 @@ class AmznSPAHttp
             $this->callResponseCallback($e->response);
 
             if ($this->isAuthenticationException($e)) {
+                ray('here');
                 if ($grantless) {
                     throw new GrantlessAuthenticationException(
                         $e->response,

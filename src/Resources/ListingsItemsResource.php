@@ -37,7 +37,7 @@ class ListingsItemsResource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku, array_filter([
+        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . urlencode($sku), array_filter([
             'marketplaceIds'=> $marketplace_ids,
             'issueLocale' => $issue_locale,
             'includedData' => $included_data,
@@ -62,7 +62,7 @@ class ListingsItemsResource implements ResourceContract
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http->put(
-            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku . '?' . http_build_query(
+            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . urlencode($sku) . '?' . http_build_query(
                 array_filter([
                     'marketplaceIds' => $marketplace_ids,
                     'issueLocale' => $issue_locale,
@@ -82,7 +82,7 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku, array_filter([
+        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . urlencode($sku), array_filter([
             'marketplaceIds'=> $marketplace_ids,
             'issueLocale' => $issue_locale,
         ]));
@@ -100,7 +100,7 @@ class ListingsItemsResource implements ResourceContract
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http->put(
-            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . $sku . '?' . http_build_query(
+            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . urlencode($sku) . '?' . http_build_query(
                 array_filter([
                     'marketplaceIds' => $marketplace_ids,
                     'issueLocale' => $issue_locale,
