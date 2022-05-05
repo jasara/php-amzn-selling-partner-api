@@ -46,6 +46,24 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getTokens()->access_token);
     }
 
+    public function testInvalidGrantRefreshTokenIsAttempted()
+    {
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/invalid-grant'), 400)
+                ->push($this->loadHttpStub('lwa/get-tokens'), 200)
+                ->push($this->loadHttpStub('notifications/get-subscription'), 200),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getTokens()->access_token);
+    }
+
     public function testRefreshGrantlessToken()
     {
         $http = new Factory;

@@ -143,7 +143,6 @@ class AmznSPAHttp
             if ($e->response->status() === 429) {
                 throw new RateLimitException(previous: $e);
             }
-
             try {
                 if ($this->shouldReturnErrorResponse($e)) {
                     return $this->handleResponse($e->response, $method, $url);
@@ -166,7 +165,15 @@ class AmznSPAHttp
 
     private function shouldRefreshToken(array $response): bool
     {
-        return Arr::get($response, 'errors.0.details') === 'The access token you provided has expired.';
+        if (Arr::get($response, 'errors.0.details') === 'The access token you provided has expired.') {
+            return true;
+        }
+
+        if (Arr::get($response, 'error') === 'invalid_grant') {
+            return true;
+        }
+
+        return false;
     }
 
     private function shouldRetry(): bool
