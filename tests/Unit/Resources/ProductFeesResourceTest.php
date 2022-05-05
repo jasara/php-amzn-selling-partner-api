@@ -9,6 +9,9 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\ProductFees\GetMyFeesEstimateReq
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductFees\GetMyFeesEstimateResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\ProductFeesResource
+ */
 class ProductFeesResourceTest extends UnitTestCase
 {
     public function testGetMyFeesEstimateForSku()

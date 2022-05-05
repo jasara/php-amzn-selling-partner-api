@@ -8,6 +8,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\UploadsResource
+ */
 class UploadsResourceTest extends UnitTestCase
 {
     public function testCreateUploadDestinationForResource()

@@ -7,6 +7,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\FbaInboundEligibilityResource
+ */
 class FbaInboundEligibilityResourceTest extends UnitTestCase
 {
     public function testGetItemEligibilityPreview()
@@ -16,7 +19,7 @@ class FbaInboundEligibilityResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fba_inbound_eligibility->getItemEligibilityPreview(
-            marketplace_ids:['ATVPDKIKX0DER'],
+            marketplace_ids: ['ATVPDKIKX0DER'],
             asin: 'hello',
             program: 'INBOUND'
         );

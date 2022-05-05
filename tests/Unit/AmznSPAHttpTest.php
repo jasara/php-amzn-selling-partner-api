@@ -14,7 +14,7 @@ use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -88,15 +88,15 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('tokens/create-restricted-data-token'), 200)
-                ->push($this->loadHttpStub('orders/get-orders'), 200),
+                ->push($this->loadHttpStub('merchant-fulfillment/get-shipment'), 200),
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
 
         $amzn = new AmznSPA($config);
-        $response = $amzn->orders->getOrders(marketplace_ids: ['ATVPDKIKX0DER']);
+        $response = $amzn->merchant_fulfillment->getShipment(Str::random());
 
-        $this->assertInstanceOf(GetOrdersResponse::class, $response);
+        $this->assertInstanceOf(GetShipmentResponse::class, $response);
 
         $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
     }
@@ -421,6 +421,6 @@ class AmznSPAHttpTest extends UnitTestCase
         $config->setResponseCallback($response_callback);
 
         $amzn = new AmznSPA($config);
-        $response = $amzn->feeds->cancelFeed('some-feed-id');
+        $amzn->fulfillment_outbound->cancelFulfillmentOrder('some-order-id');
     }
 }

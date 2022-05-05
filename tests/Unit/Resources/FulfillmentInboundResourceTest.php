@@ -25,6 +25,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\PutTransport
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\VoidTransportResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\FulfillmentInboundResource
+ */
 class FulfillmentInboundResourceTest extends UnitTestCase
 {
     public function testGetInboundGuidance()

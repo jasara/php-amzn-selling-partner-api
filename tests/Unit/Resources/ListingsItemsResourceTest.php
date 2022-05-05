@@ -11,6 +11,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\GetListingsItemRe
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\ListingsItemSubmissionResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\ListingsItemsResource
+ */
 class ListingsItemsResourceTest extends UnitTestCase
 {
     public function testGetListingsItem()

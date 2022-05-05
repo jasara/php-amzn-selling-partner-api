@@ -9,6 +9,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetOffersRespons
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetPricingResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\ProductPricingResource
+ */
 class ProductPricingResourceTest extends UnitTestCase
 {
     public function testGetPricing()

@@ -8,6 +8,9 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\Tokens\CreateRestrictedDataToken
 use Jasara\AmznSPA\DataTransferObjects\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\TokensResource
+ */
 class TokensResourceTest extends UnitTestCase
 {
     public function testCreateRestrictedDataToken()

@@ -15,6 +15,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligible
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\MerchantFulfillmentResource
+ */
 class MerchantFulfillmentResourceTest extends UnitTestCase
 {
     public function testGetEligibleShipmentServicesOld()
@@ -22,7 +25,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-eligible-shipment-services-old');
 
         $request = new GetEligibleShipmentServicesRequest(
-            shipment_request_details:$this->shipmentRequestDetails(),
+            shipment_request_details: $this->shipmentRequestDetails(),
         );
 
         $amzn = new AmznSPA($config);
@@ -45,7 +48,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-eligible-shipment-services-old');
 
         $request = new GetEligibleShipmentServicesRequest(
-            shipment_request_details:$this->shipmentRequestDetails(),
+            shipment_request_details: $this->shipmentRequestDetails(),
         );
 
         $amzn = new AmznSPA($config);
@@ -140,8 +143,8 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/create-shipment');
         $request = new CreateShipmentRequest(
-            shipment_request_details:$this->shipmentRequestDetails(),
-            shipping_service_id:Str::random(),
+            shipment_request_details: $this->shipmentRequestDetails(),
+            shipping_service_id: Str::random(),
         );
 
         $amzn = new AmznSPA($config);
@@ -163,9 +166,9 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-additional-seller-inputs-old');
         $request = new GetAdditionalSellerInputsRequest(
-            shipping_service_id:Str::random(),
-            ship_from_address:$this->setupAddress(),
-            order_id:STR::random()
+            shipping_service_id: Str::random(),
+            ship_from_address: $this->setupAddress(),
+            order_id: STR::random()
         );
 
         $amzn = new AmznSPA($config);
@@ -187,9 +190,9 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-additional-seller-inputs-old');
         $request = new GetAdditionalSellerInputsRequest(
-            shipping_service_id:Str::random(),
-            ship_from_address:$this->setupAddress(),
-            order_id:STR::random()
+            shipping_service_id: Str::random(),
+            ship_from_address: $this->setupAddress(),
+            order_id: STR::random()
         );
 
         $amzn = new AmznSPA($config);

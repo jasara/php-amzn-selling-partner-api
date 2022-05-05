@@ -24,6 +24,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnR
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\FulfillmentOutboundResource
+ */
 class FulfillmentOutboundResourceTest extends UnitTestCase
 {
     public function testGetFulfillmentPreview()

@@ -21,6 +21,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\PurchaseShipmentRespon
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\RetrieveShippingLabelResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\ShippingResource
+ */
 class ShippingResourceTest extends UnitTestCase
 {
     public function testCreateShipment()

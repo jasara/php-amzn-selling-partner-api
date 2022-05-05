@@ -7,6 +7,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Sellers\GetMarketplaceParticipationsResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\SellersResource
+ */
 class SellersResourceTest extends UnitTestCase
 {
     public function testGetMarketplaceParticipations()

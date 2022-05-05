@@ -28,6 +28,16 @@ class MarketplacesListTest extends UnitTestCase
         }
     }
 
+    public function testAllCountryCodes()
+    {
+        $country_codes = MarketplacesList::allCountryCodes();
+        $this->assertGreaterThan(19, count($country_codes));
+        foreach ($country_codes as $country_code) {
+            $this->assertIsString($country_code);
+            $this->assertEquals(2, strlen($country_code));
+        }
+    }
+
     public function testGetMarketplaceFromIdentifier()
     {
         $identifier = 'A2EUQ1WTGCTBG2';

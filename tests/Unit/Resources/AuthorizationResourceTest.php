@@ -9,6 +9,10 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthoriza
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\AuthorizationResource
+ * @covers \Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException
+ */
 class AuthorizationResourceTest extends UnitTestCase
 {
     public function testGetAuthorizationCodeFromMwsToken()

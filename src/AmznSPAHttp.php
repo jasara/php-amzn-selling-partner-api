@@ -241,7 +241,7 @@ class AmznSPAHttp
 
         $this->http->beforeSending(function (Request $request) {
             $url = $request->url();
-            $url = $this->cleanUrl($url);
+            $url = $this->removeParamsFromUrlForLogging($url);
 
             $this->config->getLogger()->debug('[AmznSPA] Pre-Request ' . $request->method() . ' ' . $url, [
                 'unsigned_request_headers' => $this->cleanData($request->headers()),
@@ -397,12 +397,12 @@ class AmznSPAHttp
 
     private function logException(Exception $e, string $method, string $url): void
     {
-        $url = $this->cleanUrl($url);
+        $url = $this->removeParamsFromUrlForLogging($url);
         $request_headers = $this->request ? $this->cleanData($this->request->headers()) : null;
 
         $response_data = (isset($e->response) && $e->response->json()) ? json_encode($this->cleanData($e->response->json())) : null;
 
-        $this->config->getLogger()->error('[AmznSPA] Response Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
+        $this->config->getLogger()->error('[AmznSPA] Error ' . strtoupper($method) . ' ' . $url . ' -- ' . $e->getMessage(), [
             'unsigned_request_headers' => $request_headers,
             'request_data' => $this->request ? json_encode($this->cleanData($this->request->data())) : null,
             'response_headers' => isset($e->response) ? $e->response->headers() : null,
@@ -413,7 +413,7 @@ class AmznSPAHttp
 
     private function logResponse(Response $response, string $method, string $url): void
     {
-        $url = $this->cleanUrl($url);
+        $url = $this->removeParamsFromUrlForLogging($url);
 
         $this->config->getLogger()->debug('[AmznSPA] Response ' . strtoupper($method) . ' ' . $url, [
             'response_headers' => $response->headers(),
@@ -484,7 +484,7 @@ class AmznSPAHttp
         return $filtered_data;
     }
 
-    private function cleanUrl(string $url): string
+    private function removeParamsFromUrlForLogging(string $url): string
     {
         return substr($url, 0, (strrpos($url, '?') ?: strlen($url)));
     }

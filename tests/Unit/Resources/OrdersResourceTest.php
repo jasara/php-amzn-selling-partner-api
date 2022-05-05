@@ -14,6 +14,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
+/**
+ * @covers \Jasara\AmznSPA\Resources\OrdersResource
+ */
 class OrdersResourceTest extends UnitTestCase
 {
     public function testGetOrders()
