@@ -3,7 +3,7 @@
 namespace Jasara\AmznSPA;
 
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -17,7 +17,7 @@ class HttpLoggerMiddleware
 
     public function buildCallable(): callable
     {
-        return Middleware::tap(after: function (RequestInterface $request, array $options, FulfilledPromise $response) {
+        return Middleware::tap(after: function (RequestInterface $request, array $options, PromiseInterface $response) {
             $response->then(function (ResponseInterface $response) use ($request) {
                 $request_url = (string) $request->getUri();
                 // Remove url parameters so URL displays cleanly in logs
