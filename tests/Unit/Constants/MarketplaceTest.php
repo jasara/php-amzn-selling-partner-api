@@ -14,12 +14,10 @@ class MarketplaceTest extends UnitTestCase
      */
     public function testGetters(string $region)
     {
-        $identifier = Str::random();
-        $country_code = Str::random();
-
         $marketplace = new Marketplace(
-            identifier: $identifier,
-            country_code: $country_code,
+            identifier: $identifier = Str::random(),
+            country_code: $country_code = Str::random(),
+            seller_central_url: $seller_central_url = Str::random(),
             region: $region,
         );
 
@@ -38,6 +36,7 @@ class MarketplaceTest extends UnitTestCase
         $this->assertEquals($identifier, $marketplace->getIdentifier());
         $this->assertEquals($country_code, $marketplace->getCountryCode());
         $this->assertEquals($region, $marketplace->getRegion());
+        $this->assertEquals($seller_central_url, $marketplace->getSellerCentralUrl());
         $this->assertEquals($base_url, $marketplace->getBaseUrl());
         $this->assertEquals($aws_region, $marketplace->getAwsRegion());
     }

@@ -9,6 +9,7 @@ class Marketplace
     public function __construct(
         private string $identifier,
         private string $country_code,
+        private string $seller_central_url,
         private string $region,
     ) {
         $this->base_url = $this->baseUrlFromRegion($region);
@@ -27,6 +28,11 @@ class Marketplace
     public function getRegion(): string
     {
         return $this->region;
+    }
+
+    public function getSellerCentralUrl(): string
+    {
+        return $this->seller_central_url;
     }
 
     public function getBaseUrl(): string
