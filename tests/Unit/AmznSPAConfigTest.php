@@ -191,7 +191,7 @@ class AmznSPAConfigTest extends UnitTestCase
             $this->assertStringContainsString('123', $line_1);
             $this->assertStringNotContainsString('"access_token":"[filtered]"', $line_2);
             $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
-            $this->assertStringContainsString('\"code\":\"InvalidInput\"', $line_2);
+            $this->assertStringContainsString('"code":"InvalidInput"', $line_2);
             $this->assertEquals('', fgets($logger_resource));
         }
 
