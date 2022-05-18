@@ -29,14 +29,14 @@ class HttpLoggerMiddleware
                     'unsigned_request_headers' => $this->cleanData($request->getHeaders()),
                     'request_data' => $this->parseRequestData($request),
                     'response_headers' => $this->cleanData($response->getHeaders()),
-                    'response_data' => json_encode($this->cleanData($response_data ?: [])),
+                    'response_data' => $this->cleanData($response_data ?: []),
                     'response_code' => $response->getStatusCode(),
                 ]);
             });
         });
     }
 
-    private function parseRequestData(RequestInterface $request): string
+    private function parseRequestData(RequestInterface $request): array
     {
         $body = json_decode($request->getBody()->getContents(), true) ?: [];
 
@@ -48,11 +48,10 @@ class HttpLoggerMiddleware
             }
         }
 
-        return json_encode(
+        return
             $this->cleanData(
                 array_merge($body, $params) ?: []
-            ),
-        );
+            );
     }
 
     private function cleanData(array $data): array

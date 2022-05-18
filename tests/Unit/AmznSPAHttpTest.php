@@ -361,7 +361,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     /**
      * @group external
-     * An actual API call is required here, in order to test the request signing and test endpoints.
+     * An actual live API call is required here, in order to test the request signing and test endpoints.
      * @covers \Jasara\AmznSPA\HttpLoggerMiddleware
      */
     public function testSetupHttp()
