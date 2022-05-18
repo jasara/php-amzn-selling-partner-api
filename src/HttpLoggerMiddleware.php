@@ -38,7 +38,9 @@ class HttpLoggerMiddleware
 
     private function parseRequestData(RequestInterface $request): array
     {
-        $body = json_decode($request->getBody()->getContents(), true) ?: [];
+        $body = $request->getBody();
+        $body->rewind();
+        $body = json_decode($body->getContents(), true) ?: [];
 
         $params = explode('&', $request->getUri()->getQuery());
         for ($i = 0; $i < count($params); $i++) {
@@ -47,6 +49,8 @@ class HttpLoggerMiddleware
                 $params[$i] = [$parts[0] => $parts[1]];
             }
         }
+
+        $params = array_filter($params);
 
         return
             $this->cleanData(
