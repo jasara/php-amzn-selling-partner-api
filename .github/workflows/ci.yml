@@ -6,15 +6,7 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Set Swap Space
-        uses: pierotofy/set-swap-space@master
-        with:
-          swap-size-gb: 10
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
+    steps:           
       - uses: actions/checkout@v2
       - name: Install dependencies
         uses: php-actions/composer@v6
@@ -27,6 +19,7 @@ jobs:
           php_extensions: pcov
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
+          memory_limit: 1G
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
