@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\MerchantFulfillment;
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemListSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\v20201201\ItemListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\WeightSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;

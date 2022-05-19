@@ -5,8 +5,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\ItemSearchResults;
+use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInventory\GetInventorySummariesResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
@@ -45,7 +44,7 @@ class FbaInventoryResourceTest extends UnitTestCase
 
     public function testGetCatalogItem()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/get');
+        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/v20201201/get');
 
         $asin = Str::random();
 

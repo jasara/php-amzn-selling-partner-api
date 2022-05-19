@@ -6,10 +6,10 @@ use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
-class ItemSalesRanksByMarketplaceSchema extends DataTransferObject
+class ItemRelationshipsByMarketplaceSchema extends DataTransferObject
 {
     public string $marketplace_id;
 
-    #[CastWith(ArrayCaster::class, itemType: ItemSalesRankSchema::class)]
-    public ItemSalesRankListSchema $ranks;
+    #[CastWith(ArrayCaster::class, itemType: ItemRelationshipSchema::class)]
+    public ?ItemRelationshipListSchema $relationships;
 }

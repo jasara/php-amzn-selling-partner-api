@@ -4,6 +4,7 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\AmznSPAHttp;
+use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class ResourceGetter
@@ -32,185 +33,113 @@ class ResourceGetter
 
     public function getAuthorization(): AuthorizationResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource('migration');
-
-        return new AuthorizationResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(AuthorizationResource::class, 'migration');
     }
 
     public function getNotifications(): NotificationsResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource('notifications');
-
-        return new NotificationsResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(NotificationsResource::class, 'notifications');
     }
 
     public function getFulfillmentInbound(): FulfillmentInboundResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new FulfillmentInboundResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(FulfillmentInboundResource::class);
     }
 
     public function getFeeds(): FeedsResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new FeedsResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(FeedsResource::class);
     }
 
     public function getReports(): ReportsResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new ReportsResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(ReportsResource::class);
     }
 
-    public function getCatalogItems(): CatalogItemsResource
+    public function getCatalogItems(): CatalogItems\CatalogItems20201201Resource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
+        return $this->constructResource(CatalogItems\CatalogItems20201201Resource::class);
+    }
 
-        return new CatalogItemsResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+    public function getCatalogItems20201201(): CatalogItems\CatalogItems20201201Resource
+    {
+        return $this->constructResource(CatalogItems\CatalogItems20201201Resource::class);
+    }
+
+    public function getCatalogItems20220401(): CatalogItems\CatalogItems20220401Resource
+    {
+        return $this->constructResource(CatalogItems\CatalogItems20220401Resource::class);
     }
 
     public function getFbaInventory(): FbaInventoryResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new FbaInventoryResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(FbaInventoryResource::class);
     }
 
     public function getProductPricing(): ProductPricingResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new ProductPricingResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(ProductPricingResource::class);
     }
 
     public function getFulfillmentOutbound(): FulfillmentOutboundResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new FulfillmentOutboundResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(FulfillmentOutboundResource::class);
     }
 
     public function getMerchantFulfillment(): MerchantFulfillmentResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new MerchantFulfillmentResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(MerchantFulfillmentResource::class);
     }
 
     public function getShipping(): ShippingResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new ShippingResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(ShippingResource::class);
     }
 
     public function getFbaInboundEligibility(): FbaInboundEligibilityResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new FbaInboundEligibilityResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(FbaInboundEligibilityResource::class);
     }
 
     public function getOrders(): OrdersResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new OrdersResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(OrdersResource::class);
     }
 
     public function getTokens(): TokensResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new TokensResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(TokensResource::class);
     }
 
     public function getSellers(): SellersResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new SellersResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(SellersResource::class);
     }
 
     public function getUploads(): UploadsResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new UploadsResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(UploadsResource::class);
     }
 
     public function getProductFees(): ProductFeesResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
-
-        return new ProductFeesResource(
-            $http,
-            $this->config->getMarketplace()->getBaseUrl(),
-        );
+        return $this->constructResource(ProductFeesResource::class);
     }
 
     public function getListingsItems(): ListingsItemsResource
     {
-        $http = $this->validateAndSetupHttpForStandardResource();
+        return $this->constructResource(ListingsItemsResource::class);
+    }
 
-        return new ListingsItemsResource(
-            $http,
+    private function constructResource(string $class, ?string $grantless_resource = null): ResourceContract
+    {
+        return new $class(
+            $this->validateAndSetupHttpForStandardResource($grantless_resource),
             $this->config->getMarketplace()->getBaseUrl(),
         );
     }
 
-    private function validateAndSetupHttpForStandardResource($grantless_resource = null): AmznSPAHttp
+    private function validateAndSetupHttpForStandardResource(?string $grantless_resource = null): AmznSPAHttp
     {
         $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
         if (! $grantless_resource) {

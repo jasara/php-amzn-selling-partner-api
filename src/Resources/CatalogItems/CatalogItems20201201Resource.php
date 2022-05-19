@@ -1,21 +1,21 @@
 <?php
 
-namespace Jasara\AmznSPA\Resources;
+namespace Jasara\AmznSPA\Resources\CatalogItems;
 
 use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\ItemSearchResults;
+use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\ItemSearchResults;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
-class CatalogItemsResource implements ResourceContract
+class CatalogItems20201201Resource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/catalog/2020-12-01/';
+    public const BASE_PATH = '/catalog/2020-12-01/';
 
     public function __construct(
         private AmznSPAHttp $http,

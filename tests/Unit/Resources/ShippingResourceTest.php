@@ -19,6 +19,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\GetTrackingInformation
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\PurchaseLabelsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\PurchaseShipmentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Shipping\RetrieveShippingLabelResponse;
+use Jasara\AmznSPA\Tests\Setup\SetupContainers;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -26,6 +27,8 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
  */
 class ShippingResourceTest extends UnitTestCase
 {
+    use SetupContainers;
+
     public function testCreateShipment()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/create-shipment');

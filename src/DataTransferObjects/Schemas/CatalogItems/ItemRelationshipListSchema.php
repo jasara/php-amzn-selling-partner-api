@@ -4,12 +4,12 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems;
 
 use Illuminate\Support\Collection;
 
-class ItemSummaryByMarketplaceListSchema extends Collection
+class ItemRelationshipListSchema extends Collection
 {
     /**
      * @codeCoverageIgnore
      */
-    public function offsetGet($key): ItemSummaryByMarketplaceSchema
+    public function offsetGet($key): ItemRelationshipSchema
     {
         return parent::offsetGet($key);
     }

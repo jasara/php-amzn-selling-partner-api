@@ -335,6 +335,8 @@ class AmazonEnums
         'identifiers',
         'images',
         'productTypes',
+        'dimensions',
+        'relationships',
         'salesRanks',
         'summaries',
         'variations',

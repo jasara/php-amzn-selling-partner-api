@@ -13,6 +13,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\CreateShipm
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetAdditionalSellerInputsResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetEligibleShipmentServicesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
+use Jasara\AmznSPA\Tests\Setup\SetupMerchantFulfillmentRequest;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -20,6 +21,8 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
  */
 class MerchantFulfillmentResourceTest extends UnitTestCase
 {
+    use SetupMerchantFulfillmentRequest;
+
     public function testGetEligibleShipmentServicesOld()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-eligible-shipment-services-old');

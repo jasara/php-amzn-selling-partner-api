@@ -10,7 +10,9 @@ use Jasara\AmznSPA\Traits\HasConfig;
 
 /**
  * @property \Jasara\AmznSPA\Resources\AuthorizationResource $authorization
- * @property \Jasara\AmznSPA\Resources\CatalogItemsResource $catalog_items
+ * @property \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource $catalog_items
+ * @property \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource $catalog_items20201201
+ * @property \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20220401Resource $catalog_items20220401
  * @property \Jasara\AmznSPA\Resources\FbaInboundEligibilityResource $fba_inbound_eligibility
  * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
  * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
@@ -33,6 +35,8 @@ class AmznSPA
 {
     use HasConfig;
 
+    private ?string $version = null;
+
     public function __construct(AmznSPAConfig $config)
     {
         $this->setupConfig($config);
@@ -48,7 +52,7 @@ class AmznSPA
             throw new InvalidResourceException($name . ' is not a supported resource.');
         }
 
-        return $resource_getter->{$function}();
+        return $resource_getter->{$function}($this->version);
     }
 
     public function usingMarketplace(string $marketplace_id): self

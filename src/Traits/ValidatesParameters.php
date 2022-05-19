@@ -19,7 +19,7 @@ trait ValidatesParameters
         }
     } */
 
-    private function validateObjectProperties(object $object_to_validate, array $required_properties)
+    private function validateObjectProperties(object $object_to_validate, array $required_properties): void
     {
         foreach ($required_properties as $property) {
             if (! isset($object_to_validate->$property) || is_null($object_to_validate->$property)) {
@@ -28,7 +28,7 @@ trait ValidatesParameters
         }
     }
 
-    private function validateDtoProperties(DataTransferObject $dto, array $required_properties)
+    private function validateDtoProperties(DataTransferObject $dto, array $required_properties): void
     {
         foreach ($required_properties as $property) {
             if (! isset($dto->$property) || is_null($dto->$property)) {
@@ -37,7 +37,7 @@ trait ValidatesParameters
         }
     }
 
-    private function validateArrayParameters(array $array, array $required_parameters)
+    private function validateArrayParameters(array $array, array $required_parameters): void
     {
         foreach ($required_parameters as $parameter) {
             if (! Arr::get($array, $parameter)) {
@@ -46,14 +46,30 @@ trait ValidatesParameters
         }
     }
 
-    private function validateStringEnum(string $string, array $allowed_values)
+    private function validateStringEnum(string $string, string|array $allowed_values): void
     {
+        if (is_string($allowed_values)) {
+            if (! enum_exists($allowed_values)) {
+                throw new \Exception('Only enum classes are allowed as string values for allowed_values.');
+            }
+
+            $allowed_values::tryFrom($string);
+
+            if (! $allowed_values::tryFrom($string)) {
+                $cases = collect($allowed_values::cases())->map(fn ($case) => $case->value)->toArray();
+
+                throw new InvalidParametersException($string . ' is not in the list of allowed values: ' . implode(',', $cases));
+            }
+
+            return;
+        }
+
         if (! in_array($string, $allowed_values)) {
             throw new InvalidParametersException($string . ' is not in the list of allowed values: ' . implode(',', $allowed_values));
         }
     }
 
-    private function validateIsArrayOfStrings(array $array, ?array $allowed_values = null)
+    private function validateIsArrayOfStrings(array $array, ?array $allowed_values = null): void
     {
         if (Arr::isAssoc($array)) {
             throw new InvalidParametersException('Arrays of strings must not be associative arrays (they must be sequential).');

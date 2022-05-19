@@ -1,28 +1,28 @@
 <?php
 
-namespace Jasara\AmznSPA\Tests\Unit\Resources;
+namespace Jasara\AmznSPA\Tests\Unit\Resources\CatalogItems;
 
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\ItemSearchResults;
+use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\ItemSearchResults;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
- * @covers \Jasara\AmznSPA\Resources\CatalogItemsResource
+ * @covers \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource
  */
-class CatalogItemsResourceTest extends UnitTestCase
+class CatalogItems20201201ResourceTest extends UnitTestCase
 {
     public function testSearchCatalogItems()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/search');
+        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/v20201201/search');
 
         $keyword = Str::random();
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->catalog_items->searchCatalogItems(
+        $response = $amzn->catalog_items20201201->searchCatalogItems(
             keywords: [$keyword],
             marketplace_ids: ['ATVPDKIKX0DER'],
             included_data: ['images'],
@@ -43,13 +43,13 @@ class CatalogItemsResourceTest extends UnitTestCase
 
     public function testGetCatalogItem()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/get');
+        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/v20201201/get');
 
         $asin = Str::random();
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->catalog_items->getCatalogItem(
+        $response = $amzn->catalog_items20201201->getCatalogItem(
             asin: $asin,
             marketplace_ids: ['ATVPDKIKX0DER'],
             included_data: ['images'],
@@ -68,13 +68,13 @@ class CatalogItemsResourceTest extends UnitTestCase
 
     public function testGetCatalogItem_Issue10_404()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/issues/issue-10-404-not-found');
+        list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/v20201201/issues/issue-10-404-not-found');
 
         $asin = 'B0AABBCC';
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->catalog_items->getCatalogItem(
+        $response = $amzn->catalog_items20201201->getCatalogItem(
             asin: $asin,
             marketplace_ids: ['ATVPDKIKX0DER'],
             included_data: ['images'],

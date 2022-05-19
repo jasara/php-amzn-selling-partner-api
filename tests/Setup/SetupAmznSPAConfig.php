@@ -31,7 +31,7 @@ trait SetupAmznSPAConfig
         return $config;
     }
 
-    public function setupSandboxConfig(): AmznSPAConfig
+    public function setupLiveConfig(): AmznSPAConfig
     {
         $config = new AmznSPAConfig(
             marketplace_id: 'ATVPDKIKX0DER',
@@ -41,7 +41,7 @@ trait SetupAmznSPAConfig
             aws_secret_key: env('AWS_SECRET_KEY'),
             lwa_client_id: env('LWA_CLIENT_ID'),
             lwa_client_secret: env('LWA_CLIENT_SECRET'),
-            use_test_endpoints: true,
+            use_test_endpoints: env('AMZN_SPA_TEST_ENDPOINTS'),
         );
 
         return $config;

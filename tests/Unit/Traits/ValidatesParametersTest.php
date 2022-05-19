@@ -12,6 +12,7 @@ use Jasara\AmznSPA\Exceptions\InvalidParametersException;
 use Jasara\AmznSPA\Resources\LwaResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 /**
  * @covers \Jasara\AmznSPA\Traits\ValidatesParameters
@@ -105,12 +106,32 @@ class ValidatesParametersTest extends UnitTestCase
         ]);
     }
 
-    public function testValidatesStringEnumException()
+    public function testValidatesStringEnumInvalidValueException()
     {
         $this->expectException(InvalidParametersException::class);
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
         $amzn->notifications->getSubscription(Str::random());
+    }
+
+    public function testValidatesStringEnumNotInEnumCasesException()
+    {
+        $this->expectException(InvalidParametersException::class);
+
+        $amzn = new AmznSPA($this->setupMinimalConfig());
+        $amzn->catalog_items20220401->searchCatalogItems(
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            identifiers_type: 'notvalid',
+        );
+    }
+
+    public function testValidatesStringEnumInvalidEnumClassPassed()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Only enum classes are allowed as string values for allowed_values.');
+
+        $stub = new ResourceStub;
+        $stub->passInvalidEnumClassToStringEnumValidator();
     }
 
     public function testValidatesStringEnumPasses()
@@ -158,5 +179,15 @@ class ValidatesParametersTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', ['WORKING']);
+    }
+}
+
+class ResourceStub
+{
+    use ValidatesParameters;
+
+    public function passInvalidEnumClassToStringEnumValidator(): void
+    {
+        $this->validateStringEnum('notvalid', ' notanenum');
     }
 }
