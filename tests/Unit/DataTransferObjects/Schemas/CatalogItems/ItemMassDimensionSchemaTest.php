@@ -14,7 +14,7 @@ class ItemMassDimensionSchemaTest extends UnitTestCase
     public function testAsUom()
     {
         $schema = new ItemMassDimensionSchema(
-            number: rand(1, 10),
+            value: rand(1, 10),
             unit: 'pounds',
         );
 

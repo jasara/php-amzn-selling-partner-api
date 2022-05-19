@@ -9,10 +9,10 @@ class ItemMassDimensionSchema extends DataTransferObject
 {
     public ?string $unit;
 
-    public ?float $number;
+    public ?float $value;
 
     public function asUom(): Mass
     {
-        return new Mass($this->number, strtolower($this->unit));
+        return new Mass($this->value, strtolower($this->unit));
     }
 }

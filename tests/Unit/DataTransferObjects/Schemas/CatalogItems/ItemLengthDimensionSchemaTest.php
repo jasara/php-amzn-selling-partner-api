@@ -14,7 +14,7 @@ class ItemLengthDimensionSchemaTest extends UnitTestCase
     public function testAsUom()
     {
         $schema = new ItemLengthDimensionSchema(
-            number: rand(1, 10),
+            value: rand(1, 10),
             unit: 'inches',
         );
 

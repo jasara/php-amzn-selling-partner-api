@@ -9,10 +9,10 @@ class ItemLengthDimensionSchema extends DataTransferObject
 {
     public ?string $unit;
 
-    public ?float $number;
+    public ?float $value;
 
     public function asUom(): Length
     {
-        return new Length($this->number, strtolower($this->unit));
+        return new Length($this->value, strtolower($this->unit));
     }
 }
