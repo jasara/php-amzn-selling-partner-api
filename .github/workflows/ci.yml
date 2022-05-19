@@ -19,6 +19,7 @@ jobs:
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         with:
+          php_version: "8.1"
           php_extensions: pcov
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
