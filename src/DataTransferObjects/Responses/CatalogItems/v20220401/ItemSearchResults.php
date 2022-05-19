@@ -12,12 +12,12 @@ use Spatie\DataTransferObject\Casters\ArrayCaster;
 
 class ItemSearchResults extends BaseResponse
 {
-    public int $number_of_results;
+    public ?int $number_of_results;
 
     public ?PaginationSchema $pagination;
 
     public ?RefinementsSchema $refinements;
 
     #[CastWith(ArrayCaster::class, itemType: ItemSchema::class)]
-    public ItemListSchema $items;
+    public ?ItemListSchema $items;
 }
