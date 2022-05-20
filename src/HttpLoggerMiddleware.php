@@ -46,7 +46,9 @@ class HttpLoggerMiddleware
         for ($i = 0; $i < count($params); $i++) {
             $parts = explode('=', $params[$i]);
             if (count($parts) === 2) {
-                $params[$i] = [$parts[0] => $parts[1]];
+                $params[$i] = [
+                    $parts[0] => str_replace('%2C', ',', $parts[1]),
+                ];
             }
         }
 
