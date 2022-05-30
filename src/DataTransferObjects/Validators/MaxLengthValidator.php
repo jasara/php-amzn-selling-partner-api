@@ -19,7 +19,7 @@ class MaxLengthValidator implements Validator
         if (is_null($value)) {
             return ValidationResult::valid();
         }
-        if (strlen($value) > $this->max_length) {
+        if (mb_strlen($value) > $this->max_length) {
             return ValidationResult::invalid("The length of the string: '{$value}' should be than or equal to {$this->max_length}. Current length: " . strlen($value));
         }
 
