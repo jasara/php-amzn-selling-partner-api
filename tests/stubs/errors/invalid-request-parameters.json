@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "code": "InvalidInput",
+            "message": "Invalid request parameters",
+            "details": ""
+        }
+    ]
+}

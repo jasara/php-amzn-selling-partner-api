@@ -64,6 +64,25 @@ class FeedsResourceTest extends UnitTestCase
         });
     }
 
+    public function testCreateFeedReturnsError()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('errors/invalid-request-parameters');
+
+        $request = new CreateFeedSpecification(
+            feed_type: 'POST_PRODUCT_DATA',
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            input_feed_document_id: Str::random(),
+        );
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->feeds->createFeed($request);
+
+        $this->assertInstanceOf(CreateFeedResponse::class, $response);
+        $this->assertNull($response->feed_id);
+        $this->assertEquals($response->errors[0]->message, 'Invalid request parameters');
+    }
+
     public function testGetFeed()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('feeds/get-feed');
