@@ -66,13 +66,7 @@ class FeedsResource implements ResourceContract
     {
         $response = $this->http->post($this->endpoint . self::BASE_PATH . 'feeds', (array) $request->toArrayObject());
 
-        $errors = Arr::get($response, 'errors');
-
-        return new CreateFeedResponse(
-            errors: $errors,
-            feed: $errors ? null : $response,
-            metadata: Arr::get($response, 'metadata'),
-        );
+        return new CreateFeedResponse($response);
     }
 
     public function getFeed(string $feed_id): GetFeedResponse
