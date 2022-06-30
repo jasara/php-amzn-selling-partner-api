@@ -69,6 +69,13 @@ class HttpLoggerMiddleware
             'restrictedDataToken' => '[filtered]',
             'access_token' => '[filtered]',
             'refresh_token' => '[filtered]',
+            'BuyerEmail' => '[filtered]',
+            'BuyerName' => '[filtered]',
+            'BuyerCounty' => '[filtered]',
+            'BuyerTaxInfo' => '[filtered]',
+            'AddressLine1' => '[filtered]',
+            'AddressLine2' => '[filtered]',
+            'Phone' => '[filtered]',
         ];
 
         foreach ($data as $key => $value) {
