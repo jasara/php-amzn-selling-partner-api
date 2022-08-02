@@ -54,6 +54,9 @@ class AmznSPAConfig
         ?CarbonImmutable $grantless_access_token_expires_at = null,
         ?string $restricted_data_token = null,
         ?CarbonImmutable $restricted_data_token_expires_at = null,
+        private ?string $assumed_role_arn = null,
+        public ?array $temporary_credentials = null,
+        public ?CarbonImmutable $temporary_credentials_expire_at = null,
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -111,6 +114,22 @@ class AmznSPAConfig
     public function getApplicationKeys(): ApplicationKeysDTO
     {
         return $this->application_keys;
+    }
+
+    public function setRoleArn(string $assumed_role_arn)
+    {
+        $this->assumed_role_arn = $assumed_role_arn;
+    }
+
+    public function getRoleArn(): string
+    {
+        return $this->assumed_role_arn;
+    }
+
+    public function setTemporaryCredentials(array $credentials)
+    {
+        $this->temporary_credentials_expire_at = CarbonImmutable::parse($credentials["Expiration"]);
+        $this->temporary_credentials = $credentials;
     }
 
     public function getRedirectUrl(): string

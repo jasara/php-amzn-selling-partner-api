@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA;
 
+use Aws\Sts\StsClient;
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Middleware;
@@ -291,13 +292,45 @@ class AmznSPAHttp
         return $user_agent;
     }
 
+    private function getAssumedCredentials(): array {
+        // If there aren't temporary credentials or they are expired, retrieve & set them
+        // Then, return them
+        // If somehow this is called even though assumed role arn is null, it'll throw an error
+        if ($this->config->temporary_credentials == null || ($this->config->temporary_credentials_expire_at && $this->config->temporary_credentials_expire_at->subMinutes(5)->isPast())) {
+            $stsClient = new StsClient([
+                'region' => $this->config->getMarketplace()->getAwsRegion(),
+                'version' => '2011-06-15',
+                'credentials' => [
+                    'key' => $this->config->getApplicationKeys()->aws_access_key,
+                    'secret' => $this->config->getApplicationKeys()->aws_secret_key
+                ]
+            ]);
+            $role = $stsClient->AssumeRole([
+                'RoleArn' => $this->config->getRoleArn(),
+                'RoleSessionName' => $this->buildUserAgent(),
+            ]);
+            $this->config->setTemporaryCredentials($role["Credentials"]);
+        }
+        return $this->config->temporary_credentials;
+    }
+
     private function signRequest(string $aws_region): void
     {
         $middleware = Middleware::mapRequest(function (RequestInterface $request) use ($aws_region) {
             $signer = new SignatureV4('execute-api', $aws_region);
+            $aws_access_key = $this->config->getApplicationKeys()->aws_access_key;
+            $aws_secret_key = $this->config->getApplicationKeys()->aws_secret_key;
+            $aws_session_token = null;
+            if ($this->config->getRoleArn() != null) {
+                $roleCredentials = $this->getAssumedCredentials();
+                $aws_access_key = $roleCredentials["AccessKeyId"];
+                $aws_secret_key = $roleCredentials["SecretAccessKey"];
+                $aws_session_token = $roleCredentials["SessionToken"];
+            }
             $credentials = new Credentials(
-                $this->config->getApplicationKeys()->aws_access_key,
-                $this->config->getApplicationKeys()->aws_secret_key
+                $aws_access_key,
+                $aws_secret_key,
+                $aws_session_token
             );
 
             $signed_request = $signer->signRequest($request, $credentials);
