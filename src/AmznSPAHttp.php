@@ -333,12 +333,9 @@ class AmznSPAHttp
                 $aws_session_token
             );
 
-            $signed_request = $signer->signRequest($request, $credentials);
-
-            /*return $request->withHeader('Authorization', $signed_request->getHeader('Authorization'))
-                ->withHeader('X-Amz-Date', $signed_request->getHeader('X-Amz-Date'));*/
             // When using Session Token, an additional signed header is included: X-Amz-Security-Token
-            return $signed_request;
+            // Just return signed request instead of adding signed headers to original request
+            return $signer->signRequest($request, $credentials);
         });
 
         $this->http->withMiddleware($middleware);
