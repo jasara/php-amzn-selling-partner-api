@@ -53,6 +53,7 @@ $config = new AmznSPAConfig(
     lwa_client_secret: '***',
     aws_access_key: '***',
     aws_secret_key: '***',
+    assumed_role_arn: 'arn', // If you would like to authenticate using an assumed role
 );
 ```
 
