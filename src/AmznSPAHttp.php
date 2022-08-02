@@ -294,8 +294,8 @@ class AmznSPAHttp
 
     private function getAssumedCredentials(): array {
         // If there aren't temporary credentials, or they are expired, retrieve & set them
-        // After, return the credentials
         // If somehow this is called even though assumed role arn is null, AssumeRole will throw an error
+        // After, return the credentials
         if ($this->config->temporary_credentials == null || ($this->config->temporary_credentials_expire_at && $this->config->temporary_credentials_expire_at->subMinutes(5)->isPast())) {
             $sts = new StsClient([
                 'region' => $this->config->getMarketplace()->getAwsRegion(),
