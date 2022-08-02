@@ -293,11 +293,11 @@ class AmznSPAHttp
     }
 
     private function getAssumedCredentials(): array {
-        // If there aren't temporary credentials or they are expired, retrieve & set them
-        // Then, return them
-        // If somehow this is called even though assumed role arn is null, it'll throw an error
+        // If there aren't temporary credentials, or they are expired, retrieve & set them
+        // After, return the credentials
+        // If somehow this is called even though assumed role arn is null, AssumeRole will throw an error
         if ($this->config->temporary_credentials == null || ($this->config->temporary_credentials_expire_at && $this->config->temporary_credentials_expire_at->subMinutes(5)->isPast())) {
-            $stsClient = new StsClient([
+            $sts = new StsClient([
                 'region' => $this->config->getMarketplace()->getAwsRegion(),
                 'version' => '2011-06-15',
                 'credentials' => [
@@ -305,9 +305,9 @@ class AmznSPAHttp
                     'secret' => $this->config->getApplicationKeys()->aws_secret_key
                 ]
             ]);
-            $role = $stsClient->AssumeRole([
+            $role = $sts->AssumeRole([
                 'RoleArn' => $this->config->getRoleArn(),
-                'RoleSessionName' => "spapiclient",
+                'RoleSessionName' => "amzn-spa-current-role-session",
             ]);
             $this->config->setTemporaryCredentials($role["Credentials"]);
         }
@@ -322,10 +322,10 @@ class AmznSPAHttp
             $aws_secret_key = $this->config->getApplicationKeys()->aws_secret_key;
             $aws_session_token = null;
             if ($this->config->getRoleArn() != null) {
-                $roleCredentials = $this->getAssumedCredentials();
-                $aws_access_key = $roleCredentials["AccessKeyId"];
-                $aws_secret_key = $roleCredentials["SecretAccessKey"];
-                $aws_session_token = $roleCredentials["SessionToken"];
+                $temporary_credentials = $this->getAssumedCredentials();
+                $aws_access_key = $temporary_credentials["AccessKeyId"];
+                $aws_secret_key = $temporary_credentials["SecretAccessKey"];
+                $aws_session_token = $temporary_credentials["SessionToken"];
             }
             $credentials = new Credentials(
                 $aws_access_key,
