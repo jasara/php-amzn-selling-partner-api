@@ -307,7 +307,7 @@ class AmznSPAHttp
             ]);
             $role = $stsClient->AssumeRole([
                 'RoleArn' => $this->config->getRoleArn(),
-                'RoleSessionName' => $this->buildUserAgent(),
+                'RoleSessionName' => "spapiclient",
             ]);
             $this->config->setTemporaryCredentials($role["Credentials"]);
         }
