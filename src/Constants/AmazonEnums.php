@@ -37,6 +37,7 @@ class AmazonEnums
         'LISTINGS_ITEM_STATUS_CHANGE',
         'LISTINGS_ITEM_ISSUES_CHANGE',
         'MFN_ORDER_STATUS_CHANGE',
+        'ORDER_STATUS_CHANGE',
         'B2B_ANY_OFFER_CHANGED',
         'ACCOUNT_STATUS_CHANGED',
         'EXTERNAL_FULFILLMENT_SHIPMENT_STATUS_CHANGE',
@@ -252,7 +253,7 @@ class AmazonEnums
         'DELIVERED',
         'CHECKED_IN',
         'READY_TO_SHIP',
-        'CREATING',
+        'CREATING', // Not valid for searches
     ];
 
     public const PACKAGE_STATUSES = [
