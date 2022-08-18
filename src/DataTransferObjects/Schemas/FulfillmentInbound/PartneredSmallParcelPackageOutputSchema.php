@@ -14,7 +14,7 @@ class PartneredSmallParcelPackageOutputSchema extends DataTransferObject
 
     public WeightSchema $weight;
 
-    public string $carrier_name;
+    public ?string $carrier_name;
 
     public ?string $tracking_id;
 
