@@ -3,7 +3,7 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Closure;
-use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
@@ -21,7 +21,7 @@ class LwaResource implements ResourceContract
     public const ENDPOINT = 'https://api.amazon.com/auth/o2/token';
 
     public function __construct(
-        private Factory $http,
+        private PendingRequest $http,
         private Marketplace $marketplace,
         private ?string $redirect_url,
         private ApplicationKeysDTO $application_keys,

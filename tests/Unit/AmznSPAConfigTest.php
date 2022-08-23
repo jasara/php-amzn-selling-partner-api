@@ -4,6 +4,7 @@ namespace Jasara\AmznSPA\Tests\Unit;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
@@ -61,7 +62,7 @@ class AmznSPAConfigTest extends UnitTestCase
         );
 
         $this->assertInstanceOf(Marketplace::class, $config->getMarketplace());
-        $this->assertInstanceOf(Factory::class, $config->getHttp());
+        $this->assertInstanceOf(PendingRequest::class, $config->getHttp());
         $this->assertInstanceOf(AuthTokensDTO::class, $config->getTokens());
         $this->assertInstanceOf(ApplicationKeysDTO::class, $config->getApplicationKeys());
 
@@ -104,6 +105,10 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertEquals($marketplace_2->getIdentifier(), $config->getMarketplace()->getIdentifier());
 
         $config->setHttp(new Factory());
+        $this->assertInstanceOf(PendingRequest::class, $config->getHttp());
+
+        $config->setHttp((new Factory())->connectTimeout(30));
+        $this->assertInstanceOf(PendingRequest::class, $config->getHttp());
 
         $refresh_token = Str::random();
         $config->setTokens(new AuthTokensDTO(

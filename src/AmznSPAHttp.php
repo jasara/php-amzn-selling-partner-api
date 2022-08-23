@@ -5,7 +5,6 @@ namespace Jasara\AmznSPA;
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Middleware;
-use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
@@ -218,7 +217,7 @@ class AmznSPAHttp
         ));
     }
 
-    private function setupHttp(Factory $http, bool $grantless = false, string $url = '', string $method = ''): void
+    private function setupHttp(PendingRequest $http, bool $grantless = false, string $url = '', string $method = ''): void
     {
         $this->http = $http->withHeaders([
             'x-amz-access-token' => $this->getToken($grantless, $url, $method),

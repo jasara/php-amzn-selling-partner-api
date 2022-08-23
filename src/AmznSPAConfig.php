@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA;
 use Carbon\CarbonImmutable;
 use Closure;
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\PendingRequest;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
@@ -19,7 +20,7 @@ class AmznSPAConfig
 {
     use ValidatesParameters;
 
-    private Factory $http;
+    private PendingRequest $http;
 
     private AuthTokensDTO $tokens;
 
@@ -57,7 +58,7 @@ class AmznSPAConfig
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
-        $this->http = new Factory;
+        $this->http = (new Factory)->connectTimeout(10);
         $this->tokens = new AuthTokensDTO(
             refresh_token: $lwa_refresh_token,
             access_token: $lwa_access_token,
@@ -83,7 +84,7 @@ class AmznSPAConfig
         $this->logger = $logger ?: new Logger();
     }
 
-    public function getHttp(): Factory
+    public function getHttp(): PendingRequest
     {
         return $this->http;
     }
@@ -148,8 +149,14 @@ class AmznSPAConfig
         return $this->get_rdt_tokens;
     }
 
-    public function setHttp(Factory $http): void
+    public function setHttp(Factory|PendingRequest $http): void
     {
+        if ($http instanceof Factory) {
+            $this->http = $http->connectTimeout(30);
+
+            return;
+        }
+
         $this->http = $http;
     }
 
