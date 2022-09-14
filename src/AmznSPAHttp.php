@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA;
 
+use Aws\Sts\StsClient;
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Middleware;
@@ -312,19 +313,50 @@ class AmznSPAHttp
         return $user_agent;
     }
 
+    private function getAssumedCredentials(): array {
+        // If there aren't temporary credentials, or they are expired, retrieve & set them
+        // If somehow this is called even though assumed role arn is null, AssumeRole will throw an error
+        // After, return the credentials
+        if ($this->config->temporary_credentials == null || ($this->config->temporary_credentials_expire_at && $this->config->temporary_credentials_expire_at->subMinutes(5)->isPast())) {
+            $sts = new StsClient([
+                'region' => $this->config->getMarketplace()->getAwsRegion(),
+                'version' => '2011-06-15',
+                'credentials' => [
+                    'key' => $this->config->getApplicationKeys()->aws_access_key,
+                    'secret' => $this->config->getApplicationKeys()->aws_secret_key
+                ]
+            ]);
+            $role = $sts->AssumeRole([
+                'RoleArn' => $this->config->getRoleArn(),
+                'RoleSessionName' => "amzn-spa-current-role-session",
+            ]);
+            $this->config->setTemporaryCredentials($role["Credentials"]);
+        }
+        return $this->config->temporary_credentials;
+    }
+
     private function signRequest(string $aws_region): void
     {
         $middleware = Middleware::mapRequest(function (RequestInterface $request) use ($aws_region) {
             $signer = new SignatureV4('execute-api', $aws_region);
+            $aws_access_key = $this->config->getApplicationKeys()->aws_access_key;
+            $aws_secret_key = $this->config->getApplicationKeys()->aws_secret_key;
+            $aws_session_token = null;
+            if ($this->config->getRoleArn() != null) {
+                $temporary_credentials = $this->getAssumedCredentials();
+                $aws_access_key = $temporary_credentials["AccessKeyId"];
+                $aws_secret_key = $temporary_credentials["SecretAccessKey"];
+                $aws_session_token = $temporary_credentials["SessionToken"];
+            }
             $credentials = new Credentials(
-                $this->config->getApplicationKeys()->aws_access_key,
-                $this->config->getApplicationKeys()->aws_secret_key
+                $aws_access_key,
+                $aws_secret_key,
+                $aws_session_token
             );
 
-            $signed_request = $signer->signRequest($request, $credentials);
-
-            return $request->withHeader('Authorization', $signed_request->getHeader('Authorization'))
-                ->withHeader('X-Amz-Date', $signed_request->getHeader('X-Amz-Date'));
+            // When using Session Token, an additional signed header is included: X-Amz-Security-Token
+            // Just return signed request instead of adding signed headers to original request
+            return $signer->signRequest($request, $credentials);
         });
 
         $this->http->withMiddleware($middleware);
