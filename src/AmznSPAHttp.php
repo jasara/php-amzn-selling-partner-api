@@ -321,6 +321,9 @@ class AmznSPAHttp
                 $this->config->getApplicationKeys()->aws_secret_key
             );
 
+            $request = $request->withoutHeader('Authorization');
+            $request = $request->withoutHeader('X-Amz-Date');
+
             $signed_request = $signer->signRequest($request, $credentials);
 
             return $request->withHeader('Authorization', $signed_request->getHeader('Authorization'))
