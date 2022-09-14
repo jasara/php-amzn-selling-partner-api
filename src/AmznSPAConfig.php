@@ -86,7 +86,7 @@ class AmznSPAConfig
 
     public function getHttp(): PendingRequest
     {
-        return $this->http;
+        return clone $this->http;
     }
 
     public function getTokens(): AuthTokensDTO

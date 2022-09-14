@@ -108,8 +108,6 @@ class OrdersResource implements ResourceContract
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
 
-        ray($response);
-
         return new GetOrderItemsResponse($response);
     }
 

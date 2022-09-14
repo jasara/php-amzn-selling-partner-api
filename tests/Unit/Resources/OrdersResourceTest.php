@@ -219,8 +219,6 @@ class OrdersResourceTest extends UnitTestCase
 
         $order_items_response = $amzn->orders->getOrderItems($order_id);
 
-        ray($order_items_response);
-
         $this->assertInstanceOf(GetOrderItemsResponse::class, $order_items_response);
         $this->assertEquals('902-1845936-5435065', $order_items_response->payload->amazon_order_id);
 
