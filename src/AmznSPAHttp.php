@@ -192,7 +192,7 @@ class AmznSPAHttp
 
     private function refreshRdtToken(string $url, string $method)
     {
-        $path = Str::replace($this->config->getMarketplace()->getBaseUrl(), '', $url);
+        $path = $this->getRestrictedTokenPathFromUrl($url);
 
         $request = new CreateRestrictedDataTokenRequest(
             restricted_resources: [
@@ -214,6 +214,7 @@ class AmznSPAHttp
         $this->config->setRestrictedDataToken(new RestrictedDataTokenDTO(
             access_token: $response->restricted_data_token,
             expires_at: $response->expires_in,
+            path: $path,
         ));
     }
 
@@ -235,7 +236,10 @@ class AmznSPAHttp
     {
         if ($this->config->shouldGetRdtTokens() && $this->isRestrictedDataPath($url, $method)) {
             $restricted_token = $this->config->getRestrictedDataToken();
-            if (! $restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
+
+            if (! $this->isRestrictedTokenCompatibleWithPath($restricted_token, $url)) {
+                $this->refreshRdtToken($url, $method);
+            } elseif (! $restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshRdtToken($url, $method);
             }
 
@@ -275,6 +279,24 @@ class AmznSPAHttp
         }
 
         return false;
+    }
+
+    private function getRestrictedTokenPathFromUrl(string $url): string
+    {
+        $path = Str::replace($this->config->getMarketplace()->getBaseUrl(), '', $url);
+
+        return $path;
+    }
+
+    private function isRestrictedTokenCompatibleWithPath(RestrictedDataTokenDTO $token, string $url): bool
+    {
+        $path = $this->getRestrictedTokenPathFromUrl($url);
+
+        if ($token->path && $token->path !== $path) {
+            return false;
+        }
+
+        return true;
     }
 
     private function buildUserAgent(): string

@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Tests\Unit;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
@@ -198,6 +199,8 @@ class AmznSPAConfigTest extends UnitTestCase
             $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
             $this->assertStringContainsString('"code":"InvalidInput"', $line_2);
             $this->assertEquals('', fgets($logger_resource));
+        } catch (ConnectionException $e) {
+            $this->markTestSkipped('No connection');
         }
 
         $this->assertTrue($caught);

@@ -13,4 +13,6 @@ class RestrictedDataTokenDTO extends DataTransferObject
 
     #[CastWith(CarbonFromSecondsCaster::class)]
     public ?CarbonImmutable $expires_at;
+
+    public ?string $path;
 }

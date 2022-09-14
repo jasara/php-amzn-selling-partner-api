@@ -72,7 +72,10 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetOrder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', '/orders/get-order']);
+        list($config, $http) = $this->setupConfigWithFakeHttp([
+            'tokens/create-restricted-data-token',
+            '/orders/get-order',
+        ]);
 
         $order_id = Str::random();
 
@@ -193,5 +196,34 @@ class OrdersResourceTest extends UnitTestCase
 
             return true;
         });
+    }
+
+    public function testGettingOrderAndOrderItemsAtSameTimeUsesSeparateRdtTokens()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp([
+            'tokens/create-restricted-data-token',
+            '/orders/get-order',
+            'tokens/create-restricted-data-token',
+            'orders/get-order-items',
+        ]);
+
+        $order_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $order_response = $amzn->orders->getOrder($order_id);
+
+        $this->assertInstanceOf(GetOrderResponse::class, $order_response);
+        $this->assertEquals('921-3175655-0452641', $order_response->payload->amazon_order_id);
+
+        $order_items_response = $amzn->orders->getOrderItems($order_id);
+
+        ray($order_items_response);
+
+        $this->assertInstanceOf(GetOrderItemsResponse::class, $order_items_response);
+        $this->assertEquals('902-1845936-5435065', $order_items_response->payload->amazon_order_id);
+
+        $http->assertSequencesAreEmpty();
     }
 }

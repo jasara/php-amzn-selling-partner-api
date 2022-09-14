@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
@@ -15,6 +16,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -99,6 +101,31 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertInstanceOf(GetShipmentResponse::class, $response);
 
         $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
+    }
+
+    public function testRefreshesRestrictedTokenIfPathIsNotCompatible()
+    {
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('tokens/create-restricted-data-token'), 200)
+                ->push($this->loadHttpStub('merchant-fulfillment/get-shipment'), 200),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+        $config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+            access_token: Str::random(),
+            path: Str::random(),
+        ));
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->merchant_fulfillment->getShipment(Str::random());
+
+        $this->assertInstanceOf(GetShipmentResponse::class, $response);
+
+        $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
+
+        $http->assertSequencesAreEmpty();
     }
 
     public function testExceptionIfCantGetRestrictedToken()
@@ -381,7 +408,12 @@ class AmznSPAHttpTest extends UnitTestCase
         );
 
         $amzn = new AmznSPA($config);
-        $amzn->listings_items->getListingsItem(Str::random(), Str::random(), ['ATVPDKIKX0DER']);
+
+        try {
+            $amzn->listings_items->getListingsItem(Str::random(), Str::random(), ['ATVPDKIKX0DER']);
+        } catch (ConnectionException $e) {
+            $this->markTestSkipped('No connection');
+        }
     }
 
     public function testRateLimitExceptionIsThrownIfResponseHasCode429()
