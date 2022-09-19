@@ -211,4 +211,23 @@ class ReportsResourceTest extends UnitTestCase
             return true;
         });
     }
+
+    public function testGetRestrictedReportDocument()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp([
+            'tokens/create-restricted-data-token',
+            'reports/get-report-document',
+        ]);
+
+        $report_document_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->reports->getRestrictedReportDocument($report_document_id);
+
+        $this->assertInstanceOf(GetReportDocumentResponse::class, $response);
+        $this->assertEquals('https://d34o8swod1owfl.cloudfront.net/Report_47700__GET_MERCHANT_LISTINGS_ALL_DATA_.txt', $response->report_document->url);
+
+        $http->assertSequencesAreEmpty();
+    }
 }

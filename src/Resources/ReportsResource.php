@@ -129,8 +129,6 @@ class ReportsResource implements ResourceContract
 
     public function getReportDocument(string $report_document_id): GetReportDocumentResponse
     {
-        $this->http->setRestrictedDataElements(['buyerInfo']);
-        
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'documents/' . $report_document_id);
 
         $errors = Arr::get($response, 'errors');
@@ -140,5 +138,12 @@ class ReportsResource implements ResourceContract
             report_document: $errors ? null : $response,
             metadata: Arr::get($response, 'metadata'),
         );
+    }
+
+    public function getRestrictedReportDocument(string $report_document_id): GetReportDocumentResponse
+    {
+        $this->http->useRestrictedDataToken();
+
+        return $this->getReportDocument($report_document_id);
     }
 }

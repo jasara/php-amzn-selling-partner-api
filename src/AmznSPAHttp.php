@@ -34,6 +34,8 @@ class AmznSPAHttp
 
     private array $restricted_data_elements = [];
 
+    private bool $use_restricted_data_token = false;
+
     public function __construct(
         private AmznSPAConfig $config,
         private ?string $grantless_resource = null,
@@ -96,6 +98,13 @@ class AmznSPAHttp
         $this->validateIsArrayOfStrings($restricted_data_elements, ['buyerInfo', 'shippingAddress']);
 
         $this->restricted_data_elements = $restricted_data_elements;
+
+        $this->useRestrictedDataToken();
+    }
+
+    public function useRestrictedDataToken(): void
+    {
+        $this->use_restricted_data_token = true;
     }
 
     private function call(string $method, string $url, array $data = [], bool $grantless = false): array
@@ -234,7 +243,7 @@ class AmznSPAHttp
 
     private function getToken(bool $grantless, string $url, string $method): string
     {
-        if ($this->config->shouldGetRdtTokens() && $this->isRestrictedDataPath($url, $method)) {
+        if ($this->shouldGetRestrictedDataToken($url, $method)) {
             $restricted_token = $this->config->getRestrictedDataToken();
 
             if (! $this->isRestrictedTokenCompatibleWithPath($restricted_token, $url)) {
@@ -261,13 +270,32 @@ class AmznSPAHttp
         }
     }
 
+    private function shouldGetRestrictedDataToken(string $url, string $method): bool
+    {
+        if (! $this->config->shouldGetRdtTokens()) {
+            return false;
+        }
+
+        if (! $this->isRestrictedDataPath($url, $method)) {
+            return false;
+        }
+
+        if (! $this->use_restricted_data_token) {
+            return false;
+        }
+
+        return true;
+    }
+
     private function isRestrictedDataPath(string $url, string $method): bool
     {
         $patterns = [
             '#.*orders/v0/orders$#',
             '#.*orders/v0/orders/[^/]*$#',
             '#.*orders/v0/orders/.*/orderItems$#',
+            '#.*reports/.*/documents/.*$#',
         ];
+
         foreach ($patterns as $pattern) {
             if (preg_match($pattern, $url) === 1) {
                 return true;
