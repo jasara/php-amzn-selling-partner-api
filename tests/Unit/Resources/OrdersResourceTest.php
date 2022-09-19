@@ -6,6 +6,8 @@ use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\DataTransferObjects\Requests\Orders\UpdateShipmentStatusRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderBuyerInfoResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsBuyerInfoResponse;
@@ -193,6 +195,31 @@ class OrdersResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems/buyerInfo', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testUpdateShipmentStatus()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('empty', 204);
+
+        $order_id = Str::random();
+
+        $request = new UpdateShipmentStatusRequest(
+            marketplace_id: 'ATVPDKIKX0DER',
+            shipment_status: 'ReadyForPickup',
+        );
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->updateShipmentStatus($order_id, $request);
+
+        $this->assertInstanceOf(BaseResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($order_id) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/shipment', urldecode($request->url()));
 
             return true;
         });

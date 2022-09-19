@@ -6,6 +6,8 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Requests\Orders\UpdateShipmentStatusRequest;
+use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderBuyerInfoResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsBuyerInfoResponse;
@@ -116,5 +118,12 @@ class OrdersResource implements ResourceContract
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems/buyerInfo');
 
         return new GetOrderItemsBuyerInfoResponse($response);
+    }
+
+    public function updateShipmentStatus(string $order_id, UpdateShipmentStatusRequest $request): BaseResponse
+    {
+        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/shipment', (array) $request->toArrayObject());
+
+        return new BaseResponse($response);
     }
 }
