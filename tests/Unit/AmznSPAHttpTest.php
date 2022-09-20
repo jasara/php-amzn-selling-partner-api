@@ -16,6 +16,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\MerchantFulfillment\GetShipmentResponse;
+use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportDocumentResponse;
 use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
@@ -101,6 +102,36 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertInstanceOf(GetShipmentResponse::class, $response);
 
         $this->assertEquals('Atz.sprdt|IQEBLjAsAhRmHjNgHpi0U-Dme37rR6CuUpSR', $config->getRestrictedDataToken()->access_token);
+    }
+
+    public function testDontRefreshRestrictedDataTokenDueToConfigSetting()
+    {
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('merchant-fulfillment/get-shipment'), 200),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+        $config->setGetRdtTokens(false);
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->merchant_fulfillment->getShipment(Str::random());
+
+        $this->assertInstanceOf(GetShipmentResponse::class, $response);
+    }
+
+    public function testDontRefreshRestrictedDataTokenDueToProperty()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('reports/get-report-document');
+
+        $report_document_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->reports->getReportDocument($report_document_id);
+
+        $this->assertInstanceOf(GetReportDocumentResponse::class, $response);
     }
 
     public function testRefreshesRestrictedTokenIfPathIsNotCompatible()

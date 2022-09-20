@@ -42,6 +42,8 @@ class MerchantFulfillmentResource implements ResourceContract
 
     public function getShipment(string $shipment_id): GetShipmentResponse
     {
+        $this->http->useRestrictedDataToken();
+
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id);
 
         return new GetShipmentResponse($response);
