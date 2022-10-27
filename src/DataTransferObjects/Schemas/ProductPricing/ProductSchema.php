@@ -16,6 +16,7 @@ class ProductSchema extends DataTransferObject
 
     public ?CompetitivePricingTypeSchema $competitive_pricing;
 
+    #[CastWith(ArrayCaster::class, itemType: SalesRankTypeSchema::class)]
     public ?SalesRankListSchema $sales_rankings;
 
     #[CastWith(ArrayCaster::class, itemType: OfferSchema::class)]
