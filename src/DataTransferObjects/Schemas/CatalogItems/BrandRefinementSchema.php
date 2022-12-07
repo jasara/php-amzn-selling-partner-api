@@ -6,7 +6,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class BrandRefinementSchema extends DataTransferObject
 {
-    public int $number_of_results;
+    public ?int $number_of_results;
 
-    public string $brand_name;
+    public ?string $brand_name;
 }
