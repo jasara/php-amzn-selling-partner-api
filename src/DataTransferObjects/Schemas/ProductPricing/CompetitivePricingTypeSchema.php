@@ -13,7 +13,7 @@ class CompetitivePricingTypeSchema extends DataTransferObject
     public CompetitivePriceListSchema $competitive_prices;
 
     #[CastWith(ArrayCaster::class, itemType: OfferListingCountTypeSchema::class)]
-    public ?NumberOfOfferListingsListSchema $number_of_offer_listing;
+    public ?NumberOfOfferListingsListSchema $number_of_offer_listings;
 
     public ?MoneySchema $trade_in_value;
 }
