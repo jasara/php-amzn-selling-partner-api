@@ -6,6 +6,7 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\DataTransferObjects\Requests\Shipping\CreateShipmentRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetOffersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetPricingResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -15,6 +16,7 @@ class ProductPricingResource implements ResourceContract
     use ValidatesParameters;
 
     public const BASE_PATH = '/products/pricing/v0/';
+    public const BATCH_BASE_PATH = '/batches/products/pricing/v0';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -98,6 +100,13 @@ class ProductPricingResource implements ResourceContract
         ]));
 
         return new GetOffersResponse($response);
+    }
+
+    public function getListingOffersBatch(GetListingOffersBatchRequest $request): GetListingOffersBatchResponse {
+
+        $response = $this->http->post($this->endpoint . self::BATCH_BASE_PATH . 'listingOffers', (array) $request->toArrayObject());
+
+        return new GetListingOffersBatchResponse($response);
     }
 
     public function getItemOffers(
