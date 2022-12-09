@@ -59,12 +59,12 @@ class BaseRequest extends DataTransferObject
         }));
     }
 
-    private function camelCase(ReflectionProperty $property): string
+    protected function camelCase(ReflectionProperty $property): string
     {
         return Str::of($property->getName())->camel();
     }
 
-    private function pascalCase(ReflectionProperty $property): string
+    protected function pascalCase(ReflectionProperty $property): string
     {
         return Str::of($property->getName())->studly()
             ->replace('Asin', 'ASIN')
