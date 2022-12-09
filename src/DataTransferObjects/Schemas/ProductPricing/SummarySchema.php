@@ -18,7 +18,8 @@ class SummarySchema extends DataTransferObject
     #[CastWith(ArrayCaster::class, itemType: LowestPriceTypeSchema::class)]
     public ?LowestPricesSchema $lowest_prices;
 
-    public ?string $buy_box_prices;
+    #[CastWith(ArrayCaster::class, itemType: BuyBoxPriceTypeSchema::class)]
+    public ?BuyBoxPricesSchema $buy_box_prices;
 
     public ?MoneySchema $list_price;
 

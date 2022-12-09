@@ -17,7 +17,7 @@ class ProductPricingResource implements ResourceContract
     use ValidatesParameters;
 
     public const BASE_PATH = '/products/pricing/v0/';
-    public const BATCH_BASE_PATH = '/batches/products/pricing/v0';
+    public const BATCH_BASE_PATH = '/batches/products/pricing/v0/';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -105,8 +105,15 @@ class ProductPricingResource implements ResourceContract
 
     public function getListingOffersBatch(GetListingOffersBatchRequest $request): GetListingOffersBatchResponse {
 
-        $response = $this->http->post($this->endpoint . self::BATCH_BASE_PATH . 'listingOffers', (array) $request->toArrayObject());
-
+        $url = $this->endpoint . self::BATCH_BASE_PATH . 'listingOffers';
+        echo "url: " . $url . "\n";
+        $response = $this->http->post($url, ["request" => [
+            ["uri" => "/products/pricing/v0/listings/302192/offers",
+             "method" => "GET",
+             "MarketplaceId" => "ATVPDKIKX0DER",
+             "ItemCondition" => "New"]
+        ]]);
+        echo "resp: " . print_r($response, true) . "\n";
         return new GetListingOffersBatchResponse($response);
     }
 
