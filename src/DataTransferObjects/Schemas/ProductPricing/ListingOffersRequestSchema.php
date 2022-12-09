@@ -16,11 +16,11 @@ class ListingOffersRequestSchema extends DataTransferObject
 
     public ?array $headers;
 
-    public string $MarketplaceId;
+    public string $marketplace_id;
 
     #[StringEnumValidator(['New', 'Used', 'Collectible', 'Refurbished', 'Club'])]
-    public string $ItemCondition;
+    public string $item_condition;
 
     #[StringEnumValidator(['Consumer', 'Business'])]
-    public ?string $CustomerType;
+    public ?string $customer_type;
 }
