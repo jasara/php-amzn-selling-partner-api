@@ -9,6 +9,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing\ListingOffersReque
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use ReflectionProperty;
+use Illuminate\Support\Str;
 
 class GetListingOffersBatchRequest extends BaseRequest implements PascalCaseRequestContract
 {
@@ -17,6 +18,6 @@ class GetListingOffersBatchRequest extends BaseRequest implements PascalCaseRequ
 
     protected function pascalCase(ReflectionProperty $property): string
     {
-        return parent::pascalCase($property)->replace('Uri', 'uri')->replace('Method', 'method');
+        return Str::of($property->getName())->studly()->replace('Uri', 'uri')->replace('Method', 'method');
     }
 }
