@@ -11,7 +11,7 @@ class BuyBoxPriceTypeSchema extends DataTransferObject
     public string $condition;
 
     #[StringEnumValidator(['B2C', 'B2B'])]
-    public ?string $offer_customer_type;
+    public ?string $offer_type;
 
     public ?int $quantity_tier;
 
@@ -23,7 +23,7 @@ class BuyBoxPriceTypeSchema extends DataTransferObject
 
     public MoneySchema $shipping;
 
-    public PointsSchema $points;
+    public ?PointsSchema $points;
 
     public ?string $seller_id;
 }
