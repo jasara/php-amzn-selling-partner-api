@@ -106,7 +106,7 @@ class ProductPricingResource implements ResourceContract
     public function getListingOffersBatch(GetListingOffersBatchRequest $request): GetListingOffersBatchResponse {
 
         $url = $this->endpoint . self::BATCH_BASE_PATH . 'listingOffers';
-        $response = $this->http->post($url, $request);
+        $response = $this->http->post($url, (array) $request->toArrayObject());
         return new GetListingOffersBatchResponse($response);
     }
 
