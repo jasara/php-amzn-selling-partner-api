@@ -27,6 +27,7 @@ class SummarySchema extends DataTransferObject
 
     public ?MoneySchema $suggested_lower_price_plus_shipping;
 
+    #[CastWith(ArrayCaster::class, itemType: SalesRankTypeSchema::class)]
     public ?SalesRankListSchema $sales_rankings;
 
     #[CastWith(ArrayCaster::class, itemType: OfferCountTypeSchema::class)]
