@@ -10,7 +10,7 @@ class OfferCountTypeSchema extends DataTransferObject
     public ?string $condition;
 
     #[StringEnumValidator(['Amazon', 'Merchant'])]
-    public ?string $fullfillment_channel;
+    public ?string $fulfillment_channel;
 
     public ?int $offer_count;
 }
