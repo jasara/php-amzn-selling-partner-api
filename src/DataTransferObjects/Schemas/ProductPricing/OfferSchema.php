@@ -16,7 +16,7 @@ class OfferSchema extends DataTransferObject
 
     public string $item_condition;
 
-    public ?string $item_subcondition;
+    public ?string $item_sub_condition;
 
     public MoneySchema $regular_price;
 
