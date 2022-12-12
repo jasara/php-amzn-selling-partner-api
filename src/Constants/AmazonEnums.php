@@ -239,6 +239,7 @@ class AmazonEnums
         'SetStickering',
         'SuffocationStickering',
         'RemoveFromHanger',
+        'NoPrep',
     ];
 
     public const SHIPMENT_STATUSES = [
