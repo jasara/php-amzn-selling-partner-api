@@ -12,9 +12,13 @@ class ItemSummaryByMarketplaceSchema extends DataTransferObject
 {
     public string $marketplace_id;
 
+    public ?bool $adult_product;
+
+    public ?bool $autographed;
+
     public ?string $brand;
 
-    public ?CatalogItems\ItemBrowseClassificationSchema $browse_node;
+    public ?CatalogItems\ItemBrowseClassificationSchema $browse_classification;
 
     public ?string $color;
 
@@ -24,6 +28,8 @@ class ItemSummaryByMarketplaceSchema extends DataTransferObject
     public ?ItemClassification $item_classification;
 
     public ?string $manufacturer;
+
+    public ?bool $memorabilia;
 
     public ?string $model_number;
 
@@ -35,5 +41,9 @@ class ItemSummaryByMarketplaceSchema extends DataTransferObject
 
     public ?string $style;
 
+    public ?bool $trade_in_eligible;
+
     public ?string $website_display_group;
+
+    public ?string $website_display_group_name;
 }
