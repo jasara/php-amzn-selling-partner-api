@@ -239,6 +239,9 @@ class AmazonEnums
         'SetStickering',
         'SuffocationStickering',
         'RemoveFromHanger',
+        'Debundle',
+        'CapSealing',
+        'BlankStickering',
         'NoPrep',
     ];
 
