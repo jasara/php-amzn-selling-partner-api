@@ -243,6 +243,7 @@ class AmazonEnums
         'CapSealing',
         'BlankStickering',
         'NoPrep',
+        'NONE',
     ];
 
     public const SHIPMENT_STATUSES = [
