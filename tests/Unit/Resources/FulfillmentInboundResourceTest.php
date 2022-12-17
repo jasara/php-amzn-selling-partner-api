@@ -191,17 +191,36 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
 
         $sku = Str::random();
-        $sku_with_comma = 'Body Fat Measuring Tape, Pack of 2'; // This will be excluded because it contains a comma, impossible to handle
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->fulfillment_inbound->getPrepInstructions('US', [$sku, $sku_with_comma]);
+        $response = $amzn->fulfillment_inbound->getPrepInstructions('US', [$sku]);
 
         $this->assertInstanceOf(GetPrepInstructionsResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList=' . $sku, urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testGetPrepInstructionsWithComma()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
+
+        $sku = 'Body Fat Measuring Tape, Pack of 2';
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getPrepInstructions('US', [$sku]);
+
+        $this->assertInstanceOf(GetPrepInstructionsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($sku) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList=Body%20Fat%20Measuring%20Tape%2C%20Pack%20of%202', $request->url());
 
             return true;
         });
