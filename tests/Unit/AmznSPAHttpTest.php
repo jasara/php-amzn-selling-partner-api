@@ -22,6 +22,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResource
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
+use Jasara\AmznSPA\Exceptions\InvalidParametersException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -470,6 +471,22 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->feeds->cancelFeed('some-feed-id');
+    }
+
+    public function testExceptionIsThrownIfGetRequestHasMultipleSkusAndOneHasAComma()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('You cannot make a request for multiple SKUs when one of those SKUs contains a comma');
+
+        $http = new Factory;
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn->fulfillment_inbound->getPrepInstructions(
+            ship_to_country_code: 'US',
+            seller_sku_list: ['NORMAL-SKU', 'SKU WITH, COMMA'],
+        );
     }
 
     public function testResponseCallbackIsCalled()

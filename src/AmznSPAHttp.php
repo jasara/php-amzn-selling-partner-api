@@ -18,6 +18,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
+use Jasara\AmznSPA\Exceptions\InvalidParametersException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Http\Message\RequestInterface;
@@ -44,7 +45,7 @@ class AmznSPAHttp
 
     public function get(string $url, array $data = []): array
     {
-        $data = $this->transformArraysToStrings($data);
+        $data = $this->transformGetRequestArraysToStrings($data);
 
         return $this->call('get', $url, $data);
     }
@@ -425,15 +426,20 @@ class AmznSPAHttp
         return false;
     }
 
-    private function transformArraysToStrings(array $data): array
+    private function transformGetRequestArraysToStrings(array $data): array
     {
         foreach ($data as $key => $param) {
             if (is_array($param)) {
                 if (array_values($param) === $param) { // Is not an associative array
                     // Amazon cannot handle commas in string arrays in GET calls
-                    $param = array_filter($param, function ($value) {
-                        return ! str_contains($value, ',');
+
+                    $has_commas = array_filter($param, function ($value) {
+                        return str_contains($value, ',');
                     });
+
+                    if (count($has_commas) && count($param) > 1) {
+                        throw new InvalidParametersException('You cannot make a request for multiple SKUs when one of those SKUs contains a comma');
+                    }
 
                     $data[$key] = implode(',', $param);
                 }
