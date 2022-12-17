@@ -10,5 +10,5 @@ class InvalidASINSchema extends DataTransferObject
     public ?string $asin;
 
     #[StringEnumValidator(['DoesNotExist', 'InvalidASIN'])]
-    public string $error_reason;
+    public ?string $error_reason;
 }

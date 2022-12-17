@@ -10,5 +10,5 @@ class InvalidSKUSchema extends DataTransferObject
     public ?string $seller_sku;
 
     #[StringEnumValidator(['DoesNotExist', 'InvalidASIN'])]
-    public string $error_reason;
+    public ?string $error_reason;
 }
