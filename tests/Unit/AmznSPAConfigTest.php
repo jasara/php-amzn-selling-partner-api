@@ -175,8 +175,6 @@ class AmznSPAConfigTest extends UnitTestCase
 
             $log = str_replace(["\n", "\r"], '', $log);
 
-            $log .= \PHP_EOL;
-
             return $log;
         });
         $config->setLogger($logger);
