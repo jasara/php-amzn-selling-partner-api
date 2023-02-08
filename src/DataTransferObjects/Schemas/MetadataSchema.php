@@ -11,4 +11,6 @@ class MetadataSchema extends DataTransferObject
     public ?string $jasara_notes;
 
     public ?string $amzn_request_id;
+
+    public ?string $amzn_request_timestamp;
 }

@@ -456,10 +456,12 @@ class AmznSPAHttp
 
         $jasara_notes = JasaraNotes::findNote(Arr::get($data, 'errors.0.message', ''));
         $amzn_request_id = Arr::get($headers, 'x-amzn-RequestId.0');
+        $amzn_request_timestamp = Arr::get($headers, 'Date.0');
 
         return new MetadataSchema(
             jasara_notes: $jasara_notes,
             amzn_request_id: $amzn_request_id,
+            amzn_request_timestamp: $amzn_request_timestamp,
         );
     }
 
