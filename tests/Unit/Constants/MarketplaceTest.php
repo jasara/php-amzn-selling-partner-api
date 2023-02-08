@@ -41,7 +41,7 @@ class MarketplaceTest extends UnitTestCase
         $this->assertEquals($aws_region, $marketplace->getAwsRegion());
     }
 
-    public function regions()
+    public static function regions()
     {
         return [
             ['NA'],

@@ -306,7 +306,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn->lwa->getGrantlessAccessToken('notifications');
     }
 
-    public function marketplaces(): array
+    public static function marketplaces(): array
     {
         $marketplaces = [];
         $marketplaces_list = MarketplacesList::all()->toArray();

@@ -1,6 +1,7 @@
 node_modules
 vendor
 package-lock.json
+.phpunit.cache
 .phpunit.result.cache
 .DS_Store
 .env

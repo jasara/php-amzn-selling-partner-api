@@ -557,7 +557,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         });
     }
 
-    public function transportDetailsDataProvider()
+    public static function transportDetailsDataProvider()
     {
         return [
             ['issue-2-is-partnered-null'],
@@ -569,7 +569,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
         ];
     }
 
-    public function shipmentItemsDataProvider()
+    public static function shipmentItemsDataProvider()
     {
         return [
             ['issue-9-prep-instruction-null'],
