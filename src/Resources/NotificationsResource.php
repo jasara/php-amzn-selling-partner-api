@@ -14,13 +14,14 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetDestinationsRe
 use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionByIdResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class NotificationsResource implements ResourceContract
 {
     use ValidatesParameters;
 
-    const BASE_PATH = '/notifications/v1/';
+    public const BASE_PATH = '/notifications/v1/';
 
     public function __construct(
         private AmznSPAHttp $http,
@@ -37,8 +38,12 @@ class NotificationsResource implements ResourceContract
         return new GetSubscriptionResponse($response);
     }
 
-    public function createSubscription(string $notification_type, ?string $payload_version = null, ?string $destination_id = null): CreateSubscriptionResponse
-    {
+    public function createSubscription(
+        string $notification_type,
+        ?string $payload_version = null,
+        ?string $destination_id = null,
+        ?ProcessingDirectiveSchema $processing_directive = null,
+    ): CreateSubscriptionResponse {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
         $response = $this->http->post(
@@ -46,6 +51,7 @@ class NotificationsResource implements ResourceContract
             array_filter([
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
+                'processingDirective' => (array) $processing_directive->toArray(),
             ]),
         );
 

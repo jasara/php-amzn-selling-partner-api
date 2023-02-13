@@ -842,4 +842,9 @@ class AmazonEnums
         'collectible_acceptable',
         'club_club',
     ];
+
+    public const AGGREGATION_TIME_PERIOD = [
+        'FiveMinutes',
+        'TenMinutes',
+    ];
 }

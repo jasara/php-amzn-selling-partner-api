@@ -15,6 +15,7 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionBy
 use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -87,7 +88,18 @@ class NotificationsResourceTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->notifications->createSubscription('ANY_OFFER_CHANGED', $payload_version);
+        $response = $amzn->notifications->createSubscription(
+            notification_type: 'ANY_OFFER_CHANGED',
+            payload_version: $payload_version,
+            processing_directive: new ProcessingDirectiveSchema([
+                'event_filter' => [
+                    'aggregation_settings' => [
+                        'aggregation_time_period' => 'FiveMinutes',
+                    ],
+                    'event_filter_type' => 'ANY_OFFER_CHANGED',
+                ],
+            ]),
+        );
 
         $this->assertInstanceOf(CreateSubscriptionResponse::class, $response);
         $this->assertEquals('7fcacc7e-727b-11e9-8848-1681be663d3e', $response->payload->subscription_id);
@@ -96,6 +108,7 @@ class NotificationsResourceTest extends UnitTestCase
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED', $request->url());
             $this->assertEquals($payload_version, $request->data()['payloadVersion']);
+            $this->assertEquals('FiveMinutes', $request->data()['processingDirective']['event_filter']['aggregation_settings']['aggregation_time_period']);
 
             return true;
         });
