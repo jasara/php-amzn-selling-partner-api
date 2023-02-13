@@ -51,7 +51,7 @@ class NotificationsResource implements ResourceContract
             array_filter([
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
-                'processingDirective' => (array) $processing_directive->toArray(),
+                'processingDirective' => $processing_directive?->toArray(),
             ]),
         );
 
