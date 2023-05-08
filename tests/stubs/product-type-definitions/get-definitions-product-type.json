@@ -1,0 +1,154 @@
+{
+    "metaSchema": {
+        "link": {
+            "resource": "https://selling-partner-definitions-prod-iad.s3.amazonaws.com/schema/amazon-product-type-definition-meta-schema-v1.json/rZ%252F2Yep0np022S38ZdEiNQ%253D%253D?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEcaCXVzLWVhc3QtMSJIMEYCIQC1t8cbb3ongZ%2BkoirM6FrCh0eL79LsRXsNl%2FuUuJ5xwgIhALKMOPtgqxn30irwQm6%2BZ5m7seE8RY2vcmGhBbH64YWsKskECF8QAxoMNTM1Nzg5ODIzODA4IgxMbLgrLYZd6Zc6fWMqpgTUCnzY71WnpQJ8j5zFrSn%2FhrqKjrk1GZVODdEIszE6rs5wz40NwVmN4W8VBrqWK6j5sfN1mS%2Bq4Lb3Q7WqQhx4IlczJiT0uRbwi9IHG9OQAvl1gAVLCyfGZ7oWitjoIOf5z76EgN2u6LSxUI1aOPsAdGeMU7bqI6mrj0ZUa6idQtQXRaoR6iNRIrVLU1P%2B2BmKeyGDTbSPgZF6glzAGMpDFVh9shNJ8o6CvzwyN8XttPW%2Fj32yyp28qMm%2FnKC%2BWtRkCCMinKiFDuA6XaayGTRYo3d%2BCWIr1JWDtsHvjkX3zVP4Av1bYTP6m7UR6%2Fhgk3bV3JqxuJcVj7Az7GXe4TUXCG8QXnOEKfLf9kIgmSCT%2BNG8oaP0mI8%2F9iKQuNq7kDXOsuPMzfhZZEDmI0N%2BYSr4vdY8TFhvy4r27gv4ZBned5lcXS1TKoiCokxYyG6EUSWRQIIQB2Lg3wYnBH27BQjfebX7Gm17Dztgy9FyuX3EB8CGcSI%2BLJ0Kkb04fZNDQw6LbRbMC7y5r2EOMUmmfayE7YmUyL2xp34mZ1kBrDNCWOI1gLWzk4IvdYVpo9jIxFePmt5D%2FuDgkXog84S2ebrVNKJoYoKrK%2FlbHWJ1vRYwNKKKKc5IdSKiRcin%2FCeP2H0%2FhM1I%2FIgstKu1HFbcCcI9tcB0%2FYntLOfEVPrM%2FqFQlmcKLhQxtSB6Rg4xCYsxhEm8f9Ko2WzjYAQOqAh8m8zhGJRRAQOtMJmJ5KIGOqYBcJ8HVxAJJE%2BTHk6Vd%2Fol%2FsUzXYOn2uBV9aJthQYRzl2G%2FWs6blLrfZXsDJZh7aP3IPlSRHiRLne%2FafISRlw1X62n%2B0QqOZrTNKBOz3RQb3UjvyyrLfkvIeeeXyJc%2FF6LOjEejl%2BqTmzrTqrlSsemV%2FIcSM2fd5PckALgyhlVJo3z%2BFL%2Fu3adjslKFiqdHd2fGIVxJRiIjvWqfy3OSx1zpQY6BUx6DA%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20230508T164757Z&X-Amz-SignedHeaders=host&X-Amz-Expires=604800&X-Amz-Credential=ASIAXZP4P45AHFFFW7WM%2F20230508%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5a59922940ffbc0c7c434bfe5c9f3eccb259cbaa7f70b2870cea759dfea55ae4",
+            "verb": "GET"
+        },
+        "checksum": "rZ/2Yep0np022S38ZdEiNQ=="
+    },
+    "schema": {
+        "link": {
+            "resource": "https://selling-partner-definitions-prod-iad.s3.amazonaws.com/schema/LUGGAGE.json/kK%252F%252BtwGbad1tNr28%252FyHPRA%253D%253D?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEEcaCXVzLWVhc3QtMSJIMEYCIQC1t8cbb3ongZ%2BkoirM6FrCh0eL79LsRXsNl%2FuUuJ5xwgIhALKMOPtgqxn30irwQm6%2BZ5m7seE8RY2vcmGhBbH64YWsKskECF8QAxoMNTM1Nzg5ODIzODA4IgxMbLgrLYZd6Zc6fWMqpgTUCnzY71WnpQJ8j5zFrSn%2FhrqKjrk1GZVODdEIszE6rs5wz40NwVmN4W8VBrqWK6j5sfN1mS%2Bq4Lb3Q7WqQhx4IlczJiT0uRbwi9IHG9OQAvl1gAVLCyfGZ7oWitjoIOf5z76EgN2u6LSxUI1aOPsAdGeMU7bqI6mrj0ZUa6idQtQXRaoR6iNRIrVLU1P%2B2BmKeyGDTbSPgZF6glzAGMpDFVh9shNJ8o6CvzwyN8XttPW%2Fj32yyp28qMm%2FnKC%2BWtRkCCMinKiFDuA6XaayGTRYo3d%2BCWIr1JWDtsHvjkX3zVP4Av1bYTP6m7UR6%2Fhgk3bV3JqxuJcVj7Az7GXe4TUXCG8QXnOEKfLf9kIgmSCT%2BNG8oaP0mI8%2F9iKQuNq7kDXOsuPMzfhZZEDmI0N%2BYSr4vdY8TFhvy4r27gv4ZBned5lcXS1TKoiCokxYyG6EUSWRQIIQB2Lg3wYnBH27BQjfebX7Gm17Dztgy9FyuX3EB8CGcSI%2BLJ0Kkb04fZNDQw6LbRbMC7y5r2EOMUmmfayE7YmUyL2xp34mZ1kBrDNCWOI1gLWzk4IvdYVpo9jIxFePmt5D%2FuDgkXog84S2ebrVNKJoYoKrK%2FlbHWJ1vRYwNKKKKc5IdSKiRcin%2FCeP2H0%2FhM1I%2FIgstKu1HFbcCcI9tcB0%2FYntLOfEVPrM%2FqFQlmcKLhQxtSB6Rg4xCYsxhEm8f9Ko2WzjYAQOqAh8m8zhGJRRAQOtMJmJ5KIGOqYBcJ8HVxAJJE%2BTHk6Vd%2Fol%2FsUzXYOn2uBV9aJthQYRzl2G%2FWs6blLrfZXsDJZh7aP3IPlSRHiRLne%2FafISRlw1X62n%2B0QqOZrTNKBOz3RQb3UjvyyrLfkvIeeeXyJc%2FF6LOjEejl%2BqTmzrTqrlSsemV%2FIcSM2fd5PckALgyhlVJo3z%2BFL%2Fu3adjslKFiqdHd2fGIVxJRiIjvWqfy3OSx1zpQY6BUx6DA%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20230508T164757Z&X-Amz-SignedHeaders=host&X-Amz-Expires=604800&X-Amz-Credential=ASIAXZP4P45AHFFFW7WM%2F20230508%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=3cfc5a38d6c91080d360300b40c6f293840d38b81c56c323d7987f2502279a9a",
+            "verb": "GET"
+        },
+        "checksum": "kK/+twGbad1tNr28/yHPRA=="
+    },
+    "requirements": "LISTING",
+    "requirementsEnforced": "NOT_ENFORCED",
+    "propertyGroups": {
+        "offer": {
+            "title": "Offer",
+            "description": "Product Offer",
+            "propertyNames": [
+                "skip_offer",
+                "fulfillment_availability",
+                "map_policy",
+                "purchasable_offer",
+                "condition_type",
+                "condition_note",
+                "list_price",
+                "product_tax_code",
+                "merchant_release_date",
+                "merchant_shipping_group",
+                "max_order_quantity",
+                "gift_options",
+                "main_offer_image_locator",
+                "other_offer_image_locator_1",
+                "other_offer_image_locator_2",
+                "other_offer_image_locator_3",
+                "other_offer_image_locator_4",
+                "other_offer_image_locator_5"
+            ]
+        },
+        "images": {
+            "title": "Images",
+            "description": "Provide media content, such as product images",
+            "propertyNames": [
+                "main_product_image_locator",
+                "other_product_image_locator_1",
+                "other_product_image_locator_2",
+                "other_product_image_locator_3",
+                "other_product_image_locator_4",
+                "other_product_image_locator_5",
+                "other_product_image_locator_6",
+                "other_product_image_locator_7",
+                "other_product_image_locator_8",
+                "swatch_product_image_locator"
+            ]
+        },
+        "shipping": {
+            "title": "Shipping",
+            "description": "Information to determine shipping and storage of your product (e.g., package dimensions, weight, volume)",
+            "propertyNames": [
+                "item_dimensions",
+                "item_package_dimensions",
+                "item_package_weight"
+            ]
+        },
+        "variations": {
+            "title": "Variations",
+            "description": "Variations that product will use",
+            "propertyNames": [
+                "parentage_level",
+                "child_parent_sku_relationship",
+                "variation_theme"
+            ]
+        },
+        "safety_and_compliance": {
+            "title": "Safety & Compliance",
+            "description": "Information to indicate product compliance, hazardous materials, and legal and safety warnings (e.g., lithium batteries, choking hazards, Consumer Product Safety Information Act (CPSIA))",
+            "propertyNames": [
+                "country_of_origin",
+                "warranty_description",
+                "batteries_required",
+                "batteries_included",
+                "battery",
+                "num_batteries",
+                "number_of_lithium_metal_cells",
+                "number_of_lithium_ion_cells",
+                "lithium_battery",
+                "supplier_declared_dg_hz_regulation",
+                "ghs",
+                "hazmat",
+                "safety_data_sheet_url",
+                "item_weight",
+                "outer",
+                "supplier_declared_material_regulation",
+                "california_proposition_65",
+                "pesticide_marking",
+                "fcc_radio_frequency_emission_compliance",
+                "regulatory_compliance_certification"
+            ]
+        },
+        "product_identity": {
+            "title": "Product Identity",
+            "description": "Information to uniquely identify your product (e.g., UPC, EAN, GTIN, Product Type, Brand)",
+            "propertyNames": [
+                "item_name",
+                "brand",
+                "externally_assigned_product_identifier",
+                "merchant_suggested_asin",
+                "supplier_declared_has_product_identifier_exemption",
+                "item_type_keyword",
+                "model_number",
+                "model_name",
+                "manufacturer"
+            ]
+        },
+        "product_details": {
+            "title": "Product Details",
+            "description": "Information and characteristics to describe the product to support search, browse and detail page content (e.g., bullets, product features, model, style name)",
+            "propertyNames": [
+                "product_description",
+                "bullet_point",
+                "generic_keyword",
+                "special_feature",
+                "style",
+                "department",
+                "target_gender",
+                "age_range_description",
+                "material",
+                "fabric_type",
+                "lining_description",
+                "number_of_items",
+                "item_type_name",
+                "number_of_wheels",
+                "wheel",
+                "color",
+                "size",
+                "size_map",
+                "part_number"
+            ]
+        }
+    },
+    "locale": "en",
+    "marketplaceIds": [
+        "ATVPDKIKX0DER"
+    ],
+    "productType": "LUGGAGE",
+    "productTypeVersion": {
+        "version": "UAAAAAAAAAAAAAAAAlYD2uo69-kXIvdYxROw667H5fYGH",
+        "latest": true,
+        "releaseCandidate": false
+    }
+}

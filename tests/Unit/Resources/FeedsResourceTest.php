@@ -22,7 +22,7 @@ class FeedsResourceTest extends UnitTestCase
 {
     public function testGetFeeds()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('feeds/get-feeds');
+        [$config, $http] = $this->setupConfigWithFakeHttp('feeds/get-feeds');
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
@@ -31,7 +31,7 @@ class FeedsResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetFeedsResponse::class, $response);
         $this->assertEquals('FeedId1', $response->feeds->first()->feed_id);
 
-        $http->assertSent(function (Request $request) use ($config) {
+        $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds?feedTypes=POST_PRODUCT_DATA&marketplaceIds=ATVPDKIKX0DER&pageSize=10&processingStatuses=DONE', $request->url());
 
@@ -41,7 +41,7 @@ class FeedsResourceTest extends UnitTestCase
 
     public function testCreateFeed()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('feeds/create-feed');
+        [$config, $http] = $this->setupConfigWithFakeHttp('feeds/create-feed');
 
         $request = new CreateFeedSpecification(
             feed_type: 'POST_PRODUCT_DATA',
@@ -66,7 +66,7 @@ class FeedsResourceTest extends UnitTestCase
 
     public function testCreateFeedReturnsError()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('errors/invalid-request-parameters');
+        [$config, $http] = $this->setupConfigWithFakeHttp('errors/invalid-request-parameters');
 
         $request = new CreateFeedSpecification(
             feed_type: 'POST_PRODUCT_DATA',
@@ -85,7 +85,7 @@ class FeedsResourceTest extends UnitTestCase
 
     public function testGetFeed()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('feeds/get-feed');
+        [$config, $http] = $this->setupConfigWithFakeHttp('feeds/get-feed');
 
         $feed_id = Str::random();
 
@@ -107,7 +107,7 @@ class FeedsResourceTest extends UnitTestCase
 
     public function testCancelFeed()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('feeds/cancel-feed');
+        [$config, $http] = $this->setupConfigWithFakeHttp('feeds/cancel-feed');
 
         $feed_id = Str::random();
 
@@ -127,7 +127,7 @@ class FeedsResourceTest extends UnitTestCase
 
     public function testCreateFeedDocument()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('feeds/create-feed-document');
+        [$config, $http] = $this->setupConfigWithFakeHttp('feeds/create-feed-document');
 
         $request = new CreateFeedDocumentSpecification(
             content_type: 'text/xml; charset=UTF-8',
@@ -150,7 +150,7 @@ class FeedsResourceTest extends UnitTestCase
 
     public function testGetFeedDocument()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('feeds/get-feed-document');
+        [$config, $http] = $this->setupConfigWithFakeHttp('feeds/get-feed-document');
 
         $feed_document_id = Str::random();
 

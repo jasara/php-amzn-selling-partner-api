@@ -26,15 +26,10 @@ use Psr\Http\Message\RequestInterface;
 class AmznSPAHttp
 {
     use ValidatesParameters;
-
     private PendingRequest $http;
-
     private ?Request $request = null;
-
     private bool $retried = false;
-
     private array $restricted_data_elements = [];
-
     private bool $use_restricted_data_token = false;
 
     public function __construct(

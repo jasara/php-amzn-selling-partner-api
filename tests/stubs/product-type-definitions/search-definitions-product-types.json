@@ -1,0 +1,16 @@
+{
+    "productTypes": [
+        {
+            "name": "BATTERY_CHARGER_OR_TESTER",
+            "marketplaceIds": [
+                "ATVPDKIKX0DER"
+            ]
+        },
+        {
+            "name": "ELECTRIC_CIRCUIT_TESTING_DEVICE",
+            "marketplaceIds": [
+                "ATVPDKIKX0DER"
+            ]
+        }
+    ]
+}

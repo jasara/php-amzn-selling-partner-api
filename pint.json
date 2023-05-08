@@ -1,0 +1,17 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "class_attributes_separation": {
+            "elements": {
+                "const": "only_if_meta",
+                "method": "one",
+                "property": "only_if_meta"
+            }
+        },
+        "method_chaining_indentation": true,
+        "method_argument_space": true,
+        "concat_space": {
+            "spacing": "one"
+        }
+    }
+}

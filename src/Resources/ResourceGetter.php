@@ -126,6 +126,11 @@ class ResourceGetter
         return $this->constructResource(ProductFeesResource::class);
     }
 
+    public function getProductTypeDefinitions(): ProductTypeDefinitionsResource
+    {
+        return $this->constructResource(ProductTypeDefinitionsResource::class);
+    }
+
     public function getListingsItems(): ListingsItemsResource
     {
         return $this->constructResource(ListingsItemsResource::class);

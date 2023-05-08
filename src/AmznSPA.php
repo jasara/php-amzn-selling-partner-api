@@ -17,24 +17,24 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
  * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
  * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
+ * @property \Jasara\AmznSPA\Resources\FulfillmentOutboundResource $fulfillment_outbound
+ * @property \Jasara\AmznSPA\Resources\ListingsItemsResource $listings_items
  * @property \Jasara\AmznSPA\Resources\LwaResource $lwa
  * @property \Jasara\AmznSPA\Resources\MerchantFulfillmentResource $merchant_fulfillment
  * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
  * @property \Jasara\AmznSPA\Resources\OrdersResource $orders
+ * @property \Jasara\AmznSPA\Resources\ProductFeesResource $product_fees
  * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
+ * @property \Jasara\AmznSPA\Resources\ProductTypeDefinitionsResource $product_type_definitions
  * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
+ * @property \Jasara\AmznSPA\Resources\SellersResource $sellers
  * @property \Jasara\AmznSPA\Resources\ShippingResource $shipping
- * @property \Jasara\AmznSPA\Resources\FulfillmentOutboundResource $fulfillment_outbound
  * @property \Jasara\AmznSPA\Resources\TokensResource $tokens
  * @property \Jasara\AmznSPA\Resources\UploadsResource $uploads
- * @property \Jasara\AmznSPA\Resources\SellersResource $sellers
- * @property \Jasara\AmznSPA\Resources\ProductFeesResource $product_fees
- * @property \Jasara\AmznSPA\Resources\ListingsItemsResource $listings_items
  **/
 class AmznSPA
 {
     use HasConfig;
-
     private ?string $version = null;
 
     public function __construct(AmznSPAConfig $config)
