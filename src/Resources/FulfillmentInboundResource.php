@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
@@ -30,7 +31,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class FulfillmentInboundResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/fba/inbound/v0/';
 
     public function __construct(
@@ -206,7 +206,22 @@ class FulfillmentInboundResource implements ResourceContract
             'NextToken' => $next_token,
         ]));
 
+        $response = $this->setEmptyShipFromAddressToNull($response);
+
         return new GetShipmentsResponse($response);
+    }
+
+    private function setEmptyShipFromAddressToNull(array $response): array
+    {
+        $response['payload']['shipment_data'] = array_map(function (array $shipment_data) {
+            if (Arr::get($shipment_data, 'ship_from_address') === []) {
+                $shipment_data['ship_from_address'] = null;
+            }
+
+            return $shipment_data;
+        }, $response['payload']['shipment_data']);
+
+        return $response;
     }
 
     public function getShipmentItemsByShipmentId(string $shipment_id, string $marketplace_id): GetShipmentItemsResponse

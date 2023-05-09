@@ -1,0 +1,15 @@
+{
+    "payload": {
+        "ShipmentData": [
+            {
+                "ShipmentId": "JHY675676Y",
+                "ShipmentName": "KJKJJIPOPOPO44",
+                "ShipFromAddress": [],
+                "DestinationFulfillmentCenterId": "LFK99",
+                "ShipmentStatus": "CREATING",
+                "LabelPrepType": "NO_LABEL",
+                "BoxContentsSource": "FEED"
+            }
+        ]
+    }
+}

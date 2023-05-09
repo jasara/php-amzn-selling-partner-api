@@ -32,7 +32,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 {
     public function testGetInboundGuidance()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-inbound-guidance');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-inbound-guidance');
 
         $sku = Str::random();
 
@@ -52,7 +52,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testCreateInboundShipmentPlan()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/create-inbound-shipment-plan');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/create-inbound-shipment-plan');
         $request = $this->setupInboundShipmentPlanRequest();
 
         $amzn = new AmznSPA($config);
@@ -71,7 +71,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testUpdateInboundShipment()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/update-inbound-shipment');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/update-inbound-shipment');
 
         $shipment_id = Str::random();
 
@@ -109,7 +109,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testCreateInboundShipment()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/create-inbound-shipment');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/create-inbound-shipment');
 
         $shipment_id = Str::random();
 
@@ -147,7 +147,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetPreorderInfo()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-preorder-info');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-preorder-info');
 
         $shipment_id = Str::random();
 
@@ -167,7 +167,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testConfirmPreorder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/confirm-preorder');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/confirm-preorder');
 
         $shipment_id = Str::random();
 
@@ -188,7 +188,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetPrepInstructions()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
 
         $sku = Str::random();
 
@@ -208,7 +208,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetPrepInstructionsWithComma()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-prep-instructions');
 
         $sku = 'Body Fat Measuring Tape, Pack of 2';
 
@@ -218,7 +218,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
         $this->assertInstanceOf(GetPrepInstructionsResponse::class, $response);
 
-        $http->assertSent(function (Request $request) use ($sku) {
+        $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/prepInstructions?ShipToCountryCode=US&SellerSKUList=Body%20Fat%20Measuring%20Tape%2C%20Pack%20of%202', $request->url());
 
@@ -228,7 +228,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetTransportDetails()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-transport-details');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-transport-details');
 
         $shipment_id = Str::random();
 
@@ -251,7 +251,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
      */
     public function testGetTransportDetails_Issue(string $stub)
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/' . $stub);
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/' . $stub);
 
         $shipment_id = Str::random();
 
@@ -271,7 +271,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetTransportDetails_Issue_ContactPropertyIsNull()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-56-contact-null');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-56-contact-null');
 
         $shipment_id = Str::random();
 
@@ -291,7 +291,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testPutTransportDetails()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/put-transport-details');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/put-transport-details');
 
         $shipment_id = Str::random();
 
@@ -315,7 +315,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testVoidTransport()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/void-transport');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/void-transport');
 
         $shipment_id = Str::random();
 
@@ -335,7 +335,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testEstimateTransport()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/estimate-transport');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/estimate-transport');
 
         $shipment_id = Str::random();
 
@@ -355,7 +355,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testConfirmTransport()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/confirm-transport');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/confirm-transport');
 
         $shipment_id = Str::random();
 
@@ -375,7 +375,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetLabels()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-labels');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-labels');
 
         $shipment_id = Str::random();
 
@@ -395,7 +395,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetBillOfLading()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-labels');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-labels');
 
         $shipment_id = Str::random();
 
@@ -416,7 +416,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetShipments()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipments');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipments');
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
@@ -439,7 +439,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetShipmentItemsByShipmentId()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipment-items-by-shipment-id');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipment-items-by-shipment-id');
 
         $shipment_id = Str::random();
 
@@ -466,7 +466,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
      */
     public function testGetShipmentItemsByShipmentId_Issues($stub)
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/' . $stub);
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/' . $stub);
 
         $shipment_id = Str::random();
 
@@ -489,7 +489,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetShipmentItems()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipment-items');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/get-shipment-items');
         $last_updated_after = CarbonImmutable::now();
         $last_updated_before = CarbonImmutable::now();
 
@@ -515,7 +515,7 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetShipments_Issues()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-48-city-null');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-48-city-null');
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
@@ -537,7 +537,29 @@ class FulfillmentInboundResourceTest extends UnitTestCase
 
     public function testGetShipments_Issues_InvalidShipmentStatus()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-55-invalid-shipment-status');
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-55-invalid-shipment-status');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound->getShipments(
+            marketplace_id: 'ATVPDKIKX0DER',
+            query_type: 'SHIPMENT',
+            shipment_status_list: ['WORKING', 'CLOSED'],
+        );
+
+        $this->assertInstanceOf(GetShipmentsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inbound/v0/shipments?MarketplaceId=ATVPDKIKX0DER&QueryType=SHIPMENT&ShipmentStatusList=WORKING,CLOSED', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testGetShipments_Issues_MissingShipFromAddress()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/issues/issue-65-ship-from-address-empty');
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
