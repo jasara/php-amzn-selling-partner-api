@@ -10,11 +10,9 @@ use Spatie\DataTransferObject\Casters\ArrayCaster;
 
 class ListingsItemSubmissionResponse extends BaseResponse
 {
-    public string $sku;
-
-    public string $status;
-
-    public string $submission_id;
+    public ?string $sku;
+    public ?string $status;
+    public ?string $submission_id;
 
     #[CastWith(ArrayCaster::class, itemType: IssueSchema::class)]
     public ?IssuesSchema $issues;
