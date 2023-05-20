@@ -3,7 +3,11 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems;
 
 use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributeSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributesListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
+use Spatie\DataTransferObject\Attributes\CastWith;
+use Spatie\DataTransferObject\Casters\ArrayCaster;
 
 class ListingsItemPutRequest extends BaseRequest
 {
@@ -12,5 +16,6 @@ class ListingsItemPutRequest extends BaseRequest
     #[StringEnumValidator(['LISTING', 'LISTING_PRODUCT_ONLY', 'LISTING_OFFER_ONLY'])]
     public ?string $requirements;
 
-    public array $attributes;
+    #[CastWith(ArrayCaster::class, itemType: AttributeSchema::class)]
+    public AttributesListSchema $attributes;
 }
