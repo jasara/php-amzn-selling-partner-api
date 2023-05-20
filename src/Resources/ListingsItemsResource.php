@@ -60,6 +60,9 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
+        $request_array = (array) $request->toArrayObject();
+        $request_array['attributes'] = $request->attributes->toArrayObject();
+
         $response = $this->http->put(
             $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
                 array_filter([
@@ -67,7 +70,7 @@ class ListingsItemsResource implements ResourceContract
                     'issueLocale' => $issue_locale,
                 ])
             ),
-            (array) $request->toArrayObject()
+            $request_array,
         );
 
         return new ListingsItemSubmissionResponse($response);

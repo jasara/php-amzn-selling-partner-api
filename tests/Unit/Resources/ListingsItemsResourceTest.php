@@ -9,6 +9,8 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPatchR
 use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPutRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\ListingsItemSubmissionResponse;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributeSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
@@ -18,7 +20,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 {
     public function testGetListingsItem()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');
 
         $sku = Str::random();
         $seller_id = Str::random();
@@ -29,7 +31,7 @@ class ListingsItemsResourceTest extends UnitTestCase
             sku: $sku,
             seller_id: $seller_id,
             marketplace_ids: ['ATVPDKIKX0DER'],
-            issue_locale : '',
+            issue_locale: '',
             included_data: ['summaries'],
         );
 
@@ -46,12 +48,18 @@ class ListingsItemsResourceTest extends UnitTestCase
 
     public function testPutListingsItem()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/put-listings-item');
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/put-listings-item');
 
         $request = new ListingsItemPutRequest(
-            product_type : Str::random(),
-            requirements : 'LISTING',
-            attributes : []
+            product_type: $product_type = Str::random(),
+            requirements: 'LISTING',
+            attributes: new AttributesListSchema([
+                new AttributeSchema(
+                    attribute_name: 'test_attribute',
+                    value: 'test',
+                    marketplace_id: 'ATVPDKIKX0DER',
+                ),
+            ]),
         );
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
@@ -65,9 +73,10 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $this->assertInstanceOf(ListingsItemSubmissionResponse::class, $response);
 
-        $http->assertSent(function (Request $request) use ($seller_id, $sku) {
+        $http->assertSent(function (Request $request) use ($seller_id, $sku, $product_type) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds[0]=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('{"productType":"' . $product_type . '","requirements":"LISTING","attributes":{"test_attribute":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"}]}}', $request->body());
 
             return true;
         });
@@ -75,12 +84,12 @@ class ListingsItemsResourceTest extends UnitTestCase
 
     public function testDeleteListingsItem()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/put-listings-item');
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/put-listings-item');
 
         $request = new ListingsItemPutRequest(
-            product_type : Str::random(),
-            requirements : 'LISTING',
-            attributes : [
+            product_type: Str::random(),
+            requirements: 'LISTING',
+            attributes: [
 
             ]
         );
@@ -105,11 +114,11 @@ class ListingsItemsResourceTest extends UnitTestCase
 
     public function testPatchListingsItem()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/put-listings-item');
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/put-listings-item');
 
         $request = new ListingsItemPatchRequest(
-            product_type : Str::random(),
-            patches : [
+            product_type: Str::random(),
+            patches: [
                 [
                     'op' => 'replace',
                     'path' => Str::random(),
@@ -141,7 +150,7 @@ class ListingsItemsResourceTest extends UnitTestCase
      */
     public function testGetListingsItemSkuIssues(string $sku): void
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');

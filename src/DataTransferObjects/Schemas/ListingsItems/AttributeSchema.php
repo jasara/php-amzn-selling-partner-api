@@ -9,6 +9,7 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 class AttributeSchema extends DataTransferObject
 {
+    public string $attribute_name;
     public string $value;
 
     #[CastWith(BackedEnumCaster::class)]
