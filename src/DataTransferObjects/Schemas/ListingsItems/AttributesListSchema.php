@@ -17,12 +17,23 @@ class AttributesListSchema extends Collection
 
     public function toArrayObject(): ArrayObject
     {
-        return new ArrayObject($this->mapWithKeys(function (AttributeSchema $attribute) {
-            return [$attribute->attribute_name => [array_filter([
-                'value' => $attribute->value,
-                'language_tag' => $attribute->language_tag,
-                'marketplace_id' => $attribute->marketplace_id,
-            ])]];
-        })->toArray());
+        $array_object = new ArrayObject();
+        $attribute_names = $this->pluck('attribute_name')->unique()->toArray();
+
+        foreach ($attribute_names as $attribute_name) {
+            $attribute_schemas = $this->filter(fn (AttributeSchema $attribute) => $attribute->attribute_name === $attribute_name);
+            $attribute_values = [];
+            foreach ($attribute_schemas as $attribute_schema) {
+                $attribute_values[] = array_filter([
+                    'value' => $attribute_schema->value,
+                    'language_tag' => $attribute_schema->language_tag,
+                    'marketplace_id' => $attribute_schema->marketplace_id,
+                ]);
+            }
+
+            $array_object->offsetSet($attribute_name, $attribute_values);
+        }
+
+        return $array_object;
     }
 }

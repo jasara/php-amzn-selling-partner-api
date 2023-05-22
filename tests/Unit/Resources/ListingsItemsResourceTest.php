@@ -55,8 +55,13 @@ class ListingsItemsResourceTest extends UnitTestCase
             requirements: 'LISTING',
             attributes: new AttributesListSchema([
                 new AttributeSchema(
-                    attribute_name: 'test_attribute',
+                    attribute_name: 'bullet_point',
                     value: 'test',
+                    marketplace_id: 'ATVPDKIKX0DER',
+                ),
+                new AttributeSchema(
+                    attribute_name: 'bullet_point',
+                    value: 'test_2',
                     marketplace_id: 'ATVPDKIKX0DER',
                 ),
             ]),
@@ -76,7 +81,7 @@ class ListingsItemsResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($seller_id, $sku, $product_type) {
             $this->assertEquals('PUT', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
-            $this->assertEquals('{"productType":"' . $product_type . '","requirements":"LISTING","attributes":{"test_attribute":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"}]}}', $request->body());
+            $this->assertEquals('{"productType":"' . $product_type . '","requirements":"LISTING","attributes":{"bullet_point":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"},{"value":"test_2","marketplace_id":"ATVPDKIKX0DER"}]}}', $request->body());
 
             return true;
         });
