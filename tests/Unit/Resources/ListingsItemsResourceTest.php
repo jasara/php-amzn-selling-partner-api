@@ -9,6 +9,7 @@ use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPatchR
 use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPutRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\ListingsItemSubmissionResponse;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributePropertySchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributeSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -55,17 +56,65 @@ class ListingsItemsResourceTest extends UnitTestCase
             requirements: 'LISTING',
             attributes: new AttributesListSchema([
                 new AttributeSchema(
-                    attribute_name: 'bullet_point',
-                    value: 'test',
-                    marketplace_id: 'ATVPDKIKX0DER',
+                    name: 'bullet_point',
+                    properties: [
+                        new AttributePropertySchema(
+                            name: 'value',
+                            value: 'test',
+                        ),
+                        new AttributePropertySchema(
+                            name: 'marketplace_id',
+                            value: 'ATVPDKIKX0DER',
+                        ),
+                    ],
                 ),
                 new AttributeSchema(
-                    attribute_name: 'bullet_point',
-                    value: 'test_2',
-                    marketplace_id: 'ATVPDKIKX0DER',
+                    name: 'bullet_point',
+                    properties: [
+                        new AttributePropertySchema(
+                            name: 'value',
+                            value: 'test_2',
+                        ),
+                        new AttributePropertySchema(
+                            name: 'marketplace_id',
+                            value: 'ATVPDKIKX0DER',
+                        ),
+                    ],
+                ),
+                new AttributeSchema(
+                    name: 'externally_assigned_product_identifier',
+                    properties: [
+                        new AttributePropertySchema(
+                            name: 'value',
+                            value: '123456789',
+                        ),
+                        new AttributePropertySchema(
+                            name: 'type',
+                            value: 'ean',
+                        ),
+                    ],
+                ),
+                new AttributeSchema(
+                    name: 'item_package_dimensions',
+                    properties: [
+                        new AttributePropertySchema(
+                            name: 'length',
+                            properties: [
+                                new AttributePropertySchema(
+                                    name: 'value',
+                                    value: '10',
+                                ),
+                                new AttributePropertySchema(
+                                    name: 'unit',
+                                    value: 'inches',
+                                ),
+                            ]
+                        ),
+                    ],
                 ),
             ]),
         );
+
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->listings_items->putListingsItem(
@@ -81,7 +130,7 @@ class ListingsItemsResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($seller_id, $sku, $product_type) {
             $this->assertEquals('PUT', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
-            $this->assertEquals('{"productType":"' . $product_type . '","requirements":"LISTING","attributes":{"bullet_point":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"},{"value":"test_2","marketplace_id":"ATVPDKIKX0DER"}]}}', $request->body());
+            $this->assertEquals('{"productType":"' . $product_type . '","requirements":"LISTING","attributes":{"bullet_point":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"},{"value":"test_2","marketplace_id":"ATVPDKIKX0DER"}],"externally_assigned_product_identifier":[{"value":"123456789","type":"ean"}],"item_package_dimensions":[{"length":{"value":"10","unit":"inches"}}]}}', $request->body());
 
             return true;
         });

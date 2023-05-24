@@ -7,13 +7,12 @@ use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
 use Spatie\DataTransferObject\DataTransferObject;
 
-class AttributeSchema extends DataTransferObject
+class AttributePropertySchema extends DataTransferObject
 {
-    public string $name; // bullet_point, brand, manufacturer, etc
+    public string $name; // value, type, marketplace_id, etc
+    public ?string $value;
 
-    /**
-     * @var Collection<int, AttributePropertySchema>
-     */
+    /** @var Collection<int, AttributePropertySchema> */
     #[CastWith(ArrayCaster::class, itemType: AttributePropertySchema::class)]
-    public Collection $properties;
+    public ?Collection $properties;
 }
