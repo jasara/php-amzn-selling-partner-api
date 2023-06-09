@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Closure;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Arr;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
@@ -17,7 +18,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class LwaResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const ENDPOINT = 'https://api.amazon.com/auth/o2/token';
 
     public function __construct(
@@ -46,7 +46,7 @@ class LwaResource implements ResourceContract
     }
 
     /**
-     * @param array $parameters Array containing the data sent by Amazon on the redirect
+     * @param  array  $parameters Array containing the data sent by Amazon on the redirect
      *      $parameters = [
      *          'state'             => (string) Required, should match the original state that was sent to Amazon
      *          'spapi_oauth_code'  => (string) Required, the authorization code
@@ -175,7 +175,7 @@ class LwaResource implements ResourceContract
 
     private function handleError(Response $response)
     {
-        if ($response->status() === 401) {
+        if ($this->isAuthenticationException($response)) {
             throw new AuthenticationException(
                 $response,
                 $this->authentication_exception_callback,
@@ -183,5 +183,20 @@ class LwaResource implements ResourceContract
         }
 
         return $response->throw();
+    }
+
+    private function isAuthenticationException(Response $response): bool
+    {
+        if ($response->status() === 401) {
+            return true;
+        }
+
+        $data = $response->json();
+
+        if (Arr::get($data, 'error') === 'invalid_grant') {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -67,7 +67,7 @@ class LwaResourceTest extends UnitTestCase
         $state = Str::random();
         $spapi_oauth_code = Str::random();
 
-        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+        [$config, $http] = $this->setupConfigWithFakeHttp('lwa/get-tokens');
 
         $amzn = new AmznSPA($config);
         $tokens = $amzn->lwa->getTokensFromRedirect($state, [
@@ -96,7 +96,7 @@ class LwaResourceTest extends UnitTestCase
     {
         $auth_code = Str::random();
 
-        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+        [$config, $http] = $this->setupConfigWithFakeHttp('lwa/get-tokens');
 
         $amzn = new AmznSPA($config);
         $tokens = $amzn->lwa->getTokensFromAuthorizationCode($auth_code);
@@ -122,7 +122,7 @@ class LwaResourceTest extends UnitTestCase
     {
         $refresh_token = Str::random();
 
-        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+        [$config, $http] = $this->setupConfigWithFakeHttp('lwa/get-tokens');
 
         $amzn = new AmznSPA($config);
         $tokens = $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
@@ -145,7 +145,7 @@ class LwaResourceTest extends UnitTestCase
 
     public function testGetGrantlessAccessToken()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+        [$config, $http] = $this->setupConfigWithFakeHttp('lwa/get-tokens');
         $scope = Str::random();
 
         $amzn = new AmznSPA($config);
@@ -203,7 +203,7 @@ class LwaResourceTest extends UnitTestCase
                 }),
             );
 
-        list($config, $http) = $this->setupConfigWithFakeHttp('lwa/get-tokens');
+        [$config, $http] = $this->setupConfigWithFakeHttp('lwa/get-tokens');
         $config->setSaveLwaTokensCallback(Closure::fromCallable([$callback, '__invoke']));
 
         $amzn = new AmznSPA($config);
@@ -315,6 +315,19 @@ class LwaResourceTest extends UnitTestCase
         }
 
         return $marketplaces;
+    }
+
+    public function testInvalidGrantThrowsAuthenticationException()
+    {
+        $this->expectException(AuthenticationException::class);
+
+        $refresh_token = Str::random();
+
+        /** @var AmznSPAConfig $config */
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-grant', 400);
+
+        $amzn = new AmznSPA($config);
+        $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
     }
 
     public function testResponseInvalidGrantCallbackIsCalled()
