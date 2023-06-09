@@ -2,8 +2,6 @@
 
 namespace Jasara\AmznSPA\Tests\Unit;
 
-use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-
 class HelpersTest extends UnitTestCase
 {
     public function testArrayKeysToSnake()

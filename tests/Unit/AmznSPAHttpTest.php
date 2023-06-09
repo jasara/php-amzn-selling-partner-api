@@ -9,9 +9,11 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
+use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
@@ -26,10 +28,9 @@ use Jasara\AmznSPA\Exceptions\InvalidParametersException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\AmznSPAHttp
- */
+#[CoversClass(AmznSPAHttp::class)]
 class AmznSPAHttpTest extends UnitTestCase
 {
     public function testRefreshToken()
@@ -471,7 +472,16 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = $this->setupMinimalConfig(null, $http);
 
         $amzn = new AmznSPA($config);
-        $amzn->feeds->cancelFeed('some-feed-id');
+        $amzn->listings_items->patchListingsItem(
+            Str::random(),
+            Str::random(),
+            ['ATVPDKIKX0DER'],
+            null,
+            new ListingsItemPatchRequest(
+                product_type: Str::random(),
+                patches: [],
+            )
+        );
     }
 
     public function testExceptionIsThrownIfGetRequestHasMultipleSkusAndOneHasAComma()
