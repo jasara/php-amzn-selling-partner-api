@@ -192,8 +192,8 @@ class ListingsItemsResourceTest extends UnitTestCase
         $this->assertInstanceOf(ListingsItemSubmissionResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
-            $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds[0]=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('PATCH', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });

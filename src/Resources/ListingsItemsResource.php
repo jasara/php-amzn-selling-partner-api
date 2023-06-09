@@ -101,7 +101,7 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->put(
+        $response = $this->http->patch(
             $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
                 array_filter([
                     'marketplaceIds' => implode(',', $marketplace_ids),

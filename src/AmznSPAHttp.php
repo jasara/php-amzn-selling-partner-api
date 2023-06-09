@@ -50,6 +50,11 @@ class AmznSPAHttp
         return $this->call('put', $url, $data);
     }
 
+    public function patch(string $url, array $data): array
+    {
+        return $this->call('patch', $url, $data);
+    }
+
     public function post(string $url, array $data): array
     {
         return $this->call('post', $url, $data);
