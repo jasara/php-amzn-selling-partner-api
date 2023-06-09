@@ -85,7 +85,7 @@ class ListingsItemsResource implements ResourceContract
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku), array_filter([
-            'marketplaceIds' => $marketplace_ids,
+            'marketplaceIds' => implode(',', $marketplace_ids),
             'issueLocale' => $issue_locale,
         ]));
 
@@ -104,7 +104,7 @@ class ListingsItemsResource implements ResourceContract
         $response = $this->http->put(
             $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
                 array_filter([
-                    'marketplaceIds' => $marketplace_ids,
+                    'marketplaceIds' => implode(',', $marketplace_ids),
                     'issueLocale' => $issue_locale,
                 ])
             ),
