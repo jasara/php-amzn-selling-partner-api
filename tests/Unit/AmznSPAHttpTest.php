@@ -426,9 +426,7 @@ class AmznSPAHttpTest extends UnitTestCase
      */
     public function testSetupHttp()
     {
-        $this->markTestSkipped('The exception changed for some reason');
-
-        $this->expectException(RequestException::class);
+        $this->expectException(AuthenticationException::class);
 
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],

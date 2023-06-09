@@ -16,6 +16,7 @@ use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
@@ -186,7 +187,7 @@ class AmznSPAConfigTest extends UnitTestCase
         try {
             $amzn = new AmznSPA($config);
             $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
-        } catch (RequestException $e) {
+        } catch (RequestException|AuthenticationException $e) {
             $caught = true;
             rewind($logger_resource);
             $line_1 = fgets($logger_resource);
@@ -195,7 +196,7 @@ class AmznSPAConfigTest extends UnitTestCase
             $this->assertStringContainsString('123', $line_1);
             $this->assertStringNotContainsString('"access_token":"[filtered]"', $line_2);
             $this->assertStringContainsString('"x-amz-access-token":"[filtered]"', $line_2);
-            $this->assertStringContainsString('"code":"InvalidInput"', $line_2);
+            $this->assertStringContainsString('"code":"Unauthorized"', $line_2);
             $this->assertEquals('', fgets($logger_resource));
         } catch (ConnectionException $e) {
             $this->markTestSkipped('No connection');
