@@ -51,6 +51,25 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $config->getTokens()->access_token);
     }
 
+    public function testRefreshTokenWithRefreshTokenSet()
+    {
+        $this->expectExceptionMessage('Refresh token is not set');
+
+        $http = new Factory;
+        $http->fake([
+            '*' => $http->sequence()
+                ->push($this->loadHttpStub('errors/token-expired'), 403),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+        $config->setTokens(new AuthTokensDTO(
+            refresh_token: null,
+        ));
+
+        $amzn = new AmznSPA($config);
+        $amzn->notifications->getSubscription('ANY_OFFER_CHANGED');
+    }
+
     public function testInvalidGrantRefreshTokenIsAttempted()
     {
         $http = new Factory;

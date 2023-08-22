@@ -185,6 +185,13 @@ class AmznSPAHttp
     private function refreshTokens(): void
     {
         $amzn = new AmznSPA($this->config);
+
+        $refresh_token = $this->config->getTokens()->refresh_token;
+
+        if (! $refresh_token) {
+            throw new AmznSPAException('Refresh token is not set');
+        }
+
         $new_tokens = $amzn->lwa->getAccessTokenFromRefreshToken($this->config->getTokens()->refresh_token);
 
         $this->config->setTokens($new_tokens);
