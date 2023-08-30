@@ -23,7 +23,7 @@ class OrdersResourceTest extends UnitTestCase
 {
     public function testGetOrders()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', '/orders/get-orders']);
+        [$config, $http] = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', '/orders/get-orders']);
 
         $created_after = CarbonImmutable::now();
 
@@ -74,7 +74,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetOrder()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp([
+        [$config, $http] = $this->setupConfigWithFakeHttp([
             'tokens/create-restricted-data-token',
             '/orders/get-order',
         ]);
@@ -106,9 +106,26 @@ class OrdersResourceTest extends UnitTestCase
         $http->assertSentInOrder($request_validation);
     }
 
+    public function testGetOrderEmptyResponse()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp([
+            'tokens/create-restricted-data-token',
+            '/orders/get-order-empty',
+        ]);
+
+        $order_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->getOrder($order_id);
+
+        $this->assertInstanceOf(GetOrderResponse::class, $response);
+        $this->assertNull($response->payload);
+    }
+
     public function testGetOrderBuyerInfo()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order-buyer-info');
+        [$config, $http] = $this->setupConfigWithFakeHttp('/orders/get-order-buyer-info');
 
         $order_id = Str::random();
 
@@ -129,7 +146,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetOrderAddress()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order-address');
+        [$config, $http] = $this->setupConfigWithFakeHttp('/orders/get-order-address');
 
         $order_id = Str::random();
 
@@ -150,7 +167,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetOrderItems()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'orders/get-order-items']);
+        [$config, $http] = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'orders/get-order-items']);
 
         $order_id = Str::random();
 
@@ -181,7 +198,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetOrderItemsBuyerInfo()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('/orders/get-order-items-buyer-info');
+        [$config, $http] = $this->setupConfigWithFakeHttp('/orders/get-order-items-buyer-info');
 
         $order_id = Str::random();
 
@@ -202,7 +219,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testUpdateShipmentStatus()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp('empty', 204);
+        [$config, $http] = $this->setupConfigWithFakeHttp('empty', 204);
 
         $order_id = Str::random();
 
@@ -227,7 +244,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGettingOrderAndOrderItemsAtSameTimeUsesSeparateRdtTokens()
     {
-        list($config, $http) = $this->setupConfigWithFakeHttp([
+        [$config, $http] = $this->setupConfigWithFakeHttp([
             'tokens/create-restricted-data-token',
             '/orders/get-order',
             'tokens/create-restricted-data-token',

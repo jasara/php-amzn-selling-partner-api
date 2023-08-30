@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
@@ -19,7 +20,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class OrdersResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/orders/v0/';
 
     public function __construct(
@@ -86,6 +86,10 @@ class OrdersResource implements ResourceContract
         $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
 
         $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
+
+        if (Arr::get($response, 'payload') === []) {
+            $response['payload'] = null;
+        }
 
         return new GetOrderResponse($response);
     }
