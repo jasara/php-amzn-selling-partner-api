@@ -7,5 +7,5 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\BillOfLadingDo
 
 class GetBillOfLadingResponse extends BaseResponse
 {
-    public BillOfLadingDownloadURLSchema $payload;
+    public ?BillOfLadingDownloadURLSchema $payload;
 }
