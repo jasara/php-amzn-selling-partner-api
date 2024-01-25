@@ -75,7 +75,7 @@ class OrderItemSchema extends DataTransferObject
 
     public ?string $store_chain_store_id;
 
-    #[StringEnumValidator(['IOSS', 'UOSS'])]
+    #[StringEnumValidator(['IOSS', 'UOSS', 'CA_MPF'])]
     public ?string $deemed_reseller_category;
 
     public ?ItemBuyerInfoSchema $buyer_info;
