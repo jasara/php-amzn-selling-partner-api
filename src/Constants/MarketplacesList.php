@@ -112,6 +112,12 @@ class MarketplacesList
                 region: 'EU',
             ),
             new Marketplace(
+                identifier: 'AMEN7PMS3EDWL',
+                country_code: 'BE',
+                seller_central_url: 'https://sellercentral.amazon.com.be',
+                region: 'EU',
+            ),
+            new Marketplace(
                 identifier: 'A19VAU5U5O7RUS',
                 country_code: 'SG',
                 seller_central_url: 'https://sellercentral.amazon.sg',
