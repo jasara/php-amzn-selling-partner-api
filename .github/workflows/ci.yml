@@ -7,21 +7,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:           
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
-          php_version: "8.1"
+          php_version: "8.2"
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         with:
-          php_version: "8.1"
+          php_version: "8.2"
           php_extensions: pcov
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml
           memory_limit: 1G
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: code-coverage-report
           path: tests/resources/clover.xml
