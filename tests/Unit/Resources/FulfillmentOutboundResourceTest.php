@@ -26,6 +26,7 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 
 /**
  * @covers \Jasara\AmznSPA\Resources\FulfillmentOutboundResource
+ * @covers \Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest
  */
 class FulfillmentOutboundResourceTest extends UnitTestCase
 {
@@ -79,7 +80,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($queryStartDate) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders?queryStartDate=' . $queryStartDate, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders?queryStartDate='.$queryStartDate, $request->url());
 
             return true;
         });
@@ -194,7 +195,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/'.$seller_fulfillment_order_id.'/return', urldecode($request->url()));
 
             return true;
         });
@@ -214,7 +215,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/' . $seller_fulfillment_order_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/'.$seller_fulfillment_order_id, $request->url());
 
             return true;
         });
@@ -237,7 +238,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/' . $seller_fulfillment_order_id, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/'.$seller_fulfillment_order_id, urldecode($request->url()));
 
             return true;
         });
@@ -257,7 +258,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_fulfillment_order_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/' . $seller_fulfillment_order_id . '/cancel', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders/'.$seller_fulfillment_order_id.'/cancel', urldecode($request->url()));
 
             return true;
         });
@@ -298,7 +299,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feature_name) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/features/inventory/' . $feature_name, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/features/inventory/'.$feature_name, $request->url());
 
             return true;
         });
@@ -320,7 +321,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feature_name, $seller_sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/features/inventory/' . $feature_name . '/' . $seller_sku, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/features/inventory/'.$feature_name.'/'.$seller_sku, $request->url());
 
             return true;
         });
