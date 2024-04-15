@@ -1,0 +1,12 @@
+<?php
+
+namespace Jasara\AmznSPA\Data\Schemas\Shipping;
+
+use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
+use Spatie\DataTransferObject\DataTransferObject;
+
+class ServiceTypeSchema extends DataTransferObject
+{
+    #[StringEnumValidator(['Amazon Shipping Ground', 'Amazon Shipping Standard', 'Amazon Shipping Premium'])]
+    public string $service_type;
+}

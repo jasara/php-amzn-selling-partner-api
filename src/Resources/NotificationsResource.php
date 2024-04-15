@@ -5,16 +5,16 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\CreateDestinationResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\CreateSubscriptionResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\DeleteDestinationResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\DeleteSubscriptionByIdResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetDestinationResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetDestinationsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionByIdResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetSubscriptionResponse;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\ProcessingDirectiveSchema;
+use Jasara\AmznSPA\Data\Responses\Notifications\CreateDestinationResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\CreateSubscriptionResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\DeleteDestinationResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\DeleteSubscriptionByIdResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationsResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\GetSubscriptionByIdResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\GetSubscriptionResponse;
+use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\Data\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class NotificationsResource implements ResourceContract
@@ -33,7 +33,7 @@ class NotificationsResource implements ResourceContract
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type);
 
         return new GetSubscriptionResponse($response);
     }
@@ -47,7 +47,7 @@ class NotificationsResource implements ResourceContract
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
         $response = $this->http->post(
-            $this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type,
+            $this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type,
             array_filter([
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
@@ -62,7 +62,7 @@ class NotificationsResource implements ResourceContract
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->getGrantless($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type . '/' . $subscription_id);
+        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type.'/'.$subscription_id);
 
         return new GetSubscriptionByIdResponse($response);
     }
@@ -71,21 +71,21 @@ class NotificationsResource implements ResourceContract
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->deleteGrantless($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type . '/' . $subscription_id);
+        $response = $this->http->deleteGrantless($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type.'/'.$subscription_id);
 
         return new DeleteSubscriptionByIdResponse($response);
     }
 
     public function getDestinations(): GetDestinationsResponse
     {
-        $response = $this->http->getGrantless($this->endpoint . self::BASE_PATH . 'destinations');
+        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'destinations');
 
         return new GetDestinationsResponse($response);
     }
 
     public function createDestination(string $name, DestinationResourceSpecificationSchema $resource_specification): CreateDestinationResponse
     {
-        $response = $this->http->postGrantless($this->endpoint . self::BASE_PATH . 'destinations', [
+        $response = $this->http->postGrantless($this->endpoint.self::BASE_PATH.'destinations', [
             'name' => $name,
             'resourceSpecification' => $resource_specification->toArrayObject(),
         ]);
@@ -95,14 +95,14 @@ class NotificationsResource implements ResourceContract
 
     public function getDestination(string $destination_id): GetDestinationResponse
     {
-        $response = $this->http->getGrantless($this->endpoint . self::BASE_PATH . 'destinations/' . $destination_id);
+        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'destinations/'.$destination_id);
 
         return new GetDestinationResponse($response);
     }
 
     public function deleteDestination(string $destination_id): DeleteDestinationResponse
     {
-        $response = $this->http->deleteGrantless($this->endpoint . self::BASE_PATH . 'destinations/' . $destination_id);
+        $response = $this->http->deleteGrantless($this->endpoint.self::BASE_PATH.'destinations/'.$destination_id);
 
         return new DeleteDestinationResponse($response);
     }

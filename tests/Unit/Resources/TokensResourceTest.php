@@ -4,8 +4,8 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Tokens\CreateRestrictedDataTokenRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Tokens\CreateRestrictedDataTokenResponse;
+use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
+use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

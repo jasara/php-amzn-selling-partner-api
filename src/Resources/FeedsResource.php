@@ -8,14 +8,14 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Feeds\CreateFeedDocumentSpecification;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Feeds\CreateFeedSpecification;
-use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\CreateFeedDocumentResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\CreateFeedResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedDocumentResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedsResponse;
+use Jasara\AmznSPA\Data\Requests\Feeds\CreateFeedDocumentSpecification;
+use Jasara\AmznSPA\Data\Requests\Feeds\CreateFeedSpecification;
+use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\Feeds\CreateFeedDocumentResponse;
+use Jasara\AmznSPA\Data\Responses\Feeds\CreateFeedResponse;
+use Jasara\AmznSPA\Data\Responses\Feeds\GetFeedDocumentResponse;
+use Jasara\AmznSPA\Data\Responses\Feeds\GetFeedResponse;
+use Jasara\AmznSPA\Data\Responses\Feeds\GetFeedsResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FeedsResource implements ResourceContract
@@ -49,7 +49,7 @@ class FeedsResource implements ResourceContract
             $this->validateIsArrayOfStrings($processing_statuses, AmazonEnums::PROCESSING_STATUSES);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'feeds', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'feeds', array_filter([
             'feedTypes' => $feed_types,
             'marketplaceIds' => $marketplace_ids,
             'pageSize' => $page_size,
@@ -64,14 +64,14 @@ class FeedsResource implements ResourceContract
 
     public function createFeed(CreateFeedSpecification $request): CreateFeedResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'feeds', (array) $request->toArrayObject());
+        $response = $this->http->post($this->endpoint.self::BASE_PATH.'feeds', (array) $request->toArrayObject());
 
         return new CreateFeedResponse($response);
     }
 
     public function getFeed(string $feed_id): GetFeedResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'feeds/' . $feed_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'feeds/'.$feed_id);
 
         $errors = Arr::get($response, 'errors');
 
@@ -84,21 +84,21 @@ class FeedsResource implements ResourceContract
 
     public function cancelFeed(string $feed_id): BaseResponse
     {
-        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'feeds/' . $feed_id);
+        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'feeds/'.$feed_id);
 
         return new BaseResponse($response);
     }
 
     public function createFeedDocument(CreateFeedDocumentSpecification $request): CreateFeedDocumentResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'documents', (array) $request->toArrayObject());
+        $response = $this->http->post($this->endpoint.self::BASE_PATH.'documents', (array) $request->toArrayObject());
 
         return new CreateFeedDocumentResponse($response);
     }
 
     public function getFeedDocument(string $feed_document_id): GetFeedDocumentResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'documents/' . $feed_document_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'documents/'.$feed_document_id);
 
         $errors = Arr::get($response, 'errors');
 

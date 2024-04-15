@@ -4,8 +4,8 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ProductTypeDefinitions\ProductTypeDefinitionResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ProductTypeDefinitions\ProductTypeListResponse;
+use Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions\ProductTypeDefinitionResponse;
+use Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions\ProductTypeListResponse;
 use Jasara\AmznSPA\Resources\ProductTypeDefinitionsResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;

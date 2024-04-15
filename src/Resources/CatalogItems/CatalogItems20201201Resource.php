@@ -7,8 +7,8 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\ItemSearchResults;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\ItemSearchResults;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class CatalogItems20201201Resource implements ResourceContract
@@ -46,7 +46,7 @@ class CatalogItems20201201Resource implements ResourceContract
             $this->validateIsArrayOfStrings($classification_ids);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items', array_filter([
             'keywords' => $keywords,
             'marketplaceIds' => $marketplace_ids,
             'includedData' => $included_data,
@@ -72,7 +72,7 @@ class CatalogItems20201201Resource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA_ITEMS);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin, array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items/'.$asin, array_filter([
             'marketplaceIds' => $marketplace_ids,
             'includedData' => $included_data,
             'locale' => $locale,

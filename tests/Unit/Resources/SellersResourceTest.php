@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Sellers\GetMarketplaceParticipationsResponse;
+use Jasara\AmznSPA\Data\Responses\Sellers\GetMarketplaceParticipationsResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

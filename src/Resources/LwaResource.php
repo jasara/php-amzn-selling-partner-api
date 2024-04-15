@@ -2,15 +2,14 @@
 
 namespace Jasara\AmznSPA\Resources;
 
-use Closure;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\ApplicationKeysDTO;
-use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
-use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
+use Jasara\AmznSPA\Data\ApplicationKeysDTO;
+use Jasara\AmznSPA\Data\AuthTokensDTO;
+use Jasara\AmznSPA\Data\GrantlessTokenDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -25,9 +24,9 @@ class LwaResource implements ResourceContract
         private Marketplace $marketplace,
         private ?string $redirect_url,
         private ApplicationKeysDTO $application_keys,
-        private ?Closure $save_lwa_tokens_callback,
-        private ?Closure $authentication_exception_callback,
-        private ?Closure $response_callback,
+        private ?\Closure $save_lwa_tokens_callback,
+        private ?\Closure $authentication_exception_callback,
+        private ?\Closure $response_callback,
     ) {
     }
 
@@ -36,28 +35,28 @@ class LwaResource implements ResourceContract
         $redirect_url = $this->redirect_url;
 
         $params = http_build_query(compact('redirect_url', 'state'));
-        $url = $this->getBaseUrlFromMarketplace() . '/apps/authorize/consent';
+        $url = $this->getBaseUrlFromMarketplace().'/apps/authorize/consent';
 
         if ($params) {
-            $url .= '?' . $params;
+            $url .= '?'.$params;
         }
 
         return $url;
     }
 
     /**
-     * @param  array  $parameters Array containing the data sent by Amazon on the redirect
-     *      $parameters = [
-     *          'state'             => (string) Required, should match the original state that was sent to Amazon
-     *          'spapi_oauth_code'  => (string) Required, the authorization code
-     *      ]
+     * @param array $parameters Array containing the data sent by Amazon on the redirect
+     *                          $parameters = [
+     *                          'state'             => (string) Required, should match the original state that was sent to Amazon
+     *                          'spapi_oauth_code'  => (string) Required, the authorization code
+     *                          ]
      */
     public function getTokensFromRedirect(string $original_state, array $parameters): AuthTokensDTO
     {
         $this->validateObjectProperties($this, ['redirect_url']);
         $this->validateArrayParameters($parameters, ['state', 'spapi_oauth_code']);
 
-        if (! $this->isRedirectValid($original_state, $parameters['state'])) {
+        if (!$this->isRedirectValid($original_state, $parameters['state'])) {
             throw new AmznSPAException('State returned from Amazon does not match the original state');
         }
 
@@ -176,10 +175,7 @@ class LwaResource implements ResourceContract
     private function handleError(Response $response)
     {
         if ($this->isAuthenticationException($response)) {
-            throw new AuthenticationException(
-                $response,
-                $this->authentication_exception_callback,
-            );
+            throw new AuthenticationException($response, $this->authentication_exception_callback);
         }
 
         return $response->throw();

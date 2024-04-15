@@ -6,27 +6,27 @@ use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentOrderRequest;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound\UpdateFulfillmentOrderRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CancelFulfillmentOrderResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeatureSkuResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFeaturesResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentOrderResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
+use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\CreateFulfillmentOrderRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\UpdateFulfillmentOrderRequest;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CancelFulfillmentOrderResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetFeatureInventoryResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetFeatureSkuResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetFeaturesResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetFulfillmentOrderResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetFulfillmentPreviewResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetPackageTrackingDetailsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(\Jasara\AmznSPA\Resources\FulfillmentOutboundResource::class)]
-#[CoversClass(\Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest::class)]
+#[CoversClass(\Jasara\AmznSPA\Data\Requests\BaseRequest::class)]
 class FulfillmentOutboundResourceTest extends UnitTestCase
 {
     public function testGetFulfillmentPreview()

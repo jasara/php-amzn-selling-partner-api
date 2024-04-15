@@ -1,0 +1,16 @@
+<?php
+
+namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
+
+use Spatie\DataTransferObject\DataTransferObject;
+
+class ItemImageSchema extends DataTransferObject
+{
+    public ?string $variant;
+
+    public string $link;
+
+    public int $height;
+
+    public int $width;
+}

@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Sellers\GetMarketplaceParticipationsResponse;
+use Jasara\AmznSPA\Data\Responses\Sellers\GetMarketplaceParticipationsResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class SellersResource implements ResourceContract
@@ -21,7 +21,7 @@ class SellersResource implements ResourceContract
 
     public function getMarketplaceParticipations(): GetMarketplaceParticipationsResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH);
 
         return new GetMarketplaceParticipationsResponse($response);
     }

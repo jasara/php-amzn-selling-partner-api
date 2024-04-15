@@ -6,8 +6,8 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetOffersResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetPricingResponse;
+use Jasara\AmznSPA\Data\Responses\ProductPricing\GetOffersResponse;
+use Jasara\AmznSPA\Data\Responses\ProductPricing\GetPricingResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class ProductPricingResource implements ResourceContract
@@ -41,12 +41,12 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($offer_type, ['B2C', 'B2B']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'price', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'price', array_filter([
             'MarketplaceId' => $marketplace_id,
             'ItemType' => $item_type,
             'Asins' => $asins,
-            'Skus' =>$skus,
-            'ItemCondition' =>$item_condition,
+            'Skus' => $skus,
+            'ItemCondition' => $item_condition,
             'OfferType' => $offer_type,
         ]));
 
@@ -68,11 +68,11 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'competitivePrice', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'competitivePrice', array_filter([
             'MarketplaceId' => $marketplace_id,
             'ItemType' => $item_type,
             'Asins' => $asins,
-            'Skus' =>$skus,
+            'Skus' => $skus,
             'CustomerType' => $customer_type,
         ]));
 
@@ -91,7 +91,7 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/offers', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'listings/'.$seller_sku.'/offers', array_filter([
             'MarketplaceId' => $marketplace_id,
             'ItemCondition' => $item_condition,
             'CustomerType' => $customer_type,
@@ -112,7 +112,7 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/offers', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items/'.$asin.'/offers', array_filter([
             'MarketplaceId' => $marketplace_id,
             'ItemCondition' => $item_condition,
             'CustomerType' => $customer_type,

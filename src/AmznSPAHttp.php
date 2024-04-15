@@ -12,9 +12,9 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\JasaraNotes;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Tokens\CreateRestrictedDataTokenRequest;
-use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\MetadataSchema;
+use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
+use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
@@ -133,15 +133,10 @@ class AmznSPAHttp
 
             if ($this->isAuthenticationException($e)) {
                 if ($grantless) {
-                    throw new GrantlessAuthenticationException(
-                        $e->response,
-                    );
+                    throw new GrantlessAuthenticationException($e->response);
                 }
 
-                throw new AuthenticationException(
-                    $e->response,
-                    $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
-                );
+                throw new AuthenticationException($e->response, $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null);
             }
 
             if ($e->response->status() === 429) {
@@ -188,7 +183,7 @@ class AmznSPAHttp
 
         $refresh_token = $this->config->getTokens()->refresh_token;
 
-        if (! $refresh_token) {
+        if (!$refresh_token) {
             throw new AmznSPAException('Refresh token is not set');
         }
 
@@ -199,7 +194,7 @@ class AmznSPAHttp
 
     private function refreshGrantlessToken()
     {
-        $scope = 'sellingpartnerapi::' . $this->grantless_resource;
+        $scope = 'sellingpartnerapi::'.$this->grantless_resource;
 
         $amzn = new AmznSPA($this->config);
         $token = $amzn->lwa->getGrantlessAccessToken($scope);
@@ -254,23 +249,23 @@ class AmznSPAHttp
         if ($this->shouldGetRestrictedDataToken($url, $method)) {
             $restricted_token = $this->config->getRestrictedDataToken();
 
-            if (! $this->isRestrictedTokenCompatibleWithPath($restricted_token, $url)) {
+            if (!$this->isRestrictedTokenCompatibleWithPath($restricted_token, $url)) {
                 $this->refreshRdtToken($url, $method);
-            } elseif (! $restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
+            } elseif (!$restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshRdtToken($url, $method);
             }
 
             return $this->config->getRestrictedDataToken()->access_token;
-        } elseif (! $grantless) {
+        } elseif (!$grantless) {
             $tokens = $this->config->getTokens();
-            if (! $tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
+            if (!$tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshTokens();
             }
 
             return $this->config->getTokens()->access_token;
         } else {
             $grantless_token = $this->config->getGrantlessToken();
-            if (! $grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
+            if (!$grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshGrantlessToken();
             }
 
@@ -280,15 +275,15 @@ class AmznSPAHttp
 
     private function shouldGetRestrictedDataToken(string $url, string $method): bool
     {
-        if (! $this->config->shouldGetRdtTokens()) {
+        if (!$this->config->shouldGetRdtTokens()) {
             return false;
         }
 
-        if (! $this->isRestrictedDataPath($url, $method)) {
+        if (!$this->isRestrictedDataPath($url, $method)) {
             return false;
         }
 
-        if (! $this->use_restricted_data_token) {
+        if (!$this->use_restricted_data_token) {
             return false;
         }
 
@@ -380,18 +375,18 @@ class AmznSPAHttp
 
     private function handleRequestException(RequestException $e, bool $grantless)
     {
-        if (! $e->response->json()) {
+        if (!$e->response->json()) {
             throw $e;
         }
 
-        if (! $this->shouldRefreshToken($e->response->json())) {
+        if (!$this->shouldRefreshToken($e->response->json())) {
             throw $e;
         }
-        if (! $this->shouldRetry()) {
+        if (!$this->shouldRetry()) {
             throw $e;
         }
 
-        if (! $grantless) {
+        if (!$grantless) {
             $this->refreshTokens();
         } else {
             $this->refreshGrantlessToken();
@@ -400,11 +395,11 @@ class AmznSPAHttp
 
     public function shouldReturnErrorResponse(RequestException $e): bool
     {
-        if (! in_array($e->response->status(), [400, 404])) {
+        if (!in_array($e->response->status(), [400, 404])) {
             return false;
         }
 
-        if (! Arr::get($e->response->json(), 'errors')) {
+        if (!Arr::get($e->response->json(), 'errors')) {
             return false;
         }
 

@@ -3,10 +3,10 @@
 namespace Jasara\AmznSPA\Tests\Setup;
 
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\AddressSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\ContactSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
+use Jasara\AmznSPA\Data\Schemas\AddressSchema;
+use Jasara\AmznSPA\Data\Schemas\ContactSchema;
+use Jasara\AmznSPA\Data\Schemas\ShippingAddressSchema;
 
 trait SetupSchemas
 {

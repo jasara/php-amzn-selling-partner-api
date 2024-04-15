@@ -5,8 +5,8 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Requests\ProductFees\GetMyFeesEstimateRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ProductFees\GetMyFeesEstimateResponse;
+use Jasara\AmznSPA\Data\Requests\ProductFees\GetMyFeesEstimateRequest;
+use Jasara\AmznSPA\Data\Responses\ProductFees\GetMyFeesEstimateResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

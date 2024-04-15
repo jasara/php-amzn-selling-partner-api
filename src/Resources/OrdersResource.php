@@ -7,14 +7,14 @@ use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Orders\UpdateShipmentStatusRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderAddressResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderBuyerInfoResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsBuyerInfoResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderItemsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrderResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Orders\GetOrdersResponse;
+use Jasara\AmznSPA\Data\Requests\Orders\UpdateShipmentStatusRequest;
+use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderAddressResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderBuyerInfoResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsBuyerInfoResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class OrdersResource implements ResourceContract
@@ -58,7 +58,7 @@ class OrdersResource implements ResourceContract
 
         $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders', array_filter([
             'MarketplaceIds' => $marketplace_ids,
             'CreatedAfter' => $created_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
             'CreatedBefore' => $created_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
@@ -85,7 +85,7 @@ class OrdersResource implements ResourceContract
     {
         $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id);
 
         if (Arr::get($response, 'payload') === []) {
             $response['payload'] = null;
@@ -96,14 +96,14 @@ class OrdersResource implements ResourceContract
 
     public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/buyerInfo');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/buyerInfo');
 
         return new GetOrderBuyerInfoResponse($response);
     }
 
     public function getOrderAddress(string $order_id): GetOrderAddressResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/address');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/address');
 
         return new GetOrderAddressResponse($response);
     }
@@ -112,21 +112,21 @@ class OrdersResource implements ResourceContract
     {
         $this->http->setRestrictedDataElements(['buyerInfo']);
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems');
 
         return new GetOrderItemsResponse($response);
     }
 
     public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems/buyerInfo');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems/buyerInfo');
 
         return new GetOrderItemsBuyerInfoResponse($response);
     }
 
     public function updateShipmentStatus(string $order_id, UpdateShipmentStatusRequest $request): BaseResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/shipment', (array) $request->toArrayObject());
+        $response = $this->http->post($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/shipment', (array) $request->toArrayObject());
 
         return new BaseResponse($response);
     }

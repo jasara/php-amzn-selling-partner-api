@@ -5,9 +5,9 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources\CatalogItems;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20220401\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20220401\ItemSearchResults;
-use Jasara\AmznSPA\Enums\CatalogItems\ItemIdentifierTypes;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20220401\GetCatalogItemResponse;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20220401\ItemSearchResults;
+use Jasara\AmznSPA\Data\Schemas\CatalogItems\ItemIdentifierTypes;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

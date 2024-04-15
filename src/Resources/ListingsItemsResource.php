@@ -7,10 +7,10 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPatchRequest;
-use Jasara\AmznSPA\DataTransferObjects\Requests\ListingsItems\ListingsItemPutRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\GetListingsItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\ListingsItems\ListingsItemSubmissionResponse;
+use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
+use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPutRequest;
+use Jasara\AmznSPA\Data\Responses\ListingsItems\GetListingsItemResponse;
+use Jasara\AmznSPA\Data\Responses\ListingsItems\ListingsItemSubmissionResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class ListingsItemsResource implements ResourceContract
@@ -36,7 +36,7 @@ class ListingsItemsResource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku), array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku), array_filter([
             'marketplaceIds' => $marketplace_ids,
             'issueLocale' => $issue_locale,
             'includedData' => $included_data,
@@ -64,7 +64,7 @@ class ListingsItemsResource implements ResourceContract
         $request_array['attributes'] = $request->attributes->toArrayObject();
 
         $response = $this->http->put(
-            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
+            $this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku).'?'.http_build_query(
                 array_filter([
                     'marketplaceIds' => implode(',', $marketplace_ids),
                     'issueLocale' => $issue_locale,
@@ -84,7 +84,7 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku), array_filter([
+        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku), array_filter([
             'marketplaceIds' => implode(',', $marketplace_ids),
             'issueLocale' => $issue_locale,
         ]));
@@ -102,7 +102,7 @@ class ListingsItemsResource implements ResourceContract
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http->patch(
-            $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
+            $this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku).'?'.http_build_query(
                 array_filter([
                     'marketplaceIds' => implode(',', $marketplace_ids),
                     'issueLocale' => $issue_locale,

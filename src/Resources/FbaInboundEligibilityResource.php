@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
+use Jasara\AmznSPA\Data\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FbaInboundEligibilityResource implements ResourceContract
@@ -27,10 +27,10 @@ class FbaInboundEligibilityResource implements ResourceContract
         }
         $this->validateStringEnum($program, ['INBOUND', 'COMMINGLING']);
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH, array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH, array_filter([
             'marketplaceIds' => $marketplace_ids,
-            'asin' =>$asin,
-            'program'=>$program,
+            'asin' => $asin,
+            'program' => $program,
         ]));
 
         return new GetItemEligibilityPreviewResponse($response);

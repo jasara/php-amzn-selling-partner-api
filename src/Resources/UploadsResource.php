@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Uploads\CreateUploadDestinationResponse;
+use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class UploadsResource implements ResourceContract
@@ -22,7 +22,7 @@ class UploadsResource implements ResourceContract
     public function createUploadDestinationForResource(array $marketplace_ids, string $content_md5, string $resource, ?string $content_type = null): CreateUploadDestinationResponse
     {
         $response = $this->http->post(
-            $this->endpoint . self::BASE_PATH . $resource,
+            $this->endpoint.self::BASE_PATH.$resource,
             array_filter([
                 'marketplaceIds' => $marketplace_ids,
                 'contentMD5' => $content_md5,

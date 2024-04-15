@@ -5,8 +5,8 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInventory\GetInventorySummariesResponse;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
+use Jasara\AmznSPA\Data\Responses\FbaInventory\GetInventorySummariesResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

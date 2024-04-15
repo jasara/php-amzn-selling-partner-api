@@ -6,7 +6,7 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInventory\GetInventorySummariesResponse;
+use Jasara\AmznSPA\Data\Responses\FbaInventory\GetInventorySummariesResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FbaInventoryResource implements ResourceContract
@@ -36,7 +36,7 @@ class FbaInventoryResource implements ResourceContract
         }
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'summaries', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'summaries', array_filter([
             'details' => $details,
             'granularityType' => $granularity_type,
             'granularityId' => $granularity_id,

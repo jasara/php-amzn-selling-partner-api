@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Uploads\CreateUploadDestinationResponse;
+use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

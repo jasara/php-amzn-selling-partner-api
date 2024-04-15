@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
+use Jasara\AmznSPA\Data\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

@@ -8,16 +8,16 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportScheduleSpecification;
-use Jasara\AmznSPA\DataTransferObjects\Requests\Reports\CreateReportSpecification;
-use Jasara\AmznSPA\DataTransferObjects\Responses\BaseResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\CreateReportScheduleResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportDocumentResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportScheduleResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportSchedulesResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportsResponse;
+use Jasara\AmznSPA\Data\Requests\Reports\CreateReportScheduleSpecification;
+use Jasara\AmznSPA\Data\Requests\Reports\CreateReportSpecification;
+use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\CreateReportResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\CreateReportScheduleResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\GetReportResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\GetReportScheduleResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\GetReportSchedulesResponse;
+use Jasara\AmznSPA\Data\Responses\Reports\GetReportsResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class ReportsResource implements ResourceContract
@@ -51,7 +51,7 @@ class ReportsResource implements ResourceContract
             $this->validateIsArrayOfStrings($processing_statuses, AmazonEnums::PROCESSING_STATUSES);
         }
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'reports', array_filter([
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'reports', array_filter([
             'reportTypes' => $report_types,
             'marketplaceIds' => $marketplace_ids,
             'pageSize' => $page_size,
@@ -66,14 +66,14 @@ class ReportsResource implements ResourceContract
 
     public function createReport(CreateReportSpecification $request): CreateReportResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'reports', (array) $request->toArrayObject());
+        $response = $this->http->post($this->endpoint.self::BASE_PATH.'reports', (array) $request->toArrayObject());
 
         return new CreateReportResponse($response);
     }
 
     public function getReport(string $report_id): GetReportResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'reports/' . $report_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'reports/'.$report_id);
 
         $errors = Arr::get($response, 'errors');
 
@@ -86,7 +86,7 @@ class ReportsResource implements ResourceContract
 
     public function cancelReport(string $report_id): BaseResponse
     {
-        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'reports/' . $report_id);
+        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'reports/'.$report_id);
 
         return new BaseResponse($response);
     }
@@ -95,21 +95,21 @@ class ReportsResource implements ResourceContract
     {
         $this->validateIsArrayOfStrings($report_types, AmazonEnums::REPORT_TYPES);
 
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'schedules');
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'schedules');
 
         return new GetReportSchedulesResponse($response);
     }
 
     public function createReportSchedule(CreateReportScheduleSpecification $request): CreateReportScheduleResponse
     {
-        $response = $this->http->post($this->endpoint . self::BASE_PATH . 'schedules', (array) $request->toArrayObject());
+        $response = $this->http->post($this->endpoint.self::BASE_PATH.'schedules', (array) $request->toArrayObject());
 
         return new CreateReportScheduleResponse($response);
     }
 
     public function getReportSchedule(string $report_schedule_id): GetReportScheduleResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'schedules/' . $report_schedule_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'schedules/'.$report_schedule_id);
 
         $errors = Arr::get($response, 'errors');
 
@@ -122,14 +122,14 @@ class ReportsResource implements ResourceContract
 
     public function cancelReportSchedule(string $report_schedule_id): BaseResponse
     {
-        $response = $this->http->delete($this->endpoint . self::BASE_PATH . 'schedules/' . $report_schedule_id);
+        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'schedules/'.$report_schedule_id);
 
         return new BaseResponse($response);
     }
 
     public function getReportDocument(string $report_document_id): GetReportDocumentResponse
     {
-        $response = $this->http->get($this->endpoint . self::BASE_PATH . 'documents/' . $report_document_id);
+        $response = $this->http->get($this->endpoint.self::BASE_PATH.'documents/'.$report_document_id);
 
         $errors = Arr::get($response, 'errors');
 

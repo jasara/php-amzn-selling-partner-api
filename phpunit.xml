@@ -22,7 +22,7 @@
       <directory suffix=".php">./src</directory>
     </include>
     <exclude>
-      <directory suffix="ListSchema.php">./src/DataTransferObjects</directory>
+      <directory suffix="ListSchema.php">./src/Data</directory>
     </exclude>
   </source>
 </phpunit>
