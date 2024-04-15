@@ -30,6 +30,7 @@ use Jasara\AmznSPA\HttpLoggerMiddleware;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 #[CoversClass(AmznSPAHttp::class)]
 #[CoversClass(AuthenticationException::class)]
@@ -439,9 +440,9 @@ class AmznSPAHttpTest extends UnitTestCase
     }
 
     /**
-     * @group external
      * An actual live API call is required here, in order to test the request signing and test endpoints.
      */
+    #[Group('external')]
     public function testSetupHttp()
     {
         $this->expectException(AuthenticationException::class);
