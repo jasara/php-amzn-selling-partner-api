@@ -14,10 +14,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedDocumentResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Feeds\GetFeedsResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\FeedsResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\FeedsResource::class)]
 class FeedsResourceTest extends UnitTestCase
 {
     public function testGetFeeds()
@@ -99,7 +98,7 @@ class FeedsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feed_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/' . $feed_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/'.$feed_id, $request->url());
 
             return true;
         });
@@ -119,7 +118,7 @@ class FeedsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feed_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/' . $feed_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/'.$feed_id, $request->url());
 
             return true;
         });
@@ -163,7 +162,7 @@ class FeedsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feed_document_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/documents/' . $feed_document_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/documents/'.$feed_document_id, $request->url());
 
             return true;
         });

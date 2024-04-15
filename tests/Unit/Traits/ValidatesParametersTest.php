@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Traits;
 
+use Exception;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
@@ -13,10 +14,9 @@ use Jasara\AmznSPA\Resources\LwaResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Traits\ValidatesParameters
- */
+#[CoversClass(ValidatesParameters::class)]
 class ValidatesParametersTest extends UnitTestCase
 {
     public function testRequiredParametersInObjectException()
@@ -130,7 +130,7 @@ class ValidatesParametersTest extends UnitTestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Only enum classes are allowed as string values for allowed_values.');
 
-        $stub = new ResourceStub;
+        $stub = new ResourceStub();
         $stub->passInvalidEnumClassToStringEnumValidator();
     }
 

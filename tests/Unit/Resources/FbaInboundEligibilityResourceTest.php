@@ -6,10 +6,9 @@ use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\FbaInboundEligibilityResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\FbaInboundEligibilityResource::class)]
 class FbaInboundEligibilityResourceTest extends UnitTestCase
 {
     public function testGetItemEligibilityPreview()

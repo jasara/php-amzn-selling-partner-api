@@ -6,10 +6,9 @@ use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Sellers\GetMarketplaceParticipationsResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\SellersResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\SellersResource::class)]
 class SellersResourceTest extends UnitTestCase
 {
     public function testGetMarketplaceParticipations()

@@ -23,11 +23,10 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListAllFulf
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\FulfillmentOutboundResource
- * @covers \Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\FulfillmentOutboundResource::class)]
+#[CoversClass(\Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest::class)]
 class FulfillmentOutboundResourceTest extends UnitTestCase
 {
     public function testGetFulfillmentPreview()

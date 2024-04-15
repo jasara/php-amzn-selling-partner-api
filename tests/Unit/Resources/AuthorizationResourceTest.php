@@ -8,11 +8,10 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\AuthorizationResource
- * @covers \Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\AuthorizationResource::class)]
+#[CoversClass(GrantlessAuthenticationException::class)]
 class AuthorizationResourceTest extends UnitTestCase
 {
     public function testGetAuthorizationCodeFromMwsToken()
@@ -31,7 +30,7 @@ class AuthorizationResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $developer_id, $mws_auth_token) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/authorization/v1/authorizationCode?sellingPartnerId=' . $seller_id . '&developerId=' . $developer_id . '&mwsAuthToken=' . $mws_auth_token, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/authorization/v1/authorizationCode?sellingPartnerId='.$seller_id.'&developerId='.$developer_id.'&mwsAuthToken='.$mws_auth_token, urldecode($request->url()));
 
             return true;
         });
@@ -39,7 +38,7 @@ class AuthorizationResourceTest extends UnitTestCase
 
     public function testGetAuthorizationCodeNoAuthorizationExistsError()
     {
-        $this->expectException(GrantlessAuthenticationException ::class);
+        $this->expectException(GrantlessAuthenticationException::class);
 
         list($config, $http) = $this->setupConfigWithFakeHttp('authorization/no-authorization-exists-error', 400);
 
@@ -53,7 +52,7 @@ class AuthorizationResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $developer_id, $mws_auth_token) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/authorization/v1/authorizationCode?sellingPartnerId=' . $seller_id . '&developerId=' . $developer_id . '&mwsAuthToken=' . $mws_auth_token, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/authorization/v1/authorizationCode?sellingPartnerId='.$seller_id.'&developerId='.$developer_id.'&mwsAuthToken='.$mws_auth_token, urldecode($request->url()));
 
             return true;
         });
@@ -75,7 +74,7 @@ class AuthorizationResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $developer_id, $mws_auth_token) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/authorization/v1/authorizationCode?sellingPartnerId=' . $seller_id . '&developerId=' . $developer_id . '&mwsAuthToken=' . $mws_auth_token, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/authorization/v1/authorizationCode?sellingPartnerId='.$seller_id.'&developerId='.$developer_id.'&mwsAuthToken='.$mws_auth_token, urldecode($request->url()));
 
             return true;
         });

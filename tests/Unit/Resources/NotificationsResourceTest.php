@@ -17,10 +17,9 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResource
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\NotificationsResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\NotificationsResource::class)]
 class NotificationsResourceTest extends UnitTestCase
 {
     public function testGetSubscription()
@@ -34,7 +33,7 @@ class NotificationsResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetSubscriptionResponse::class, $response);
         $this->assertEquals('7fcacc7e-727b-11e9-8848-1681be663d3e', $response->payload->subscription_id);
 
-        $http->assertSent(function (Request $request) use ($config) {
+        $http->assertSent(function (Request $request) {
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED', $request->url());
 
             return true;
@@ -55,7 +54,7 @@ class NotificationsResourceTest extends UnitTestCase
         $this->assertEquals('7fcacc7e-727b-11e9-8848-1681be663d3e', $response->payload->subscription_id);
 
         $http->assertSent(function (Request $request) use ($subscription_id) {
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED/' . $subscription_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED/'.$subscription_id, $request->url());
 
             return true;
         });
@@ -75,7 +74,7 @@ class NotificationsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($subscription_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED/' . $subscription_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED/'.$subscription_id, $request->url());
 
             return true;
         });
@@ -161,7 +160,7 @@ class NotificationsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($destination_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations/' . $destination_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations/'.$destination_id, $request->url());
 
             return true;
         });
@@ -205,7 +204,7 @@ class NotificationsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($destination_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations/' . $destination_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/destinations/'.$destination_id, $request->url());
 
             return true;
         });

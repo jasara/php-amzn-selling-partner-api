@@ -13,10 +13,9 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributePropertySc
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributeSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems\AttributesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\ListingsItemsResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\ListingsItemsResource::class)]
 class ListingsItemsResourceTest extends UnitTestCase
 {
     public function testGetListingsItem()
@@ -41,7 +40,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER&includedData=summaries', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/'.$seller_id.'/'.$sku.'?marketplaceIds=ATVPDKIKX0DER&includedData=summaries', $request->url());
 
             return true;
         });
@@ -129,8 +128,8 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku, $product_type) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
-            $this->assertEquals('{"productType":"' . $product_type . '","requirements":"LISTING","attributes":{"bullet_point":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"},{"value":"test_2","marketplace_id":"ATVPDKIKX0DER"}],"externally_assigned_product_identifier":[{"value":"123456789","type":"ean"}],"item_package_dimensions":[{"length":{"value":"10","unit":"inches"}}]}}', $request->body());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/'.$seller_id.'/'.$sku.'?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('{"productType":"'.$product_type.'","requirements":"LISTING","attributes":{"bullet_point":[{"value":"test","marketplace_id":"ATVPDKIKX0DER"},{"value":"test_2","marketplace_id":"ATVPDKIKX0DER"}],"externally_assigned_product_identifier":[{"value":"123456789","type":"ean"}],"item_package_dimensions":[{"length":{"value":"10","unit":"inches"}}]}}', $request->body());
 
             return true;
         });
@@ -144,7 +143,6 @@ class ListingsItemsResourceTest extends UnitTestCase
             product_type: Str::random(),
             requirements: 'LISTING',
             attributes: [
-
             ]
         );
         $amzn = new AmznSPA($config);
@@ -160,7 +158,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/'.$seller_id.'/'.$sku, $request->url());
 
             return true;
         });
@@ -193,7 +191,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('PATCH', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/'.$seller_id.'/'.$sku.'?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });
@@ -217,7 +215,7 @@ class ListingsItemsResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetListingsItemResponse::class, $response);
 
         $http->assertSent(function (Request $request) use ($sku, $seller_id) {
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/'.$seller_id.'/'.$sku.'?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
 
             return true;
         });

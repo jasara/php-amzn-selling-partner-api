@@ -5,11 +5,12 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
+use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromSecondsCaster;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AuthTokensDTO::class)]
-#[CoversClass(\Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromSecondsCaster::class)]
+#[CoversClass(CarbonFromSecondsCaster::class)]
 class AuthTokensDTOTest extends UnitTestCase
 {
     public function testSetupDTO()

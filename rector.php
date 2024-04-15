@@ -6,4 +6,8 @@ use Rector\PHPUnit\AnnotationsToAttributes\Rector\Class_\CoversAnnotationWithVal
 return RectorConfig::configure()
     ->withRules([
         CoversAnnotationWithValueToAttributeRector::class,
-    ]);
+    ])
+    ->withImportNames(
+        removeUnusedImports: true,
+        importDocBlockNames: true,
+    );

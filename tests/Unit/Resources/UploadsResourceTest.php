@@ -7,10 +7,9 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\UploadsResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\UploadsResource::class)]
 class UploadsResourceTest extends UnitTestCase
 {
     public function testCreateUploadDestinationForResource()
@@ -31,7 +30,7 @@ class UploadsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($resource) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/uploads/2020-11-01/uploadDestinations/' . $resource, urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/uploads/2020-11-01/uploadDestinations/'.$resource, urldecode($request->url()));
 
             return true;
         });

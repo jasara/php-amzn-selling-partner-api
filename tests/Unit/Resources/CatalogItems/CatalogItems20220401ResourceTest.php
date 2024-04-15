@@ -9,10 +9,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20220401\GetCatal
 use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20220401\ItemSearchResults;
 use Jasara\AmznSPA\Enums\CatalogItems\ItemIdentifierTypes;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20220401Resource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20220401Resource::class)]
 class CatalogItems20220401ResourceTest extends UnitTestCase
 {
     public function testSearchCatalogItems()
@@ -63,7 +62,7 @@ class CatalogItems20220401ResourceTest extends UnitTestCase
 
         $this->assertRequestSent(
             $http,
-            'https://sellingpartnerapi-na.amazon.com/catalog/2022-04-01/items/' . $asin,
+            'https://sellingpartnerapi-na.amazon.com/catalog/2022-04-01/items/'.$asin,
             compact('marketplace_ids', 'included_data'),
         );
     }

@@ -8,10 +8,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetOffersResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductPricing\GetPricingResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\ProductPricingResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\ProductPricingResource::class)]
 class ProductPricingResourceTest extends UnitTestCase
 {
     public function testGetPricing()
@@ -104,7 +103,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/' . $seller_sku . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=Club&CustomerType=Business', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/listings/'.$seller_sku.'/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=Club&CustomerType=Business', $request->url());
 
             return true;
         });
@@ -137,7 +136,7 @@ class ProductPricingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/' . $asin . '/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=New&CustomerType=Consumer', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/pricing/v0/items/'.$asin.'/offers?MarketplaceId=ATVPDKIKX0DER&ItemCondition=New&CustomerType=Consumer', $request->url());
 
             return true;
         });

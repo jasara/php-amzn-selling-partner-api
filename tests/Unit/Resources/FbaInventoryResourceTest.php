@@ -8,10 +8,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\FbaInventory\GetInventorySummariesResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\FbaInventoryResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\FbaInventoryResource::class)]
 class FbaInventoryResourceTest extends UnitTestCase
 {
     public function testGetInventorySummaries()
@@ -36,7 +35,7 @@ class FbaInventoryResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?granularityType=Marketplace&granularityId=ATVPDKIKX0DER&sellerSkus=' . $sku . '&marketplaceIds=ATVPDKIKX0DER', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?granularityType=Marketplace&granularityId=ATVPDKIKX0DER&sellerSkus='.$sku.'&marketplaceIds=ATVPDKIKX0DER', $request->url());
 
             return true;
         });
@@ -61,7 +60,7 @@ class FbaInventoryResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/' . $asin . '?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/'.$asin.'?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
 
             return true;
         });

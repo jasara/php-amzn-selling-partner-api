@@ -8,10 +8,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\CatalogItems\v20201201\ItemSearchResults;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource::class)]
 class CatalogItems20201201ResourceTest extends UnitTestCase
 {
     public function testSearchCatalogItems()
@@ -35,7 +34,7 @@ class CatalogItems20201201ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($keyword) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items?keywords=' . $keyword . '&marketplaceIds=ATVPDKIKX0DER&includedData=images&brandNames=BRAND&classificationIds=ID', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items?keywords='.$keyword.'&marketplaceIds=ATVPDKIKX0DER&includedData=images&brandNames=BRAND&classificationIds=ID', $request->url());
 
             return true;
         });
@@ -60,13 +59,13 @@ class CatalogItems20201201ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/' . $asin . '?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/'.$asin.'?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
 
             return true;
         });
     }
 
-    public function testGetCatalogItem_Issue10_404()
+    public function testGetCatalogItemIssue10404()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/v20201201/issues/issue-10-404-not-found');
 
@@ -85,7 +84,7 @@ class CatalogItems20201201ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/' . $asin . '?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/'.$asin.'?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
 
             return true;
         });

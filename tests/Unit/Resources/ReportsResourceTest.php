@@ -16,10 +16,9 @@ use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportScheduleRespon
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportSchedulesResponse;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Reports\GetReportsResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\ReportsResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\ReportsResource::class)]
 class ReportsResourceTest extends UnitTestCase
 {
     public function testGetReports()
@@ -33,7 +32,7 @@ class ReportsResourceTest extends UnitTestCase
         $this->assertInstanceOf(GetReportsResponse::class, $response);
         $this->assertEquals('ReportId1', $response->reports->first()->report_id);
 
-        $http->assertSent(function (Request $request) use ($config) {
+        $http->assertSent(function (Request $request) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports?reportTypes=GET_MERCHANT_LISTINGS_ALL_DATA&marketplaceIds=ATVPDKIKX0DER&pageSize=10&processingStatuses=DONE', $request->url());
 
@@ -81,7 +80,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/' . $report_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/'.$report_id, $request->url());
 
             return true;
         });
@@ -101,7 +100,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/' . $report_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/'.$report_id, $request->url());
 
             return true;
         });
@@ -165,7 +164,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_schedule_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/' . $report_schedule_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/'.$report_schedule_id, $request->url());
 
             return true;
         });
@@ -185,7 +184,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_schedule_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/' . $report_schedule_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/'.$report_schedule_id, $request->url());
 
             return true;
         });
@@ -206,7 +205,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_document_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/documents/' . $report_document_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/documents/'.$report_document_id, $request->url());
 
             return true;
         });

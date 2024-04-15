@@ -17,16 +17,14 @@ use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\LwaResource
- * @covers \Jasara\AmznSPA\Exceptions\AuthenticationException
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\LwaResource::class)]
+#[CoversClass(AuthenticationException::class)]
 class LwaResourceTest extends UnitTestCase
 {
-    /**
-     * @dataProvider marketplaces
-     */
+    #[DataProvider('marketplaces')]
     public function testAuthUrlGenerated(Marketplace $marketplace)
     {
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
@@ -35,9 +33,7 @@ class LwaResourceTest extends UnitTestCase
         $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl(), $url);
     }
 
-    /**
-     * @dataProvider marketplaces
-     */
+    #[DataProvider('marketplaces')]
     public function testAuthUrlGeneratedWithStateAndRedirectUrl(Marketplace $marketplace)
     {
         $state = Str::random();

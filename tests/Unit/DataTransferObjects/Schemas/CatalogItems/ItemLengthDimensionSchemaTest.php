@@ -4,11 +4,10 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas\CatalogItems;
 
 use Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemLengthDimensionSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PhpUnitsOfMeasure\PhysicalQuantity\Length;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Schemas\CatalogItems\ItemLengthDimensionSchema
- */
+#[CoversClass(ItemLengthDimensionSchema::class)]
 class ItemLengthDimensionSchemaTest extends UnitTestCase
 {
     public function testAsUom()

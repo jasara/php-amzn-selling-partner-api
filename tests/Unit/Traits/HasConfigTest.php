@@ -9,10 +9,9 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Traits\HasConfig
- */
+#[CoversClass(\Jasara\AmznSPA\Traits\HasConfig::class)]
 class HasConfigTest extends UnitTestCase
 {
     public function testGetAccessTokenNotSetException()
@@ -22,7 +21,7 @@ class HasConfigTest extends UnitTestCase
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            redirect_url: Str::random() . '.com',
+            redirect_url: Str::random().'.com',
             lwa_refresh_token: Str::random(),
             aws_access_key: Str::random(),
             aws_secret_key: Str::random(),

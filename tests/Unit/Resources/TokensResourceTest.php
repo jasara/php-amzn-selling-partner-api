@@ -7,10 +7,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\Tokens\CreateRestrictedDataTokenRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\TokensResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\TokensResource::class)]
 class TokensResourceTest extends UnitTestCase
 {
     public function testCreateRestrictedDataToken()

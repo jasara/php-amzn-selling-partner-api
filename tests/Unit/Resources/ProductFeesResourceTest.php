@@ -8,10 +8,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\DataTransferObjects\Requests\ProductFees\GetMyFeesEstimateRequest;
 use Jasara\AmznSPA\DataTransferObjects\Responses\ProductFees\GetMyFeesEstimateResponse;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Resources\ProductFeesResource
- */
+#[CoversClass(\Jasara\AmznSPA\Resources\ProductFeesResource::class)]
 class ProductFeesResourceTest extends UnitTestCase
 {
     public function testGetMyFeesEstimateForSku()
@@ -51,7 +50,7 @@ class ProductFeesResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/listings/' . $seller_sku . '/feesEstimate', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/listings/'.$seller_sku.'/feesEstimate', urldecode($request->url()));
 
             return true;
         });
@@ -94,7 +93,7 @@ class ProductFeesResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/items/' . $asin . '/feesEstimate', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/items/'.$asin.'/feesEstimate', urldecode($request->url()));
 
             return true;
         });
