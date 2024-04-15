@@ -6,9 +6,6 @@ use Illuminate\Support\Collection;
 
 class ItemIdentifiersByMarketplaceListSchema extends Collection
 {
-    /**
-     * @codeCoverageIgnore
-     */
     public function offsetGet($key): ItemIdentifiersByMarketplaceSchema
     {
         return parent::offsetGet($key);

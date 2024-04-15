@@ -5,13 +5,13 @@ namespace Jasara\AmznSPA\Tests\Unit\Constants;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
+#[CoversClass(Marketplace::class)]
 class MarketplaceTest extends UnitTestCase
 {
-    /**
-     * @covers \Jasara\AmznSPA\Constants\Marketplace
-     * @dataProvider regions
-     */
+    #[DataProvider('regions')]
     public function testGetters(string $region)
     {
         $marketplace = new Marketplace(

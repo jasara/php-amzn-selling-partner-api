@@ -13,10 +13,10 @@ class SummarySchema extends DataTransferObject
     public int $total_offer_count;
 
     #[CastWith(ArrayCaster::class, itemType: OfferCountTypeSchema::class)]
-    public ?NumberOfOffersSchema $number_of_offers;
+    public ?NumberOfOffersListSchema $number_of_offers;
 
     #[CastWith(ArrayCaster::class, itemType: LowestPriceTypeSchema::class)]
-    public ?LowestPricesSchema $lowest_prices;
+    public ?LowestPriceListSchema $lowest_prices;
 
     public ?string $buy_box_prices;
 
@@ -29,7 +29,7 @@ class SummarySchema extends DataTransferObject
     public ?SalesRankListSchema $sales_rankings;
 
     #[CastWith(ArrayCaster::class, itemType: OfferCountTypeSchema::class)]
-    public ?BuyBoxEligibleOffersSchema $buy_box_eligible_offers;
+    public ?BuyBoxEligibleOfferListSchema $buy_box_eligible_offers;
 
     public ?CarbonImmutable $offers_available_time;
 }

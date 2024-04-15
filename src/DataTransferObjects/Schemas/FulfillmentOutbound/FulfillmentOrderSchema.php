@@ -50,6 +50,6 @@ class FulfillmentOrderSchema extends DataTransferObject
 
     public ?array $notification_emails;
 
-    #[CastWith(ArrayCaster::class, itemType:FeatureSettingShema::class)]
-    public ?FeatureSettingsSchema $feature_constraints;
+    #[CastWith(ArrayCaster::class, itemType: FeatureSettingShema::class)]
+    public ?FeatureSettingListSchema $feature_constraints;
 }

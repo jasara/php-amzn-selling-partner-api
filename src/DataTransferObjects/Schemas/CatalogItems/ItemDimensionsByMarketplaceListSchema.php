@@ -6,9 +6,6 @@ use Illuminate\Support\Collection;
 
 class ItemDimensionsByMarketplaceListSchema extends Collection
 {
-    /**
-     * @codeCoverageIgnore
-     */
     public function offsetGet($key): ItemDimensionsByMarketplaceSchema
     {
         return parent::offsetGet($key);

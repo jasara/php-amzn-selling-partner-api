@@ -3,8 +3,8 @@
 namespace Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentOutbound;
 
 use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingShema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingsSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\GetFulfillmentPreviewItemListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\GetFulfillmentPreviewItemSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\ShippingAddressSchema;
@@ -29,5 +29,5 @@ class GetFulfillmentPreviewRequest extends BaseRequest
     public ?bool $include_delivery_windows;
 
     #[CastWith(ArrayCaster::class, itemType: FeatureSettingShema::class)]
-    public ?FeatureSettingsSchema $feature_constraints;
+    public ?FeatureSettingListSchema $feature_constraints;
 }

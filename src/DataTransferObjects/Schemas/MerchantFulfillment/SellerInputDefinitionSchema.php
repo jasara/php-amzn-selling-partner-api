@@ -14,7 +14,7 @@ class SellerInputDefinitionSchema extends DataTransferObject
     public string $data_type;
 
     #[CastWith(ArrayCaster::class, itemType: ConstraintSchema::class)]
-    public ConstraintsSchema $constraints;
+    public ConstraintListSchema $constraints;
 
     public string $input_display_text;
 

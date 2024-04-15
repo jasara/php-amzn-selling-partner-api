@@ -35,5 +35,5 @@ class FulfillmentPreviewSchema extends DataTransferObject
     public string $marketplace_id;
 
     #[CastWith(ArrayCaster::class, itemType: FeatureSettingShema::class)]
-    public ?FeatureSettingsSchema $feature_constraints;
+    public ?FeatureSettingListSchema $feature_constraints;
 }

@@ -13,5 +13,5 @@ class BuyerTaxInfoSchema extends DataTransferObject
     public ?string $taxing_region;
 
     #[CastWith(ArrayCaster::class, itemType: TaxClassificationSchema::class)]
-    public ?TaxClassificationsSchema $tax_classifications;
+    public ?TaxClassificationListSchema $tax_classifications;
 }

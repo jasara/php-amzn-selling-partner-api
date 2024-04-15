@@ -2,29 +2,26 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Requests;
 
-use ArrayObject;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Contracts\PascalCaseRequestContract;
 use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonToDateStringMapper;
-use ReflectionClass;
-use ReflectionProperty;
 use Spatie\DataTransferObject\DataTransferObject;
 
 class BaseRequest extends DataTransferObject
 {
-    public function toArrayObject($class = null, $case_function = 'camelCase'): ArrayObject
+    public function toArrayObject($class = null, $case_function = 'camelCase'): \ArrayObject
     {
         $class = $class ?: $this;
-        $reflection = new ReflectionClass($class);
+        $reflection = new \ReflectionClass($class);
 
         if ($class instanceof PascalCaseRequestContract) {
             $case_function = 'pascalCase';
         }
 
-        $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
+        $properties = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
 
         $data = [];
         foreach ($properties as $property) {
@@ -54,17 +51,17 @@ class BaseRequest extends DataTransferObject
 
         Arr::forget($data, ['ExceptKeys', 'OnlyKeys']);
 
-        return new ArrayObject(array_filter($data, function ($value) {
-            return ! is_null($value);
+        return new \ArrayObject(array_filter($data, function ($value) {
+            return !is_null($value);
         }));
     }
 
-    private function camelCase(ReflectionProperty $property): string
+    private function camelCase(\ReflectionProperty $property): string
     {
         return Str::of($property->getName())->camel();
     }
 
-    private function pascalCase(ReflectionProperty $property): string
+    private function pascalCase(\ReflectionProperty $property): string
     {
         return Str::of($property->getName())->studly()
             ->replace('Asin', 'ASIN')

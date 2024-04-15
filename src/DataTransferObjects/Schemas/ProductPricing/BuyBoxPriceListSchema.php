@@ -4,12 +4,9 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ProductPricing;
 
 use Illuminate\Support\Collection;
 
-class LowestPricesSchema extends Collection
+class BuyBoxPriceListSchema extends Collection
 {
-    /**
-     * @codeCoverageIgnore
-     */
-    public function offsetGet($key): LowestPriceTypeSchema
+    public function offsetGet($key): BuyBoxPriceTypeSchema
     {
         return parent::offsetGet($key);
     }

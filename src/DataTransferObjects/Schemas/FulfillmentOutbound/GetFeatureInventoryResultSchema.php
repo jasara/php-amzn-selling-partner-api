@@ -14,6 +14,6 @@ class GetFeatureInventoryResultSchema extends DataTransferObject
 
     public ?string $next_token;
 
-    #[CastWith(ArrayCaster::class, itemType:FeatureSkuSchema::class)]
-    public ?FeatureSkusSchema $feature_skus;
+    #[CastWith(ArrayCaster::class, itemType: FeatureSkuSchema::class)]
+    public ?FeatureSkuListSchema $feature_skus;
 }

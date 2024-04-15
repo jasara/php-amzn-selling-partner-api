@@ -73,7 +73,7 @@ class OrderSchema extends DataTransferObject
     public ?OrderAddressDetailSchema $default_ship_from_location_address;
     public ?FulfillmentInstructionSchema $fulfillment_instruction;
     public ?bool $is_ispu;
-    public ?MarketplaceTaxInfoSchema $marketplace_tax_info;
+    public ?MarketplaceTaxInfoListSchema $marketplace_tax_info;
     public ?string $seller_display_name;
     public ?OrderAddressDetailSchema $shipping_address;
     public ?BuyerInfoSchema $buyer_info;

@@ -10,7 +10,7 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\CODSettingsSc
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\CreateFulfillmentOrderItemListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\CreateFulfillmentOrderItemSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\DeliveryWindowSchema;
-use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingsSchema;
+use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound\FeatureSettingListSchema;
 use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Spatie\DataTransferObject\Attributes\CastWith;
 use Spatie\DataTransferObject\Casters\ArrayCaster;
@@ -47,8 +47,8 @@ class CreateFulfillmentOrderRequest extends BaseRequest
 
     public ?array $notification_emails;
 
-    public ?FeatureSettingsSchema $feature_constraints;
+    public ?FeatureSettingListSchema $feature_constraints;
 
-    #[CastWith(ArrayCaster::class, itemType:CreateFulfillmentOrderItemSchema::class)]
+    #[CastWith(ArrayCaster::class, itemType: CreateFulfillmentOrderItemSchema::class)]
     public CreateFulfillmentOrderItemListSchema $items;
 }

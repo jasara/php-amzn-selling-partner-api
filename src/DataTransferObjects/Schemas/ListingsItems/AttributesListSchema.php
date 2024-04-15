@@ -2,22 +2,18 @@
 
 namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems;
 
-use ArrayObject;
 use Illuminate\Support\Collection;
 
 class AttributesListSchema extends Collection
 {
-    /**
-     * @codeCoverageIgnore
-     */
     public function offsetGet($key): AttributeSchema
     {
         return parent::offsetGet($key);
     }
 
-    public function toArrayObject(): ArrayObject
+    public function toArrayObject(): \ArrayObject
     {
-        $array_object = new ArrayObject();
+        $array_object = new \ArrayObject();
         $attribute_names = $this->pluck('name')->unique()->toArray();
 
         foreach ($attribute_names as $attribute_name) {
@@ -26,7 +22,6 @@ class AttributesListSchema extends Collection
             $attribute_values = [];
             foreach ($attribute_schemas as $attribute_schema) {
                 $attribute_values[] = $this->getAttributeProperties($attribute_schema);
-
             }
 
             $array_object->offsetSet($attribute_name, $attribute_values);

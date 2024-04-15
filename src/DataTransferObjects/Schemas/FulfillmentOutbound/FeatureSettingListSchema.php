@@ -4,12 +4,9 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentOutbound;
 
 use Illuminate\Support\Collection;
 
-class FeatureSkusSchema extends Collection
+class FeatureSettingListSchema extends Collection
 {
-    /**
-     * @codeCoverageIgnore
-     */
-    public function offsetGet($key): FeatureSkuSchema
+    public function offsetGet($key): FeatureSettingShema
     {
         return parent::offsetGet($key);
     }

@@ -11,18 +11,18 @@ class ListingsItemSchema extends DataTransferObject
     public string $sku;
 
     #[CastWith(ArrayCaster::class, itemType: ItemSummaryByMarketplaceSchema::class)]
-    public ?ItemSummariesSchema $summaries;
+    public ?ItemSummaryListSchema $summaries;
 
     public ?array $attributes;
 
     #[CastWith(ArrayCaster::class, itemType: IssueSchema::class)]
-    public ?IssuesSchema $issues;
+    public ?IssuesListSchema $issues;
 
     #[CastWith(ArrayCaster::class, itemType: ItemOfferByMarketplaceSchema::class)]
-    public ?ItemOffersSchema $offers;
+    public ?ItemOfferListSchema $offers;
 
     #[CastWith(ArrayCaster::class, itemType: FulfillmentAvailabilitySchema::class)]
-    public ?FulfillmentAvailability $fulfillment_availability;
+    public ?FulfillmentAvailabilityListSchema $fulfillment_availability;
 
     public ?ItemProcurementSchema $procurement;
 }

@@ -4,12 +4,9 @@ namespace Jasara\AmznSPA\DataTransferObjects\Schemas\ListingsItems;
 
 use Illuminate\Support\Collection;
 
-class IssuesSchema extends Collection
+class ItemSummaryListSchema extends Collection
 {
-    /**
-     * @codeCoverageIgnore
-     */
-    public function offsetGet($key): IssueSchema
+    public function offsetGet($key): ItemSummaryByMarketplaceSchema
     {
         return parent::offsetGet($key);
     }
