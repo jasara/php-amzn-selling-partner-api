@@ -242,6 +242,7 @@ class AmazonEnums
         'Debundle',
         'CapSealing',
         'BlankStickering',
+        'ShipsInProductPackaging',
         'NoPrep',
         'NONE',
     ];
