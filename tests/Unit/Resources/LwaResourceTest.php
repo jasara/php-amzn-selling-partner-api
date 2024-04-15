@@ -3,10 +3,8 @@
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Carbon\CarbonImmutable;
-use Closure;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
@@ -34,7 +32,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->lwa->getAuthUrl();
 
-        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl(), $url);
+        $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl(), $url);
     }
 
     /**
@@ -47,7 +45,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config = $this->setupMinimalConfig($marketplace->getIdentifier()));
         $url = $amzn->lwa->getAuthUrl($state);
 
-        $this->assertEquals($marketplace->getBaseUrl() . '/apps/authorize/consent?redirect_url=' . $config->getRedirectUrl() . '&state=' . $state, $url);
+        $this->assertEquals($marketplace->getBaseUrl().'/apps/authorize/consent?redirect_url='.$config->getRedirectUrl().'&state='.$state, $url);
     }
 
     public function testStateDoesNotMatch()
@@ -186,28 +184,25 @@ class LwaResourceTest extends UnitTestCase
     {
         $refresh_token = Str::random();
 
-        $callback = $this->getMockBuilder(\stdClass::class)
-            ->addMethods(['__invoke'])
-            ->getMock();
+        $callback = new class() {
+            public mixed $tokens;
 
-        $callback->expects($this->once())
-            ->method('__invoke')
-            ->with(
-                $this->callback(function (AuthTokensDTO $tokens) {
-                    $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
-                    $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
-                    $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
-                    $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', $tokens->refresh_token);
-
-                    return true;
-                }),
-            );
+            public function __invoke($tokens)
+            {
+                $this->tokens = $tokens;
+            }
+        };
 
         [$config, $http] = $this->setupConfigWithFakeHttp('lwa/get-tokens');
-        $config->setSaveLwaTokensCallback(Closure::fromCallable([$callback, '__invoke']));
+        $config->setSaveLwaTokensCallback(\Closure::fromCallable([$callback, '__invoke']));
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
+
+        $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $callback->tokens->access_token);
+        $this->assertInstanceOf(CarbonImmutable::class, $callback->tokens->expires_at);
+        $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $callback->tokens->expires_at, 5);
+        $this->assertEquals('Atzr|IQEBLzAtAhexamplewVz2Nn6f2y-tpJX2DeX', $callback->tokens->refresh_token);
     }
 
     public function testHandle401()
@@ -273,25 +268,22 @@ class LwaResourceTest extends UnitTestCase
 
         $refresh_token = Str::random();
 
-        $callback = $this->getMockBuilder(\stdClass::class)
-            ->addMethods(['__invoke'])
-            ->getMock();
+        $callback = new class() {
+            public mixed $response;
 
-        $callback->expects($this->once())
-            ->method('__invoke')
-            ->with(
-                $this->callback(function (Response $response) {
-                    $this->assertEquals('invalid_client', $response->json()['error']);
-
-                    return true;
-                }),
-            );
+            public function __invoke($response)
+            {
+                $this->response = $response;
+            }
+        };
 
         [$config] = $this->setupConfigWithFakeHttp('errors/no-error-description-in-data', 401);
-        $config->setAuthenticationExceptionCallback(Closure::fromCallable([$callback, '__invoke']));
+        $config->setAuthenticationExceptionCallback(\Closure::fromCallable([$callback, '__invoke']));
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
+
+        $this->assertEquals('invalid_client', $callback->response->json()['error']);
     }
 
     public function testNon401Error()
@@ -337,12 +329,12 @@ class LwaResourceTest extends UnitTestCase
         $refresh_token = Str::random();
 
         $callback = function () {
-            throw new CallbackTestException;
+            throw new CallbackTestException();
         };
 
         /** @var AmznSPAConfig $config */
         [$config] = $this->setupConfigWithFakeHttp('errors/invalid-grant', 400);
-        $config->setResponseCallback(Closure::fromCallable($callback));
+        $config->setResponseCallback(\Closure::fromCallable($callback));
 
         $amzn = new AmznSPA($config);
         $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
