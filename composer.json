@@ -11,7 +11,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Jasara\\AmznSPA\\": "src"
+            "Jasara\\AmznSPA\\": "src/"
         },
         "files": [
             "src/helpers.php"
