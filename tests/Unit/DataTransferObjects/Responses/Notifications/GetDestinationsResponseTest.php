@@ -10,12 +10,11 @@ use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\EventBridgeResourceSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(GetDestinationsResponse::class)]
 class GetDestinationsResponseTest extends UnitTestCase
 {
-    /**
-     * @covers \Jasara\AmznSPA\DataTransferObjects\Responses\Notifications\GetDestinationsResponse
-     */
     public function testSetupClass()
     {
         $destination_name = Str::random();

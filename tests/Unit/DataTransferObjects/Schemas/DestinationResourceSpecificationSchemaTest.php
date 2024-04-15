@@ -3,14 +3,14 @@
 namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas;
 
 use Illuminate\Support\Str;
+use Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\EventBridgeResourceSpecificationSchema;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Requests\BaseRequest
- */
+#[CoversClass(BaseRequest::class)]
 class DestinationResourceSpecificationSchemaTest extends UnitTestCase
 {
     public function testToArray()

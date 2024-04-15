@@ -8,10 +8,9 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Exceptions\InvalidResourceException;
 use Jasara\AmznSPA\Resources\LwaResource;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\AmznSPA
- */
+#[CoversClass(AmznSPA::class)]
 class AmznSPATest extends UnitTestCase
 {
     public function testInvalidResource()
@@ -49,7 +48,7 @@ class AmznSPATest extends UnitTestCase
     {
         $state = Str::random();
         $test_string_1 = Str::random();
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->response(['access_token' => $test_string_1, 'refresh_token' => $test_string_1, 'expires_in' => 3600]),
         ]);
@@ -65,7 +64,7 @@ class AmznSPATest extends UnitTestCase
         $this->assertEquals($test_string_1, $result->access_token);
 
         $test_string_2 = Str::random();
-        $new_http = new Factory;
+        $new_http = new Factory();
         $new_http->fake([
             '*' => $new_http->response(['access_token' => $test_string_2, 'refresh_token' => $test_string_2, 'expires_in' => 3600]),
         ]);

@@ -26,16 +26,19 @@ use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Exceptions\InvalidParametersException;
 use Jasara\AmznSPA\Exceptions\RateLimitException;
+use Jasara\AmznSPA\HttpLoggerMiddleware;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(AmznSPAHttp::class)]
+#[CoversClass(AuthenticationException::class)]
+#[CoversClass(HttpLoggerMiddleware::class)]
 class AmznSPAHttpTest extends UnitTestCase
 {
     public function testRefreshToken()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -55,7 +58,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectExceptionMessage('Refresh token is not set');
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403),
@@ -72,7 +75,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testInvalidGrantRefreshTokenIsAttempted()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/invalid-grant'), 400)
@@ -90,7 +93,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testRefreshGrantlessToken()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -108,7 +111,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testRefreshRestrictedDataToken()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('tokens/create-restricted-data-token'), 200)
@@ -127,7 +130,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testDontRefreshRestrictedDataTokenDueToConfigSetting()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('merchant-fulfillment/get-shipment'), 200),
@@ -157,7 +160,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testRefreshesRestrictedTokenIfPathIsNotCompatible()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('tokens/create-restricted-data-token'), 200)
@@ -185,7 +188,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectException(AmznSPAException::class);
         $this->expectExceptionMessage('Application does not have access to one or more requested data elements: [shippingAddress]');
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/restricted-no-access'), 400),
@@ -199,7 +202,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testGetTokenIfNotSet()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('lwa/get-tokens'), 200)
@@ -219,7 +222,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testGetGrantlessTokenIfNotSet()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('lwa/get-tokens'), 200)
@@ -241,7 +244,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/invalid-client'), 403),
@@ -257,7 +260,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(\Exception::class);
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/invalid-client'), 401),
@@ -273,7 +276,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -291,7 +294,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/token-expired'), 403)
@@ -307,7 +310,7 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testInvalidInputResponseReturned()
     {
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/create-inbound-shipment-plan-invalid-input'), 400),
@@ -328,7 +331,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->sequence()
                 ->push($this->loadHttpStub('errors/no-error-in-data'), 400),
@@ -424,9 +427,6 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->assertSentInOrder($request_validation);
     }
 
-    /**
-     *  @covers \Jasara\AmznSPA\Exceptions\AuthenticationException
-     */
     public function testInvalidPartyId()
     {
         $this->expectException(AuthenticationException::class);
@@ -441,8 +441,6 @@ class AmznSPAHttpTest extends UnitTestCase
     /**
      * @group external
      * An actual live API call is required here, in order to test the request signing and test endpoints.
-     *
-     * @covers \Jasara\AmznSPA\HttpLoggerMiddleware
      */
     public function testSetupHttp()
     {
@@ -483,7 +481,7 @@ class AmznSPAHttpTest extends UnitTestCase
     {
         $this->expectException(RequestException::class);
 
-        $http = new Factory;
+        $http = new Factory();
         $http->fake([
             '*' => $http->response('', 400),
         ]);
@@ -508,7 +506,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectException(InvalidParametersException::class);
         $this->expectExceptionMessage('You cannot make a request for multiple SKUs when one of those SKUs contains a comma');
 
-        $http = new Factory;
+        $http = new Factory();
 
         $config = $this->setupMinimalConfig(null, $http);
 
@@ -527,7 +525,7 @@ class AmznSPAHttpTest extends UnitTestCase
         [$config] = $this->setupConfigWithFakeHttp('errors/invalid-grant', 400);
 
         $response_callback = function () {
-            throw new CallbackTestException;
+            throw new CallbackTestException();
         };
         $config->setResponseCallback($response_callback);
 

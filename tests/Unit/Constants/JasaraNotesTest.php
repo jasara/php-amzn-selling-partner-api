@@ -5,10 +5,9 @@ namespace Jasara\AmznSPA\Tests\Unit\Constants;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Constants\JasaraNotes
- */
+#[CoversClass(JasaraNotes::class)]
 class JasaraNotesTest extends UnitTestCase
 {
     public function testGetNote()

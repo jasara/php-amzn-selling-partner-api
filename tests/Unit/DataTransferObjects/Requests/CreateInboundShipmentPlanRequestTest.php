@@ -4,13 +4,13 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Requests;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
+use Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Spatie\DataTransferObject\Exceptions\ValidationException;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest
- * @covers \Jasara\AmznSPA\DataTransferObjects\Validators\MaxLengthValidator
- */
+#[CoversClass(CreateInboundShipmentPlanRequest::class)]
+#[CoversClass(MaxLengthValidator::class)]
 class CreateInboundShipmentPlanRequestTest extends UnitTestCase
 {
     public function testSetupDtoMaxLengthError()

@@ -6,10 +6,9 @@ use Illuminate\Support\Collection;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\Constants\MarketplacesList
- */
+#[CoversClass(MarketplacesList::class)]
 class MarketplacesListTest extends UnitTestCase
 {
     public function testAll()

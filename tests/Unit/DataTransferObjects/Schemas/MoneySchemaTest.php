@@ -5,10 +5,9 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas;
 use Brick\Money\Money;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Schemas\MoneySchema
- */
+#[CoversClass(MoneySchema::class)]
 class MoneySchemaTest extends UnitTestCase
 {
     public function testAsMoney()

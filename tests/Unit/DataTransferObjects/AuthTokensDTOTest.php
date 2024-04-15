@@ -6,13 +6,12 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(AuthTokensDTO::class)]
+#[CoversClass(\Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromSecondsCaster::class)]
 class AuthTokensDTOTest extends UnitTestCase
 {
-    /**
-     * @covers \Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO
-     * @covers \Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromSecondsCaster
-     */
     public function testSetupDTO()
     {
         $access_token = Str::random();
@@ -30,10 +29,6 @@ class AuthTokensDTOTest extends UnitTestCase
         $this->assertEqualsWithDelta($expires_in, $dto->expires_at->diffInSeconds(CarbonImmutable::now()), 2);
     }
 
-    /**
-     * @covers \Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO
-     * @covers \Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromSecondsCaster
-     */
     public function testSetupDTOWithExistingDate()
     {
         $access_token = Str::random();

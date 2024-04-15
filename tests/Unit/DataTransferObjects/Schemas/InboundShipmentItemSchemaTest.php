@@ -4,13 +4,13 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
+use Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentItemSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\InboundShipmentItemSchema
- * @covers \Jasara\AmznSPA\DataTransferObjects\Casts\CarbonFromStringCaster
- */
+#[CoversClass(InboundShipmentItemSchema::class)]
+#[CoversClass(CarbonFromStringCaster::class)]
 class InboundShipmentItemSchemaTest extends UnitTestCase
 {
     public function testCarbonDate()

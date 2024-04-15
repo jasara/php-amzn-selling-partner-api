@@ -17,12 +17,11 @@ use Jasara\AmznSPA\DataTransferObjects\AuthTokensDTO;
 use Jasara\AmznSPA\DataTransferObjects\GrantlessTokenDTO;
 use Jasara\AmznSPA\DataTransferObjects\RestrictedDataTokenDTO;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
-/**
- * @covers \Jasara\AmznSPA\AmznSPAConfig
- */
+#[CoversClass(AmznSPAConfig::class)]
 class AmznSPAConfigTest extends UnitTestCase
 {
     public function testGetNewConfig()
@@ -157,21 +156,18 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertFalse($config->shouldGetRdtTokens());
     }
 
-    /**
-     * @covers \Jasara\AmznSPA\AmznSPAConfig
-     */
     public function testLogger()
     {
         $config = $this->setupMinimalConfig();
 
-        $error_filepath = __DIR__ . '/../error-log.txt';
+        $error_filepath = __DIR__.'/../error-log.txt';
         touch($error_filepath);
         $logger_resource = fopen($error_filepath, 'rw+');
         ftruncate($logger_resource, 0);
         $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
             $log = sprintf('[%s] %s', $level, $message);
             if (count($context)) {
-                $log .= ' Context: ' . json_encode($context);
+                $log .= ' Context: '.json_encode($context);
             }
 
             $log = str_replace(["\n", "\r"], '', $log);

@@ -4,13 +4,13 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Schemas;
 
 use Brick\Money\Money;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\AmountSchema;
+use Jasara\AmznSPA\DataTransferObjects\Validators\StringIsNumberValidator;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Spatie\DataTransferObject\Exceptions\ValidationException;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Schemas\AmountSchema
- * @covers \Jasara\AmznSPA\DataTransferObjects\Validators\StringIsNumberValidator
- */
+#[CoversClass(AmountSchema::class)]
+#[CoversClass(StringIsNumberValidator::class)]
 class AmountSchemaTest extends UnitTestCase
 {
     public function testAsMoney()

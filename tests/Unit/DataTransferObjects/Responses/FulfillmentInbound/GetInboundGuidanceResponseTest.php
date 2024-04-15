@@ -4,14 +4,15 @@ namespace Jasara\AmznSPA\Tests\Unit\DataTransferObjects\Responses\FulfillmentInb
 
 use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\DataTransferObjects\Schemas\FulfillmentInbound\GetInboundGuidanceResultSchema;
+use Jasara\AmznSPA\DataTransferObjects\Validators\StringArrayEnumValidator;
+use Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Spatie\DataTransferObject\Exceptions\ValidationException;
 
-/**
- * @covers \Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse
- * @covers \Jasara\AmznSPA\DataTransferObjects\Validators\StringArrayEnumValidator
- * @covers \Jasara\AmznSPA\DataTransferObjects\Validators\StringEnumValidator
- */
+#[CoversClass(GetInboundGuidanceResponse::class)]
+#[CoversClass(StringArrayEnumValidator::class)]
+#[CoversClass(StringEnumValidator::class)]
 class GetInboundGuidanceResponseTest extends UnitTestCase
 {
     public function testSetupDtoSuccess()
