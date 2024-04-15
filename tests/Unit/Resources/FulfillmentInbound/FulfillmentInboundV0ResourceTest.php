@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Tests\Unit\Resources;
+namespace Jasara\AmznSPA\Tests\Unit\Resources\FulfillmentInbound;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\Request;
@@ -27,8 +27,8 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[CoversClass(\Jasara\AmznSPA\Resources\FulfillmentInboundResource::class)]
-class FulfillmentInboundResourceTest extends UnitTestCase
+#[CoversClass(\Jasara\AmznSPA\Resources\FulfillmentInbound\FulfillmentInboundV0Resource::class)]
+class FulfillmentInboundV0ResourceTest extends UnitTestCase
 {
     public function testGetInboundGuidance()
     {
