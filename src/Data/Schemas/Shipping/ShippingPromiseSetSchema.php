@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ShippingPromiseSetSchema extends DataTransferObject
+class ShippingPromiseSetSchema extends BaseSchema
 {
-    public ?TimeRangeSchema $delivery_window;
-
-    public ?TimeRangeSchema $receive_window;
+    public function __construct(
+        public ?TimeRangeSchema $delivery_window,
+        public ?TimeRangeSchema $receive_window,
+    ) {
+    }
 }

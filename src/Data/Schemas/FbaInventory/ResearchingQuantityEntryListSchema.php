@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FbaInventory;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ResearchingQuantityEntryListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ResearchingQuantityEntrySchema>
+ */
+class ResearchingQuantityEntryListSchema extends TypedCollection
 {
-    public function offsetGet($key): ResearchingQuantityEntrySchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = ResearchingQuantityEntrySchema::class;
 }

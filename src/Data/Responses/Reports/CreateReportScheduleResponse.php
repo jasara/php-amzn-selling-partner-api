@@ -6,5 +6,8 @@ use Jasara\AmznSPA\Data\Responses\BaseResponse;
 
 class CreateReportScheduleResponse extends BaseResponse
 {
-    public string $report_schedule_id;
+    public function __construct(
+        public string $report_schedule_id,
+    ) {
+    }
 }

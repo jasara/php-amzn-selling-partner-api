@@ -7,10 +7,10 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\Data\ApplicationKeysDTO;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\GrantlessTokenDTO;
-use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\ApplicationKeys;
+use Jasara\AmznSPA\Data\AuthTokens;
+use Jasara\AmznSPA\Data\GrantlessToken;
+use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Log\Logger;
@@ -21,15 +21,15 @@ class AmznSPAConfig
 
     private PendingRequest $http;
 
-    private AuthTokensDTO $tokens;
+    private AuthTokens $tokens;
 
     private Marketplace $marketplace;
 
-    private ApplicationKeysDTO $application_keys;
+    private ApplicationKeys $application_keys;
 
-    private GrantlessTokenDTO $grantless_token;
+    private GrantlessToken $grantless_token;
 
-    private RestrictedDataTokenDTO $restricted_data_token;
+    private RestrictedDataToken $restricted_data_token;
 
     private LoggerInterface $logger;
 
@@ -58,21 +58,22 @@ class AmznSPAConfig
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
         $this->http = (new Factory())->connectTimeout(10);
-        $this->tokens = new AuthTokensDTO(
+        $this->tokens = new AuthTokens(
             refresh_token: $lwa_refresh_token,
             access_token: $lwa_access_token,
             expires_at: $lwa_access_token_expires_at,
         );
-        $this->grantless_token = new GrantlessTokenDTO(
+        $this->grantless_token = new GrantlessToken(
             access_token: $grantless_access_token,
             expires_at: $grantless_access_token_expires_at,
         );
-        $this->restricted_data_token = new RestrictedDataTokenDTO(
+        $this->restricted_data_token = new RestrictedDataToken(
             access_token: $restricted_data_token,
             expires_at: $restricted_data_token_expires_at,
+            path: null,
         );
         $this->marketplace = MarketplacesList::getMarketplaceById($marketplace_id);
-        $this->application_keys = new ApplicationKeysDTO(
+        $this->application_keys = new ApplicationKeys(
             application_id: $application_id,
             aws_access_key: $aws_access_key,
             aws_secret_key: $aws_secret_key,
@@ -88,17 +89,17 @@ class AmznSPAConfig
         return clone $this->http;
     }
 
-    public function getTokens(): AuthTokensDTO
+    public function getTokens(): AuthTokens
     {
         return $this->tokens;
     }
 
-    public function getGrantlessToken(): GrantlessTokenDTO
+    public function getGrantlessToken(): GrantlessToken
     {
         return $this->grantless_token;
     }
 
-    public function getRestrictedDataToken(): RestrictedDataTokenDTO
+    public function getRestrictedDataToken(): RestrictedDataToken
     {
         return $this->restricted_data_token;
     }
@@ -108,7 +109,7 @@ class AmznSPAConfig
         return $this->marketplace;
     }
 
-    public function getApplicationKeys(): ApplicationKeysDTO
+    public function getApplicationKeys(): ApplicationKeys
     {
         return $this->application_keys;
     }
@@ -159,17 +160,17 @@ class AmznSPAConfig
         $this->http = $http;
     }
 
-    public function setTokens(AuthTokensDTO $tokens): void
+    public function setTokens(AuthTokens $tokens): void
     {
         $this->tokens = $tokens;
     }
 
-    public function setRestrictedDataToken(RestrictedDataTokenDTO $token): void
+    public function setRestrictedDataToken(RestrictedDataToken $token): void
     {
         $this->restricted_data_token = $token;
     }
 
-    public function setGrantlessToken(GrantlessTokenDTO $token): void
+    public function setGrantlessToken(GrantlessToken $token): void
     {
         $this->grantless_token = $token;
     }

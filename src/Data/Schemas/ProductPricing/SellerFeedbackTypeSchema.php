@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class SellerFeedbackTypeSchema extends DataTransferObject
+class SellerFeedbackTypeSchema extends BaseSchema
 {
-    public ?int $seller_positive_feedback_rating;
-
-    public int $feedback_count;
+    public function __construct(
+        public ?int $seller_positive_feedback_rating,
+        public int $feedback_count,
+    ) {
+    }
 }

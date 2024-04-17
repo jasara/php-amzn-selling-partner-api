@@ -2,19 +2,17 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Sellers;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class MarketplaceSchema extends DataTransferObject
+class MarketplaceSchema extends BaseSchema
 {
-    public string $id;
-
-    public string $name;
-
-    public string $country_code;
-
-    public string $default_currency_code;
-
-    public string $default_language_code;
-
-    public string $domain_name;
+    public function __construct(
+        public string $id,
+        public string $name,
+        public string $country_code,
+        public string $default_currency_code,
+        public string $default_language_code,
+        public string $domain_name,
+    ) {
+    }
 }

@@ -2,14 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use PhpUnitsOfMeasure\PhysicalQuantity\Length;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ItemLengthDimensionSchema extends DataTransferObject
+class ItemLengthDimensionSchema extends BaseSchema
 {
-    public ?string $unit;
-
-    public ?float $value;
+    public function __construct(
+        public ?string $unit,
+        public ?float $value,
+    ) {
+    }
 
     public function asUom(): Length
     {

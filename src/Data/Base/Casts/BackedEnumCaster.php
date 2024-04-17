@@ -1,8 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Data\Casts;
-
-use Spatie\DataTransferObject\Caster;
+namespace Jasara\AmznSPA\Data\Base\Casts;
 
 class BackedEnumCaster implements Caster
 {

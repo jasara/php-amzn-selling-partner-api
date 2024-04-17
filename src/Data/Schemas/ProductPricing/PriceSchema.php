@@ -2,15 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PriceSchema extends DataTransferObject
+class PriceSchema extends BaseSchema
 {
-    public string $status;
-
-    public ?string $seller_sku;
-
-    public ?string $asin;
-
-    public ?ProductSchema $product;
+    public function __construct(
+        public string $status,
+        public ?string $seller_sku,
+        public ?string $asin,
+        public ?ProductSchema $product,
+    ) {
+    }
 }

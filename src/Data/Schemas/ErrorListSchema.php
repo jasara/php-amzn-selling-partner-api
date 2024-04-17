@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ErrorListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ErrorSchema>
+ */
+class ErrorListSchema extends TypedCollection
 {
-    public function offsetGet($key): ErrorSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = ErrorSchema::class;
 }

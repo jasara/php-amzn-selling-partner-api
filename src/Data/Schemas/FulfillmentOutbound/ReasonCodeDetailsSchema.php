@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ReasonCodeDetailsSchema extends DataTransferObject
+class ReasonCodeDetailsSchema extends BaseSchema
 {
-    public string $return_reason_code;
-
-    public string $description;
-
-    public ?string $translated_description;
+    public function __construct(
+        public string $return_reason_code,
+        public string $description,
+        public ?string $translated_description,
+    ) {
+    }
 }

@@ -3,24 +3,20 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class InboundShipmentPlanRequestItemSchema extends DataTransferObject
+class InboundShipmentPlanRequestItemSchema extends BaseSchema
 {
-    public string $seller_sku;
+    public function __construct(
+        public string $seller_sku,
+        public string $asin,
+        #[StringEnumValidator(AmazonEnums::CONDITIONS)]
+        public string $condition,
+        public int $quantity,
+        public ?int $quantity_in_case,
 
-    public string $asin;
-
-    #[StringEnumValidator(AmazonEnums::CONDITIONS)]
-    public string $condition;
-
-    public int $quantity;
-
-    public ?int $quantity_in_case;
-
-    #[CastWith(ArrayCaster::class, itemType: PrepDetailsSchema::class)]
-    public ?PrepDetailsListSchema $prep_details_list;
+        public ?PrepDetailsListSchema $prep_details_list,
+    ) {
+    }
 }

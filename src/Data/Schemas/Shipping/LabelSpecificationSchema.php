@@ -2,14 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LabelSpecificationSchema extends DataTransferObject
+class LabelSpecificationSchema extends BaseSchema
 {
-    #[StringEnumValidator(['PNG'])]
-    public string $label_format;
-
-    #[StringEnumValidator(['4x6'])]
-    public string $label_stock_size;
+    public function __construct(
+        #[StringEnumValidator(['PNG'])]
+        public string $label_format,
+        #[StringEnumValidator(['4x6'])]
+        public string $label_stock_size,
+    ) {
+    }
 }

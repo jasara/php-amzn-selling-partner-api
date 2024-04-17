@@ -2,18 +2,17 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductFees;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class IncludedFeeDetailSchema extends DataTransferObject
+class IncludedFeeDetailSchema extends BaseSchema
 {
-    public string $fee_type;
-
-    public MoneySchema $fee_amount;
-
-    public ?MoneySchema $fee_promotion;
-
-    public ?MoneySchema $tax_amount;
-
-    public MoneySchema $final_fee;
+    public function __construct(
+        public string $fee_type,
+        public MoneySchema $fee_amount,
+        public ?MoneySchema $fee_promotion,
+        public ?MoneySchema $tax_amount,
+        public MoneySchema $final_fee,
+    ) {
+    }
 }

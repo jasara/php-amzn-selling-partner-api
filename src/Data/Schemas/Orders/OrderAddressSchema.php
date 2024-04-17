@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class OrderAddressSchema extends DataTransferObject
+class OrderAddressSchema extends BaseSchema
 {
-    public string $amazon_order_id;
-
-    public ?OrderAddressDetailSchema $shipping_address;
+    public function __construct(
+        public string $amazon_order_id,
+        public ?OrderAddressDetailSchema $shipping_address,
+    ) {
+    }
 }

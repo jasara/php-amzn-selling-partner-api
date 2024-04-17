@@ -2,15 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemDimensionsSchema extends DataTransferObject
+class ItemDimensionsSchema extends BaseSchema
 {
-    public ?ItemLengthDimensionSchema $height;
-
-    public ?ItemLengthDimensionSchema $length;
-
-    public ?ItemLengthDimensionSchema $width;
-
-    public ?ItemMassDimensionSchema $weight;
+    public function __construct(
+        public ?ItemLengthDimensionSchema $height,
+        public ?ItemLengthDimensionSchema $length,
+        public ?ItemLengthDimensionSchema $width,
+        public ?ItemMassDimensionSchema $weight,
+    ) {
+    }
 }

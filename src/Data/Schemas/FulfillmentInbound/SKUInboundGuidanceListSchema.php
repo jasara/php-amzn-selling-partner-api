@@ -4,9 +4,9 @@ namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
 use Illuminate\Support\Collection;
 
-class SKUInboundGuidanceListSchema extends Collection
+class SkuInboundGuidanceListSchema extends Collection
 {
-    public function offsetGet($key): SKUInboundGuidanceSchema
+    public function offsetGet($key): SkuInboundGuidanceSchema
     {
         return parent::offsetGet($key);
     }

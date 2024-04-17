@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\GetAdditionalSellerInputsRes
 
 class GetAdditionalSellerInputsResponse extends BaseResponse
 {
-    public ?GetAdditionalSellerInputsResultSchema $payload;
+    public function __construct(
+        public ?GetAdditionalSellerInputsResultSchema $payload,
+    ) {
+    }
 }

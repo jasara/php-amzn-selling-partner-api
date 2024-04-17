@@ -3,13 +3,14 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
 use Jasara\AmznSPA\Data\Schemas\AmountSchema;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class BoxContentsFeeDetailsSchema extends DataTransferObject
+class BoxContentsFeeDetailsSchema extends BaseSchema
 {
-    public int $total_units;
-
-    public AmountSchema $fee_per_unit;
-
-    public AmountSchema $total_fee;
+    public function __construct(
+        public int $total_units,
+        public AmountSchema $fee_per_unit,
+        public AmountSchema $total_fee,
+    ) {
+    }
 }

@@ -2,18 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class InboundShipmentPlanItemSchema extends DataTransferObject
+class InboundShipmentPlanItemSchema extends BaseSchema
 {
-    public string $seller_sku;
+    public function __construct(
+        public string $seller_sku,
+        public string $fulfillment_network_sku,
+        public int $quantity,
 
-    public string $fulfillment_network_sku;
-
-    public int $quantity;
-
-    #[CastWith(ArrayCaster::class, itemType: PrepDetailsSchema::class)]
-    public ?PrepDetailsListSchema $prep_details_list;
+        public ?PrepDetailsListSchema $prep_details_list,
+    ) {
+    }
 }

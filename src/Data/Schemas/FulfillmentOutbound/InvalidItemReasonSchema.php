@@ -2,13 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class InvalidItemReasonSchema extends DataTransferObject
+class InvalidItemReasonSchema extends BaseSchema
 {
-    #[StringEnumValidator(['InvalidValues', 'DuplicateRequest', 'NoCompletedShipItems', 'NoReturnableQuantity'])]
-    public string $invalid_item_reason_code;
-
-    public string $description;
+    public function __construct(
+        #[StringEnumValidator(['InvalidValues', 'DuplicateRequest', 'NoCompletedShipItems', 'NoReturnableQuantity'])]
+        public string $invalid_item_reason_code,
+        public string $description,
+    ) {
+    }
 }

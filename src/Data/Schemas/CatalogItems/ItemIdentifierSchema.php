@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemIdentifierSchema extends DataTransferObject
+class ItemIdentifierSchema extends BaseSchema
 {
-    public string $identifier_type;
-
-    public string $identifier;
+    public function __construct(
+        public string $identifier_type,
+        public string $identifier,
+    ) {
+    }
 }

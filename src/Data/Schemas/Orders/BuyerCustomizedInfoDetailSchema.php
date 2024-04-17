@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class BuyerCustomizedInfoDetailSchema extends DataTransferObject
+class BuyerCustomizedInfoDetailSchema extends BaseSchema
 {
-    public ?string $customized_url;
+    public function __construct(
+        public ?string $customized_url,
+    ) {
+    }
 }

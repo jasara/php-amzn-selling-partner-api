@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
+use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -38,7 +38,7 @@ class HasConfigTest extends UnitTestCase
     {
         $token = Str::random();
         $config = $this->setupMinimalConfig();
-        $config->setTokens(new AuthTokensDTO(
+        $config->setTokens(new AuthTokens(
             access_token: $token,
         ));
 

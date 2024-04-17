@@ -2,12 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class PaymentExecutionDetailItemSchema extends DataTransferObject
+class PaymentExecutionDetailItemSchema extends BaseSchema
 {
-    public MoneySchema $payment;
-
-    public string $payment_method;
+    public function __construct(
+        public MoneySchema $payment,
+        public string $payment_method,
+    ) {
+    }
 }

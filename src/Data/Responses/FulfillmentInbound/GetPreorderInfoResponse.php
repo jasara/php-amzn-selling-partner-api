@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetPreorderInfoResultSchema;
 
 class GetPreorderInfoResponse extends BaseResponse
 {
-    public ?GetPreorderInfoResultSchema $payload;
+    public function __construct(
+        public ?GetPreorderInfoResultSchema $payload,
+    ) {
+    }
 }

@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TaxClassificationSchema extends DataTransferObject
+class TaxClassificationSchema extends BaseSchema
 {
-    public ?string $name;
-
-    public ?string $value;
+    public function __construct(
+        public ?string $name,
+        public ?string $value,
+    ) {
+    }
 }

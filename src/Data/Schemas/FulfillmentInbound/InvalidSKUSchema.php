@@ -2,13 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class InvalidSKUSchema extends DataTransferObject
+class InvalidSkuSchema extends BaseSchema
 {
-    public ?string $seller_sku;
-
-    #[StringEnumValidator(['DoesNotExist', 'InvalidASIN'])]
-    public ?string $error_reason;
+    public function __construct(
+        public ?string $seller_sku,
+        #[StringEnumValidator(['DoesNotExist', 'InvalidASIN'])]
+        public ?string $error_reason,
+    ) {
+    }
 }

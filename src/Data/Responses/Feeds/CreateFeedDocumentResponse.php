@@ -6,7 +6,9 @@ use Jasara\AmznSPA\Data\Responses\BaseResponse;
 
 class CreateFeedDocumentResponse extends BaseResponse
 {
-    public string $feed_document_id;
-
-    public string $url;
+    public function __construct(
+        public string $feed_document_id,
+        public string $url,
+    ) {
+    }
 }

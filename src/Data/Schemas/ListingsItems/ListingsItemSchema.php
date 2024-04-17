@@ -2,27 +2,22 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ListingsItemSchema extends DataTransferObject
+class ListingsItemSchema extends BaseSchema
 {
-    public string $sku;
+    public function __construct(
+        public string $sku,
 
-    #[CastWith(ArrayCaster::class, itemType: ItemSummaryByMarketplaceSchema::class)]
-    public ?ItemSummaryListSchema $summaries;
+        public ?ItemSummaryListSchema $summaries,
+        public ?array $attributes,
 
-    public ?array $attributes;
+        public ?IssuesListSchema $issues,
 
-    #[CastWith(ArrayCaster::class, itemType: IssueSchema::class)]
-    public ?IssuesListSchema $issues;
+        public ?ItemOfferListSchema $offers,
 
-    #[CastWith(ArrayCaster::class, itemType: ItemOfferByMarketplaceSchema::class)]
-    public ?ItemOfferListSchema $offers;
-
-    #[CastWith(ArrayCaster::class, itemType: FulfillmentAvailabilitySchema::class)]
-    public ?FulfillmentAvailabilityListSchema $fulfillment_availability;
-
-    public ?ItemProcurementSchema $procurement;
+        public ?FulfillmentAvailabilityListSchema $fulfillment_availability,
+        public ?ItemProcurementSchema $procurement,
+    ) {
+    }
 }

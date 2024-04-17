@@ -2,18 +2,18 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Jasara\AmznSPA\Data\Casts\BackedEnumCaster;
+use Jasara\AmznSPA\Data\Base\Casts\BackedEnumCaster;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ItemRelationshipSchema extends DataTransferObject
+class ItemRelationshipSchema extends BaseSchema
 {
-    public ?array $child_asins;
-
-    public ?array $parent_asins;
-
-    public ?ItemVariationThemeSchema $variation_theme;
-
-    #[CastWith(BackedEnumCaster::class)]
-    public ItemRelationshipType $type;
+    public function __construct(
+        public ?array $child_asins,
+        public ?array $parent_asins,
+        public ?ItemVariationThemeSchema $variation_theme,
+        #[CastWith(BackedEnumCaster::class)]
+        public ItemRelationshipType $type,
+    ) {
+    }
 }

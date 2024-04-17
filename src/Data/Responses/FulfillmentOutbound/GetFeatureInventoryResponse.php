@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\GetFeatureInventoryResultSch
 
 class GetFeatureInventoryResponse extends BaseResponse
 {
-    public ?GetFeatureInventoryResultSchema $payload;
+    public function __construct(
+        public ?GetFeatureInventoryResultSchema $payload,
+    ) {
+    }
 }

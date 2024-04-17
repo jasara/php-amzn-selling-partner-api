@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Sellers;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class MarketplaceParticipationSchema extends DataTransferObject
+class MarketplaceParticipationSchema extends BaseSchema
 {
-    public MarketplaceSchema $marketplace;
-
-    public ParticipationSchema $participation;
+    public function __construct(
+        public MarketplaceSchema $marketplace,
+        public ParticipationSchema $participation,
+    ) {
+    }
 }

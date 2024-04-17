@@ -8,7 +8,9 @@ use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\ShippingOfferingFilterSchema
 
 class GetEligibleShipmentServicesRequest extends BaseRequest
 {
-    public ShipmentRequestDetailsSchema $shipment_request_details;
-
-    public ?ShippingOfferingFilterSchema $shipping_offering_filter;
+    public function __construct(
+        public ShipmentRequestDetailsSchema $shipment_request_details,
+        public ?ShippingOfferingFilterSchema $shipping_offering_filter = null,
+    ) {
+    }
 }

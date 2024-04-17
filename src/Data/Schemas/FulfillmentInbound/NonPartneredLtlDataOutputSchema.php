@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class NonPartneredLtlDataOutputSchema extends DataTransferObject
+class NonPartneredLtlDataOutputSchema extends BaseSchema
 {
-    public ?string $carrier_name;
-
-    public ?string $pro_number;
+    public function __construct(
+        public ?string $carrier_name,
+        public ?string $pro_number,
+    ) {
+    }
 }

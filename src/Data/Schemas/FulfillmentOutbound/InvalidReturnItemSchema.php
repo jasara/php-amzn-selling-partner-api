@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class InvalidReturnItemSchema extends DataTransferObject
+class InvalidReturnItemSchema extends BaseSchema
 {
-    public string $seller_return_item_id;
-
-    public string $seller_fulfillment_order_item_id;
-
-    public InvalidItemReasonSchema $invalid_item_reason;
+    public function __construct(
+        public string $seller_return_item_id,
+        public string $seller_fulfillment_order_item_id,
+        public InvalidItemReasonSchema $invalid_item_reason,
+    ) {
+    }
 }

@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ASINPrepInstructionsListSchema extends Collection
+/**
+ * @template-extends TypedCollection<AsinPrepInstructionsSchema>
+ */
+class AsinPrepInstructionsListSchema extends TypedCollection
 {
-    public function offsetGet($key): ASINPrepInstructionsSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = AsinPrepInstructionsSchema::class;
 }

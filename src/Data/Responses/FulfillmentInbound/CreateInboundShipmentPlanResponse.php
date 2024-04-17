@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\CreateInboundShipmentPlanResu
 
 class CreateInboundShipmentPlanResponse extends BaseResponse
 {
-    public ?CreateInboundShipmentPlanResultSchema $payload;
+    public function __construct(
+        public ?CreateInboundShipmentPlanResultSchema $payload,
+    ) {
+    }
 }

@@ -30,6 +30,6 @@ class UploadsResource implements ResourceContract
             ]),
         );
 
-        return new CreateUploadDestinationResponse($response);
+        return CreateUploadDestinationResponse::from($response);
     }
 }

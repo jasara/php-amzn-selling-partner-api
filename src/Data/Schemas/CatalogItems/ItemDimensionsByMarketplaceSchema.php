@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemDimensionsByMarketplaceSchema extends DataTransferObject
+class ItemDimensionsByMarketplaceSchema extends BaseSchema
 {
-    public string $marketplace_id;
-
-    public ?ItemDimensionsSchema $item;
-
-    public ?ItemDimensionsSchema $package;
+    public function __construct(
+        public string $marketplace_id,
+        public ?ItemDimensionsSchema $item,
+        public ?ItemDimensionsSchema $package,
+    ) {
+    }
 }

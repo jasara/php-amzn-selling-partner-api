@@ -11,15 +11,15 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\GrantlessTokenDTO;
+use Jasara\AmznSPA\Data\AuthTokens;
+use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
-use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -66,7 +66,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokensDTO(
+        $config->setTokens(new AuthTokens(
             refresh_token: null,
         ));
 
@@ -169,7 +169,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+        $config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: Str::random(),
             path: Str::random(),
         ));
@@ -211,7 +211,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokensDTO(
+        $config->setTokens(new AuthTokens(
             refresh_token: Str::random(),
         ));
 
@@ -231,7 +231,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setGrantlessToken(new GrantlessTokenDTO(
+        $config->setGrantlessToken(new GrantlessToken(
             access_token: null,
         ));
 

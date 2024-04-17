@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemSalesRankSchema extends DataTransferObject
+class ItemSalesRankSchema extends BaseSchema
 {
-    public string $title;
-
-    public ?string $link;
-
-    public int $rank;
+    public function __construct(
+        public string $title,
+        public ?string $link,
+        public int $rank,
+    ) {
+    }
 }

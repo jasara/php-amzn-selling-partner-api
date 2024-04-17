@@ -7,9 +7,10 @@ use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 
 class GetAdditionalSellerInputsRequest extends BaseRequest
 {
-    public string $shipping_service_id;
-
-    public AddressSchema $ship_from_address;
-
-    public string $order_id;
+    public function __construct(
+        public string $shipping_service_id,
+        public AddressSchema $ship_from_address,
+        public string $order_id,
+    ) {
+    }
 }

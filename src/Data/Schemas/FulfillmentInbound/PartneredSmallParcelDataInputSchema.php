@@ -2,14 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PartneredSmallParcelDataInputSchema extends DataTransferObject
+class PartneredSmallParcelDataInputSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: PartneredSmallParcelPackageInputSchema::class)]
-    public ?PartneredSmallParcelPackageInputListSchema $package_list;
-
-    public ?string $carrier_name;
+    public function __construct(
+        public ?PartneredSmallParcelPackageInputListSchema $package_list,
+        public ?string $carrier_name,
+    ) {
+    }
 }

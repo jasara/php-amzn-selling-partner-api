@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Reports\ReportScheduleSchema;
 
 class GetReportScheduleResponse extends BaseResponse
 {
-    public ReportScheduleSchema $report_schedule;
+    public function __construct(
+        public ReportScheduleSchema $report_schedule,
+    ) {
+    }
 }

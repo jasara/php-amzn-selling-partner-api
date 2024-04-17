@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LabelResultSchema extends DataTransferObject
+class LabelResultSchema extends BaseSchema
 {
-    public ?string $container_reference_id;
-
-    public ?string $tracking_id;
-
-    public ?LabelSchema $label;
+    public function __construct(
+        public ?string $container_reference_id,
+        public ?string $tracking_id,
+        public ?LabelSchema $label,
+    ) {
+    }
 }

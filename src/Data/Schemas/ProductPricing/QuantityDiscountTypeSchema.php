@@ -2,11 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class QuantityDiscountTypeSchema extends DataTransferObject
+class QuantityDiscountTypeSchema extends BaseSchema
 {
-    #[StringEnumValidator(['QUANTITY_DISCOUNT'])]
-    public string $quantity_discount;
+    public function __construct(
+        #[StringEnumValidator(['QUANTITY_DISCOUNT'])]
+        public string $quantity_discount,
+    ) {
+    }
 }

@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\CreateFulfillmentReturnResul
 
 class CreateFulfillmentReturnResponse extends BaseResponse
 {
-    public ?CreateFulfillmentReturnResultSchema $payload;
+    public function __construct(
+        public ?CreateFulfillmentReturnResultSchema $payload,
+    ) {
+    }
 }

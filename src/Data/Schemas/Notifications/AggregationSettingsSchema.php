@@ -3,11 +3,14 @@
 namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AggregationSettingsSchema extends DataTransferObject
+class AggregationSettingsSchema extends BaseSchema
 {
-    #[StringEnumValidator(AmazonEnums::AGGREGATION_TIME_PERIOD)]
-    public string $aggregation_time_period;
+    public function __construct(
+        #[StringEnumValidator(AmazonEnums::AGGREGATION_TIME_PERIOD)]
+        public string $aggregation_time_period,
+    ) {
+    }
 }

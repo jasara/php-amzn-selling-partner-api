@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Notifications\SubscriptionSchema;
 
 class GetSubscriptionByIdResponse extends BaseResponse
 {
-    public ?SubscriptionSchema $payload;
+    public function __construct(
+        public ?SubscriptionSchema $payload,
+    ) {
+    }
 }

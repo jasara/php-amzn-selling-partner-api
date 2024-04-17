@@ -3,13 +3,15 @@
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LabelFormatOptionSchema extends DataTransferObject
+class LabelFormatOptionSchema extends BaseSchema
 {
-    public ?bool $include_packing_slip_with_label;
-
-    #[StringEnumValidator(AmazonEnums::LABEL_FORMAT)]
-    public ?string $label_format;
+    public function __construct(
+        public ?bool $include_packing_slip_with_label,
+        #[StringEnumValidator(AmazonEnums::LABEL_FORMAT)]
+        public ?string $label_format,
+    ) {
+    }
 }

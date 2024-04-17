@@ -2,26 +2,21 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class SellerInputDefinitionSchema extends DataTransferObject
+class SellerInputDefinitionSchema extends BaseSchema
 {
-    public bool $is_required;
+    public function __construct(
+        public bool $is_required,
+        public string $data_type,
 
-    public string $data_type;
-
-    #[CastWith(ArrayCaster::class, itemType: ConstraintSchema::class)]
-    public ConstraintListSchema $constraints;
-
-    public string $input_display_text;
-
-    #[StringEnumValidator(['SHIPMENT_LEVEL', 'ITEM_LEVEL'])]
-    public ?string $input_target_type;
-
-    public AdditionalSellerInputSchema $stored_value;
-
-    public ?string $restricted_set_values;
+        public ConstraintListSchema $constraints,
+        public string $input_display_text,
+        #[StringEnumValidator(['SHIPMENT_LEVEL', 'ITEM_LEVEL'])]
+        public ?string $input_target_type,
+        public AdditionalSellerInputSchema $stored_value,
+        public ?string $restricted_set_values,
+    ) {
+    }
 }

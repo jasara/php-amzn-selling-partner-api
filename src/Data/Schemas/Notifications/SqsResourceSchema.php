@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class SqsResourceSchema extends DataTransferObject
+class SqsResourceSchema extends BaseSchema
 {
-    public string $arn;
+    public function __construct(
+        public string $arn,
+    ) {
+    }
 }

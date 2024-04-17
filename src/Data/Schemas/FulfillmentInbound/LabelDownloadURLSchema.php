@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LabelDownloadURLSchema extends DataTransferObject
+class LabelDownloadUrlSchema extends BaseSchema
 {
-    public ?string $download_url;
+    public function __construct(
+        public ?string $download_url,
+    ) {
+    }
 }

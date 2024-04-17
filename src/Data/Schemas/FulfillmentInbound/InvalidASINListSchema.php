@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class InvalidASINListSchema extends Collection
+/**
+ * @template-extends TypedCollection<InvalidAsinSchema>
+ */
+class InvalidAsinListSchema extends TypedCollection
 {
-    public function offsetGet($key): InvalidASINSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = InvalidAsinSchema::class;
 }

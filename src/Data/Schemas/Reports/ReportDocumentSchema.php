@@ -2,15 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Reports;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ReportDocumentSchema extends DataTransferObject
+class ReportDocumentSchema extends BaseSchema
 {
-    public string $report_document_id;
-
-    public string $url;
-
-    #[StringEnumValidator(['GZIP'])]
-    public ?string $compression_algorithm;
+    public function __construct(
+        public string $report_document_id,
+        public string $url,
+        #[StringEnumValidator(['GZIP'])]
+        public ?string $compression_algorithm,
+    ) {
+    }
 }

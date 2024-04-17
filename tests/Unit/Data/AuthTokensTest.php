@@ -4,22 +4,20 @@ namespace Jasara\AmznSPA\Tests\Unit\Data;
 
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\Casts\CarbonFromSecondsCaster;
+use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(AuthTokensDTO::class)]
-#[CoversClass(CarbonFromSecondsCaster::class)]
-class AuthTokensDTOTest extends UnitTestCase
+#[CoversClass(AuthTokens::class)]
+class AuthTokensTest extends UnitTestCase
 {
-    public function testSetupDTO()
+    public function testSetupTokens()
     {
         $access_token = Str::random();
         $refresh_token = Str::random();
         $expires_in = rand(500, 5000);
 
-        $dto = new AuthTokensDTO(
+        $dto = new AuthTokens(
             access_token: $access_token,
             refresh_token: $refresh_token,
             expires_at: $expires_in,
@@ -30,13 +28,13 @@ class AuthTokensDTOTest extends UnitTestCase
         $this->assertEqualsWithDelta($expires_in, $dto->expires_at->diffInSeconds(CarbonImmutable::now()), 2);
     }
 
-    public function testSetupDTOWithExistingDate()
+    public function testSetupTokensWithExistingDate()
     {
         $access_token = Str::random();
         $refresh_token = Str::random();
         $expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
 
-        $dto = new AuthTokensDTO(
+        $dto = new AuthTokens(
             access_token: $access_token,
             refresh_token: $refresh_token,
             expires_at: $expires_at,

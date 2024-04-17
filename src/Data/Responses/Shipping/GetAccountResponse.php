@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Shipping\AccountSchema;
 
 class GetAccountResponse extends BaseResponse
 {
-    public ?AccountSchema $payload;
+    public function __construct(
+        public ?AccountSchema $payload,
+    ) {
+    }
 }

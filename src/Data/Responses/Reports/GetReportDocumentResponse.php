@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Reports\ReportDocumentSchema;
 
 class GetReportDocumentResponse extends BaseResponse
 {
-    public ReportDocumentSchema $report_document;
+    public function __construct(
+        public ReportDocumentSchema $report_document,
+    ) {
+    }
 }

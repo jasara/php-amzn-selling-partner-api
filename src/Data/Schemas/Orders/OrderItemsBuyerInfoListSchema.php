@@ -2,16 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class OrderItemsBuyerInfoListSchema extends DataTransferObject
+class OrderItemsBuyerInfoListSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: OrderItemBuyerInfoSchema::class)]
-    public OrderItemBuyerInfoListSchema $order_items;
-
-    public ?string $next_token;
-
-    public string $amazon_order_id;
+    public function __construct(
+        public OrderItemBuyerInfoListSchema $order_items,
+        public ?string $next_token,
+        public string $amazon_order_id,
+    ) {
+    }
 }

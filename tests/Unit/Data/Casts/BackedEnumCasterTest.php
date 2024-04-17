@@ -2,7 +2,7 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Data\Casts;
 
-use Jasara\AmznSPA\Data\Casts\BackedEnumCaster;
+use Jasara\AmznSPA\Data\Base\Casts\BackedEnumCaster;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems\ItemIdentifierTypes;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 

@@ -2,18 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class CreateFulfillmentReturnResultSchema extends DataTransferObject
+class CreateFulfillmentReturnResultSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: ReturnItemSchema::class)]
-    public ?ReturnItemListSchema $return_items;
+    public function __construct(
+        public ?ReturnItemListSchema $return_items,
 
-    #[CastWith(ArrayCaster::class, itemType: InvalidReturnItemSchema::class)]
-    public ?InvalidReturnItemListSchema $invalid_return_items;
+        public ?InvalidReturnItemListSchema $invalid_return_items,
 
-    #[CastWith(ArrayCaster::class, itemType: ReturnAuthorizationSchema::class)]
-    public ?ReturnAuthorizationListSchema $return_authorizations;
+        public ?ReturnAuthorizationListSchema $return_authorizations,
+    ) {
+    }
 }

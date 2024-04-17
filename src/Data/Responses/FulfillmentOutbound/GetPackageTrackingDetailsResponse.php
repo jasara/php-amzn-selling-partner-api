@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\PackageTrackingDetailsSchema
 
 class GetPackageTrackingDetailsResponse extends BaseResponse
 {
-    public ?PackageTrackingDetailsSchema $payload;
+    public function __construct(
+        public ?PackageTrackingDetailsSchema $payload,
+    ) {
+    }
 }

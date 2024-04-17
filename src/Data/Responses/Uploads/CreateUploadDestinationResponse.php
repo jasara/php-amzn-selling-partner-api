@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Uploads\UploadDestinationSchema;
 
 class CreateUploadDestinationResponse extends BaseResponse
 {
-    public ?UploadDestinationSchema $payload;
+    public function __construct(
+        public ?UploadDestinationSchema $payload,
+    ) {
+    }
 }

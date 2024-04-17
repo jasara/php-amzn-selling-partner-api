@@ -2,16 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PurchaseShipmentResultSchema extends DataTransferObject
+class PurchaseShipmentResultSchema extends BaseSchema
 {
-    public string $shipment_id;
+    public function __construct(
+        public string $shipment_id,
+        public ServiceRateSchema $service_rate,
 
-    public ServiceRateSchema $service_rate;
-
-    #[CastWith(ArrayCaster::class, itemType: LabelResultSchema::class)]
-    public LabelResultListSchema $label_results;
+        public LabelResultListSchema $label_results,
+    ) {
+    }
 }

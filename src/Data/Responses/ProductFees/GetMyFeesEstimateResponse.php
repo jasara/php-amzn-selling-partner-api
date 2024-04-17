@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\ProductFees\GetMyFeesEstimateResultSchema;
 
 class GetMyFeesEstimateResponse extends BaseResponse
 {
-    public ?GetMyFeesEstimateResultSchema $payload;
+    public function __construct(
+        public ?GetMyFeesEstimateResultSchema $payload,
+    ) {
+    }
 }

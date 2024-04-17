@@ -13,7 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
-use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -223,7 +223,7 @@ class AmznSPAHttp
             throw new AmznSPAException(implode(',', $response->errors->pluck('message')->toArray() ?: []));
         }
 
-        $this->config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+        $this->config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: $response->restricted_data_token,
             expires_at: $response->expires_in,
             path: $path,
@@ -319,7 +319,7 @@ class AmznSPAHttp
         return $path;
     }
 
-    private function isRestrictedTokenCompatibleWithPath(RestrictedDataTokenDTO $token, string $url): bool
+    private function isRestrictedTokenCompatibleWithPath(RestrictedDataToken $token, string $url): bool
     {
         $path = $this->getRestrictedTokenPathFromUrl($url);
 

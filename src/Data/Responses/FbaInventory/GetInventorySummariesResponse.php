@@ -8,7 +8,9 @@ use Jasara\AmznSPA\Data\Schemas\PaginationSchema;
 
 class GetInventorySummariesResponse extends BaseResponse
 {
-    public ?GetInventorySummariesResultSchema $payload;
-
-    public ?PaginationSchema $pagination;
+    public function __construct(
+        public ?GetInventorySummariesResultSchema $payload,
+        public ?PaginationSchema $pagination,
+    ) {
+    }
 }

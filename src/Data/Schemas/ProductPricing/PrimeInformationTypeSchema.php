@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PrimeInformationTypeSchema extends DataTransferObject
+class PrimeInformationTypeSchema extends BaseSchema
 {
-    public ?bool $is_prime;
-
-    public bool $is_national_prime;
+    public function __construct(
+        public ?bool $is_prime,
+        public bool $is_national_prime,
+    ) {
+    }
 }

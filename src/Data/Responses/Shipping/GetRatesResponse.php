@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Shipping\GetRatesResultSchema;
 
 class GetRatesResponse extends BaseResponse
 {
-    public ?GetRatesResultSchema $payload;
+    public function __construct(
+        public ?GetRatesResultSchema $payload,
+    ) {
+    }
 }

@@ -2,17 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class RejectedShippingServiceSchema extends DataTransferObject
+class RejectedShippingServiceSchema extends BaseSchema
 {
-    public string $carrier_name;
-
-    public string $shipping_service_name;
-
-    public string $shipping_service_id;
-
-    public string $rejection_reason_code;
-
-    public ?string $rejection_reason_message;
+    public function __construct(
+        public string $carrier_name,
+        public string $shipping_service_name,
+        public string $shipping_service_id,
+        public string $rejection_reason_code,
+        public ?string $rejection_reason_message,
+    ) {
+    }
 }

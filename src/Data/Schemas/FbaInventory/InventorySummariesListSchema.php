@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FbaInventory;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class InventorySummariesListSchema extends Collection
+/**
+ * @template-extends TypedCollection<InventorySummarySchema>
+ */
+class InventorySummariesListSchema extends TypedCollection
 {
-    public function offsetGet($key): InventorySummarySchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = InventorySummarySchema::class;
 }

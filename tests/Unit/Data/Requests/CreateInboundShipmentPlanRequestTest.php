@@ -3,8 +3,8 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Requests;
 
 use Illuminate\Support\Str;
+use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
-use Jasara\AmznSPA\Data\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Spatie\DataTransferObject\Exceptions\ValidationException;

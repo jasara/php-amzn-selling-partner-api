@@ -3,17 +3,16 @@
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
 use Illuminate\Support\Collection;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class RefinementsSchema extends DataTransferObject
+class RefinementsSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: BrandRefinementSchema::class)]
-    /** @var Collection<int, BrandRefinementSchema> */
-    public Collection $brands;
+    public function __construct(
+        /** @var Collection<int, BrandRefinementSchema> */
+        public Collection $brands,
 
-    #[CastWith(ArrayCaster::class, itemType: ClassificationRefinementSchema::class)]
-    /** @var Collection<int, ClassificationRefinementSchema> */
-    public ?Collection $classifications;
+        /** @var Collection<int, ClassificationRefinementSchema> */
+        public ?Collection $classifications,
+    ) {
+    }
 }

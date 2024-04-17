@@ -3,9 +3,12 @@
 namespace Jasara\AmznSPA\Data\Responses\FulfillmentInbound;
 
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\LabelDownloadURLSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\LabelDownloadUrlSchema;
 
 class GetLabelsResponse extends BaseResponse
 {
-    public ?LabelDownloadURLSchema $payload;
+    public function __construct(
+        public ?LabelDownloadUrlSchema $payload,
+    ) {
+    }
 }

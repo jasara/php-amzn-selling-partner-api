@@ -2,10 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ItemProcurementSchema extends DataTransferObject
+class ItemProcurementSchema extends BaseSchema
 {
-    public MoneySchema $cost_price;
+    public function __construct(
+        public MoneySchema $cost_price,
+    ) {
+    }
 }

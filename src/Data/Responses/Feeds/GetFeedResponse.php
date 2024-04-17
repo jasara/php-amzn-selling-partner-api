@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Feeds\FeedSchema;
 
 class GetFeedResponse extends BaseResponse
 {
-    public ?FeedSchema $feed;
+    public function __construct(
+        public ?FeedSchema $feed,
+    ) {
+    }
 }

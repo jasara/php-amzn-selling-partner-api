@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class InvalidSKUListSchema extends Collection
+/**
+ * @template-extends TypedCollection<InvalidSkuSchema>
+ */
+class InvalidSkuListSchema extends TypedCollection
 {
-    public function offsetGet($key): InvalidSKUSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = InvalidSkuSchema::class;
 }

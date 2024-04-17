@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Orders\OrderAddressSchema;
 
 class GetOrderAddressResponse extends BaseResponse
 {
-    public ?OrderAddressSchema $payload;
+    public function __construct(
+        public ?OrderAddressSchema $payload,
+    ) {
+    }
 }

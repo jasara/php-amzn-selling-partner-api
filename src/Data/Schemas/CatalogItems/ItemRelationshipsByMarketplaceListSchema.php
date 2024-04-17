@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ItemRelationshipsByMarketplaceListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ItemRelationshipsByMarketplaceSchema>
+ */
+class ItemRelationshipsByMarketplaceListSchema extends TypedCollection
 {
-    public function offsetGet($key): ItemRelationshipsByMarketplaceSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = ItemRelationshipsByMarketplaceSchema::class;
 }

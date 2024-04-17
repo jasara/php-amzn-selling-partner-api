@@ -6,5 +6,8 @@ use Jasara\AmznSPA\Data\Responses\BaseResponse;
 
 class CreateFeedResponse extends BaseResponse
 {
-    public ?string $feed_id;
+    public function __construct(
+        public ?string $feed_id,
+    ) {
+    }
 }

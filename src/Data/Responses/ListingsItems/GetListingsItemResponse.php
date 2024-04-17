@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\ListingsItems\ListingsItemSchema;
 
 class GetListingsItemResponse extends BaseResponse
 {
-    public ?ListingsItemSchema $item;
+    public function __construct(
+        public ?ListingsItemSchema $item,
+    ) {
+    }
 }

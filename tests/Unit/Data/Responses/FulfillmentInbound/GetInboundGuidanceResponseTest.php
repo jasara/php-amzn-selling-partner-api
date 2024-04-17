@@ -2,10 +2,10 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Data\Responses\FulfillmentInbound;
 
+use Jasara\AmznSPA\Data\Base\Validators\StringArrayEnumValidator;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetInboundGuidanceResultSchema;
-use Jasara\AmznSPA\Data\Validators\StringArrayEnumValidator;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Spatie\DataTransferObject\Exceptions\ValidationException;

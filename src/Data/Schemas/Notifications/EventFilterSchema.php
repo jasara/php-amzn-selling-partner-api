@@ -2,15 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class EventFilterSchema extends DataTransferObject
+class EventFilterSchema extends BaseSchema
 {
-    public ?AggregationSettingsSchema $aggregation_settings;
-
-    public ?array $marketplace_ids;
-
-    #[StringEnumValidator(['ANY_OFFER_CHANGED'])]
-    public string $event_filter_type;
+    public function __construct(
+        public ?AggregationSettingsSchema $aggregation_settings,
+        public ?array $marketplace_ids,
+        #[StringEnumValidator(['ANY_OFFER_CHANGED'])]
+        public string $event_filter_type,
+    ) {
+    }
 }

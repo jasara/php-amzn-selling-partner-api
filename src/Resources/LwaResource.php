@@ -7,9 +7,9 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\Data\ApplicationKeysDTO;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\GrantlessTokenDTO;
+use Jasara\AmznSPA\Data\ApplicationKeys;
+use Jasara\AmznSPA\Data\AuthTokens;
+use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -23,7 +23,7 @@ class LwaResource implements ResourceContract
         private PendingRequest $http,
         private Marketplace $marketplace,
         private ?string $redirect_url,
-        private ApplicationKeysDTO $application_keys,
+        private ApplicationKeys $application_keys,
         private ?\Closure $save_lwa_tokens_callback,
         private ?\Closure $authentication_exception_callback,
         private ?\Closure $response_callback,
@@ -51,7 +51,7 @@ class LwaResource implements ResourceContract
      *                          'spapi_oauth_code'  => (string) Required, the authorization code
      *                          ]
      */
-    public function getTokensFromRedirect(string $original_state, array $parameters): AuthTokensDTO
+    public function getTokensFromRedirect(string $original_state, array $parameters): AuthTokens
     {
         $this->validateObjectProperties($this, ['redirect_url']);
         $this->validateArrayParameters($parameters, ['state', 'spapi_oauth_code']);
@@ -63,14 +63,14 @@ class LwaResource implements ResourceContract
         return $this->callGetTokens($parameters['spapi_oauth_code']);
     }
 
-    public function getTokensFromAuthorizationCode(string $authorization_code): AuthTokensDTO
+    public function getTokensFromAuthorizationCode(string $authorization_code): AuthTokens
     {
         $this->validateObjectProperties($this, ['redirect_url']);
 
         return $this->callGetTokens($authorization_code);
     }
 
-    private function callGetTokens(string $spapi_oauth_code): AuthTokensDTO
+    private function callGetTokens(string $spapi_oauth_code): AuthTokens
     {
         $response = $this->http->post(self::ENDPOINT, [
             'grant_type' => 'authorization_code',
@@ -91,7 +91,7 @@ class LwaResource implements ResourceContract
         return $tokens;
     }
 
-    public function getAccessTokenFromRefreshToken(string $refresh_token): AuthTokensDTO
+    public function getAccessTokenFromRefreshToken(string $refresh_token): AuthTokens
     {
         $response = $this->http->post(self::ENDPOINT, [
             'grant_type' => 'refresh_token',
@@ -117,7 +117,7 @@ class LwaResource implements ResourceContract
         return $tokens;
     }
 
-    public function getGrantlessAccessToken(string $scope): GrantlessTokenDTO
+    public function getGrantlessAccessToken(string $scope): GrantlessToken
     {
         $response = $this->http->post(self::ENDPOINT, [
             'grant_type' => 'client_credentials',
@@ -142,7 +142,7 @@ class LwaResource implements ResourceContract
         return false;
     }
 
-    private function storeLwaTokens(AuthTokensDTO $tokens)
+    private function storeLwaTokens(AuthTokens $tokens)
     {
         if ($this->save_lwa_tokens_callback) {
             $callback = $this->save_lwa_tokens_callback;
@@ -150,18 +150,18 @@ class LwaResource implements ResourceContract
         }
     }
 
-    private function formatTokenResponse(array $response_data): AuthTokensDTO
+    private function formatTokenResponse(array $response_data): AuthTokens
     {
-        return new AuthTokensDTO(
+        return new AuthTokens(
             access_token: $response_data['access_token'],
             refresh_token: $response_data['refresh_token'],
             expires_at: $response_data['expires_in'],
         );
     }
 
-    private function formatGrantlessTokenResponse(array $response_data): GrantlessTokenDTO
+    private function formatGrantlessTokenResponse(array $response_data): GrantlessToken
     {
-        return new GrantlessTokenDTO(
+        return new GrantlessToken(
             access_token: $response_data['access_token'],
             expires_at: $response_data['expires_in'],
         );

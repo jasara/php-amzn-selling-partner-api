@@ -89,9 +89,9 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('empty');
 
-        $request = new CreateFulfillmentOrderRequest(
+        $request = CreateFulfillmentOrderRequest::from(
             marketplace_id: 'ATVPDKIKX0DER',
-            seller_fulfillmen_order_id: Str::random(),
+            seller_fulfillment_order_id: Str::random(),
             displayable_order_id: Str::random(),
             displayable_order_date: CarbonImmutable::now(),
             displayable_order_comment: Str::random(),

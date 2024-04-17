@@ -3,13 +3,14 @@
 namespace Jasara\AmznSPA\Data\Schemas;
 
 use Brick\Money\Money;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class MoneySchema extends DataTransferObject
+class MoneySchema extends BaseSchema
 {
-    public ?string $currency_code;
-
-    public ?string $amount;
+    public function __construct(
+        public ?string $currency_code,
+        public ?string $amount,
+    ) {
+    }
 
     public function asMoney(): Money
     {

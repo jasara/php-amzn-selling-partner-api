@@ -2,10 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class SchemaLinkSchema extends DataTransferObject
+class SchemaLinkSchema extends BaseSchema
 {
-    public LinkSchema $link;
-    public string $checksum;
+    public function __construct(
+        public LinkSchema $link,
+        public string $checksum,
+    ) {
+    }
 }

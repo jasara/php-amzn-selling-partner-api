@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class SellerSKUIdentifierSchema extends DataTransferObject
+class SellerSkuIdentifierSchema extends BaseSchema
 {
-    public string $marketplace_id;
-
-    public string $seller_id;
-
-    public string $seller_sku;
+    public function __construct(
+        public string $marketplace_id,
+        public string $seller_id,
+        public string $seller_sku,
+    ) {
+    }
 }

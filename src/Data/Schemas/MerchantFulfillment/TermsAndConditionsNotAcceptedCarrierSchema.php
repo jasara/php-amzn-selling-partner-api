@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TermsAndConditionsNotAcceptedCarrierSchema extends DataTransferObject
+class TermsAndConditionsNotAcceptedCarrierSchema extends BaseSchema
 {
-    public string $carrier_name;
+    public function __construct(
+        public string $carrier_name,
+    ) {
+    }
 }

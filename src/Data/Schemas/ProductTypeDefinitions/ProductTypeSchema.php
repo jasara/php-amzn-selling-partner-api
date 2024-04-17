@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ProductTypeSchema extends DataTransferObject
+class ProductTypeSchema extends BaseSchema
 {
-    public string $name;
-
-    public array $marketplace_ids;
+    public function __construct(
+        public string $name,
+        public array $marketplace_ids,
+    ) {
+    }
 }

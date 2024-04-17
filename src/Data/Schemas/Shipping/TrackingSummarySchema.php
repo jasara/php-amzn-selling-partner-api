@@ -2,11 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Jasara\AmznSPA\Data\Validators\MaxLengthValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TrackingSummarySchema extends DataTransferObject
+class TrackingSummarySchema extends BaseSchema
 {
-    #[MaxLengthValidator(60)]
-    public ?string $status;
+    public function __construct(
+        #[MaxLengthValidator(60)]
+        public ?string $status,
+    ) {
+    }
 }

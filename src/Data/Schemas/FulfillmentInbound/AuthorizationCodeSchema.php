@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AuthorizationCodeSchema extends DataTransferObject
+class AuthorizationCodeSchema extends BaseSchema
 {
-    public ?string $authorization_code;
+    public function __construct(
+        public ?string $authorization_code,
+    ) {
+    }
 }

@@ -2,14 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ScheduledDeliveryInfoSchema extends DataTransferObject
+class ScheduledDeliveryInfoSchema extends BaseSchema
 {
-    public string $delivery_time_zone;
+    public function __construct(
+        public string $delivery_time_zone,
 
-    #[CastWith(ArrayCaster::class, itemType: DeliveryWindowSchema::class)]
-    public DeliveryWindowListSchema $delivery_windows;
+        public DeliveryWindowListSchema $delivery_windows,
+    ) {
+    }
 }

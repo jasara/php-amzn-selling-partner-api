@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AsinIdentifierSchema extends DataTransferObject
+class AsinIdentifierSchema extends BaseSchema
 {
-    public string $marketplace_id;
-
-    public string $asin;
+    public function __construct(
+        public string $marketplace_id,
+        public string $asin,
+    ) {
+    }
 }

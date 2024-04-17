@@ -3,12 +3,13 @@
 namespace Jasara\AmznSPA\Tests\Setup;
 
 use Illuminate\Support\Str;
+use Jasara\AmznSPA\Data\Schemas\Shipping\ContainerListSchema;
 
 trait SetupContainers
 {
-    public function setupContainers()
+    public function setupContainers(): ContainerListSchema
     {
-        return [
+        return new ContainerListSchema([
             [
                 'container_type' => 'PACKAGE',
                 'container_reference_id' => Str::random(),

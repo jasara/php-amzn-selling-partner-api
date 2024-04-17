@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemVariationThemeSchema extends DataTransferObject
+class ItemVariationThemeSchema extends BaseSchema
 {
-    public ?array $attributes;
-
-    public ?string $theme;
+    public function __construct(
+        public ?array $attributes,
+        public ?string $theme,
+    ) {
+    }
 }

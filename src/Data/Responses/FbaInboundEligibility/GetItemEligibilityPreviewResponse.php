@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FbaInboundEligibility\ItemEligibilityPreviewSche
 
 class GetItemEligibilityPreviewResponse extends BaseResponse
 {
-    public ?ItemEligibilityPreviewSchema $payload;
+    public function __construct(
+        public ?ItemEligibilityPreviewSchema $payload,
+    ) {
+    }
 }

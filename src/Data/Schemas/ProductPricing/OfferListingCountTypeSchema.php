@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class OfferListingCountTypeSchema extends DataTransferObject
+class OfferListingCountTypeSchema extends BaseSchema
 {
-    public int $count;
-
-    public string $condition;
+    public function __construct(
+        public int $count,
+        public string $condition,
+    ) {
+    }
 }

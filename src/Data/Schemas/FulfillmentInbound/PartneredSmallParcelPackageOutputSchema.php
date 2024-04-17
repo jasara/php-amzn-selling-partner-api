@@ -3,21 +3,20 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\DimensionsSchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class PartneredSmallParcelPackageOutputSchema extends DataTransferObject
+class PartneredSmallParcelPackageOutputSchema extends BaseSchema
 {
-    public DimensionsSchema $dimensions;
-
-    public WeightSchema $weight;
-
-    public ?string $carrier_name;
-
-    public ?string $tracking_id;
-
-    #[StringEnumValidator(AmazonEnums::PACKAGE_STATUSES)]
-    public string $package_status;
+    public function __construct(
+        public DimensionsSchema $dimensions,
+        public WeightSchema $weight,
+        public ?string $carrier_name,
+        public ?string $tracking_id,
+        #[StringEnumValidator(AmazonEnums::PACKAGE_STATUSES)]
+        public string $package_status,
+    ) {
+    }
 }

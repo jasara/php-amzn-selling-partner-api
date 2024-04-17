@@ -2,17 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetFeatureSkuResultSchema extends DataTransferObject
+class GetFeatureSkuResultSchema extends BaseSchema
 {
-    public string $marketplace_id;
-
-    public string $feature_name;
-
-    public bool $is_eligible;
-
-    public ?array $ineligible_reasons;
-
-    public FeatureSkuSchema $sku_info;
+    public function __construct(
+        public string $marketplace_id,
+        public string $feature_name,
+        public bool $is_eligible,
+        public ?array $ineligible_reasons,
+        public FeatureSkuSchema $sku_info,
+    ) {
+    }
 }

@@ -3,23 +3,22 @@
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use PhpUnitsOfMeasure\PhysicalQuantity\Length;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class PackageDimensionsSchema extends DataTransferObject
+class PackageDimensionsSchema extends BaseSchema
 {
-    public ?int $length;
-
-    public ?int $width;
-
-    public ?int $height;
-
-    #[StringEnumValidator(['inches', 'centimeters', 'CM', 'IN'])]
-    public ?string $unit;
-
-    #[StringEnumValidator(AmazonEnums::PREDEFINED_PACKAGE_DIMENSIONS)]
-    public ?string $predefined_package_dimensions;
+    public function __construct(
+        public ?int $length,
+        public ?int $width,
+        public ?int $height,
+        #[StringEnumValidator(['inches', 'centimeters', 'CM', 'IN'])]
+        public ?string $unit,
+        #[StringEnumValidator(AmazonEnums::PREDEFINED_PACKAGE_DIMENSIONS)]
+        public ?string $predefined_package_dimensions,
+    ) {
+    }
 
     public function lengthAsUom(): Length
     {

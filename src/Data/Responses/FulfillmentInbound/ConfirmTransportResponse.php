@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\CommonTransportResultSchema;
 
 class ConfirmTransportResponse extends BaseResponse
 {
-    public ?CommonTransportResultSchema $payload;
+    public function __construct(
+        public ?CommonTransportResultSchema $payload,
+    ) {
+    }
 }

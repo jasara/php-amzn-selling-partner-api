@@ -2,18 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetFeatureInventoryResultSchema extends DataTransferObject
+class GetFeatureInventoryResultSchema extends BaseSchema
 {
-    public string $marketplace_id;
+    public function __construct(
+        public string $marketplace_id,
+        public string $feature_name,
+        public ?string $next_token,
 
-    public string $feature_name;
-
-    public ?string $next_token;
-
-    #[CastWith(ArrayCaster::class, itemType: FeatureSkuSchema::class)]
-    public ?FeatureSkuListSchema $feature_skus;
+        public ?FeatureSkuListSchema $feature_skus,
+    ) {
+    }
 }

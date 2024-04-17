@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\ConfirmPreorderResultSchema;
 
 class ConfirmPreorderResponse extends BaseResponse
 {
-    public ?ConfirmPreorderResultSchema $payload;
+    public function __construct(
+        public ?ConfirmPreorderResultSchema $payload,
+    ) {
+    }
 }

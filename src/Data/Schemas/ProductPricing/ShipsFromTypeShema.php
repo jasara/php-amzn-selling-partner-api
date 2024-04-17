@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ShipsFromTypeShema extends DataTransferObject
+class ShipsFromTypeShema extends BaseSchema
 {
-    public ?string $state;
-
-    public ?string $country;
+    public function __construct(
+        public ?string $state,
+        public ?string $country,
+    ) {
+    }
 }
