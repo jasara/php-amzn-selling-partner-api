@@ -9,7 +9,7 @@ trait SetupContainers
 {
     public function setupContainers(): ContainerListSchema
     {
-        return new ContainerListSchema([
+        return ContainerListSchema::from([
             [
                 'container_type' => 'PACKAGE',
                 'container_reference_id' => Str::random(),
@@ -41,6 +41,7 @@ trait SetupContainers
                     'unit' => 'lb',
                     'value' => 0.08164656,
                 ],
-            ], ];
+            ],
+        ]);
     }
 }
