@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ItemSalesRankListSchema extends TypedCollection
 {
-    protected string $item_class = ItemSalesRankSchema::class;
+    public const string ITEM_CLASS = ItemSalesRankSchema::class;
 }

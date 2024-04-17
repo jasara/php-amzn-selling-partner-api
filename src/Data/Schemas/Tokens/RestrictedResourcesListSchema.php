@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class RestrictedResourcesListSchema extends TypedCollection
 {
-    protected string $item_class = RestrictedResourceSchema::class;
+    public const string ITEM_CLASS = RestrictedResourceSchema::class;
 }

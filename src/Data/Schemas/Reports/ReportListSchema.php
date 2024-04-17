@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ReportListSchema extends TypedCollection
 {
-    protected string $item_class = ReportSchema::class;
+    public const string ITEM_CLASS = ReportSchema::class;
 }

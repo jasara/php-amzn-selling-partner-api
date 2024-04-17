@@ -43,7 +43,7 @@ class GetDestinationsResponseTest extends UnitTestCase
 
         $payload = array_keys_to_snake($payload);
 
-        $dto = new GetDestinationsResponse(
+        $dto = GetDestinationsResponse::from(
             payload: $payload,
         );
 

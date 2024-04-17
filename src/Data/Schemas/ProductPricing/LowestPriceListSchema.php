@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class LowestPriceListSchema extends TypedCollection
 {
-    protected string $item_class = LowestPriceTypeSchema::class;
+    public const string ITEM_CLASS = LowestPriceTypeSchema::class;
 }

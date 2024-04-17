@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ItemRelationshipsByMarketplaceListSchema extends TypedCollection
 {
-    protected string $item_class = ItemRelationshipsByMarketplaceSchema::class;
+    public const string ITEM_CLASS = ItemRelationshipsByMarketplaceSchema::class;
 }

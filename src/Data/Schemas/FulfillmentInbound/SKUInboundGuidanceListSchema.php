@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class SkuInboundGuidanceListSchema extends TypedCollection
 {
-    protected string $item_class = SkuInboundGuidanceSchema::class;
+    public const string ITEM_CLASS = SkuInboundGuidanceSchema::class;
 }

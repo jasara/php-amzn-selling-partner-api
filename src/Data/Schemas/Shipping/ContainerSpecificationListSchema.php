@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ContainerSpecificationListSchema extends TypedCollection
 {
-    protected string $item_class = ContainerSpecificationSchema::class;
+    public const string ITEM_CLASS = ContainerSpecificationSchema::class;
 }

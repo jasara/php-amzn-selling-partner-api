@@ -12,7 +12,7 @@ trait SetupSchemas
 {
     public function setupAddress(): AddressSchema
     {
-        return new AddressSchema(
+        return AddressSchema::from(
             name: Str::random(),
             address_line_1: Str::random(),
             address_line_2: Str::random(),
@@ -25,7 +25,7 @@ trait SetupSchemas
 
     public function setupContact(): ContactSchema
     {
-        return new ContactSchema(
+        return ContactSchema::from(
             name: Str::random(),
             phone: Str::random(),
             email: Str::random(),
@@ -34,7 +34,7 @@ trait SetupSchemas
 
     public function setupShippingAddress(): ShippingAddressSchema
     {
-        return new ShippingAddressSchema(
+        return ShippingAddressSchema::from(
             name: Str::random(),
             address_line_1: Str::random(),
             address_line_2: Str::random(),
@@ -47,7 +47,7 @@ trait SetupSchemas
 
     public function setupInboundShipmentPlanRequest(): CreateInboundShipmentPlanRequest
     {
-        return new CreateInboundShipmentPlanRequest(
+        return CreateInboundShipmentPlanRequest::from(
             ...array_keys_to_snake($this->loadHttpStub('fulfillment-inbound/create-inbound-shipment-plan-request')),
         );
     }

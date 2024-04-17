@@ -35,7 +35,7 @@ class NotificationsResource implements ResourceContract
 
         $response = $this->http->get($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type);
 
-        return new GetSubscriptionResponse($response);
+        return GetSubscriptionResponse::from($response);
     }
 
     public function createSubscription(
@@ -51,11 +51,11 @@ class NotificationsResource implements ResourceContract
             array_filter([
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
-                'processingDirective' => $processing_directive?->toArray(),
+                'processingDirective' => $processing_directive?->toArrayObject(),
             ]),
         );
 
-        return new CreateSubscriptionResponse($response);
+        return CreateSubscriptionResponse::from($response);
     }
 
     public function getSubscriptionById(string $notification_type, string $subscription_id): GetSubscriptionByIdResponse
@@ -64,7 +64,7 @@ class NotificationsResource implements ResourceContract
 
         $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type.'/'.$subscription_id);
 
-        return new GetSubscriptionByIdResponse($response);
+        return GetSubscriptionByIdResponse::from($response);
     }
 
     public function deleteSubscriptionById(string $notification_type, string $subscription_id): DeleteSubscriptionByIdResponse
@@ -73,14 +73,14 @@ class NotificationsResource implements ResourceContract
 
         $response = $this->http->deleteGrantless($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type.'/'.$subscription_id);
 
-        return new DeleteSubscriptionByIdResponse($response);
+        return DeleteSubscriptionByIdResponse::from($response);
     }
 
     public function getDestinations(): GetDestinationsResponse
     {
         $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'destinations');
 
-        return new GetDestinationsResponse($response);
+        return GetDestinationsResponse::from($response);
     }
 
     public function createDestination(string $name, DestinationResourceSpecificationSchema $resource_specification): CreateDestinationResponse
@@ -90,20 +90,20 @@ class NotificationsResource implements ResourceContract
             'resourceSpecification' => $resource_specification->toArrayObject(),
         ]);
 
-        return new CreateDestinationResponse($response);
+        return CreateDestinationResponse::from($response);
     }
 
     public function getDestination(string $destination_id): GetDestinationResponse
     {
         $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'destinations/'.$destination_id);
 
-        return new GetDestinationResponse($response);
+        return GetDestinationResponse::from($response);
     }
 
     public function deleteDestination(string $destination_id): DeleteDestinationResponse
     {
         $response = $this->http->deleteGrantless($this->endpoint.self::BASE_PATH.'destinations/'.$destination_id);
 
-        return new DeleteDestinationResponse($response);
+        return DeleteDestinationResponse::from($response);
     }
 }

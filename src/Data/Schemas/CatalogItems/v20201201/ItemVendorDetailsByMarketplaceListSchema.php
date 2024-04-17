@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ItemVendorDetailsByMarketplaceListSchema extends TypedCollection
 {
-    protected string $item_class = ItemVendorDetailsByMarketplaceSchema::class;
+    public const string ITEM_CLASS = ItemVendorDetailsByMarketplaceSchema::class;
 }

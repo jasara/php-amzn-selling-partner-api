@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AvailableFormatOptionsForLabelListSchema extends TypedCollection
 {
-    protected string $item_class = LabelFormatOptionSchema::class;
+    public const string ITEM_CLASS = LabelFormatOptionSchema::class;
 }

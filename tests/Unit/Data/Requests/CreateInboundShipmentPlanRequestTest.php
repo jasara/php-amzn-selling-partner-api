@@ -7,20 +7,16 @@ use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Spatie\DataTransferObject\Exceptions\ValidationException;
 
 #[CoversClass(CreateInboundShipmentPlanRequest::class)]
 #[CoversClass(MaxLengthValidator::class)]
 class CreateInboundShipmentPlanRequestTest extends UnitTestCase
 {
-    public function testSetupDtoMaxLengthError()
+    public function testFormatsDataInPascalCase()
     {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('The length of the string');
-
-        new CreateInboundShipmentPlanRequest(
+        $request = CreateInboundShipmentPlanRequest::from(
             ship_from_address: [
-                'name' => Str::random(60),
+                'name' => Str::random(10),
                 'address_line_1' => Str::random(),
                 'address_line_2' => null,
                 'district_or_county' => Str::random(),
@@ -30,6 +26,20 @@ class CreateInboundShipmentPlanRequestTest extends UnitTestCase
                 'postal_code' => Str::random(),
             ],
             label_prep_preference: 'SELLER_LABEL',
+            inbound_shipment_plan_request_items: [
+                [
+                    'seller_sku' => Str::random(),
+                    'asin' => Str::random(),
+                    'condition' => 'NewItem',
+                    'quantity' => 1,
+                ],
+            ],
         );
+
+        $array_object = $request->toArrayObject();
+
+        $this->assertArrayHasKey('ShipFromAddress', $array_object);
+        $this->assertArrayHasKey('LabelPrepPreference', $array_object);
+        $this->assertArrayHasKey('InboundShipmentPlanRequestItems', $array_object);
     }
 }

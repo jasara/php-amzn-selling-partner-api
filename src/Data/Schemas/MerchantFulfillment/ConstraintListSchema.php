@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ConstraintListSchema extends TypedCollection
 {
-    protected string $item_class = ConstraintSchema::class;
+    public const string ITEM_CLASS = ConstraintSchema::class;
 }

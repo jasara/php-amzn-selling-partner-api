@@ -8,9 +8,16 @@ use Jasara\AmznSPA\Data\Schemas\MetadataSchema;
 
 class BaseResponse extends Data
 {
-    public function __construct(
-        public ?ErrorListSchema $errors,
-        public ?MetadataSchema $metadata,
-    ) {
+    public ?ErrorListSchema $errors = null;
+    public ?MetadataSchema $metadata = null;
+
+    public function setErrors(ErrorListSchema $errors): void
+    {
+        $this->errors = $errors;
+    }
+
+    public function setMetadata(MetadataSchema $metadata): void
+    {
+        $this->metadata = $metadata;
     }
 }

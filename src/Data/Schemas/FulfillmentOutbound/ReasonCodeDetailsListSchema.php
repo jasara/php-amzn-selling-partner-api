@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ReasonCodeDetailsListSchema extends TypedCollection
 {
-    protected string $item_class = ReasonCodeDetailsSchema::class;
+    public const string ITEM_CLASS = ReasonCodeDetailsSchema::class;
 }

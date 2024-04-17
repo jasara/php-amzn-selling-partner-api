@@ -23,7 +23,7 @@ class CreateDestinationResponseTest extends UnitTestCase
         $event_bridge_account_id = Str::random();
         $destination_id = Str::random();
 
-        $dto = new CreateDestinationResponse(
+        $dto = CreateDestinationResponse::from(
             payload: array_keys_to_snake([
                 'name' => $destination_name,
                 'destinationId' => $destination_id,

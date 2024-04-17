@@ -16,8 +16,8 @@ class PutTransportDetailsRequestTest extends UnitTestCase
         $request = new PutTransportDetailsRequest(
             is_partnered: true,
             shipment_type: 'LTL',
-            transport_details: new TransportDetailInputSchema(
-                partnered_ltl_data: new PartneredLtlDataInputSchema(
+            transport_details: TransportDetailInputSchema::from(
+                partnered_ltl_data: PartneredLtlDataInputSchema::from(
                     contact: $this->setupContact(),
                     freight_ready_date: $ready_date,
                 ),

@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AvailableDeliveryExperienceOptionsListSchema extends TypedCollection
 {
-    protected string $item_class = AvailableDeliveryExperienceOptionSchema::class;
+    public const string ITEM_CLASS = AvailableDeliveryExperienceOptionSchema::class;
 }

@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ServiceRateListSchema extends TypedCollection
 {
-    protected string $item_class = ServiceRateSchema::class;
+    public const string ITEM_CLASS = ServiceRateSchema::class;
 }

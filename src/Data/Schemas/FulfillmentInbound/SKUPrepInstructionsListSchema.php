@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class SkuPrepInstructionsListSchema extends TypedCollection
 {
-    protected string $item_class = SkuPrepInstructionsSchema::class;
+    public const string ITEM_CLASS = SkuPrepInstructionsSchema::class;
 }

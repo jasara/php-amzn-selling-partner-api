@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class DeliveryWindowListSchema extends TypedCollection
 {
-    protected string $item_class = DeliveryWindowSchema::class;
+    public const string ITEM_CLASS = DeliveryWindowSchema::class;
 }

@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class BuyBoxEligibleOfferListSchema extends TypedCollection
 {
-    protected string $item_class = OfferCountTypeSchema::class;
+    public const string ITEM_CLASS = OfferCountTypeSchema::class;
 }

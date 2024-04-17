@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class InventorySummariesListSchema extends TypedCollection
 {
-    protected string $item_class = InventorySummarySchema::class;
+    public const string ITEM_CLASS = InventorySummarySchema::class;
 }

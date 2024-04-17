@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class NumberOfOfferListingsListSchema extends TypedCollection
 {
-    protected string $item_class = OfferListingCountTypeSchema::class;
+    public const string ITEM_CLASS = OfferListingCountTypeSchema::class;
 }

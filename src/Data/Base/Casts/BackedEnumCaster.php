@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Data\Base\Casts;
 
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_PARAMETER)]
 class BackedEnumCaster implements Caster
 {
     private string $enum_class;

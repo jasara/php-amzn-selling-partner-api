@@ -9,7 +9,7 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AttributesListSchema extends TypedCollection
 {
-    protected string $item_class = AttributeSchema::class;
+    public const string ITEM_CLASS = AttributeSchema::class;
 
     public function toArrayObject(): \ArrayObject
     {

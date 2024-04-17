@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class DestinationListSchema extends TypedCollection
 {
-    protected string $item_class = DestinationSchema::class;
+    public const string ITEM_CLASS = DestinationSchema::class;
 }

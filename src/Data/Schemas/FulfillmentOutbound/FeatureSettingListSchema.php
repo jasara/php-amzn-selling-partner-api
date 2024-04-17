@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class FeatureSettingListSchema extends TypedCollection
 {
-    protected string $item_class = FeatureSettingShema::class;
+    public const string ITEM_CLASS = FeatureSettingShema::class;
 }

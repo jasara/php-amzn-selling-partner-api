@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class PalletListSchema extends TypedCollection
 {
-    protected string $item_class = PalletSchema::class;
+    public const string ITEM_CLASS = PalletSchema::class;
 }

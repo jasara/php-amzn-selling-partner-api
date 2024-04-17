@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class InboundShipmentPlanRequestItemListSchema extends TypedCollection
 {
-    protected string $item_class = InboundShipmentPlanRequestItemSchema::class;
+    public const string ITEM_CLASS = InboundShipmentPlanRequestItemSchema::class;
 }

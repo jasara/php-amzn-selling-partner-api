@@ -26,7 +26,7 @@ class GetSubscriptionResponseTest extends UnitTestCase
         $payload_version = Str::random();
         $destination_id = Str::random();
 
-        $dto = new GetSubscriptionResponse(
+        $dto = GetSubscriptionResponse::from(
             errors: [
                 [
                     'code' => $error_code,

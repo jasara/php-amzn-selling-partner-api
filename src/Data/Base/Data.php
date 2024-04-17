@@ -6,20 +6,18 @@ class Data
 {
     use ToArrayObject;
     use BuildsData;
+    use ValidatesData;
 
-    public static function from(array $payload): static
+    public static function from(mixed ...$payload): static
     {
-        $data = self::buildObject(
-            static::class,
-            $payload,
-        );
+        if (count($payload) && func_num_args() !== 0) {
+            $payload = $payload[0];
+        }
+
+        $data = $payload instanceof static ? $payload : self::buildObject(static::class, $payload);
 
         self::validateParameters($data);
 
         return $data;
-    }
-
-    private static function validateParameters(object $data): void
-    {
     }
 }

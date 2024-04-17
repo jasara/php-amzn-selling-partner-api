@@ -2,7 +2,7 @@
 
 namespace Jasara\AmznSPA\Data\Base;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\Casts\Caster;
 
 trait BuildsData
 {
@@ -10,6 +10,10 @@ trait BuildsData
     {
         $reflection = new \ReflectionClass($class);
         $constructor = $reflection->getConstructor();
+        if (is_null($constructor)) {
+            return new $class();
+        }
+
         $parameters = $constructor->getParameters();
         $arguments = [];
 
@@ -31,7 +35,7 @@ trait BuildsData
                 return null;
             }
 
-            throw new \InvalidArgumentException("Missing required parameter: {$parameter->getName()}");
+            throw new \InvalidArgumentException("Missing required parameter: {$parameter->getName()} for {$parameter->getDeclaringClass()->getName()}");
         }
 
         if ($parameter->getType() instanceof \ReflectionUnionType) {
@@ -50,20 +54,46 @@ trait BuildsData
             throw new \InvalidArgumentException("Unsupported parameter union for: {$parameter->getName()}");
         }
 
-        return self::getValueFromNamedType($parameter->getType(), $payload_value);
+        $caster = $parameter->getAttributes(Caster::class, \ReflectionAttribute::IS_INSTANCEOF);
+        if (count($caster)) {
+            $caster = $caster[0]->newInstance();
+
+            return $caster->cast($payload_value);
+        }
+
+        return self::getValueFromNamedType($parameter->getType()->getName(), $payload_value);
     }
 
     private static function getValueFromNamedType(
-        \ReflectionNamedType $type,
+        string $type_name,
         mixed $payload_value,
     ): mixed {
         return match (true) {
-            is_a($type->getName(), Data::class, true) => $type->getName()::from($payload_value),
-            is_a($type->getName(), Collection::class, true) => $type->getName()::make($payload_value),
-            $type->getName() === 'int' => (int) $payload_value,
-            $type->getName() === 'string' => (string) $payload_value,
-            $type->getName() === 'array' => (array) $payload_value,
-            default => throw new \InvalidArgumentException("Unsupported parameter type: {$type->getName()}"),
+            is_a($type_name, Data::class, true) => $type_name::from($payload_value),
+            is_a($type_name, TypedCollection::class, true) => self::getTypedCollectionValue($type_name, $payload_value),
+            $type_name === 'int' => (int) $payload_value,
+            $type_name === 'string' => (string) $payload_value,
+            $type_name === 'array' => (array) $payload_value,
+            default => throw new \InvalidArgumentException("Unsupported parameter type: {$type_name} with value: {$payload_value}"),
         };
+    }
+
+    /**
+     * @param class-string<TypedCollection> $type_name
+     */
+    private static function getTypedCollectionValue(
+        string $type_name,
+        mixed $payload_value,
+    ): TypedCollection {
+        if (!is_iterable($payload_value)) {
+            throw new \InvalidArgumentException("Expected iterable for collection parameter: {$type_name}");
+        }
+
+        $collection_values = [];
+        foreach ($payload_value as $raw_value) {
+            $collection_values[] = self::getValueFromNamedType($type_name::ITEM_CLASS, $raw_value);
+        }
+
+        return $type_name::make($collection_values);
     }
 }

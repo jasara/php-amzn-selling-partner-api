@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class FeedListSchema extends TypedCollection
 {
-    protected string $item_class = FeedSchema::class;
+    public const string ITEM_CLASS = FeedSchema::class;
 }

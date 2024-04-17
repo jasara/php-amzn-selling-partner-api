@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class TaxClassificationListSchema extends TypedCollection
 {
-    protected string $item_class = TaxClassificationSchema::class;
+    public const string ITEM_CLASS = TaxClassificationSchema::class;
 }

@@ -90,7 +90,7 @@ class NotificationsResourceTest extends UnitTestCase
         $response = $amzn->notifications->createSubscription(
             notification_type: 'ANY_OFFER_CHANGED',
             payload_version: $payload_version,
-            processing_directive: new ProcessingDirectiveSchema([
+            processing_directive: ProcessingDirectiveSchema::from([
                 'event_filter' => [
                     'aggregation_settings' => [
                         'aggregation_time_period' => 'FiveMinutes',
@@ -172,7 +172,7 @@ class NotificationsResourceTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->notifications->createDestination(Str::random(), new DestinationResourceSpecificationSchema());
+        $response = $amzn->notifications->createDestination(Str::random(), DestinationResourceSpecificationSchema::from());
 
         $this->assertInstanceOf(CreateDestinationResponse::class, $response);
         $this->assertInstanceOf(DestinationSchema::class, $response->payload);

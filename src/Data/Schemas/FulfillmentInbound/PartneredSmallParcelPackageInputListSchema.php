@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class PartneredSmallParcelPackageInputListSchema extends TypedCollection
 {
-    protected string $item_class = PartneredSmallParcelPackageInputSchema::class;
+    public const string ITEM_CLASS = PartneredSmallParcelPackageInputSchema::class;
 }

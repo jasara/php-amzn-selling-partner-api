@@ -6,6 +6,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Contracts\PascalCaseRequestContract;
+use Jasara\AmznSPA\Contracts\SnakeCaseRequestContract;
 use Jasara\AmznSPA\Data\Base\Mappers\Mapper;
 
 trait ToArrayObject
@@ -17,6 +18,9 @@ trait ToArrayObject
 
         if ($class instanceof PascalCaseRequestContract) {
             $case = 'pascal';
+        }
+        if ($class instanceof SnakeCaseRequestContract) {
+            $case = 'snake';
         }
 
         $properties = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
@@ -41,7 +45,7 @@ trait ToArrayObject
         \ReflectionProperty $property,
         mixed $value,
     ): mixed {
-        $has_mapper = count($property->getAttributes(Mapper::class));
+        $has_mapper = (bool) count($property->getAttributes(Mapper::class, \ReflectionAttribute::IS_INSTANCEOF));
 
         return match (true) {
             $has_mapper => $this->mapWithMapper($property, $value),
@@ -54,7 +58,7 @@ trait ToArrayObject
 
     private function mapWithMapper(\ReflectionProperty $property, mixed $value): mixed
     {
-        $mapper = $property->getAttributes(Mapper::class)[0]->newInstance();
+        $mapper = $property->getAttributes(Mapper::class, \ReflectionAttribute::IS_INSTANCEOF)[0]->newInstance();
 
         return $mapper->map($value);
     }
@@ -85,6 +89,7 @@ trait ToArrayObject
             'pascal' => Str::of($property->getName())->studly()
                 ->replace('Asin', 'ASIN')
                 ->replace('Sku', 'SKU'),
+            'snake' => Str::of($property->getName())->snake(),
             default => throw new \InvalidArgumentException('Invalid case provided'),
         };
     }
