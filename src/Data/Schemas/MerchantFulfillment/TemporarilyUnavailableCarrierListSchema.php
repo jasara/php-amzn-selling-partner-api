@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class TemporarilyUnavailableCarrierListSchema extends Collection
+/**
+ * @template-extends TypedCollection<TemporarilyUnavailableCarrierSchema>
+ */
+class TemporarilyUnavailableCarrierListSchema extends TypedCollection
 {
-    public function offsetGet($key): TemporarilyUnavailableCarrierSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = TemporarilyUnavailableCarrierSchema::class;
 }

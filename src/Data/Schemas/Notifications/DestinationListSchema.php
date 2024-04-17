@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class DestinationListSchema extends Collection
+/**
+ * @template-extends TypedCollection<DestinationSchema>
+ */
+class DestinationListSchema extends TypedCollection
 {
-    public function offsetGet($key): DestinationSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = DestinationSchema::class;
 }

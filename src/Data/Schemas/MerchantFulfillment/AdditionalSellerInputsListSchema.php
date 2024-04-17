@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class AdditionalSellerInputsListSchema extends Collection
+/**
+ * @template-extends TypedCollection<AdditionalSellerInputSchema>
+ */
+class AdditionalSellerInputsListSchema extends TypedCollection
 {
-    public function offsetGet($key): AdditionalSellerInputsSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = AdditionalSellerInputSchema::class;
 }

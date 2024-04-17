@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class EventListSchema extends Collection
+/**
+ * @template-extends TypedCollection<EventSchema>
+ */
+class EventListSchema extends TypedCollection
 {
-    public function offsetGet($key): EventSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = EventSchema::class;
 }

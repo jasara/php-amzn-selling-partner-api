@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class AvailableFormatOptionsForLabelListSchema extends Collection
+/**
+ * @template-extends TypedCollection<LabelFormatOptionSchema>
+ */
+class AvailableFormatOptionsForLabelListSchema extends TypedCollection
 {
-    public function offsetGet($key): LabelFormatOptionSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = LabelFormatOptionSchema::class;
 }

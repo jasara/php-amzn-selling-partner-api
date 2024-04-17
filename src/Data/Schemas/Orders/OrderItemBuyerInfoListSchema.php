@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class OrderItemBuyerInfoListSchema extends Collection
+/**
+ * @template-extends TypedCollection<OrderItemBuyerInfoSchema>
+ */
+class OrderItemBuyerInfoListSchema extends TypedCollection
 {
-    public function offsetGet($key): OrderItemBuyerInfoSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = OrderItemBuyerInfoSchema::class;
 }

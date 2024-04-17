@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class AvailableDeliveryExperienceOptionsListSchema extends Collection
+/**
+ * @template-extends TypedCollection<AvailableDeliveryExperienceOptionSchema>
+ */
+class AvailableDeliveryExperienceOptionsListSchema extends TypedCollection
 {
-    public function offsetGet($key): AvailableDeliveryExperienceOptionSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = AvailableDeliveryExperienceOptionSchema::class;
 }

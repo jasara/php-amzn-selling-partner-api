@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class PaymentExecutionDetailItemListSchema extends Collection
+/**
+ * @template-extends TypedCollection<PaymentExecutionDetailItemSchema>
+ */
+class PaymentExecutionDetailItemListSchema extends TypedCollection
 {
-    public function offsetGet($key): PaymentExecutionDetailItemSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = PaymentExecutionDetailItemSchema::class;
 }

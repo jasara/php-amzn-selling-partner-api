@@ -12,7 +12,7 @@ class ItemSchema extends BaseSchema
         public int $quantity,
         public ?WeightSchema $item_weight,
         public ?string $item_description,
-        public ?TransparencyCodeListSchema $transparency_code_list,
+        public ?array $transparency_code_list,
         public ?AdditionalSellerInputsListSchema $item_level_seller_inputs_list,
     ) {
     }

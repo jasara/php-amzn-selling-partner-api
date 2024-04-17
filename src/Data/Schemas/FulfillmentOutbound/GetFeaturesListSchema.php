@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class GetFeaturesListSchema extends Collection
+/**
+ * @template-extends TypedCollection<FeaturesSchema>
+ */
+class GetFeaturesListSchema extends TypedCollection
 {
-    public function offsetGet($key): FeaturesSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = FeaturesSchema::class;
 }

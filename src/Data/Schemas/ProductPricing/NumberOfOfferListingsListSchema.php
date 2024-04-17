@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class NumberOfOfferListingsListSchema extends Collection
+/**
+ * @template-extends TypedCollection<OfferListingCountTypeSchema>
+ */
+class NumberOfOfferListingsListSchema extends TypedCollection
 {
-    public function offsetGet($key): OfferListingCountTypeSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = OfferListingCountTypeSchema::class;
 }

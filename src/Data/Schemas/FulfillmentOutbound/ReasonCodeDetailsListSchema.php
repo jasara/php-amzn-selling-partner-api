@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ReasonCodeDetailsListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ReasonCodeDetailsSchema>
+ */
+class ReasonCodeDetailsListSchema extends TypedCollection
 {
-    public function offsetGet($key): ReasonCodeDetailsSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = ReasonCodeDetailsSchema::class;
 }

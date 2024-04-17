@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ItemLevelFieldsListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ItemLevelFieldsSchema>
+ */
+class ItemLevelFieldsListSchema extends TypedCollection
 {
-    public function offsetGet($key): ItemLevelFieldsSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = ItemLevelFieldsSchema::class;
 }

@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class DeliveryWindowListSchema extends Collection
+/**
+ * @template-extends TypedCollection<DeliveryWindowSchema>
+ */
+class DeliveryWindowListSchema extends TypedCollection
 {
-    public function offsetGet($key): DeliveryWindowSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = DeliveryWindowSchema::class;
 }

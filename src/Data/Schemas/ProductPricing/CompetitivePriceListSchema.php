@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class CompetitivePriceListSchema extends Collection
+/**
+ * @template-extends TypedCollection<CompetitivePriceTypeSchema>
+ */
+class CompetitivePriceListSchema extends TypedCollection
 {
-    public function offsetGet($key): CompetitivePriceTypeSchema
-    {
-        return parent::offsetGet($key);
-    }
+    protected string $item_class = CompetitivePriceTypeSchema::class;
 }
