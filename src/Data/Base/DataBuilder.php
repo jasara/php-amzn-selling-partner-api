@@ -183,7 +183,13 @@ class DataBuilder
 
         $is_empty_array = is_array($payload_value) && count($payload_value) === 0;
 
-        if ($is_empty_array) {
+        if (! $is_empty_array) {
+            return false;
+        }
+
+        $param_is_iterable = is_a($parameter->getType()->getName(), \Iterator::class, true) || is_a($parameter->getType()->getName(), \IteratorAggregate::class, true);
+
+        if (! $param_is_iterable) {
             return true;
         }
 

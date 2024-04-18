@@ -8,6 +8,7 @@ use Jasara\AmznSPA\Data\Base\Data;
 use Jasara\AmznSPA\Data\Base\DataBuilder;
 use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
+use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
@@ -16,6 +17,7 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelDataOu
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputListSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
+use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationListSchema;
 use Jasara\AmznSPA\Data\Schemas\ProductFees\FeesEstimateErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\Uploads\UploadDestinationSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -167,6 +169,13 @@ class DataBuilderTest extends UnitTestCase
 
         $this->assertInstanceOf(FeesEstimateErrorSchema::class, $data);
         $this->assertIsArray($data->detail);
+
+        $data = GetDestinationsResponse::from([
+            'payload' => [],
+        ]);
+
+        $this->assertInstanceOf(GetDestinationsResponse::class, $data);
+        $this->assertInstanceOf(DestinationListSchema::class, $data->payload);
     }
 
     public function testBuildDataWithNoParameters(): void
