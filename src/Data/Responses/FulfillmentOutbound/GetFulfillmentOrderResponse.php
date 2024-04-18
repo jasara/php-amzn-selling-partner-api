@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\GetFulfillmentOrderResultSch
 
 class GetFulfillmentOrderResponse extends BaseResponse
 {
-    public ?GetFulfillmentOrderResultSchema $payload;
+    public function __construct(
+        public ?GetFulfillmentOrderResultSchema $payload,
+    ) {
+    }
 }

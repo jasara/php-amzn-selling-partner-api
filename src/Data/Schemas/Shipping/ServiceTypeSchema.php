@@ -2,11 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ServiceTypeSchema extends DataTransferObject
+class ServiceTypeSchema extends BaseSchema
 {
-    #[StringEnumValidator(['Amazon Shipping Ground', 'Amazon Shipping Standard', 'Amazon Shipping Premium'])]
-    public string $service_type;
+    public function __construct(
+        #[StringEnumValidator(['Amazon Shipping Ground', 'Amazon Shipping Standard', 'Amazon Shipping Premium'])]
+        public string $service_type,
+    ) {
+    }
 }

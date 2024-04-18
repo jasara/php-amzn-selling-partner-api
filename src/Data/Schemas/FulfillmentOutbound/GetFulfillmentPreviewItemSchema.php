@@ -3,15 +3,15 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
 use Jasara\AmznSPA\Data\Schemas\AmountSchema;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetFulfillmentPreviewItemSchema extends DataTransferObject
+class GetFulfillmentPreviewItemSchema extends BaseSchema
 {
-    public string $seller_sku;
-
-    public int $quantity;
-
-    public ?AmountSchema $per_unit_declared_value;
-
-    public string $seller_fulfillment_order_item_id;
+    public function __construct(
+        public string $seller_sku,
+        public int $quantity,
+        public ?AmountSchema $per_unit_declared_value,
+        public string $seller_fulfillment_order_item_id,
+    ) {
+    }
 }

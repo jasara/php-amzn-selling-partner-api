@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class PalletListSchema extends Collection
+/**
+ * @template-extends TypedCollection<PalletSchema>
+ */
+class PalletListSchema extends TypedCollection
 {
-    public function offsetGet($key): PalletSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = PalletSchema::class;
 }

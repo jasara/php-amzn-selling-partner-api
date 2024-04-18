@@ -2,16 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class BuyerTaxInfoSchema extends DataTransferObject
+class BuyerTaxInfoSchema extends BaseSchema
 {
-    public ?string $companylegal_name;
+    public function __construct(
+        public ?string $companylegal_name,
+        public ?string $taxing_region,
 
-    public ?string $taxing_region;
-
-    #[CastWith(ArrayCaster::class, itemType: TaxClassificationSchema::class)]
-    public ?TaxClassificationListSchema $tax_classifications;
+        public ?TaxClassificationListSchema $tax_classifications,
+    ) {
+    }
 }

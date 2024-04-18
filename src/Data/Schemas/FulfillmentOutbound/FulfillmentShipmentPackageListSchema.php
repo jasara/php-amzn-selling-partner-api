@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class FulfillmentShipmentPackageListSchema extends Collection
+/**
+ * @template-extends TypedCollection<FulfillmentShipmentPackageSchema>
+ */
+class FulfillmentShipmentPackageListSchema extends TypedCollection
 {
-    public function offsetGet($key): FulfillmentShipmentPackageSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = FulfillmentShipmentPackageSchema::class;
 }

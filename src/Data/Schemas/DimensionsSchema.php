@@ -2,24 +2,23 @@
 
 namespace Jasara\AmznSPA\Data\Schemas;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Jasara\AmznSPA\Data\Validators\StringIsNumberValidator;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Base\Validators\StringIsNumberValidator;
 use PhpUnitsOfMeasure\PhysicalQuantity\Length;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class DimensionsSchema extends DataTransferObject
+class DimensionsSchema extends BaseSchema
 {
-    #[StringIsNumberValidator]
-    public string $length;
-
-    #[StringIsNumberValidator]
-    public string $width;
-
-    #[StringIsNumberValidator]
-    public string $height;
-
-    #[StringEnumValidator(['inches', 'centimeters', 'CM', 'IN'])]
-    public string $unit;
+    public function __construct(
+        #[StringIsNumberValidator]
+        public string $length,
+        #[StringIsNumberValidator]
+        public string $width,
+        #[StringIsNumberValidator]
+        public string $height,
+        #[StringEnumValidator(['inches', 'centimeters', 'CM', 'IN'])]
+        public string $unit,
+    ) {
+    }
 
     public function lengthAsUom(): Length
     {

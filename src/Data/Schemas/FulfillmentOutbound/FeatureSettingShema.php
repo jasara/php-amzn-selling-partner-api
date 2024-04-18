@@ -2,13 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class FeatureSettingShema extends DataTransferObject
+class FeatureSettingShema extends BaseSchema
 {
-    public ?string $feature_name;
-
-    #[StringEnumValidator(['Required', 'NotRequired'])]
-    public ?string $feature_fulfillment_policy;
+    public function __construct(
+        public ?string $feature_name,
+        #[StringEnumValidator(['Required', 'NotRequired'])]
+        public ?string $feature_fulfillment_policy,
+    ) {
+    }
 }

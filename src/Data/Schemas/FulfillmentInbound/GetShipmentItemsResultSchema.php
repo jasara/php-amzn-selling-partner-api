@@ -2,14 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetShipmentItemsResultSchema extends DataTransferObject
+class GetShipmentItemsResultSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: InboundShipmentItemSchema::class)]
-    public ?InboundShipmentItemListSchema $item_data;
-
-    public ?string $next_token;
+    public function __construct(
+        public ?InboundShipmentItemListSchema $item_data,
+        public ?string $next_token,
+    ) {
+    }
 }

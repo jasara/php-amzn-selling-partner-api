@@ -7,7 +7,9 @@ use Jasara\AmznSPA\Data\Schemas\Shipping\LabelSpecificationSchema;
 
 class PurchaseLabelsRequest extends BaseRequest
 {
-    public string $rate_id;
-
-    public LabelSpecificationSchema $label_specification;
+    public function __construct(
+        public string $rate_id,
+        public LabelSpecificationSchema $label_specification,
+    ) {
+    }
 }

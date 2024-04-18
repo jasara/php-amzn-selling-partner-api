@@ -4,15 +4,10 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Responses\FulfillmentInbound;
 
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetInboundGuidanceResultSchema;
-use Jasara\AmznSPA\Data\Validators\StringArrayEnumValidator;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Spatie\DataTransferObject\Exceptions\ValidationException;
 
 #[CoversClass(GetInboundGuidanceResponse::class)]
-#[CoversClass(StringArrayEnumValidator::class)]
-#[CoversClass(StringEnumValidator::class)]
 class GetInboundGuidanceResponseTest extends UnitTestCase
 {
     public function testSetupDtoSuccess()
@@ -51,7 +46,7 @@ class GetInboundGuidanceResponseTest extends UnitTestCase
             ],
         ];
 
-        $dto = new GetInboundGuidanceResponse(
+        $dto = GetInboundGuidanceResponse::from(
             payload: array_keys_to_snake($payload),
         );
 
@@ -70,71 +65,5 @@ class GetInboundGuidanceResponseTest extends UnitTestCase
 
         $this->assertEquals('ASIN', $dto->payload->invalid_asin_list[0]->asin);
         $this->assertEquals('DoesNotExist', $dto->payload->invalid_asin_list[0]->error_reason);
-    }
-
-    public function testSetupDtoStringValidationErrors()
-    {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('NOTVALID is not an allowed result. Valid values are: InboundNotRecommended,InboundOK');
-
-        $payload = [
-            'SKUInboundGuidanceList' => [
-                [
-                    'SellerSKU' => 'SellerSKU',
-                    'ASIN' => 'ASIN',
-                    'InboundGuidance' => 'NOTVALID',
-                    'GuidanceReasonList' => [
-                        'SlowMovingASIN',
-                    ],
-                ],
-            ],
-        ];
-
-        new GetInboundGuidanceResponse(
-            payload: array_keys_to_snake($payload),
-        );
-    }
-
-    public function testSetupDtoStringArrayValidationErrors()
-    {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('NOTVALID is not an allowed result. Valid values are: SlowMovingASIN,NoApplicableGuidance');
-
-        $payload = [
-            'SKUInboundGuidanceList' => [
-                [
-                    'SellerSKU' => 'SellerSKU',
-                    'ASIN' => 'ASIN',
-                    'InboundGuidance' => 'InboundNotRecommended',
-                    'GuidanceReasonList' => [
-                        'NOTVALID',
-                    ],
-                ],
-            ],
-        ];
-
-        new GetInboundGuidanceResponse(
-            payload: array_keys_to_snake($payload),
-        );
-    }
-
-    public function testSetupDtoStringArrayValidationNull()
-    {
-        $payload = [
-            'SKUInboundGuidanceList' => [
-                [
-                    'SellerSKU' => 'SellerSKU',
-                    'ASIN' => 'ASIN',
-                    'InboundGuidance' => 'InboundNotRecommended',
-                    'GuidanceReasonList' => null,
-                ],
-            ],
-        ];
-
-        $dto = new GetInboundGuidanceResponse(
-            payload: array_keys_to_snake($payload),
-        );
-
-        $this->assertInstanceOf(GetInboundGuidanceResultSchema::class, $dto->payload);
     }
 }

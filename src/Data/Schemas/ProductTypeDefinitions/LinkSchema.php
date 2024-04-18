@@ -2,13 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LinkSchema extends DataTransferObject
+class LinkSchema extends BaseSchema
 {
-    public string $resource;
-
-    #[StringEnumValidator(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])]
-    public string $verb;
+    public function __construct(
+        public string $resource,
+        #[StringEnumValidator(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])]
+        public string $verb,
+    ) {
+    }
 }

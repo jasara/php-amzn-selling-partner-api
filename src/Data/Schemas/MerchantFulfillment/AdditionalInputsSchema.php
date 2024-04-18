@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AdditionalInputsSchema extends DataTransferObject
+class AdditionalInputsSchema extends BaseSchema
 {
-    public ?string $additional_input_field_name;
-
-    public ?SellerInputDefinitionSchema $seller_input_definition;
+    public function __construct(
+        public ?string $additional_input_field_name,
+        public ?SellerInputDefinitionSchema $seller_input_definition,
+    ) {
+    }
 }

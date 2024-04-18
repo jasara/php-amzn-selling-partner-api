@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class NonPartneredSmallParcelPackageInputSchema extends DataTransferObject
+class NonPartneredSmallParcelPackageInputSchema extends BaseSchema
 {
-    public string $tracking_id;
+    public function __construct(
+        public string $tracking_id,
+    ) {
+    }
 }

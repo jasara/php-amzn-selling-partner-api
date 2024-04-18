@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\ListReturnReasonCodesResultS
 
 class ListReturnReasonCodesResponse extends BaseResponse
 {
-    public ?ListReturnReasonCodesResultSchema $payload;
+    public function __construct(
+        public ?ListReturnReasonCodesResultSchema $payload,
+    ) {
+    }
 }

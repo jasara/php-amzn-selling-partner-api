@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Sellers;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class MarketplaceParticipationListSchema extends Collection
+/**
+ * @template-extends TypedCollection<MarketplaceParticipationSchema>
+ */
+class MarketplaceParticipationListSchema extends TypedCollection
 {
-    public function offsetGet($key): MarketplaceParticipationSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = MarketplaceParticipationSchema::class;
 }

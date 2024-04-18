@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PointsSchema extends DataTransferObject
+class PointsSchema extends BaseSchema
 {
-    public int $points_number;
+    public function __construct(
+        public int $points_number,
+    ) {
+    }
 }

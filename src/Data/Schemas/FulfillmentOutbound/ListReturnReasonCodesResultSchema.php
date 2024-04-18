@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ListReturnReasonCodesResultSchema extends DataTransferObject
+class ListReturnReasonCodesResultSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: ReasonCodeDetailsSchema::class)]
-    public ?ReasonCodeDetailsListSchema $reason_code_details;
+    public function __construct(
+        public ?ReasonCodeDetailsListSchema $reason_code_details,
+    ) {
+    }
 }

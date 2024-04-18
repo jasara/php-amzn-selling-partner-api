@@ -47,6 +47,7 @@ trait SetupAmznSPAConfig
         return $config;
     }
 
+    /** @return array{0: AmznSPAConfig, 1: Factory} */
     public function setupConfigWithFakeHttp(string | array $stubs, int $status_code = 200): array
     {
         if (is_string($stubs)) {

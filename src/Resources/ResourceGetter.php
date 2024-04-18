@@ -18,7 +18,7 @@ class ResourceGetter
 
     public function getLwa(): LwaResource
     {
-        $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret']);
+        $this->validateObjectProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret']);
 
         return new LwaResource(
             $this->config->getHttp(),
@@ -146,9 +146,9 @@ class ResourceGetter
 
     private function validateAndSetupHttpForStandardResource(?string $grantless_resource = null): AmznSPAHttp
     {
-        $this->validateDtoProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        if (! $grantless_resource) {
-            $this->validateDtoProperties($this->config->getTokens(), ['refresh_token']);
+        $this->validateObjectProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
+        if (!$grantless_resource) {
+            $this->validateObjectProperties($this->config->getTokens(), ['refresh_token']);
         }
 
         return new AmznSPAHttp($this->config, $grantless_resource);

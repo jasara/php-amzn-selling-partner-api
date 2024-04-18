@@ -12,7 +12,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class FbaInventoryResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/fba/inventory/v1/';
 
     public function __construct(
@@ -36,16 +35,18 @@ class FbaInventoryResource implements ResourceContract
         }
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'summaries', array_filter([
-            'details' => $details,
-            'granularityType' => $granularity_type,
-            'granularityId' => $granularity_id,
-            'startDateTime' => $start_date_time?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'sellerSkus' => $seller_skus,
-            'nextToken' => $next_token,
-            'marketplaceIds' => $marketplace_ids,
-        ]));
+        $response = $this->http
+            ->responseClass(GetInventorySummariesResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'summaries', array_filter([
+                'details' => $details,
+                'granularityType' => $granularity_type,
+                'granularityId' => $granularity_id,
+                'startDateTime' => $start_date_time?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'sellerSkus' => $seller_skus,
+                'nextToken' => $next_token,
+                'marketplaceIds' => $marketplace_ids,
+            ]));
 
-        return new GetInventorySummariesResponse($response);
+        return $response;
     }
 }

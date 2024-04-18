@@ -2,15 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class OfferCountTypeSchema extends DataTransferObject
+class OfferCountTypeSchema extends BaseSchema
 {
-    public ?string $condition;
-
-    #[StringEnumValidator(['Amazon', 'Merchant'])]
-    public ?string $fullfillment_channel;
-
-    public ?int $offer_count;
+    public function __construct(
+        public ?string $condition,
+        #[StringEnumValidator(['Amazon', 'Merchant'])]
+        public ?string $fullfillment_channel,
+        public ?int $offer_count,
+    ) {
+    }
 }

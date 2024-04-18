@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class OrderListSchema extends Collection
+/**
+ * @template-extends TypedCollection<OrderSchema>
+ */
+class OrderListSchema extends TypedCollection
 {
-    public function offsetGet($key): OrderSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = OrderSchema::class;
 }

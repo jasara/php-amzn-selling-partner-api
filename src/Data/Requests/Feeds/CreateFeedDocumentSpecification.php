@@ -6,5 +6,8 @@ use Jasara\AmznSPA\Data\Requests\BaseRequest;
 
 class CreateFeedDocumentSpecification extends BaseRequest
 {
-    public string $content_type;
+    public function __construct(
+        public string $content_type,
+    ) {
+    }
 }

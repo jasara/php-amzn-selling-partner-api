@@ -3,17 +3,16 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
 use Jasara\AmznSPA\Data\Schemas\AmountSchema;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class CODSettingsSchema extends DataTransferObject
+class CODSettingsSchema extends BaseSchema
 {
-    public bool $is_cod_required;
-
-    public ?AmountSchema $cod_charge;
-
-    public ?AmountSchema $cod_charge_tax;
-
-    public ?AmountSchema $shipping_charge;
-
-    public ?AmountSchema $shipping_charge_tax;
+    public function __construct(
+        public bool $is_cod_required,
+        public ?AmountSchema $cod_charge,
+        public ?AmountSchema $cod_charge_tax,
+        public ?AmountSchema $shipping_charge,
+        public ?AmountSchema $shipping_charge_tax,
+    ) {
+    }
 }

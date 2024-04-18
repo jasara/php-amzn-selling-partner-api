@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class FeaturesSchema extends DataTransferObject
+class FeaturesSchema extends BaseSchema
 {
-    public string $feature_name;
-
-    public string $feature_description;
-
-    public ?bool $seller_eligible;
+    public function __construct(
+        public string $feature_name,
+        public string $feature_description,
+        public ?bool $seller_eligible,
+    ) {
+    }
 }

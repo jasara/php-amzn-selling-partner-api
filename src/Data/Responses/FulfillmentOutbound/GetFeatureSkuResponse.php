@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\GetFeatureSkuResultSchema;
 
 class GetFeatureSkuResponse extends BaseResponse
 {
-    public ?GetFeatureSkuResultSchema $payload;
+    public function __construct(
+        public ?GetFeatureSkuResultSchema $payload,
+    ) {
+    }
 }

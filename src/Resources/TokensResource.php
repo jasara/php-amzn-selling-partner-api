@@ -19,8 +19,10 @@ class TokensResource implements ResourceContract
 
     public function createRestrictedDataToken(CreateRestrictedDataTokenRequest $request): CreateRestrictedDataTokenResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'restrictedDataToken', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateRestrictedDataTokenResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'restrictedDataToken', (array) $request->toArrayObject());
 
-        return new CreateRestrictedDataTokenResponse($response);
+        return CreateRestrictedDataTokenResponse::from($response);
     }
 }

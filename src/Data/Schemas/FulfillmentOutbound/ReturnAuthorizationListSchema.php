@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ReturnAuthorizationListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ReturnAuthorizationSchema>
+ */
+class ReturnAuthorizationListSchema extends TypedCollection
 {
-    public function offsetGet($key): ReturnAuthorizationSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = ReturnAuthorizationSchema::class;
 }

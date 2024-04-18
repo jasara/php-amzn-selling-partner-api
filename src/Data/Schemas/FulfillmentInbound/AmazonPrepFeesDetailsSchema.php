@@ -3,14 +3,16 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\AmountSchema;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AmazonPrepFeesDetailsSchema extends DataTransferObject
+class AmazonPrepFeesDetailsSchema extends BaseSchema
 {
-    #[StringEnumValidator(AmazonEnums::PREP_INSTRUCTIONS)]
-    public ?string $prep_instruction;
-
-    public ?AmountSchema $fee_per_unit;
+    public function __construct(
+        #[StringEnumValidator(AmazonEnums::PREP_INSTRUCTIONS)]
+        public ?string $prep_instruction,
+        public ?AmountSchema $fee_per_unit,
+    ) {
+    }
 }

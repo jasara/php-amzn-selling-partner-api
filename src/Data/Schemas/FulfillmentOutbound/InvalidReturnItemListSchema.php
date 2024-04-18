@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class InvalidReturnItemListSchema extends Collection
+/**
+ * @template-extends TypedCollection<InvalidReturnItemSchema>
+ */
+class InvalidReturnItemListSchema extends TypedCollection
 {
-    public function offsetGet($key): InvalidReturnItemSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = InvalidReturnItemSchema::class;
 }

@@ -29,7 +29,6 @@
         "guzzlehttp/guzzle": "^7.4",
         "aws/aws-sdk-php": "^3.199",
         "illuminate/http": "^9.0 || ^10.0",
-        "spatie/data-transfer-object": "^3.7",
         "vlucas/phpdotenv": "^5.3",
         "brick/money": "^0.5 || ^0.6 || ^0.7 || ^0.8",
         "illuminate/support": "^9.0 || ^10.0",

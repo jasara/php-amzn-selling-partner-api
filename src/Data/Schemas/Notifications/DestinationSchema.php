@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class DestinationSchema extends DataTransferObject
+class DestinationSchema extends BaseSchema
 {
-    public string $name;
-
-    public string $destination_id;
-
-    public DestinationResourceSchema $resource;
+    public function __construct(
+        public string $name,
+        public string $destination_id,
+        public DestinationResourceSchema $resource,
+    ) {
+    }
 }

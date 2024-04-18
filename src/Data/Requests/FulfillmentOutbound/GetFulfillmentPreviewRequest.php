@@ -2,32 +2,25 @@
 
 namespace Jasara\AmznSPA\Data\Requests\FulfillmentOutbound;
 
+use Jasara\AmznSPA\Data\Base\Validators\StringArrayEnumValidator;
 use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\FeatureSettingListSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\FeatureSettingShema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\GetFulfillmentPreviewItemListSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\GetFulfillmentPreviewItemSchema;
 use Jasara\AmznSPA\Data\Schemas\ShippingAddressSchema;
-use Jasara\AmznSPA\Data\Validators\StringArrayEnumValidator;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
 
 class GetFulfillmentPreviewRequest extends BaseRequest
 {
-    public ?string $marketplace_id;
+    public function __construct(
+        public ShippingAddressSchema $address,
 
-    public ShippingAddressSchema $address;
+        public GetFulfillmentPreviewItemListSchema $items,
+        public ?string $marketplace_id = null,
+        #[StringArrayEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
+        public ?array $shipping_speed_categories = null,
+        public ?bool $include_cod_fulfillment_preview = null,
+        public ?bool $include_delivery_windows = null,
 
-    #[CastWith(ArrayCaster::class, itemType: GetFulfillmentPreviewItemSchema::class)]
-    public GetFulfillmentPreviewItemListSchema $items;
-
-    #[StringArrayEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
-    public ?array $shipping_speed_categories;
-
-    public ?bool $include_cod_fulfillment_preview;
-
-    public ?bool $include_delivery_windows;
-
-    #[CastWith(ArrayCaster::class, itemType: FeatureSettingShema::class)]
-    public ?FeatureSettingListSchema $feature_constraints;
+        public ?FeatureSettingListSchema $feature_constraints = null,
+    ) {
+    }
 }

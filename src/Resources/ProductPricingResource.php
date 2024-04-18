@@ -13,7 +13,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class ProductPricingResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/products/pricing/v0/';
 
     public function __construct(
@@ -41,16 +40,18 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($offer_type, ['B2C', 'B2B']);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'price', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'ItemType' => $item_type,
-            'Asins' => $asins,
-            'Skus' => $skus,
-            'ItemCondition' => $item_condition,
-            'OfferType' => $offer_type,
-        ]));
+        $response = $this->http
+            ->responseClass(GetPricingResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'price', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'ItemType' => $item_type,
+                'Asins' => $asins,
+                'Skus' => $skus,
+                'ItemCondition' => $item_condition,
+                'OfferType' => $offer_type,
+            ]));
 
-        return new GetPricingResponse($response);
+        return $response;
     }
 
     public function getCompetitivePricing(
@@ -68,15 +69,17 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'competitivePrice', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'ItemType' => $item_type,
-            'Asins' => $asins,
-            'Skus' => $skus,
-            'CustomerType' => $customer_type,
-        ]));
+        $response = $this->http
+            ->responseClass(GetPricingResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'competitivePrice', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'ItemType' => $item_type,
+                'Asins' => $asins,
+                'Skus' => $skus,
+                'CustomerType' => $customer_type,
+            ]));
 
-        return new GetPricingResponse($response);
+        return $response;
     }
 
     public function getListingOffers(
@@ -91,13 +94,15 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'listings/'.$seller_sku.'/offers', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'ItemCondition' => $item_condition,
-            'CustomerType' => $customer_type,
-        ]));
+        $response = $this->http
+            ->responseClass(GetOffersResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/offers', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'ItemCondition' => $item_condition,
+                'CustomerType' => $customer_type,
+            ]));
 
-        return new GetOffersResponse($response);
+        return $response;
     }
 
     public function getItemOffers(
@@ -112,12 +117,14 @@ class ProductPricingResource implements ResourceContract
             $this->validateStringEnum($customer_type, ['Consumer', 'Business']);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items/'.$asin.'/offers', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'ItemCondition' => $item_condition,
-            'CustomerType' => $customer_type,
-        ]));
+        $response = $this->http
+            ->responseClass(GetOffersResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/offers', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'ItemCondition' => $item_condition,
+                'CustomerType' => $customer_type,
+            ]));
 
-        return new GetOffersResponse($response);
+        return $response;
     }
 }

@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TemporarilyUnavailableCarrierSchema extends DataTransferObject
+class TemporarilyUnavailableCarrierSchema extends BaseSchema
 {
-    public string $carrier_name;
+    public function __construct(
+        public string $carrier_name,
+    ) {
+    }
 }

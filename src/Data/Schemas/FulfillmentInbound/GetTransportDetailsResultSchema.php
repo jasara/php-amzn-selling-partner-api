@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetTransportDetailsResultSchema extends DataTransferObject
+class GetTransportDetailsResultSchema extends BaseSchema
 {
-    public TransportContentSchema $transport_content;
+    public function __construct(
+        public TransportContentSchema $transport_content,
+    ) {
+    }
 }

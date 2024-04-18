@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Tokens;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class RestrictedResourcesListSchema extends Collection
+/**
+ * @template-extends TypedCollection<RestrictedResourceSchema>
+ */
+class RestrictedResourcesListSchema extends TypedCollection
 {
-    public function offsetGet($key): RestrictedResourceSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = RestrictedResourceSchema::class;
 }

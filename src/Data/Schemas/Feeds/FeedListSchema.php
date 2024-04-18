@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Feeds;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class FeedListSchema extends Collection
+/**
+ * @template-extends TypedCollection<FeedSchema>
+ */
+class FeedListSchema extends TypedCollection
 {
-    public function offsetGet($key): FeedSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = FeedSchema::class;
 }

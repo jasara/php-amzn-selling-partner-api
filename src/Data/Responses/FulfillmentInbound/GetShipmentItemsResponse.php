@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetShipmentItemsResultSchema;
 
 class GetShipmentItemsResponse extends BaseResponse
 {
-    public ?GetShipmentItemsResultSchema $payload;
+    public function __construct(
+        public ?GetShipmentItemsResultSchema $payload,
+    ) {
+    }
 }

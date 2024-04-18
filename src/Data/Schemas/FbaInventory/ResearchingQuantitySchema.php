@@ -2,14 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FbaInventory;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ResearchingQuantitySchema extends DataTransferObject
+class ResearchingQuantitySchema extends BaseSchema
 {
-    public ?int $total_researching_quantity;
+    public function __construct(
+        public ?int $total_researching_quantity,
 
-    #[CastWith(ArrayCaster::class, itemType: ResearchingQuantityEntrySchema::class)]
-    public ?ResearchingQuantityEntryListSchema $researching_quantity_breakdown;
+        public ?ResearchingQuantityEntryListSchema $researching_quantity_breakdown,
+    ) {
+    }
 }

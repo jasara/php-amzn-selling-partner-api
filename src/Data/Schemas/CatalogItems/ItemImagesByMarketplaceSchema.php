@@ -2,14 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemImagesByMarketplaceSchema extends DataTransferObject
+class ItemImagesByMarketplaceSchema extends BaseSchema
 {
-    public string $marketplace_id;
+    public function __construct(
+        public string $marketplace_id,
 
-    #[CastWith(ArrayCaster::class, itemType: ItemImageSchema::class)]
-    public ItemImageListSchema $images;
+        public ItemImageListSchema $images,
+    ) {
+    }
 }

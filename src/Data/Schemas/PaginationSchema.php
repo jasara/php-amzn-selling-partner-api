@@ -2,11 +2,11 @@
 
 namespace Jasara\AmznSPA\Data\Schemas;
 
-use Spatie\DataTransferObject\DataTransferObject;
-
-class PaginationSchema extends DataTransferObject
+class PaginationSchema extends BaseSchema
 {
-    public ?string $next_token;
-
-    public ?string $previous_token;
+    public function __construct(
+        public ?string $next_token,
+        public ?string $previous_token,
+    ) {
+    }
 }

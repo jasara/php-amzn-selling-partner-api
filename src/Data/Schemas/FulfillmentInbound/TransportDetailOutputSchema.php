@@ -2,15 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TransportDetailOutputSchema extends DataTransferObject
+class TransportDetailOutputSchema extends BaseSchema
 {
-    public ?PartneredSmallParcelDataOutputSchema $partnered_small_parcel_data;
-
-    public ?NonPartneredSmallParcelDataOutputSchema $non_partnered_small_parcel_data;
-
-    public ?PartneredLtlDataOutputSchema $partnered_ltl_data;
-
-    public ?NonPartneredLtlDataOutputSchema $non_partnered_ltl_data;
+    public function __construct(
+        public ?PartneredSmallParcelDataOutputSchema $partnered_small_parcel_data,
+        public ?NonPartneredSmallParcelDataOutputSchema $non_partnered_small_parcel_data,
+        public ?PartneredLtlDataOutputSchema $partnered_ltl_data,
+        public ?NonPartneredLtlDataOutputSchema $non_partnered_ltl_data,
+    ) {
+    }
 }

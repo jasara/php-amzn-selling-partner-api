@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\GetEligibleShipmentServicesR
 
 class GetEligibleShipmentServicesResponse extends BaseResponse
 {
-    public ?GetEligibleShipmentServicesResultSchema $payload;
+    public function __construct(
+        public ?GetEligibleShipmentServicesResultSchema $payload,
+    ) {
+    }
 }

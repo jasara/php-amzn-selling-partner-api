@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Reports;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ReportScheduleListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ReportScheduleSchema>
+ */
+class ReportScheduleListSchema extends TypedCollection
 {
-    public function offsetGet($key): ReportScheduleSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = ReportScheduleSchema::class;
 }

@@ -2,15 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PatchOperationSchema extends DataTransferObject
+class PatchOperationSchema extends BaseSchema
 {
-    #[StringEnumValidator(['add', 'replace', 'delete'])]
-    public string $op;
-
-    public string $path;
-
-    public ?array $value;
+    public function __construct(
+        #[StringEnumValidator(['add', 'replace', 'delete'])]
+        public string $op,
+        public string $path,
+        public ?array $value,
+    ) {
+    }
 }

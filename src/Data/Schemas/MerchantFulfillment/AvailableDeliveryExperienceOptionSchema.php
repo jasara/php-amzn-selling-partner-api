@@ -2,12 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class AvailableDeliveryExperienceOptionSchema extends DataTransferObject
+class AvailableDeliveryExperienceOptionSchema extends BaseSchema
 {
-    public string $delivery_experience_option;
-
-    public MoneySchema $charge;
+    public function __construct(
+        public string $delivery_experience_option,
+        public MoneySchema $charge,
+    ) {
+    }
 }

@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetFulfillmentPreviewResultSchema extends DataTransferObject
+class GetFulfillmentPreviewResultSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: FulfillmentPreviewSchema::class)]
-    public ?FulfillmentPreviewListSchema $fulfillment_previews;
+    public function __construct(
+        public ?FulfillmentPreviewListSchema $fulfillment_previews,
+    ) {
+    }
 }

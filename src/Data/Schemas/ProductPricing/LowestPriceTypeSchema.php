@@ -2,28 +2,23 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class LowestPriceTypeSchema extends DataTransferObject
+class LowestPriceTypeSchema extends BaseSchema
 {
-    public string $condition;
-
-    public string $fulfillment_channel;
-
-    #[StringEnumValidator(['B2C', 'B2B'])]
-    public ?string $offer_customer_type;
-
-    public ?int $quantity_tier;
-
-    public ?QuantityDiscountTypeSchema $quantity_discount_type;
-
-    public MoneySchema $landed_price;
-
-    public MoneySchema $listing_price;
-
-    public MoneySchema $shipping;
-
-    public ?PointsSchema $points;
+    public function __construct(
+        public string $condition,
+        public string $fulfillment_channel,
+        #[StringEnumValidator(['B2C', 'B2B'])]
+        public ?string $offer_customer_type,
+        public ?int $quantity_tier,
+        public ?QuantityDiscountTypeSchema $quantity_discount_type,
+        public MoneySchema $landed_price,
+        public MoneySchema $listing_price,
+        public MoneySchema $shipping,
+        public ?PointsSchema $points,
+    ) {
+    }
 }

@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class FeeListSchema extends Collection
+/**
+ * @template-extends TypedCollection<FeeSchema>
+ */
+class FeeListSchema extends TypedCollection
 {
-    public function offsetGet($key): FeeSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = FeeSchema::class;
 }

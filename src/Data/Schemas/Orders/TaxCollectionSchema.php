@@ -2,14 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TaxCollectionSchema extends DataTransferObject
+class TaxCollectionSchema extends BaseSchema
 {
-    #[StringEnumValidator(['MarketplaceFacilitator'])]
-    public ?string $model;
-
-    #[StringEnumValidator(['Amazon Services, Inc.'])]
-    public ?string $responsible_party;
+    public function __construct(
+        #[StringEnumValidator(['MarketplaceFacilitator'])]
+        public ?string $model,
+        #[StringEnumValidator(['Amazon Services, Inc.'])]
+        public ?string $responsible_party,
+    ) {
+    }
 }

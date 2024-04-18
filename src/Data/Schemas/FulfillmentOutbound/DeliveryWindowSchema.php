@@ -3,15 +3,16 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
 use Carbon\CarbonImmutable;
-use Jasara\AmznSPA\Data\Casts\CarbonFromStringCaster;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class DeliveryWindowSchema extends DataTransferObject
+class DeliveryWindowSchema extends BaseSchema
 {
-    #[CastWith(CarbonFromStringCaster::class)]
-    public CarbonImmutable $start_date;
-
-    #[CastWith(CarbonFromStringCaster::class)]
-    public CarbonImmutable $end_date;
+    public function __construct(
+        #[CarbonFromStringCaster]
+        public CarbonImmutable $start_date,
+        #[CarbonFromStringCaster]
+        public CarbonImmutable $end_date,
+    ) {
+    }
 }

@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LabelSchema extends DataTransferObject
+class LabelSchema extends BaseSchema
 {
-    public ?string $label_stream;
-
-    public ?LabelSpecificationSchema $label_specification;
+    public function __construct(
+        public ?string $label_stream,
+        public ?LabelSpecificationSchema $label_specification,
+    ) {
+    }
 }

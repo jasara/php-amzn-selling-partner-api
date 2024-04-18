@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ItemClassificationSalesRankListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ItemClassificationSalesRankSchema>
+ */
+class ItemClassificationSalesRankListSchema extends TypedCollection
 {
-    public function offsetGet($key): ItemClassificationSalesRankSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = ItemClassificationSalesRankSchema::class;
 }

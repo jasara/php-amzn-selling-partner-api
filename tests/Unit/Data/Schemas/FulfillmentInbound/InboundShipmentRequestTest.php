@@ -13,7 +13,7 @@ class InboundShipmentRequestTest extends UnitTestCase
 {
     public function testToArrayObject()
     {
-        $request = new InboundShipmentRequest(
+        $request = InboundShipmentRequest::from(
             inbound_shipment_header: [
                 'shipment_name' => Str::random(),
                 'ship_from_address' => $this->setupAddress(),

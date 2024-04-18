@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Orders\OrderBuyerInfoSchema;
 
 class GetOrderBuyerInfoResponse extends BaseResponse
 {
-    public ?OrderBuyerInfoSchema $payload;
+    public function __construct(
+        public ?OrderBuyerInfoSchema $payload,
+    ) {
+    }
 }

@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class UpdateShipmentStatusOrderItemSchema extends DataTransferObject
+class UpdateShipmentStatusOrderItemSchema extends BaseSchema
 {
-    public ?string $order_item_id;
-
-    public ?int $quantity;
+    public function __construct(
+        public ?string $order_item_id,
+        public ?int $quantity,
+    ) {
+    }
 }

@@ -2,17 +2,18 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Jasara\AmznSPA\Data\Validators\MaxLengthValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TrackingAddressSchema extends DataTransferObject
+class TrackingAddressSchema extends BaseSchema
 {
-    #[MaxLengthValidator(150)]
-    public string $city;
-
-    #[MaxLengthValidator(150)]
-    public string $state;
-
-    #[MaxLengthValidator(6)]
-    public string $country;
+    public function __construct(
+        #[MaxLengthValidator(150)]
+        public string $city,
+        #[MaxLengthValidator(150)]
+        public string $state,
+        #[MaxLengthValidator(6)]
+        public string $country,
+    ) {
+    }
 }

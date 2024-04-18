@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class NonPartneredSmallParcelPackageInputListSchema extends Collection
+/**
+ * @template-extends TypedCollection<NonPartneredSmallParcelPackageInputSchema>
+ */
+class NonPartneredSmallParcelPackageInputListSchema extends TypedCollection
 {
-    public function offsetGet($key): NonPartneredSmallParcelPackageInputSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = NonPartneredSmallParcelPackageInputSchema::class;
 }

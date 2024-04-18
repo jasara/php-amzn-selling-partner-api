@@ -12,16 +12,17 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\Data\ApplicationKeysDTO;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\GrantlessTokenDTO;
-use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\ApplicationKeys;
+use Jasara\AmznSPA\Data\AuthTokens;
+use Jasara\AmznSPA\Data\GrantlessToken;
+use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
 #[CoversClass(AmznSPAConfig::class)]
+#[CoversClass(ApplicationKeys::class)]
 class AmznSPAConfigTest extends UnitTestCase
 {
     public function testGetNewConfig()
@@ -64,8 +65,8 @@ class AmznSPAConfigTest extends UnitTestCase
 
         $this->assertInstanceOf(Marketplace::class, $config->getMarketplace());
         $this->assertInstanceOf(PendingRequest::class, $config->getHttp());
-        $this->assertInstanceOf(AuthTokensDTO::class, $config->getTokens());
-        $this->assertInstanceOf(ApplicationKeysDTO::class, $config->getApplicationKeys());
+        $this->assertInstanceOf(AuthTokens::class, $config->getTokens());
+        $this->assertInstanceOf(ApplicationKeys::class, $config->getApplicationKeys());
 
         foreach ($application_key_properties as $property) {
             $this->assertEquals($$property, $config->getApplicationKeys()->$property);
@@ -112,20 +113,23 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertInstanceOf(PendingRequest::class, $config->getHttp());
 
         $refresh_token = Str::random();
-        $config->setTokens(new AuthTokensDTO(
+        $config->setTokens(AuthTokens::from(
             refresh_token: $refresh_token,
         ));
 
         $this->assertEquals($refresh_token, $config->getTokens()->refresh_token);
 
         $grantless_access_token = Str::random();
-        $config->setGrantlessToken(new GrantlessTokenDTO(
+        $config->setGrantlessToken(new GrantlessToken(
             access_token: $grantless_access_token,
+            expires_at: 3600,
         ));
 
         $restricted_data_token = Str::random();
-        $config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+        $config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: $restricted_data_token,
+            expires_at: 3600,
+            path: '/path',
         ));
 
         $this->assertEquals($restricted_data_token, $config->getRestrictedDataToken()->access_token);
@@ -160,14 +164,14 @@ class AmznSPAConfigTest extends UnitTestCase
     {
         $config = $this->setupMinimalConfig();
 
-        $error_filepath = __DIR__.'/../error-log.txt';
+        $error_filepath = __DIR__ . '/../error-log.txt';
         touch($error_filepath);
         $logger_resource = fopen($error_filepath, 'rw+');
         ftruncate($logger_resource, 0);
         $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
             $log = sprintf('[%s] %s', $level, $message);
             if (count($context)) {
-                $log .= ' Context: '.json_encode($context);
+                $log .= ' Context: ' . json_encode($context);
             }
 
             $log = str_replace(["\n", "\r"], '', $log);

@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FbaInventory;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GranularitySchema extends DataTransferObject
+class GranularitySchema extends BaseSchema
 {
-    public ?string $granularity_type;
-
-    public ?string $granularity_id;
+    public function __construct(
+        public ?string $granularity_type,
+        public ?string $granularity_id,
+    ) {
+    }
 }

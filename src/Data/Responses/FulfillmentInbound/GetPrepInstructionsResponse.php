@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetPrepInstructionsResultSche
 
 class GetPrepInstructionsResponse extends BaseResponse
 {
-    public ?GetPrepInstructionsResultSchema $payload;
+    public function __construct(
+        public ?GetPrepInstructionsResultSchema $payload,
+    ) {
+    }
 }

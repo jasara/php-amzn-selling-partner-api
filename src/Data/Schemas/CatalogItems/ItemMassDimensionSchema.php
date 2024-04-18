@@ -2,14 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ItemMassDimensionSchema extends DataTransferObject
+class ItemMassDimensionSchema extends BaseSchema
 {
-    public ?string $unit;
-
-    public ?float $value;
+    public function __construct(
+        public ?string $unit,
+        public ?float $value,
+    ) {
+    }
 
     public function asUom(): Mass
     {

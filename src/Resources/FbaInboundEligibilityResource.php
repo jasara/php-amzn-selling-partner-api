@@ -11,7 +11,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class FbaInboundEligibilityResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/fba/inbound/v1/eligibility/itemPreview';
 
     public function __construct(
@@ -27,12 +26,14 @@ class FbaInboundEligibilityResource implements ResourceContract
         }
         $this->validateStringEnum($program, ['INBOUND', 'COMMINGLING']);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH, array_filter([
-            'marketplaceIds' => $marketplace_ids,
-            'asin' => $asin,
-            'program' => $program,
-        ]));
+        $response = $this->http
+            ->responseClass(GetItemEligibilityPreviewResponse::class)
+            ->get($this->endpoint . self::BASE_PATH, array_filter([
+                'marketplaceIds' => $marketplace_ids,
+                'asin' => $asin,
+                'program' => $program,
+            ]));
 
-        return new GetItemEligibilityPreviewResponse($response);
+        return $response;
     }
 }

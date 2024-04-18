@@ -2,28 +2,24 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
+use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\PackageDimensionsSchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Jasara\AmznSPA\Data\Validators\MaxLengthValidator;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ContainerSchema extends DataTransferObject
+class ContainerSchema extends BaseSchema
 {
-    #[StringEnumValidator(['PACKAGE'])]
-    public ?string $container_type;
+    public function __construct(
+        #[StringEnumValidator(['PACKAGE'])]
+        public ?string $container_type,
+        #[MaxLengthValidator(40)]
+        public string $container_reference_id,
+        public CurrencySchema $value,
+        public PackageDimensionsSchema $dimensions,
 
-    #[MaxLengthValidator(40)]
-    public string $container_reference_id;
-
-    public CurrencySchema $value;
-
-    public PackageDimensionsSchema $dimensions;
-
-    #[CastWith(ArrayCaster::class, itemType: ContainerItemSchema::class)]
-    public ContainerItemListSchema $items;
-
-    public WeightSchema $weight;
+        public ContainerItemListSchema $items,
+        public WeightSchema $weight,
+    ) {
+    }
 }

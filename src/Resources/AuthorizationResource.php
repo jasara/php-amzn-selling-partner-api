@@ -10,7 +10,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class AuthorizationResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/authorization/v1/';
 
     public function __construct(
@@ -26,12 +25,14 @@ class AuthorizationResource implements ResourceContract
      */
     public function getAuthorizationCodeFromMwsToken(string $seller_id, string $developer_id, string $mws_auth_token): GetAuthorizationCodeResponse
     {
-        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'authorizationCode', [
-            'sellingPartnerId' => $seller_id,
-            'developerId' => $developer_id,
-            'mwsAuthToken' => $mws_auth_token,
-        ]);
+        $response = $this->http
+            ->responseClass(GetAuthorizationCodeResponse::class)
+            ->getGrantless($this->endpoint . self::BASE_PATH . 'authorizationCode', [
+                'sellingPartnerId' => $seller_id,
+                'developerId' => $developer_id,
+                'mwsAuthToken' => $mws_auth_token,
+            ]);
 
-        return new GetAuthorizationCodeResponse($response);
+        return $response;
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class RateListSchema extends Collection
+/**
+ * @template-extends TypedCollection<RateSchema>
+ */
+class RateListSchema extends TypedCollection
 {
-    public function offsetGet($key): RateSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = RateSchema::class;
 }

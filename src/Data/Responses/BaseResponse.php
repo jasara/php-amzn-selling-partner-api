@@ -2,17 +2,22 @@
 
 namespace Jasara\AmznSPA\Data\Responses;
 
+use Jasara\AmznSPA\Data\Base\Data;
 use Jasara\AmznSPA\Data\Schemas\ErrorListSchema;
-use Jasara\AmznSPA\Data\Schemas\ErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\MetadataSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class BaseResponse extends DataTransferObject
+class BaseResponse extends Data
 {
-    #[CastWith(ArrayCaster::class, itemType: ErrorSchema::class)]
-    public ?ErrorListSchema $errors;
+    public ?ErrorListSchema $errors = null;
+    public ?MetadataSchema $metadata = null;
 
-    public ?MetadataSchema $metadata;
+    public function setErrors(ErrorListSchema $errors): void
+    {
+        $this->errors = $errors;
+    }
+
+    public function setMetadata(MetadataSchema $metadata): void
+    {
+        $this->metadata = $metadata;
+    }
 }

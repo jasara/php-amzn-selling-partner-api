@@ -13,7 +13,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
-use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\RestrictedDataToken;
+use Jasara\AmznSPA\Data\Schemas\ErrorListSchema;
+use Jasara\AmznSPA\Data\Schemas\ErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\MetadataSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -23,6 +26,9 @@ use Jasara\AmznSPA\Exceptions\RateLimitException;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @template TResponse of BaseResponse
+ */
 class AmznSPAHttp
 {
     use ValidatesParameters;
@@ -32,40 +38,80 @@ class AmznSPAHttp
     private array $restricted_data_elements = [];
     private bool $use_restricted_data_token = false;
 
+    /** @var class-string<BaseResponse>|null */
+    private ?string $response_class = null;
+
     public function __construct(
         private AmznSPAConfig $config,
         private ?string $grantless_resource = null,
     ) {
     }
 
-    public function get(string $url, array $data = []): array
+    /**
+     * @template TResponse of BaseResponse
+     *
+     * @param class-string<TResponse> $response_class
+     *
+     * @return AmznSpaHttp<TResponse>
+     */
+    public function responseClass(
+        string $response_class,
+    ): self {
+        if (! is_a($response_class, BaseResponse::class, true)) {
+            throw new AmznSPAException('Response class must extend BaseResponse');
+        }
+
+        $this->response_class = $response_class;
+
+        return $this;
+    }
+
+    /**
+     * @return TResponse|array
+     */
+    public function get(string $url, array $data = []): array|object
     {
         $data = $this->transformGetRequestArraysToStrings($data);
 
         return $this->call('get', $url, $data);
     }
 
-    public function put(string $url, array $data): array
+    /**
+     * @return TResponse|array
+     */
+    public function put(string $url, array $data): array|object
     {
         return $this->call('put', $url, $data);
     }
 
-    public function patch(string $url, array $data): array
+    /**
+     * @return TResponse|array
+     */
+    public function patch(string $url, array $data): array|object
     {
         return $this->call('patch', $url, $data);
     }
 
-    public function post(string $url, array $data): array
+    /**
+     * @return TResponse|array
+     */
+    public function post(string $url, array $data): array|object
     {
         return $this->call('post', $url, $data);
     }
 
-    public function delete(string $url): array
+    /**
+     * @return TResponse|array
+     */
+    public function delete(string $url): array|object
     {
         return $this->call('delete', $url);
     }
 
-    public function getGrantless(string $url, array $data = []): array
+    /**
+     * @return TResponse|array
+     */
+    public function getGrantless(string $url, array $data = []): array|object
     {
         return $this->call(
             method: 'get',
@@ -75,7 +121,10 @@ class AmznSPAHttp
         );
     }
 
-    public function postGrantless(string $url, array $data): array
+    /**
+     * @return TResponse|array
+     */
+    public function postGrantless(string $url, array $data): array|object
     {
         return $this->call(
             method: 'post',
@@ -85,7 +134,10 @@ class AmznSPAHttp
         );
     }
 
-    public function deleteGrantless(string $url): array
+    /**
+     * @return TResponse|array
+     */
+    public function deleteGrantless(string $url): array|object
     {
         return $this->call(
             method: 'delete',
@@ -108,7 +160,10 @@ class AmznSPAHttp
         $this->use_restricted_data_token = true;
     }
 
-    private function call(string $method, string $url, array $data = [], bool $grantless = false): array
+    /**
+     * @return TResponse|array
+     */
+    private function call(string $method, string $url, array $data = [], bool $grantless = false): array|object
     {
         $this->setupHttp($this->config->getHttp(), $grantless, $url, $method);
 
@@ -183,7 +238,7 @@ class AmznSPAHttp
 
         $refresh_token = $this->config->getTokens()->refresh_token;
 
-        if (!$refresh_token) {
+        if (! $refresh_token) {
             throw new AmznSPAException('Refresh token is not set');
         }
 
@@ -194,7 +249,7 @@ class AmznSPAHttp
 
     private function refreshGrantlessToken()
     {
-        $scope = 'sellingpartnerapi::'.$this->grantless_resource;
+        $scope = 'sellingpartnerapi::' . $this->grantless_resource;
 
         $amzn = new AmznSPA($this->config);
         $token = $amzn->lwa->getGrantlessAccessToken($scope);
@@ -206,7 +261,7 @@ class AmznSPAHttp
     {
         $path = $this->getRestrictedTokenPathFromUrl($url);
 
-        $request = new CreateRestrictedDataTokenRequest(
+        $request = CreateRestrictedDataTokenRequest::from(
             restricted_resources: [
                 [
                     'method' => strtoupper($method),
@@ -220,10 +275,10 @@ class AmznSPAHttp
         $response = $amzn->tokens->createRestrictedDataToken($request);
 
         if ($response->errors) {
-            throw new AmznSPAException(implode(',', $response->errors->pluck('message')->toArray() ?: []));
+            throw new AmznSPAException(implode(',', $response->errors->toBase()->pluck('message')->toArray() ?: []));
         }
 
-        $this->config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+        $this->config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: $response->restricted_data_token,
             expires_at: $response->expires_in,
             path: $path,
@@ -249,23 +304,23 @@ class AmznSPAHttp
         if ($this->shouldGetRestrictedDataToken($url, $method)) {
             $restricted_token = $this->config->getRestrictedDataToken();
 
-            if (!$this->isRestrictedTokenCompatibleWithPath($restricted_token, $url)) {
+            if (! $this->isRestrictedTokenCompatibleWithPath($restricted_token, $url)) {
                 $this->refreshRdtToken($url, $method);
-            } elseif (!$restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
+            } elseif (! $restricted_token->access_token || ($restricted_token->expires_at && $restricted_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshRdtToken($url, $method);
             }
 
             return $this->config->getRestrictedDataToken()->access_token;
-        } elseif (!$grantless) {
+        } elseif (! $grantless) {
             $tokens = $this->config->getTokens();
-            if (!$tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
+            if (! $tokens->access_token || ($tokens->expires_at && $tokens->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshTokens();
             }
 
             return $this->config->getTokens()->access_token;
         } else {
             $grantless_token = $this->config->getGrantlessToken();
-            if (!$grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
+            if (! $grantless_token->access_token || ($grantless_token->expires_at && $grantless_token->expires_at->subMinutes(5)->isPast())) {
                 $this->refreshGrantlessToken();
             }
 
@@ -275,15 +330,15 @@ class AmznSPAHttp
 
     private function shouldGetRestrictedDataToken(string $url, string $method): bool
     {
-        if (!$this->config->shouldGetRdtTokens()) {
+        if (! $this->config->shouldGetRdtTokens()) {
             return false;
         }
 
-        if (!$this->isRestrictedDataPath($url, $method)) {
+        if (! $this->isRestrictedDataPath($url, $method)) {
             return false;
         }
 
-        if (!$this->use_restricted_data_token) {
+        if (! $this->use_restricted_data_token) {
             return false;
         }
 
@@ -319,7 +374,7 @@ class AmznSPAHttp
         return $path;
     }
 
-    private function isRestrictedTokenCompatibleWithPath(RestrictedDataTokenDTO $token, string $url): bool
+    private function isRestrictedTokenCompatibleWithPath(RestrictedDataToken $token, string $url): bool
     {
         $path = $this->getRestrictedTokenPathFromUrl($url);
 
@@ -375,18 +430,18 @@ class AmznSPAHttp
 
     private function handleRequestException(RequestException $e, bool $grantless)
     {
-        if (!$e->response->json()) {
+        if (! $e->response->json()) {
             throw $e;
         }
 
-        if (!$this->shouldRefreshToken($e->response->json())) {
+        if (! $this->shouldRefreshToken($e->response->json())) {
             throw $e;
         }
-        if (!$this->shouldRetry()) {
+        if (! $this->shouldRetry()) {
             throw $e;
         }
 
-        if (!$grantless) {
+        if (! $grantless) {
             $this->refreshTokens();
         } else {
             $this->refreshGrantlessToken();
@@ -395,11 +450,11 @@ class AmznSPAHttp
 
     public function shouldReturnErrorResponse(RequestException $e): bool
     {
-        if (!in_array($e->response->status(), [400, 404])) {
+        if (! in_array($e->response->status(), [400, 404])) {
             return false;
         }
 
-        if (!Arr::get($e->response->json(), 'errors')) {
+        if (! Arr::get($e->response->json(), 'errors')) {
             return false;
         }
 
@@ -467,10 +522,25 @@ class AmznSPAHttp
         );
     }
 
-    private function handleResponse(Response $response): array
+    private function handleResponse(Response $response): array|BaseResponse
     {
-        return array_merge(array_keys_to_snake($response->json() ?: []), [
-            'metadata' => $this->getMetaData($response),
-        ]);
+        $response_array = array_keys_to_snake($response->json() ?: []);
+
+        if ($this->response_class) {
+            /** @var BaseResponse */
+            $mapped_response = $this->response_class::from($response_array);
+
+            if (array_key_exists('errors', $response_array)) {
+                $mapped_response->setErrors(
+                    ErrorListSchema::make(array_map(fn ($error) => ErrorSchema::from($error), $response_array['errors']))
+                );
+            }
+
+            $mapped_response->setMetadata($this->getMetaData($response));
+
+            return $mapped_response;
+        }
+
+        return $response_array;
     }
 }

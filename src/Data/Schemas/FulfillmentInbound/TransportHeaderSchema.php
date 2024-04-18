@@ -2,17 +2,17 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TransportHeaderSchema extends DataTransferObject
+class TransportHeaderSchema extends BaseSchema
 {
-    public string $seller_id;
-
-    public string $shipment_id;
-
-    public ?bool $is_partnered;
-
-    #[StringEnumValidator(['SP', 'LTL'])]
-    public string $shipment_type;
+    public function __construct(
+        public string $seller_id,
+        public string $shipment_id,
+        public ?bool $is_partnered,
+        #[StringEnumValidator(['SP', 'LTL'])]
+        public string $shipment_type,
+    ) {
+    }
 }

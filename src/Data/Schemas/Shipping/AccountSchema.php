@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AccountSchema extends DataTransferObject
+class AccountSchema extends BaseSchema
 {
-    public string $account_id;
+    public function __construct(
+        public string $account_id,
+    ) {
+    }
 }

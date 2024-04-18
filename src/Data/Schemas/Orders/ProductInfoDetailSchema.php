@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ProductInfoDetailSchema extends DataTransferObject
+class ProductInfoDetailSchema extends BaseSchema
 {
-    public ?int $number_of_items;
+    public function __construct(
+        public ?int $number_of_items,
+    ) {
+    }
 }

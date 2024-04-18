@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class FulfillmentAvailabilityListSchema extends Collection
+/**
+ * @template-extends TypedCollection<FulfillmentAvailabilitySchema>
+ */
+class FulfillmentAvailabilityListSchema extends TypedCollection
 {
-    public function offsetGet($key): FulfillmentAvailabilitySchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = FulfillmentAvailabilitySchema::class;
 }

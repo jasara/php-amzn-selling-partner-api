@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\AuthorizationCodeSchema;
 
 class GetAuthorizationCodeResponse extends BaseResponse
 {
-    public ?AuthorizationCodeSchema $payload;
+    public function __construct(
+        public ?AuthorizationCodeSchema $payload,
+    ) {
+    }
 }

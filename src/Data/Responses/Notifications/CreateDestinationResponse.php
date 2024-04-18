@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationSchema;
 
 class CreateDestinationResponse extends BaseResponse
 {
-    public ?DestinationSchema $payload;
+    public function __construct(
+        public ?DestinationSchema $payload,
+    ) {
+    }
 }

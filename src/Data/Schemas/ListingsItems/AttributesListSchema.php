@@ -2,22 +2,21 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class AttributesListSchema extends Collection
+/**
+ * @template-extends TypedCollection<AttributeSchema>
+ */
+class AttributesListSchema extends TypedCollection
 {
-    public function offsetGet($key): AttributeSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = AttributeSchema::class;
 
     public function toArrayObject(): \ArrayObject
     {
         $array_object = new \ArrayObject();
-        $attribute_names = $this->pluck('name')->unique()->toArray();
+        $attribute_names = $this->toBase()->pluck('name')->unique()->toArray();
 
         foreach ($attribute_names as $attribute_name) {
-            /** @var Collection<int, AttributeSchema> */
             $attribute_schemas = $this->filter(fn (AttributeSchema $attribute) => $attribute->name === $attribute_name);
             $attribute_values = [];
             foreach ($attribute_schemas as $attribute_schema) {

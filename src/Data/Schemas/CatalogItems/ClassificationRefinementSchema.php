@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ClassificationRefinementSchema extends DataTransferObject
+class ClassificationRefinementSchema extends BaseSchema
 {
-    public int $number_of_results;
-
-    public string $display_name;
-
-    public string $classification_id;
+    public function __construct(
+        public int $number_of_results,
+        public string $display_name,
+        public string $classification_id,
+    ) {
+    }
 }

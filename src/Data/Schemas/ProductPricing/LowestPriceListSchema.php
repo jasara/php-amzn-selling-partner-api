@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class LowestPriceListSchema extends Collection
+/**
+ * @template-extends TypedCollection<LowestPriceTypeSchema>
+ */
+class LowestPriceListSchema extends TypedCollection
 {
-    public function offsetGet($key): LowestPriceTypeSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = LowestPriceTypeSchema::class;
 }

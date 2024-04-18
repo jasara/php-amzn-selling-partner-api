@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class ContainerSpecificationListSchema extends Collection
+/**
+ * @template-extends TypedCollection<ContainerSpecificationSchema>
+ */
+class ContainerSpecificationListSchema extends TypedCollection
 {
-    public function offsetGet($key): ContainerSpecificationSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = ContainerSpecificationSchema::class;
 }

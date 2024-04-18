@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class SalesRankTypeSchema extends DataTransferObject
+class SalesRankTypeSchema extends BaseSchema
 {
-    public string $product_category_id;
-
-    public int $rank;
+    public function __construct(
+        public string $product_category_id,
+        public int $rank,
+    ) {
+    }
 }

@@ -2,18 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Illuminate\Support\Collection;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AttributeSchema extends DataTransferObject
+class AttributeSchema extends BaseSchema
 {
-    public string $name; // bullet_point, brand, manufacturer, etc
-
-    /**
-     * @var Collection<int, AttributePropertySchema>
-     */
-    #[CastWith(ArrayCaster::class, itemType: AttributePropertySchema::class)]
-    public Collection $properties;
+    public function __construct(
+        public string $name,
+        public AttributePropertyListSchema $properties,
+    ) {
+    }
 }

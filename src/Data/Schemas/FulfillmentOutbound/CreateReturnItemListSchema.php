@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class CreateReturnItemListSchema extends Collection
+/**
+ * @template-extends TypedCollection<CreateReturnItemSchema>
+ */
+class CreateReturnItemListSchema extends TypedCollection
 {
-    public function offsetGet($key): CreateReturnItemSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = CreateReturnItemSchema::class;
 }

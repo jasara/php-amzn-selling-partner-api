@@ -2,15 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemImageSchema extends DataTransferObject
+class ItemImageSchema extends BaseSchema
 {
-    public ?string $variant;
-
-    public string $link;
-
-    public int $height;
-
-    public int $width;
+    public function __construct(
+        public ?string $variant,
+        public string $link,
+        public int $height,
+        public int $width,
+    ) {
+    }
 }

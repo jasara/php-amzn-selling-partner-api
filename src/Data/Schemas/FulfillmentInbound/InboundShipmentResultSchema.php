@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class InboundShipmentResultSchema extends DataTransferObject
+class InboundShipmentResultSchema extends BaseSchema
 {
-    public string $shipment_id;
+    public function __construct(
+        public string $shipment_id,
+    ) {
+    }
 }

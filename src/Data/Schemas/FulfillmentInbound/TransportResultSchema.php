@@ -3,15 +3,16 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
 use Jasara\AmznSPA\Constants\AmazonEnums;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TransportResultSchema extends DataTransferObject
+class TransportResultSchema extends BaseSchema
 {
-    #[StringEnumValidator(AmazonEnums::TRANSPORT_STATUSES)]
-    public string $transport_status;
-
-    public ?string $error_code;
-
-    public ?string $error_description;
+    public function __construct(
+        #[StringEnumValidator(AmazonEnums::TRANSPORT_STATUSES)]
+        public string $transport_status,
+        public ?string $error_code,
+        public ?string $error_description,
+    ) {
+    }
 }

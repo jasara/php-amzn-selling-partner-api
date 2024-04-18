@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\ProductFees\FeesEstimateRequestSchema;
 
 class GetMyFeesEstimateRequest extends BaseRequest
 {
-    public ?FeesEstimateRequestSchema $fees_estimate_request;
+    public function __construct(
+        public ?FeesEstimateRequestSchema $fees_estimate_request = null,
+    ) {
+    }
 }

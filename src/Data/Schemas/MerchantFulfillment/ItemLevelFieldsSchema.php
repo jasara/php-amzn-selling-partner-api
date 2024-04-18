@@ -2,14 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ItemLevelFieldsSchema extends DataTransferObject
+class ItemLevelFieldsSchema extends BaseSchema
 {
-    public string $asin;
+    public function __construct(
+        public string $asin,
 
-    #[CastWith(ArrayCaster::class, itemType: AdditionalInputsSchema::class)]
-    public AdditionalInputsListSchema $additional_inputs;
+        public AdditionalInputsListSchema $additional_inputs,
+    ) {
+    }
 }

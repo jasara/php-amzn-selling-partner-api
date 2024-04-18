@@ -10,7 +10,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class SellersResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/sellers/v1/marketplaceParticipations';
 
     public function __construct(
@@ -21,8 +20,10 @@ class SellersResource implements ResourceContract
 
     public function getMarketplaceParticipations(): GetMarketplaceParticipationsResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH);
+        $response = $this->http
+            ->responseClass(GetMarketplaceParticipationsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH);
 
-        return new GetMarketplaceParticipationsResponse($response);
+        return $response;
     }
 }

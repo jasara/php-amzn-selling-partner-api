@@ -2,11 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ProductTypeVersionSchema extends DataTransferObject
+class ProductTypeVersionSchema extends BaseSchema
 {
-    public string $version;
-    public bool $latest;
-    public bool $release_candidate;
+    public function __construct(
+        public string $version,
+        public bool $latest,
+        public bool $release_candidate,
+    ) {
+    }
 }

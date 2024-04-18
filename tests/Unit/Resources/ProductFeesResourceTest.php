@@ -16,7 +16,7 @@ class ProductFeesResourceTest extends UnitTestCase
     public function testGetMyFeesEstimateForSku()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('product-fees/get-my-fees-estimate-for-sku');
-        $request = new GetMyFeesEstimateRequest(
+        $request = GetMyFeesEstimateRequest::from(
             fees_estimate_request: [
                 'marketplace_id' => 'ATVPDKIKX0DER',
                 'is_amazon_fulfilled' => false,
@@ -50,7 +50,7 @@ class ProductFeesResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/listings/'.$seller_sku.'/feesEstimate', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/listings/' . $seller_sku . '/feesEstimate', urldecode($request->url()));
 
             return true;
         });
@@ -59,7 +59,7 @@ class ProductFeesResourceTest extends UnitTestCase
     public function testGetMyFeesEstimateForAsin()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('product-fees/get-my-fees-estimate-for-sku');
-        $request = new GetMyFeesEstimateRequest(
+        $request = GetMyFeesEstimateRequest::from(
             fees_estimate_request: [
                 'marketplace_id' => 'ATVPDKIKX0DER',
                 'is_amazon_fulfilled' => false,
@@ -93,7 +93,7 @@ class ProductFeesResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/items/'.$asin.'/feesEstimate', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/items/' . $asin . '/feesEstimate', urldecode($request->url()));
 
             return true;
         });

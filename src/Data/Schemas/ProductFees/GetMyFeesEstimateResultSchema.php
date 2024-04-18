@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductFees;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetMyFeesEstimateResultSchema extends DataTransferObject
+class GetMyFeesEstimateResultSchema extends BaseSchema
 {
-    public ?FeesEstimateResultSchema $fees_estimate_result;
+    public function __construct(
+        public ?FeesEstimateResultSchema $fees_estimate_result,
+    ) {
+    }
 }

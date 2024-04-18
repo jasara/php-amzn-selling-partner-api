@@ -7,17 +7,19 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\TransportDetailInputSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(PutTransportDetailsRequest::class)]
 class PutTransportDetailsRequestTest extends UnitTestCase
 {
-    public function testReadyDate()
+    public function testReadyDate(): void
     {
         $ready_date = CarbonImmutable::now()->addWeekdays(10);
-        $request = new PutTransportDetailsRequest(
+        $request = PutTransportDetailsRequest::from(
             is_partnered: true,
             shipment_type: 'LTL',
-            transport_details: new TransportDetailInputSchema(
-                partnered_ltl_data: new PartneredLtlDataInputSchema(
+            transport_details: TransportDetailInputSchema::from(
+                partnered_ltl_data: PartneredLtlDataInputSchema::from(
                     contact: $this->setupContact(),
                     freight_ready_date: $ready_date,
                 ),

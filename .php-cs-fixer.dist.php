@@ -32,6 +32,7 @@ $rules = [
     'magic_method_casing' => true, // added from Symfony
     'magic_constant_casing' => true,
     'method_argument_space' => true,
+    'method_chaining_indentation' => true,
     'native_function_casing' => true,
     'no_alias_functions' => true,
     'no_extra_blank_lines' => [
@@ -104,7 +105,6 @@ $rules = [
     'unary_operator_spaces' => true,
     'whitespace_after_comma_in_array' => true,
 
-    // php-cs-fixer 3: Renamed rules
     'constant_case' => ['case' => 'lower'],
     'general_phpdoc_tag_rename' => true,
     'phpdoc_inline_tag_normalizer' => true,
@@ -112,19 +112,17 @@ $rules = [
     'psr_autoloading' => true,
     'trailing_comma_in_multiline' => ['elements' => ['arrays']],
 
-    // php-cs-fixer 3: Changed options
     'binary_operator_spaces' => [
         'default' => 'single_space',
-        'operators' => ['=>' => null],
     ],
     'blank_line_before_statement' => [
         'statements' => ['return'],
     ],
     'class_attributes_separation' => [
         'elements' => [
-            'const' => 'one',
+            'const' => 'only_if_meta',
             'method' => 'one',
-            'property' => 'one',
+            'property' => 'only_if_meta',
         ],
     ],
     'class_definition' => [
@@ -136,7 +134,6 @@ $rules = [
         'sort_algorithm' => 'alpha',
     ],
 
-    // php-cs-fixer 3: Removed rootless options (*)
     'no_unneeded_control_parentheses' => [
         'statements' => ['break', 'clone', 'continue', 'echo_print', 'return', 'switch_case', 'yield'],
     ],
@@ -146,23 +143,15 @@ $rules = [
     'visibility_required' => [
         'elements' => ['property', 'method', 'const'],
     ],
-
 ];
 
-$finder = Finder::create()
-    ->notPath('vendor')
-    ->in([
-        __DIR__ . '/src',
-        __DIR__ . '/tests',
-    ])
-    ->ignoreUnreadableDirs()
-    ->name('*.php')
-    ->notName('*.blade.php')
+$finder = (new Finder)
+    ->in(__DIR__)
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
 return (new Config())
-    ->setFinder($finder)
     ->setRules($rules)
+    ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setUsingCache(true);

@@ -2,15 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductFees;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class FeesEstimateErrorSchema extends DataTransferObject
+class FeesEstimateErrorSchema extends BaseSchema
 {
-    public string $type;
-
-    public string $code;
-
-    public string $message;
-
-    public array $detail;
+    public function __construct(
+        public string $type,
+        public string $code,
+        public string $message,
+        public array $detail,
+    ) {
+    }
 }

@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\GetFulfillmentPreviewResultS
 
 class GetFulfillmentPreviewResponse extends BaseResponse
 {
-    public ?GetFulfillmentPreviewResultSchema $payload;
+    public function __construct(
+        public ?GetFulfillmentPreviewResultSchema $payload,
+    ) {
+    }
 }

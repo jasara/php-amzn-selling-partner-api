@@ -2,11 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Shipping;
 
-use Jasara\AmznSPA\Data\Validators\MaxLengthValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class PartySchema extends DataTransferObject
+class PartySchema extends BaseSchema
 {
-    #[MaxLengthValidator(10)]
-    public ?string $account_id;
+    public function __construct(
+        #[MaxLengthValidator(10)]
+        public ?string $account_id,
+    ) {
+    }
 }

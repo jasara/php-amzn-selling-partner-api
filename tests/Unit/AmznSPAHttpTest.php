@@ -11,15 +11,15 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\GrantlessTokenDTO;
+use Jasara\AmznSPA\Data\AuthTokens;
+use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
-use Jasara\AmznSPA\Data\RestrictedDataTokenDTO;
+use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
@@ -66,7 +66,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokensDTO(
+        $config->setTokens(AuthTokens::from(
             refresh_token: null,
         ));
 
@@ -169,8 +169,9 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setRestrictedDataToken(new RestrictedDataTokenDTO(
+        $config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: Str::random(),
+            expires_at: 3600,
             path: Str::random(),
         ));
 
@@ -211,7 +212,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokensDTO(
+        $config->setTokens(AuthTokens::from(
             refresh_token: Str::random(),
         ));
 
@@ -231,8 +232,9 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setGrantlessToken(new GrantlessTokenDTO(
+        $config->setGrantlessToken(new GrantlessToken(
             access_token: null,
+            expires_at: 0,
         ));
 
         $amzn = new AmznSPA($config);
@@ -306,7 +308,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = $this->setupMinimalConfig(null, $http);
 
         $amzn = new AmznSPA($config);
-        $amzn->notifications->createDestination(Str::random(), new DestinationResourceSpecificationSchema());
+        $amzn->notifications->createDestination(Str::random(), DestinationResourceSpecificationSchema::from());
     }
 
     public function testInvalidInputResponseReturned()
@@ -495,7 +497,7 @@ class AmznSPAHttpTest extends UnitTestCase
             Str::random(),
             ['ATVPDKIKX0DER'],
             null,
-            new ListingsItemPatchRequest(
+            ListingsItemPatchRequest::from(
                 product_type: Str::random(),
                 patches: [],
             )
@@ -532,5 +534,23 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_outbound->cancelFulfillmentOrder('some-order-id');
+    }
+
+    public function testCannotSetResponseThatIsNotBaseResponse()
+    {
+        $this->expectExceptionMessage('Response class must extend BaseResponse');
+
+        $http = new AmznSPAHttp($this->setupMinimalConfig());
+        $http->responseClass('stdClass');
+    }
+
+    public function testReturnsArrayWithNoResponseClassSet()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('reports/get-report-document');
+
+        $http = new AmznSPAHttp($config);
+        $response = $http->get($config->getMarketplace()->getBaseUrl() . '/orders/v0/orders');
+
+        $this->assertIsArray($response);
     }
 }

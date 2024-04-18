@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetInboundGuidanceResultSchem
 
 class GetInboundGuidanceResponse extends BaseResponse
 {
-    public ?GetInboundGuidanceResultSchema $payload;
+    public function __construct(
+        public ?GetInboundGuidanceResultSchema $payload,
+    ) {
+    }
 }

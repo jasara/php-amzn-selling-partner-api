@@ -2,15 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems\v20201201;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class ItemSalesRanksByMarketplaceSchema extends DataTransferObject
+class ItemSalesRanksByMarketplaceSchema extends BaseSchema
 {
-    public string $marketplace_id;
+    public function __construct(
+        public string $marketplace_id,
 
-    #[CastWith(ArrayCaster::class, itemType: CatalogItems\ItemSalesRankSchema::class)]
-    public CatalogItems\ItemSalesRankListSchema $ranks;
+        public CatalogItems\ItemSalesRankListSchema $ranks,
+    ) {
+    }
 }

@@ -2,13 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FbaInventory;
 
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ResearchingQuantityEntrySchema extends DataTransferObject
+class ResearchingQuantityEntrySchema extends BaseSchema
 {
-    #[StringEnumValidator(['researchingQuantityInShortTerm', 'researchingQuantityInMidTerm', 'researchingQuantityInLongTerm'])]
-    public string $name;
-
-    public int $quantity;
+    public function __construct(
+        #[StringEnumValidator(['researchingQuantityInShortTerm', 'researchingQuantityInMidTerm', 'researchingQuantityInLongTerm'])]
+        public string $name,
+        public int $quantity,
+    ) {
+    }
 }

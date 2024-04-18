@@ -2,38 +2,29 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class FulfillmentPreviewSchema extends DataTransferObject
+class FulfillmentPreviewSchema extends BaseSchema
 {
-    #[StringEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
-    public string $shipping_speed_category;
+    public function __construct(
+        #[StringEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
+        public string $shipping_speed_category,
+        public ?ScheduledDeliveryInfoSchema $scheduled_delivery_info,
+        public bool $is_fulfillable,
+        public bool $is_cod_capable,
+        public ?WeightSchema $estimated_shipping_weight,
 
-    public ?ScheduledDeliveryInfoSchema $scheduled_delivery_info;
+        public ?FeeListSchema $estimated_fees,
 
-    public bool $is_fulfillable;
+        public ?FulfillmentPreviewShipmentListSchema $fulfillment_preview_shipments,
 
-    public bool $is_cod_capable;
+        public ?UnfulfillablePreviewItemListSchema $unfulfillable_preview_items,
+        public ?array $order_unfulfillable_reasons,
+        public string $marketplace_id,
 
-    public ?WeightSchema $estimated_shipping_weight;
-
-    #[CastWith(ArrayCaster::class, itemType: FeeSchema::class)]
-    public ?FeeListSchema $estimated_fees;
-
-    #[CastWith(ArrayCaster::class, itemType: FulfillmentPreviewShipmentSchema::class)]
-    public ?FulfillmentPreviewShipmentListSchema $fulfillment_preview_shipments;
-
-    #[CastWith(ArrayCaster::class, itemType: FulfillmentPreviewItemSchema::class)]
-    public ?UnfulfillablePreviewItemListSchema $unfulfillable_preview_items;
-
-    public ?array $order_unfulfillable_reasons;
-
-    public string $marketplace_id;
-
-    #[CastWith(ArrayCaster::class, itemType: FeatureSettingShema::class)]
-    public ?FeatureSettingListSchema $feature_constraints;
+        public ?FeatureSettingListSchema $feature_constraints,
+    ) {
+    }
 }

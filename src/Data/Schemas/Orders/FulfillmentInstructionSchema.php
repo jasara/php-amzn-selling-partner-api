@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class FulfillmentInstructionSchema extends DataTransferObject
+class FulfillmentInstructionSchema extends BaseSchema
 {
-    public ?string $fulfillment_supply_source_id;
+    public function __construct(
+        public ?string $fulfillment_supply_source_id,
+    ) {
+    }
 }

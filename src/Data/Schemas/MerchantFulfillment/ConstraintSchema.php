@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ConstraintSchema extends DataTransferObject
+class ConstraintSchema extends BaseSchema
 {
-    public ?string $validation_reg_ex;
-
-    public string $validation_string;
+    public function __construct(
+        public ?string $validation_reg_ex,
+        public string $validation_string,
+    ) {
+    }
 }

@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\Shipping\RetrieveShippingLabelResultSchema;
 
 class RetrieveShippingLabelResponse extends BaseResponse
 {
-    public ?RetrieveShippingLabelResultSchema $payload;
+    public function __construct(
+        public ?RetrieveShippingLabelResultSchema $payload,
+    ) {
+    }
 }

@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class FulfillmentAvailabilitySchema extends DataTransferObject
+class FulfillmentAvailabilitySchema extends BaseSchema
 {
-    public string $fulfillment_channel_code;
-
-    public ?int $quantity;
+    public function __construct(
+        public string $fulfillment_channel_code,
+        public ?int $quantity,
+    ) {
+    }
 }

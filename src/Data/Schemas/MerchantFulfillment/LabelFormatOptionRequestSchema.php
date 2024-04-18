@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class LabelFormatOptionRequestSchema extends DataTransferObject
+class LabelFormatOptionRequestSchema extends BaseSchema
 {
-    public ?bool $include_packing_slip_with_label;
+    public function __construct(
+        public ?bool $include_packing_slip_with_label,
+    ) {
+    }
 }

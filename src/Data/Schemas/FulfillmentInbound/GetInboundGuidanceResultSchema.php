@@ -2,21 +2,18 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetInboundGuidanceResultSchema extends DataTransferObject
+class GetInboundGuidanceResultSchema extends BaseSchema
 {
-    #[CastWith(ArrayCaster::class, itemType: SKUInboundGuidanceSchema::class)]
-    public ?SKUInboundGuidanceListSchema $sku_inbound_guidance_list;
+    public function __construct(
+        public ?SkuInboundGuidanceListSchema $sku_inbound_guidance_list,
 
-    #[CastWith(ArrayCaster::class, itemType: InvalidSKUSchema::class)]
-    public ?InvalidSKUListSchema $invalid_sku_list;
+        public ?InvalidSkuListSchema $invalid_sku_list,
 
-    #[CastWith(ArrayCaster::class, itemType: ASINInboundGuidanceSchema::class)]
-    public ?ASINInboundGuidanceListSchema $asin_inbound_guidance_list;
+        public ?AsinInboundGuidanceListSchema $asin_inbound_guidance_list,
 
-    #[CastWith(ArrayCaster::class, itemType: InvalidASINSchema::class)]
-    public ?InvalidASINListSchema $invalid_asin_list;
+        public ?InvalidAsinListSchema $invalid_asin_list,
+    ) {
+    }
 }

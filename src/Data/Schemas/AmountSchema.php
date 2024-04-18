@@ -3,15 +3,16 @@
 namespace Jasara\AmznSPA\Data\Schemas;
 
 use Brick\Money\Money;
-use Jasara\AmznSPA\Data\Validators\StringIsNumberValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringIsNumberValidator;
 
-class AmountSchema extends DataTransferObject
+class AmountSchema extends BaseSchema
 {
-    public string $currency_code;
-
-    #[StringIsNumberValidator]
-    public string $value;
+    public function __construct(
+        public string $currency_code,
+        #[StringIsNumberValidator]
+        public string $value,
+    ) {
+    }
 
     public function asMoney(): Money
     {

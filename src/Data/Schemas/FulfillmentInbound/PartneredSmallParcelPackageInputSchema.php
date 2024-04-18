@@ -2,13 +2,15 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\DimensionsSchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class PartneredSmallParcelPackageInputSchema extends DataTransferObject
+class PartneredSmallParcelPackageInputSchema extends BaseSchema
 {
-    public DimensionsSchema $dimensions;
-
-    public WeightSchema $weight;
+    public function __construct(
+        public DimensionsSchema $dimensions,
+        public WeightSchema $weight,
+    ) {
+    }
 }

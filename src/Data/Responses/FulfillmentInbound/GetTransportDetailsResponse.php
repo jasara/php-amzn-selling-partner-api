@@ -7,5 +7,8 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\GetTransportDetailsResultSche
 
 class GetTransportDetailsResponse extends BaseResponse
 {
-    public ?GetTransportDetailsResultSchema $payload;
+    public function __construct(
+        public ?GetTransportDetailsResultSchema $payload,
+    ) {
+    }
 }

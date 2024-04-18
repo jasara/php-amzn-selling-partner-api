@@ -6,6 +6,8 @@ use Illuminate\Http\Client\Request;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
+use Jasara\AmznSPA\Data\Schemas\Tokens\RestrictedResourceSchema;
+use Jasara\AmznSPA\Data\Schemas\Tokens\RestrictedResourcesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -16,14 +18,11 @@ class TokensResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('tokens/create-restricted-data-token');
 
-        $request = new CreateRestrictedDataTokenRequest(
-            restricted_resources: [
-                [
-                    'method' => 'GET',
-                    'path' => '/orders/v0/orders',
-                    'data_elements' => ['buyerInfo', 'shippingAddress'],
-                ],
-            ],
+        $request = CreateRestrictedDataTokenRequest::from(
+            target_application: null,
+            restricted_resources: new RestrictedResourcesListSchema([
+                new RestrictedResourceSchema(method: 'GET', path: '/orders/v0/orders', data_elements: ['buyerInfo', 'shippingAddress']),
+            ])
         );
 
         $amzn = new AmznSPA($config);

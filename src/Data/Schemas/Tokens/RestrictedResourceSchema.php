@@ -2,17 +2,18 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Tokens;
 
-use Jasara\AmznSPA\Data\Validators\StringArrayEnumValidator;
-use Jasara\AmznSPA\Data\Validators\StringEnumValidator;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Base\Validators\StringArrayEnumValidator;
+use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class RestrictedResourceSchema extends DataTransferObject
+class RestrictedResourceSchema extends BaseSchema
 {
-    #[StringEnumValidator(['GET', 'PUT', 'POST', 'DELETE'])]
-    public string $method;
-
-    public string $path;
-
-    #[StringArrayEnumValidator(['buyerInfo', 'shippingAddress'])]
-    public ?array $data_elements;
+    public function __construct(
+        #[StringEnumValidator(['GET', 'PUT', 'POST', 'DELETE'])]
+        public string $method,
+        public string $path,
+        #[StringArrayEnumValidator(['buyerInfo', 'shippingAddress'])]
+        public ?array $data_elements,
+    ) {
+    }
 }

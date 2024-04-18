@@ -11,8 +11,8 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
-use Jasara\AmznSPA\Data\AuthTokensDTO;
-use Jasara\AmznSPA\Data\GrantlessTokenDTO;
+use Jasara\AmznSPA\Data\AuthTokens;
+use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Tests\Setup\CallbackTestException;
@@ -69,7 +69,7 @@ class LwaResourceTest extends UnitTestCase
             'spapi_oauth_code' => $spapi_oauth_code,
         ]);
 
-        $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
+        $this->assertInstanceOf(AuthTokens::class, $tokens);
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
         $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
         $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
@@ -95,7 +95,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $tokens = $amzn->lwa->getTokensFromAuthorizationCode($auth_code);
 
-        $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
+        $this->assertInstanceOf(AuthTokens::class, $tokens);
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
         $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
         $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
@@ -121,7 +121,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $tokens = $amzn->lwa->getAccessTokenFromRefreshToken($refresh_token);
 
-        $this->assertInstanceOf(AuthTokensDTO::class, $tokens);
+        $this->assertInstanceOf(AuthTokens::class, $tokens);
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
         $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
         $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);
@@ -145,7 +145,7 @@ class LwaResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $tokens = $amzn->lwa->getGrantlessAccessToken($scope);
 
-        $this->assertInstanceOf(GrantlessTokenDTO::class, $tokens);
+        $this->assertInstanceOf(GrantlessToken::class, $tokens);
         $this->assertEquals('Atza|IQEBLjAsAexampleHpi0U-Dme37rR6CuUpSR', $tokens->access_token);
         $this->assertInstanceOf(CarbonImmutable::class, $tokens->expires_at);
         $this->assertEqualsWithDelta(CarbonImmutable::now()->addSeconds(3600), $tokens->expires_at, 5);

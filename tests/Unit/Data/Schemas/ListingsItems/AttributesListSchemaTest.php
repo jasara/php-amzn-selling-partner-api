@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas\ListingsItems;
 
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertyListSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertySchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributeSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributesListSchema;
@@ -16,21 +17,21 @@ class AttributesListSchemaTest extends UnitTestCase
         $attributes_list = new AttributesListSchema([
             new AttributeSchema(
                 name: 'bullet_point',
-                properties: [
-                    new AttributePropertySchema(
+                properties: AttributePropertyListSchema::make([
+                    AttributePropertySchema::from(
                         name: 'value',
                         value: 'test',
                     ),
-                    new AttributePropertySchema(
+                    AttributePropertySchema::from(
                         name: 'nested',
                         properties: [
-                            new AttributePropertySchema(
+                            AttributePropertySchema::from(
                                 name: 'marketplace_id',
                                 value: 'ATVPDKIKX0DER',
                             ),
                         ]
                     ),
-                ],
+                ]),
             ),
         ]);
 

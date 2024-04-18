@@ -2,13 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class EventBridgeResourceSchema extends DataTransferObject
+class EventBridgeResourceSchema extends BaseSchema
 {
-    public string $name;
-
-    public string $region;
-
-    public string $account_id;
+    public function __construct(
+        public string $name,
+        public string $region,
+        public string $account_id,
+    ) {
+    }
 }

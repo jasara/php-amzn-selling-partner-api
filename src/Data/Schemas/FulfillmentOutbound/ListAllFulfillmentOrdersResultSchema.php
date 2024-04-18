@@ -2,14 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ListAllFulfillmentOrdersResultSchema extends DataTransferObject
+class ListAllFulfillmentOrdersResultSchema extends BaseSchema
 {
-    public ?string $next_token;
+    public function __construct(
+        public ?string $next_token,
 
-    #[CastWith(ArrayCaster::class, itemType: FulfillmentOrderSchema::class)]
-    public ?FulfillmentOrderListSchema $fulfillment_orders;
+        public ?FulfillmentOrderListSchema $fulfillment_orders,
+    ) {
+    }
 }

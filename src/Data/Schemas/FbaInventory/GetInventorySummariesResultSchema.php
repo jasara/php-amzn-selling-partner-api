@@ -2,14 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FbaInventory;
 
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class GetInventorySummariesResultSchema extends DataTransferObject
+class GetInventorySummariesResultSchema extends BaseSchema
 {
-    public GranularitySchema $granularity;
+    public function __construct(
+        public GranularitySchema $granularity,
 
-    #[CastWith(ArrayCaster::class, itemType: InventorySummarySchema::class)]
-    public InventorySummariesListSchema $inventory_summaries;
+        public InventorySummariesListSchema $inventory_summaries,
+    ) {
+    }
 }

@@ -2,11 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Sellers;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class ParticipationSchema extends DataTransferObject
+class ParticipationSchema extends BaseSchema
 {
-    public bool $is_participating;
-
-    public bool $has_suspended_listings;
+    public function __construct(
+        public bool $is_participating,
+        public bool $has_suspended_listings,
+    ) {
+    }
 }

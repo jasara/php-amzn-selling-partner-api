@@ -2,12 +2,14 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing;
 
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\DataTransferObject;
 
-class PointsSchema extends DataTransferObject
+class PointsSchema extends BaseSchema
 {
-    public ?int $points_number;
-
-    public ?MoneySchema $points_monetary_value;
+    public function __construct(
+        public ?int $points_number,
+        public ?MoneySchema $points_monetary_value,
+    ) {
+    }
 }

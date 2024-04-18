@@ -2,14 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions;
 
-use Illuminate\Support\Collection;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
-use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\ProductTypeSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
-use Spatie\DataTransferObject\Casters\ArrayCaster;
+use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\ProductTypeListSchema;
 
 class ProductTypeListResponse extends BaseResponse
 {
-    #[CastWith(ArrayCaster::class, itemType: ProductTypeSchema::class)]
-    public Collection $product_types;
+    public function __construct(
+        public ?ProductTypeListSchema $product_types,
+    ) {
+    }
 }

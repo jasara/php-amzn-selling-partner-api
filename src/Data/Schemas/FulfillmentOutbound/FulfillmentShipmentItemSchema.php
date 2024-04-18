@@ -2,17 +2,16 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 
-use Spatie\DataTransferObject\DataTransferObject;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class FulfillmentShipmentItemSchema extends DataTransferObject
+class FulfillmentShipmentItemSchema extends BaseSchema
 {
-    public string $seller_sku;
-
-    public string $seller_fulfillment_order_item_id;
-
-    public int $quantity;
-
-    public ?string $package_number;
-
-    public ?string $serial_number;
+    public function __construct(
+        public string $seller_sku,
+        public string $seller_fulfillment_order_item_id,
+        public int $quantity,
+        public ?string $package_number,
+        public ?string $serial_number,
+    ) {
+    }
 }

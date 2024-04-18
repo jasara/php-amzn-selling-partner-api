@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
-use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class MarketplaceTaxInfoListSchema extends Collection
+/**
+ * @template-extends TypedCollection<TaxClassificationSchema>
+ */
+class MarketplaceTaxInfoListSchema extends TypedCollection
 {
-    public function offsetGet($key): TaxClassificationSchema
-    {
-        return parent::offsetGet($key);
-    }
+    public const ITEM_CLASS = TaxClassificationSchema::class;
 }
