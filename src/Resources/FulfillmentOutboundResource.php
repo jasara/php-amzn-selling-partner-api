@@ -27,7 +27,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class FulfillmentOutboundResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/fba/outbound/2020-07-01/';
 
     public function __construct(
@@ -38,94 +37,118 @@ class FulfillmentOutboundResource implements ResourceContract
 
     public function getFulfillmentPreview(GetFulfillmentPreviewRequest $request): GetFulfillmentPreviewResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'fulfillmentOrders/preview', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetFulfillmentPreviewResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/preview', (array) $request->toArrayObject());
 
-        return new GetFulfillmentPreviewResponse($response);
+        return $response;
     }
 
     public function listAllFulfillmentOrders(?CarbonImmutable $query_start_date = null, ?string $next_token = null): ListAllFulfillmentOrdersResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'fulfillmentOrders', [
-            'queryStartDate' => $query_start_date->toDateString(),
-            'nextToken' => $next_token,
-        ]);
+        $response = $this->http
+            ->responseClass(ListAllFulfillmentOrdersResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', [
+                'queryStartDate' => $query_start_date->toDateString(),
+                'nextToken' => $next_token,
+            ]);
 
-        return new ListAllFulfillmentOrdersResponse($response);
+        return $response;
     }
 
     public function createFulfillmentOrder(CreateFulfillmentOrderRequest $request): CreateFulfillmentOrderResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'fulfillmentOrders', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateFulfillmentOrderResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', (array) $request->toArrayObject());
 
-        return new CreateFulfillmentOrderResponse($response);
+        return $response;
     }
 
     public function getPackageTrackingDetails(int $package_number): GetPackageTrackingDetailsResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'tracking');
+        $response = $this->http
+            ->responseClass(GetPackageTrackingDetailsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'tracking');
 
-        return new GetPackageTrackingDetailsResponse($response);
+        return $response;
     }
 
     public function listReturnReasonCodes(string $seller_sku, ?string $marketplace_id, ?string $seller_fulfillment_order_id, string $language): ListReturnReasonCodesResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'returnReasonCodes', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'sellerSku' => $seller_sku,
-            'sellerFulfillmentOrderId' => $seller_fulfillment_order_id,
-            'language' => $language,
-        ]));
+        $response = $this->http
+            ->responseClass(ListReturnReasonCodesResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'returnReasonCodes', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'sellerSku' => $seller_sku,
+                'sellerFulfillmentOrderId' => $seller_fulfillment_order_id,
+                'language' => $language,
+            ]));
 
-        return new ListReturnReasonCodesResponse($response);
+        return $response;
     }
 
     public function createFulfillmentReturn(string $seller_fulfillment_order_id, CreateFulfillmentReturnRequest $request): CreateFulfillmentReturnResponse
     {
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'fulfillmentOrders/'.$seller_fulfillment_order_id.'/return', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateFulfillmentReturnResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', (array) $request->toArrayObject());
 
-        return new CreateFulfillmentReturnResponse($response);
+        return $response;
     }
 
     public function getFulfillmentOrder(string $seller_fulfillment_order_id): GetFulfillmentOrderResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'fulfillmentOrders/'.$seller_fulfillment_order_id);
+        $response = $this->http
+            ->responseClass(GetFulfillmentOrderResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id);
 
-        return new GetFulfillmentOrderResponse($response);
+        return $response;
     }
 
     public function updateFulfillmentOrder(UpdateFulfillmentOrderRequest $request, string $seller_fulfillment_order_id): UpdateFulfillmentOrderResponse
     {
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'fulfillmentOrders/'.$seller_fulfillment_order_id, (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(UpdateFulfillmentOrderResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id, (array) $request->toArrayObject());
 
-        return new UpdateFulfillmentOrderResponse($response);
+        return $response;
     }
 
     public function cancelFulfillmentOrder(string $seller_fulfillment_order_id): CancelFulfillmentOrderResponse
     {
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'fulfillmentOrders/'.$seller_fulfillment_order_id.'/cancel', []);
+        $response = $this->http
+            ->responseClass(CancelFulfillmentOrderResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/cancel', []);
 
-        return new CancelFulfillmentOrderResponse($response);
+        return $response;
     }
 
     public function getFeatures(string $marketplace_id): GetFeaturesResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'features');
+        $response = $this->http
+            ->responseClass(GetFeaturesResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'features');
 
-        return new GetFeaturesResponse($response);
+        return $response;
     }
 
     public function getFeatureInventory(string $marketplace_id, string $feature_name, ?string $next_token = null): GetFeatureInventoryResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'features/inventory/'.$feature_name);
+        $response = $this->http
+            ->responseClass(GetFeatureInventoryResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name);
 
-        return new GetFeatureInventoryResponse($response);
+        return $response;
     }
 
     public function getFeatureSKU(string $marketplace_id, string $feature_name, ?string $seller_sku): GetFeatureSkuResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'features/inventory/'.$feature_name.'/'.rawurlencode($seller_sku));
+        $response = $this->http
+            ->responseClass(GetFeatureSkuResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'features/inventory/' . $feature_name . '/' . rawurlencode($seller_sku));
 
-        return new GetFeatureSkuResponse($response);
+        return $response;
     }
 }

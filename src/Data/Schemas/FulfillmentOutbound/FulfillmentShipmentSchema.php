@@ -6,7 +6,6 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class FulfillmentShipmentSchema extends BaseSchema
 {
@@ -15,14 +14,12 @@ class FulfillmentShipmentSchema extends BaseSchema
         public string $fulfillment_center_id,
         #[StringEnumValidator(['PENDING', 'SHIPPED', 'CANCELLED_BY_FULFILLER', 'CANCELLED_BY_SELLER'])]
         public string $fulfillment_shipment_status,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $shipping_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $estimated_arrival_date,
         public ?array $shipping_notes,
-
         public FulfillmentShipmentItemListSchema $fulfillment_shipment_item,
-
         public ?FulfillmentShipmentPackageListSchema $fulfillment_shipment_package,
     ) {
     }

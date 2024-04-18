@@ -20,7 +20,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class NotificationsResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/notifications/v1/';
 
     public function __construct(
@@ -33,9 +32,11 @@ class NotificationsResource implements ResourceContract
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type);
+        $response = $this->http
+            ->responseClass(GetSubscriptionResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type);
 
-        return GetSubscriptionResponse::from($response);
+        return $response;
     }
 
     public function createSubscription(
@@ -46,64 +47,78 @@ class NotificationsResource implements ResourceContract
     ): CreateSubscriptionResponse {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->post(
-            $this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type,
-            array_filter([
-                'payloadVersion' => $payload_version,
-                'destinationId' => $destination_id,
-                'processingDirective' => $processing_directive?->toArrayObject(),
-            ]),
-        );
+        $response = $this->http
+            ->responseClass(CreateSubscriptionResponse::class)
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type,
+                array_filter([
+                    'payloadVersion' => $payload_version,
+                    'destinationId' => $destination_id,
+                    'processingDirective' => $processing_directive?->toArrayObject(),
+                ]),
+            );
 
-        return CreateSubscriptionResponse::from($response);
+        return $response;
     }
 
     public function getSubscriptionById(string $notification_type, string $subscription_id): GetSubscriptionByIdResponse
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type.'/'.$subscription_id);
+        $response = $this->http
+            ->responseClass(GetSubscriptionByIdResponse::class)
+            ->getGrantless($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type . '/' . $subscription_id);
 
-        return GetSubscriptionByIdResponse::from($response);
+        return $response;
     }
 
     public function deleteSubscriptionById(string $notification_type, string $subscription_id): DeleteSubscriptionByIdResponse
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
-        $response = $this->http->deleteGrantless($this->endpoint.self::BASE_PATH.'subscriptions/'.$notification_type.'/'.$subscription_id);
+        $response = $this->http
+            ->responseClass(DeleteSubscriptionByIdResponse::class)
+            ->deleteGrantless($this->endpoint . self::BASE_PATH . 'subscriptions/' . $notification_type . '/' . $subscription_id);
 
-        return DeleteSubscriptionByIdResponse::from($response);
+        return $response;
     }
 
     public function getDestinations(): GetDestinationsResponse
     {
-        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'destinations');
+        $response = $this->http
+            ->responseClass(GetDestinationsResponse::class)
+            ->getGrantless($this->endpoint . self::BASE_PATH . 'destinations');
 
-        return GetDestinationsResponse::from($response);
+        return $response;
     }
 
     public function createDestination(string $name, DestinationResourceSpecificationSchema $resource_specification): CreateDestinationResponse
     {
-        $response = $this->http->postGrantless($this->endpoint.self::BASE_PATH.'destinations', [
-            'name' => $name,
-            'resourceSpecification' => $resource_specification->toArrayObject(),
-        ]);
+        $response = $this->http
+            ->responseClass(CreateDestinationResponse::class)
+            ->postGrantless($this->endpoint . self::BASE_PATH . 'destinations', [
+                'name' => $name,
+                'resourceSpecification' => $resource_specification->toArrayObject(),
+            ]);
 
-        return CreateDestinationResponse::from($response);
+        return $response;
     }
 
     public function getDestination(string $destination_id): GetDestinationResponse
     {
-        $response = $this->http->getGrantless($this->endpoint.self::BASE_PATH.'destinations/'.$destination_id);
+        $response = $this->http
+            ->responseClass(GetDestinationResponse::class)
+            ->getGrantless($this->endpoint . self::BASE_PATH . 'destinations/' . $destination_id);
 
-        return GetDestinationResponse::from($response);
+        return $response;
     }
 
     public function deleteDestination(string $destination_id): DeleteDestinationResponse
     {
-        $response = $this->http->deleteGrantless($this->endpoint.self::BASE_PATH.'destinations/'.$destination_id);
+        $response = $this->http
+            ->responseClass(DeleteDestinationResponse::class)
+            ->deleteGrantless($this->endpoint . self::BASE_PATH . 'destinations/' . $destination_id);
 
-        return DeleteDestinationResponse::from($response);
+        return $response;
     }
 }

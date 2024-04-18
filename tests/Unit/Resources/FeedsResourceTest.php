@@ -42,7 +42,7 @@ class FeedsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('feeds/create-feed');
 
-        $request = new CreateFeedSpecification(
+        $request = CreateFeedSpecification::from(
             feed_type: 'POST_PRODUCT_DATA',
             marketplace_ids: ['ATVPDKIKX0DER'],
             input_feed_document_id: Str::random(),
@@ -98,7 +98,7 @@ class FeedsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feed_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/'.$feed_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/' . $feed_id, $request->url());
 
             return true;
         });
@@ -118,7 +118,7 @@ class FeedsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feed_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/'.$feed_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/feeds/' . $feed_id, $request->url());
 
             return true;
         });
@@ -162,7 +162,7 @@ class FeedsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($feed_document_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/documents/'.$feed_document_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/feeds/2021-06-30/documents/' . $feed_document_id, $request->url());
 
             return true;
         });

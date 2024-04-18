@@ -14,7 +14,7 @@ class AttributesListSchema extends TypedCollection
     public function toArrayObject(): \ArrayObject
     {
         $array_object = new \ArrayObject();
-        $attribute_names = $this->pluck('name')->unique()->toArray();
+        $attribute_names = $this->toBase()->pluck('name')->unique()->toArray();
 
         foreach ($attribute_names as $attribute_name) {
             $attribute_schemas = $this->filter(fn (AttributeSchema $attribute) => $attribute->name === $attribute_name);

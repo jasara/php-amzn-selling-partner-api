@@ -3,21 +3,23 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Carbon\CarbonImmutable;
-use Jasara\AmznSPA\Data\Base\BuildsData;
 use Jasara\AmznSPA\Data\Base\Data;
+use Jasara\AmznSPA\Data\Base\DataBuilder;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentInfoSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelDataOutputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputListSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
+use Jasara\AmznSPA\Data\Schemas\ProductFees\FeesEstimateErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\Uploads\UploadDestinationSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Data::class)]
-#[CoversClass(BuildsData::class)]
-class BuildsDataTest extends UnitTestCase
+#[CoversClass(DataBuilder::class)]
+class DataBuilderTest extends UnitTestCase
 {
     public function testBuildDataWithNamedParameters(): void
     {
@@ -109,7 +111,7 @@ class BuildsDataTest extends UnitTestCase
         $this->assertLessThanOrEqual(3600, $data->expires_in->diffInSeconds());
     }
 
-    public function testBuildsDataWithCasters(): void
+    public function testBuildsDataWithCarbonCaster(): void
     {
         $data = PartneredLtlDataInputSchema::from([
             'freight_ready_date' => '2021-01-01',
@@ -118,5 +120,28 @@ class BuildsDataTest extends UnitTestCase
         $this->assertInstanceOf(PartneredLtlDataInputSchema::class, $data);
         $this->assertInstanceOf(CarbonImmutable::class, $data->freight_ready_date);
         $this->assertEquals('2021-01-01', $data->freight_ready_date->toDateString());
+    }
+
+    public function testBuildsDataWithEmptyArrayAsNull(): void
+    {
+        $data = InboundShipmentInfoSchema::from([
+            'ship_from_address' => [],
+        ]);
+
+        $this->assertInstanceOf(InboundShipmentInfoSchema::class, $data);
+        $this->assertNull($data->ship_from_address);
+    }
+
+    public function testBuildsDataWithEmptyArrayNotNullableDoesNotMapToNull(): void
+    {
+        $data = FeesEstimateErrorSchema::from([
+            'type' => 'type',
+            'code' => 'code',
+            'message' => 'message',
+            'detail' => [],
+        ]);
+
+        $this->assertInstanceOf(FeesEstimateErrorSchema::class, $data);
+        $this->assertIsArray($data->detail);
     }
 }

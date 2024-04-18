@@ -62,7 +62,7 @@ class OrdersResourceTest extends UnitTestCase
             },
             function (Request $request) use ($created_after) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER&CreatedAfter='.$created_after->tz('UTC')->format('Y-m-d\TH:i:s\Z').'&OrderStatuses=Pending&FulfillmentChannels=MFN&BuyerEmail=tagrid@gmail.com&MaxResultsPerPage=10&StoreChainStoreId=ISPU_StoreId', urldecode($request->url()));
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER&CreatedAfter=' . $created_after->tz('UTC')->format('Y-m-d\TH:i:s\Z') . '&OrderStatuses=Pending&FulfillmentChannels=MFN&BuyerEmail=tagrid@gmail.com&MaxResultsPerPage=10&StoreChainStoreId=ISPU_StoreId', urldecode($request->url()));
 
                 return true;
             },
@@ -96,7 +96,7 @@ class OrdersResourceTest extends UnitTestCase
             },
             function (Request $request) use ($order_id) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id, $request->url());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id, $request->url());
 
                 return true;
             },
@@ -137,7 +137,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/buyerInfo', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/buyerInfo', $request->url());
 
             return true;
         });
@@ -158,7 +158,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/address', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/address', $request->url());
 
             return true;
         });
@@ -186,7 +186,7 @@ class OrdersResourceTest extends UnitTestCase
             },
             function (Request $request) use ($order_id) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/orderItems', $request->url());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems', $request->url());
 
                 return true;
             },
@@ -210,7 +210,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/orderItems/buyerInfo', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/orderItems/buyerInfo', $request->url());
 
             return true;
         });
@@ -222,7 +222,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $order_id = Str::random();
 
-        $request = new UpdateShipmentStatusRequest(
+        $request = UpdateShipmentStatusRequest::from(
             marketplace_id: 'ATVPDKIKX0DER',
             shipment_status: 'ReadyForPickup',
         );
@@ -235,7 +235,7 @@ class OrdersResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/'.$order_id.'/shipment', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/shipment', urldecode($request->url()));
 
             return true;
         });

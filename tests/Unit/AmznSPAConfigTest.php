@@ -112,7 +112,7 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertInstanceOf(PendingRequest::class, $config->getHttp());
 
         $refresh_token = Str::random();
-        $config->setTokens(new AuthTokens(
+        $config->setTokens(AuthTokens::from(
             refresh_token: $refresh_token,
         ));
 
@@ -121,11 +121,14 @@ class AmznSPAConfigTest extends UnitTestCase
         $grantless_access_token = Str::random();
         $config->setGrantlessToken(new GrantlessToken(
             access_token: $grantless_access_token,
+            expires_at: 3600,
         ));
 
         $restricted_data_token = Str::random();
         $config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: $restricted_data_token,
+            expires_at: 3600,
+            path: '/path',
         ));
 
         $this->assertEquals($restricted_data_token, $config->getRestrictedDataToken()->access_token);
@@ -160,14 +163,14 @@ class AmznSPAConfigTest extends UnitTestCase
     {
         $config = $this->setupMinimalConfig();
 
-        $error_filepath = __DIR__.'/../error-log.txt';
+        $error_filepath = __DIR__ . '/../error-log.txt';
         touch($error_filepath);
         $logger_resource = fopen($error_filepath, 'rw+');
         ftruncate($logger_resource, 0);
         $logger = new Logger(LogLevel::DEBUG, $logger_resource, function (string $level, string $message, array $context) {
             $log = sprintf('[%s] %s', $level, $message);
             if (count($context)) {
-                $log .= ' Context: '.json_encode($context);
+                $log .= ' Context: ' . json_encode($context);
             }
 
             $log = str_replace(["\n", "\r"], '', $log);

@@ -2,16 +2,17 @@
 
 namespace Jasara\AmznSPA\Data\Base;
 
+use Jasara\AmznSPA\Data\Base\Validators\DataValidationException;
 use Jasara\AmznSPA\Data\Base\Validators\Validator;
 
-trait ValidatesData
+class DataValidator
 {
-    private static function validateParameters(object $data): void
+    public function validate(object $data): void
     {
         $reflection = new \ReflectionClass($data);
 
         foreach ($reflection->getProperties() as $property) {
-            if (!$property->isInitialized($data)) {
+            if (! $property->isInitialized($data)) {
                 continue;
             }
 
@@ -22,7 +23,7 @@ trait ValidatesData
             if (is_iterable($property_value)) {
                 foreach ($property_value as $item) {
                     if ($item instanceof Data) {
-                        self::validateParameters($item);
+                        $this->validate($item);
                     }
                 }
 
@@ -31,19 +32,30 @@ trait ValidatesData
 
             // If is data object, validate it recursively
             if ($property_value instanceof Data) {
-                self::validateParameters($property_value);
+                $this->validate($property_value);
 
                 continue;
             }
 
-            foreach (self::getValidators($property) as $validator) {
-                $validator->validate($property_value);
+            foreach ($this->getValidators($property) as $validator) {
+                try {
+                    $validator->validate($property_value);
+                } catch (DataValidationException $e) {
+                    throw new DataValidationException(
+                        sprintf(
+                            'Validation failed for property %s: %s on class %s',
+                            $property->getName(),
+                            $e->getMessage(),
+                            $reflection->getName(),
+                        )
+                    );
+                }
             }
         }
     }
 
     /** @return Validator[]  */
-    private static function getValidators(\ReflectionProperty $property): array
+    private function getValidators(\ReflectionProperty $property): array
     {
         $validator_attributes = $property->getAttributes(Validator::class, \ReflectionAttribute::IS_INSTANCEOF);
 

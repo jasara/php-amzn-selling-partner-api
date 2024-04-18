@@ -32,7 +32,7 @@ class ShippingResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/create-shipment');
 
-        $request = new CreateShipmentRequest(
+        $request = CreateShipmentRequest::from(
             client_reference_id: Str::random(),
             ship_to: $this->setupShippingAddress(),
             ship_from: $this->setupShippingAddress(),
@@ -68,7 +68,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id, $request->url());
 
             return true;
         });
@@ -88,7 +88,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/cancel', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/cancel', $request->url());
 
             return true;
         });
@@ -97,7 +97,7 @@ class ShippingResourceTest extends UnitTestCase
     public function testPurchaseLabels()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/purchase-labels');
-        $request = new PurchaseLabelsRequest(
+        $request = PurchaseLabelsRequest::from(
             rate_id: Str::random(),
             label_specification: [
                 'label_format' => 'PNG',
@@ -116,7 +116,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/purchaseLabels', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/purchaseLabels', $request->url());
 
             return true;
         });
@@ -125,7 +125,7 @@ class ShippingResourceTest extends UnitTestCase
     public function testRetrieveShippingLabel()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/retrieve-shipping-label');
-        $request = new RetrieveShippingLabelRequest(
+        $request = RetrieveShippingLabelRequest::from(
             label_specification: [
                 'label_format' => 'PNG',
                 'label_stock_size' => '4x6',
@@ -144,7 +144,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id, $tracking_id) {
             $this->assertEquals('POST', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/'.$shipment_id.'/containers/'.$tracking_id.'/label', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/shipments/' . $shipment_id . '/containers/' . $tracking_id . '/label', $request->url());
 
             return true;
         });
@@ -153,7 +153,7 @@ class ShippingResourceTest extends UnitTestCase
     public function testPurchaseShipment()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/purchase-shipment');
-        $request = new PurchaseShipmentRequest(
+        $request = PurchaseShipmentRequest::from(
             client_reference_id: Str::random(),
             ship_to: $this->setupShippingAddress(),
             ship_from: $this->setupShippingAddress(),
@@ -183,7 +183,7 @@ class ShippingResourceTest extends UnitTestCase
     public function testGetRates()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('shipping/get-rates');
-        $request = new GetRatesRequest(
+        $request = GetRatesRequest::from(
             ship_to: $this->setupShippingAddress(),
             ship_from: $this->setupShippingAddress(),
             service_types: [
@@ -252,7 +252,7 @@ class ShippingResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($tracking_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/tracking/'.$tracking_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/shipping/v1/tracking/' . $tracking_id, $request->url());
 
             return true;
         });

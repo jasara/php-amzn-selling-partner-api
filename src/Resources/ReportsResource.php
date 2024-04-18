@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
@@ -23,7 +22,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class ReportsResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/reports/2021-06-30/';
 
     public function __construct(
@@ -51,93 +49,93 @@ class ReportsResource implements ResourceContract
             $this->validateIsArrayOfStrings($processing_statuses, AmazonEnums::PROCESSING_STATUSES);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'reports', array_filter([
-            'reportTypes' => $report_types,
-            'marketplaceIds' => $marketplace_ids,
-            'pageSize' => $page_size,
-            'processingStatuses' => $processing_statuses,
-            'createdSince' => $created_since?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'createdUntil' => $created_until?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'nextToken' => $next_token,
-        ]));
+        $response = $this->http
+            ->responseClass(GetReportsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'reports', array_filter([
+                'reportTypes' => $report_types,
+                'marketplaceIds' => $marketplace_ids,
+                'pageSize' => $page_size,
+                'processingStatuses' => $processing_statuses,
+                'createdSince' => $created_since?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'createdUntil' => $created_until?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'nextToken' => $next_token,
+            ]));
 
-        return new GetReportsResponse($response);
+        return $response;
     }
 
     public function createReport(CreateReportSpecification $request): CreateReportResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'reports', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateReportResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'reports', (array) $request->toArrayObject());
 
-        return new CreateReportResponse($response);
+        return $response;
     }
 
     public function getReport(string $report_id): GetReportResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'reports/'.$report_id);
+        $response = $this->http
+            ->responseClass(GetReportResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'reports/' . $report_id);
 
-        $errors = Arr::get($response, 'errors');
-
-        return new GetReportResponse(
-            errors: $errors,
-            report: $errors ? null : $response,
-            metadata: Arr::get($response, 'metadata'),
-        );
+        return $response;
     }
 
     public function cancelReport(string $report_id): BaseResponse
     {
-        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'reports/'.$report_id);
+        $response = $this->http
+            ->responseClass(BaseResponse::class)
+            ->delete($this->endpoint . self::BASE_PATH . 'reports/' . $report_id);
 
-        return new BaseResponse($response);
+        return $response;
     }
 
     public function getReportSchedules(array $report_types): GetReportSchedulesResponse
     {
         $this->validateIsArrayOfStrings($report_types, AmazonEnums::REPORT_TYPES);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'schedules');
+        $response = $this->http
+            ->responseClass(GetReportSchedulesResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'schedules');
 
-        return new GetReportSchedulesResponse($response);
+        return $response;
     }
 
     public function createReportSchedule(CreateReportScheduleSpecification $request): CreateReportScheduleResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'schedules', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateReportScheduleResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'schedules', (array) $request->toArrayObject());
 
-        return new CreateReportScheduleResponse($response);
+        return $response;
     }
 
     public function getReportSchedule(string $report_schedule_id): GetReportScheduleResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'schedules/'.$report_schedule_id);
+        $response = $this->http
+            ->responseClass(GetReportScheduleResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'schedules/' . $report_schedule_id);
 
-        $errors = Arr::get($response, 'errors');
-
-        return new GetReportScheduleResponse(
-            errors: $errors,
-            report_schedule: $errors ? null : $response,
-            metadata: Arr::get($response, 'metadata'),
-        );
+        return $response;
     }
 
     public function cancelReportSchedule(string $report_schedule_id): BaseResponse
     {
-        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'schedules/'.$report_schedule_id);
+        $response = $this->http
+            ->responseClass(BaseResponse::class)
+            ->delete($this->endpoint . self::BASE_PATH . 'schedules/' . $report_schedule_id);
 
-        return new BaseResponse($response);
+        return $response;
     }
 
     public function getReportDocument(string $report_document_id): GetReportDocumentResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'documents/'.$report_document_id);
+        $response = $this->http
+            ->responseClass(GetReportDocumentResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'documents/' . $report_document_id);
 
-        $errors = Arr::get($response, 'errors');
-
-        return new GetReportDocumentResponse(
-            errors: $errors,
-            report_document: $errors ? null : $response,
-            metadata: Arr::get($response, 'metadata'),
-        );
+        return $response;
     }
 
     public function getRestrictedReportDocument(string $report_document_id): GetReportDocumentResponse

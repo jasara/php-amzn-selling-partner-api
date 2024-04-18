@@ -44,7 +44,7 @@ class ReportsResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('reports/create-report');
 
-        $request = new CreateReportSpecification(
+        $request = CreateReportSpecification::from(
             report_type: 'GET_MERCHANT_LISTINGS_ALL_DATA',
             marketplace_ids: ['ATVPDKIKX0DER'],
         );
@@ -80,7 +80,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/'.$report_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/' . $report_id, $request->url());
 
             return true;
         });
@@ -100,7 +100,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/'.$report_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/reports/' . $report_id, $request->url());
 
             return true;
         });
@@ -164,7 +164,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_schedule_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/'.$report_schedule_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/' . $report_schedule_id, $request->url());
 
             return true;
         });
@@ -184,7 +184,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_schedule_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/'.$report_schedule_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/schedules/' . $report_schedule_id, $request->url());
 
             return true;
         });
@@ -205,7 +205,7 @@ class ReportsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($report_document_id) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/documents/'.$report_document_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/reports/2021-06-30/documents/' . $report_document_id, $request->url());
 
             return true;
         });

@@ -7,7 +7,6 @@ use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class ReportSchema extends BaseSchema
 {
@@ -16,16 +15,16 @@ class ReportSchema extends BaseSchema
         public string $report_id,
         #[StringEnumValidator(AmazonEnums::REPORT_TYPES)]
         public string $report_type,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $data_start_time,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $data_end_time,
         public ?string $report_schedule_id,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $created_time,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $processing_start_time,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $processing_end_time,
         #[StringEnumValidator(AmazonEnums::PROCESSING_STATUSES)]
         public string $processing_status,

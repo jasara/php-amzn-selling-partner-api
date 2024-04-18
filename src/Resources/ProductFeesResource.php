@@ -11,7 +11,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class ProductFeesResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/products/fees/v0/';
 
     public function __construct(
@@ -22,15 +21,19 @@ class ProductFeesResource implements ResourceContract
 
     public function getMyFeesEstimateForSku(GetMyFeesEstimateRequest $request, string $seller_sku): GetMyFeesEstimateResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'listings/'.$seller_sku.'/feesEstimate', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetMyFeesEstimateResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/feesEstimate', (array) $request->toArrayObject());
 
-        return new GetMyFeesEstimateResponse($response);
+        return $response;
     }
 
     public function getMyFeesEstimateForAsin(GetMyFeesEstimateRequest $request, string $asin): GetMyFeesEstimateResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'items/'.$asin.'/feesEstimate', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetMyFeesEstimateResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/feesEstimate', (array) $request->toArrayObject());
 
-        return new GetMyFeesEstimateResponse($response);
+        return $response;
     }
 }

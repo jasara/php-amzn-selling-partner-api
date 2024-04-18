@@ -12,7 +12,7 @@ class PackageDimensionsSchemaTest extends UnitTestCase
 {
     public function testAsUom()
     {
-        $schema = new PackageDimensionsSchema(
+        $schema = PackageDimensionsSchema::from(
             length: rand(1, 10),
             width: rand(1, 10),
             height: rand(1, 10),

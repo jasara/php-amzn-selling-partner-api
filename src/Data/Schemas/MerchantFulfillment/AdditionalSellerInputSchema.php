@@ -8,7 +8,6 @@ use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class AdditionalSellerInputSchema extends BaseSchema
 {
@@ -17,7 +16,7 @@ class AdditionalSellerInputSchema extends BaseSchema
         public ?string $value_as_string,
         public ?bool $value_as_boolean,
         public ?int $value_as_integer,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $value_as_timestamp,
         public ?AddressSchema $value_as_address,
         public ?WeightSchema $value_as_weight,

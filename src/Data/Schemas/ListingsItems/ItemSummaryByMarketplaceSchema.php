@@ -8,7 +8,6 @@ use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems\ItemImageSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class ItemSummaryByMarketplaceSchema extends BaseSchema
 {
@@ -21,9 +20,9 @@ class ItemSummaryByMarketplaceSchema extends BaseSchema
         public array $status,
         public ?string $fnsku,
         public string $item_name,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $created_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $last_updated_date,
         public ?ItemImageSchema $main_image,
     ) {

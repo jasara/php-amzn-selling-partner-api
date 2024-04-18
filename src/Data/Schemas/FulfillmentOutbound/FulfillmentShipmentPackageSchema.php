@@ -5,7 +5,6 @@ namespace Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound;
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class FulfillmentShipmentPackageSchema extends BaseSchema
 {
@@ -13,7 +12,7 @@ class FulfillmentShipmentPackageSchema extends BaseSchema
         public int $package_number,
         public string $carrier_code,
         public ?string $tracking_number,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $estimated_arrival_date,
     ) {
     }

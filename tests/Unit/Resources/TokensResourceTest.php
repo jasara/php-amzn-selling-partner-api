@@ -18,7 +18,7 @@ class TokensResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('tokens/create-restricted-data-token');
 
-        $request = new CreateRestrictedDataTokenRequest(
+        $request = CreateRestrictedDataTokenRequest::from(
             target_application: null,
             restricted_resources: new RestrictedResourcesListSchema([
                 new RestrictedResourceSchema(method: 'GET', path: '/orders/v0/orders', data_elements: ['buyerInfo', 'shippingAddress']),

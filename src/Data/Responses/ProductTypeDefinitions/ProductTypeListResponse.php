@@ -2,13 +2,13 @@
 
 namespace Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions;
 
-use Illuminate\Support\Collection;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\ProductTypeListSchema;
 
 class ProductTypeListResponse extends BaseResponse
 {
     public function __construct(
-        public ?Collection $product_types,
+        public ?ProductTypeListSchema $product_types,
     ) {
     }
 }

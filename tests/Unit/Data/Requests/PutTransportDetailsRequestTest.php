@@ -13,7 +13,7 @@ class PutTransportDetailsRequestTest extends UnitTestCase
     public function testReadyDate()
     {
         $ready_date = CarbonImmutable::now()->addWeekdays(10);
-        $request = new PutTransportDetailsRequest(
+        $request = PutTransportDetailsRequest::from(
             is_partnered: true,
             shipment_type: 'LTL',
             transport_details: TransportDetailInputSchema::from(

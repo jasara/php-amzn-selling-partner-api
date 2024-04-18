@@ -58,76 +58,90 @@ class OrdersResource implements ResourceContract
 
         $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders', array_filter([
-            'MarketplaceIds' => $marketplace_ids,
-            'CreatedAfter' => $created_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'CreatedBefore' => $created_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'OrderStatuses' => $order_statuses,
-            'FulfillmentChannels' => $fulfillment_channels,
-            'PaymentMethods' => $payment_methods,
-            'BuyerEmail' => $buyer_email,
-            'SellerOrderId' => $seller_order_id,
-            'MaxResultsPerPage' => $max_results_per_page,
-            'EasyShipShipmentStatuses' => $easy_ship_shipment_statuses,
-            'NextToken' => $next_token,
-            'AmazonOrderIds' => $amazon_order_ids,
-            'ActualFulfillmentSupplySourceId' => $actual_fulfillment_supply_source_id,
-            'IsIspu' => $is_ispu,
-            'StoreChainStoreId' => $store_chain_store_id,
-        ]));
+        $response = $this->http
+            ->responseClass(GetOrdersResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
+                'MarketplaceIds' => $marketplace_ids,
+                'CreatedAfter' => $created_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'CreatedBefore' => $created_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'OrderStatuses' => $order_statuses,
+                'FulfillmentChannels' => $fulfillment_channels,
+                'PaymentMethods' => $payment_methods,
+                'BuyerEmail' => $buyer_email,
+                'SellerOrderId' => $seller_order_id,
+                'MaxResultsPerPage' => $max_results_per_page,
+                'EasyShipShipmentStatuses' => $easy_ship_shipment_statuses,
+                'NextToken' => $next_token,
+                'AmazonOrderIds' => $amazon_order_ids,
+                'ActualFulfillmentSupplySourceId' => $actual_fulfillment_supply_source_id,
+                'IsIspu' => $is_ispu,
+                'StoreChainStoreId' => $store_chain_store_id,
+            ]));
 
-        return new GetOrdersResponse($response);
+        return $response;
     }
 
     public function getOrder(string $order_id): GetOrderResponse
     {
         $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id);
+        $response = $this->http
+            ->responseClass(GetOrderResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
 
         if (Arr::get($response, 'payload') === []) {
             $response['payload'] = null;
         }
 
-        return new GetOrderResponse($response);
+        return $response;
     }
 
     public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/buyerInfo');
+        $response = $this->http
+            ->responseClass(GetOrderBuyerInfoResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/buyerInfo');
 
-        return new GetOrderBuyerInfoResponse($response);
+        return $response;
     }
 
     public function getOrderAddress(string $order_id): GetOrderAddressResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/address');
+        $response = $this->http
+            ->responseClass(GetOrderAddressResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/address');
 
-        return new GetOrderAddressResponse($response);
+        return $response;
     }
 
     public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse
     {
         $this->http->setRestrictedDataElements(['buyerInfo']);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems');
+        $response = $this->http
+            ->responseClass(GetOrderItemsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems');
 
-        return new GetOrderItemsResponse($response);
+        return $response;
     }
 
     public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/orderItems/buyerInfo');
+        $response = $this->http
+            ->responseClass(GetOrderItemsBuyerInfoResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/orderItems/buyerInfo');
 
-        return new GetOrderItemsBuyerInfoResponse($response);
+        return $response;
     }
 
     public function updateShipmentStatus(string $order_id, UpdateShipmentStatusRequest $request): BaseResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'orders/'.$order_id.'/shipment', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(BaseResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/shipment', (array) $request->toArrayObject());
 
-        return new BaseResponse($response);
+        return $response;
     }
 }

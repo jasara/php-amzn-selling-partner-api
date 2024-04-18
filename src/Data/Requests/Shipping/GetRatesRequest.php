@@ -8,18 +8,15 @@ use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Schemas\Shipping\ContainerSpecificationListSchema;
 use Jasara\AmznSPA\Data\Schemas\Shipping\ServiceTypeListSchema;
 use Jasara\AmznSPA\Data\Schemas\ShippingAddressSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class GetRatesRequest extends BaseRequest
 {
     public function __construct(
         public ShippingAddressSchema $ship_to,
         public ShippingAddressSchema $ship_from,
-
         public ServiceTypeListSchema $service_types,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $ship_date,
-
         public ContainerSpecificationListSchema $container_specifications,
     ) {
     }

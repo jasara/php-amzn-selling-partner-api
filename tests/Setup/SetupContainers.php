@@ -4,13 +4,14 @@ namespace Jasara\AmznSPA\Tests\Setup;
 
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Data\Schemas\Shipping\ContainerListSchema;
+use Jasara\AmznSPA\Data\Schemas\Shipping\ContainerSchema;
 
 trait SetupContainers
 {
     public function setupContainers(): ContainerListSchema
     {
-        return ContainerListSchema::from([
-            [
+        return ContainerListSchema::make([
+            ContainerSchema::from([
                 'container_type' => 'PACKAGE',
                 'container_reference_id' => Str::random(),
                 'value' => [
@@ -41,7 +42,7 @@ trait SetupContainers
                     'unit' => 'lb',
                     'value' => 0.08164656,
                 ],
-            ],
+            ]),
         ]);
     }
 }

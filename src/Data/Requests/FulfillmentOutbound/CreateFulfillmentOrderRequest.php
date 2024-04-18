@@ -11,20 +11,18 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\CODSettingsSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\CreateFulfillmentOrderItemListSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\DeliveryWindowSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\FeatureSettingListSchema;
-use Spatie\LaravelData\Attributes\WithCast;
 
 class CreateFulfillmentOrderRequest extends BaseRequest
 {
     public function __construct(
         public string $seller_fulfillment_order_id,
         public string $displayable_order_id,
-        #[WithCast(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $displayable_order_date,
         public string $displayable_order_comment,
         #[StringEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
         public string $shipping_speed_category,
         public AddressSchema $destination_address,
-
         public CreateFulfillmentOrderItemListSchema $items,
         public ?DeliveryWindowSchema $delivery_window = null,
         #[StringEnumValidator(['Ship', 'Hold'])]

@@ -17,7 +17,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class MerchantFulfillmentResource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/mfn/v0/';
 
     public function __construct(
@@ -28,59 +27,75 @@ class MerchantFulfillmentResource implements ResourceContract
 
     public function getEligibleShipmentServicesOld(GetEligibleShipmentServicesRequest $request): GetEligibleShipmentServicesResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'eligibleServices', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetEligibleShipmentServicesResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'eligibleServices', (array) $request->toArrayObject());
 
-        return new GetEligibleShipmentServicesResponse($response);
+        return $response;
     }
 
     public function getEligibleShipmentServices(GetEligibleShipmentServicesRequest $request): GetEligibleShipmentServicesResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'eligibleShippingServices', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetEligibleShipmentServicesResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'eligibleShippingServices', (array) $request->toArrayObject());
 
-        return new GetEligibleShipmentServicesResponse($response);
+        return $response;
     }
 
     public function getShipment(string $shipment_id): GetShipmentResponse
     {
         $this->http->useRestrictedDataToken();
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id);
+        $response = $this->http
+            ->responseClass(GetShipmentResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id);
 
-        return new GetShipmentResponse($response);
+        return $response;
     }
 
     public function cancelShipment(string $shipment_id): CancelShipmentResponse
     {
-        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id);
+        $response = $this->http
+            ->responseClass(CancelShipmentResponse::class)
+            ->delete($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id);
 
-        return new CancelShipmentResponse($response);
+        return $response;
     }
 
     public function cancelShipmentOld(string $shipment_id): CancelShipmentResponse
     {
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/cancel', []);
+        $response = $this->http
+            ->responseClass(CancelShipmentResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/cancel', []);
 
-        return new CancelShipmentResponse($response);
+        return $response;
     }
 
     public function createShipment(CreateShipmentRequest $request): CreateShipmentResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'shipments/', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateShipmentResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'shipments/', (array) $request->toArrayObject());
 
-        return new CreateShipmentResponse($response);
+        return $response;
     }
 
     public function getAdditionalSellerInputsOld(GetAdditionalSellerInputsRequest $request): GetAdditionalSellerInputsResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'sellerInputs', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetAdditionalSellerInputsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'sellerInputs', (array) $request->toArrayObject());
 
-        return new GetAdditionalSellerInputsResponse($response);
+        return $response;
     }
 
     public function getAdditionalSellerInputs(GetAdditionalSellerInputsRequest $request): GetAdditionalSellerInputsResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'additionalSellerInputs', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(GetAdditionalSellerInputsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'additionalSellerInputs', (array) $request->toArrayObject());
 
-        return new GetAdditionalSellerInputsResponse($response);
+        return $response;
     }
 }

@@ -7,7 +7,6 @@ use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class ReturnItemSchema extends BaseSchema
 {
@@ -20,7 +19,7 @@ class ReturnItemSchema extends BaseSchema
         public ?string $amazon_return_reason_code,
         #[StringEnumValidator(['New', 'Processed'])]
         public string $status,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $status_changed_date,
         public ?string $return_authorization_id,
         #[StringEnumValidator(AmazonEnums::RETURN_ITEM_DISPOSITION)]

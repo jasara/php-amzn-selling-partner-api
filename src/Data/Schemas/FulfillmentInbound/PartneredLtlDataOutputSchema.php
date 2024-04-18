@@ -10,7 +10,6 @@ use Jasara\AmznSPA\Data\Schemas\AmountSchema;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\ContactSchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class PartneredLtlDataOutputSchema extends BaseSchema
 {
@@ -19,16 +18,15 @@ class PartneredLtlDataOutputSchema extends BaseSchema
         public int $box_count,
         #[StringEnumValidator(AmazonEnums::SELLER_FREIGHT_CLASSES)]
         public ?string $seller_freight_class,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $freight_ready_date,
-
         public ?PalletListSchema $pallet_list,
         public ?WeightSchema $total_weight,
         public ?AmountSchema $seller_declared_value,
         public ?AmountSchema $amazon_calculated_value,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $preview_pickup_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $preview_delivery_date,
         #[StringEnumValidator(AmazonEnums::SELLER_FREIGHT_CLASSES)]
         public ?string $preview_freight_class,

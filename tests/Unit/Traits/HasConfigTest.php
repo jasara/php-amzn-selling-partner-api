@@ -21,7 +21,7 @@ class HasConfigTest extends UnitTestCase
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            redirect_url: Str::random().'.com',
+            redirect_url: Str::random() . '.com',
             lwa_refresh_token: Str::random(),
             aws_access_key: Str::random(),
             aws_secret_key: Str::random(),
@@ -38,7 +38,7 @@ class HasConfigTest extends UnitTestCase
     {
         $token = Str::random();
         $config = $this->setupMinimalConfig();
-        $config->setTokens(new AuthTokens(
+        $config->setTokens(AuthTokens::from(
             access_token: $token,
         ));
 

@@ -7,14 +7,13 @@ use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Schemas\ShippingAddressSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class UpdateFulfillmentOrderRequest extends BaseRequest
 {
     public function __construct(
         public ?string $marketplace_id = null,
         public ?string $displayable_order_id = null,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $displayable_order_date = null,
         public ?string $displayable_order_comment = null,
         #[StringEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]

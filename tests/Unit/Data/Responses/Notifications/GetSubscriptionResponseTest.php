@@ -27,19 +27,19 @@ class GetSubscriptionResponseTest extends UnitTestCase
         $destination_id = Str::random();
 
         $dto = GetSubscriptionResponse::from(
-            errors: [
-                [
-                    'code' => $error_code,
-                    'message' => $error_message,
-                    'details' => $error_details,
-                ],
-            ],
             payload: array_keys_to_snake([
                 'subscriptionId' => $subscription_id,
                 'payloadVersion' => $payload_version,
                 'destinationId' => $destination_id,
             ])
         );
+        $dto->setErrors(ErrorListSchema::make([
+            [
+                'code' => $error_code,
+                'message' => $error_message,
+                'details' => $error_details,
+            ],
+        ]));
 
         $this->assertInstanceOf(ErrorListSchema::class, $dto->errors);
         $error_schema = $dto->errors->first();

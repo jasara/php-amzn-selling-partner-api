@@ -6,16 +6,15 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class OrderSchema extends BaseSchema
 {
     public function __construct(
         public string $amazon_order_id,
         public ?string $seller_order_id,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $purchase_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $last_update_date,
         public string $order_status,
         public ?string $fulfillment_channel,
@@ -25,7 +24,6 @@ class OrderSchema extends BaseSchema
         public ?MoneySchema $order_total,
         public ?int $number_of_items_shipped,
         public ?int $number_of_items_unshipped,
-
         public ?PaymentExecutionDetailItemListSchema $payment_execution_detail,
         public ?string $payment_method,
         public ?array $payment_method_details,
@@ -34,13 +32,13 @@ class OrderSchema extends BaseSchema
         public ?string $easy_ship_shipment_status,
         public ?string $cba_displayable_shipping_label,
         public ?string $order_type,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $earliest_ship_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $latest_ship_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $earliest_delivery_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $latest_delivery_date,
         public ?bool $is_business_order,
         public ?bool $is_prime,
@@ -48,7 +46,7 @@ class OrderSchema extends BaseSchema
         public ?bool $is_global_express_enabled,
         public ?string $replaced_order_id,
         public ?bool $is_replacement_order,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $promise_response_due_date,
         public ?bool $is_estimated_ship_date_set,
         public ?bool $is_sold_by_ab,

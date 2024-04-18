@@ -2,13 +2,11 @@
 
 namespace Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions;
 
-use Jasara\AmznSPA\Data\Base\Casts\BackedEnumCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\Locale;
 use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\ProductTypeVersionSchema;
 use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\SchemaLinkSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class ProductTypeDefinitionResponse extends BaseResponse
 {
@@ -22,7 +20,6 @@ class ProductTypeDefinitionResponse extends BaseResponse
         public ProductTypeVersionSchema $product_type_version,
         public string $product_type,
         public array $marketplace_ids,
-        #[CastWith(BackedEnumCaster::class)]
         public Locale $locale,
         public array $property_groups,
     ) {

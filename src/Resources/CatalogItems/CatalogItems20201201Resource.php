@@ -2,7 +2,6 @@
 
 namespace Jasara\AmznSPA\Resources\CatalogItems;
 
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
@@ -14,7 +13,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class CatalogItems20201201Resource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/catalog/2020-12-01/';
 
     public function __construct(
@@ -46,19 +44,21 @@ class CatalogItems20201201Resource implements ResourceContract
             $this->validateIsArrayOfStrings($classification_ids);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items', array_filter([
-            'keywords' => $keywords,
-            'marketplaceIds' => $marketplace_ids,
-            'includedData' => $included_data,
-            'brandNames' => $brand_names,
-            'classificationIds' => $classification_ids,
-            'pageSize' => $page_size,
-            'pageToken' => $page_token,
-            'keywordsLocale' => $keywords_locale,
-            'locale' => $locale,
-        ]));
+        $response = $this->http
+            ->responseClass(ItemSearchResults::class)
+            ->get($this->endpoint . self::BASE_PATH . 'items', array_filter([
+                'keywords' => $keywords,
+                'marketplaceIds' => $marketplace_ids,
+                'includedData' => $included_data,
+                'brandNames' => $brand_names,
+                'classificationIds' => $classification_ids,
+                'pageSize' => $page_size,
+                'pageToken' => $page_token,
+                'keywordsLocale' => $keywords_locale,
+                'locale' => $locale,
+            ]));
 
-        return new ItemSearchResults($response);
+        return $response;
     }
 
     public function getCatalogItem(
@@ -72,18 +72,14 @@ class CatalogItems20201201Resource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA_ITEMS);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items/'.$asin, array_filter([
-            'marketplaceIds' => $marketplace_ids,
-            'includedData' => $included_data,
-            'locale' => $locale,
-        ]));
+        $response = $this->http
+            ->responseClass(GetCatalogItemResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'items/' . $asin, array_filter([
+                'marketplaceIds' => $marketplace_ids,
+                'includedData' => $included_data,
+                'locale' => $locale,
+            ]));
 
-        $errors = Arr::get($response, 'errors');
-
-        return new GetCatalogItemResponse(
-            errors: $errors,
-            item: $errors ? null : $response,
-            metadata: Arr::get($response, 'metadata'),
-        );
+        return $response;
     }
 }

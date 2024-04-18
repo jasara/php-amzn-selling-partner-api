@@ -2,11 +2,9 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\CatalogItems\v20220401;
 
-use Jasara\AmznSPA\Data\Base\Casts\BackedEnumCaster;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems\ItemClassification;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class ItemSummaryByMarketplaceSchema extends BaseSchema
 {
@@ -16,7 +14,6 @@ class ItemSummaryByMarketplaceSchema extends BaseSchema
         public ?CatalogItems\ItemBrowseClassificationSchema $browse_node,
         public ?string $color,
         public ?string $item_name,
-        #[CastWith(BackedEnumCaster::class)]
         public ?ItemClassification $item_classification,
         public ?string $manufacturer,
         public ?string $model_number,

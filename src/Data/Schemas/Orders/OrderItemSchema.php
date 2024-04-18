@@ -7,7 +7,6 @@ use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class OrderItemSchema extends BaseSchema
 {
@@ -35,9 +34,9 @@ class OrderItemSchema extends BaseSchema
         public ?string $condition_note,
         public ?string $condition_id,
         public ?string $condition_subtype_id,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $scheduled_delivery_start_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $scheduled_delivery_end_date,
         public ?string $price_designation,
         public ?TaxCollectionSchema $tax_collection,

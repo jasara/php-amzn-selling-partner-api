@@ -8,7 +8,6 @@ use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\ShippingAddressSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class FulfillmentOrderSchema extends BaseSchema
 {
@@ -16,7 +15,7 @@ class FulfillmentOrderSchema extends BaseSchema
         public string $seller_fulfillment_order_id,
         public ?string $marketplace_id,
         public string $displayable_order_id,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $displayable_order_date,
         public string $displayable_order_comment,
         #[StringEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
@@ -28,14 +27,13 @@ class FulfillmentOrderSchema extends BaseSchema
         #[StringEnumValidator(['FillOrKill', 'FillAll', 'FillAllAvailable'])]
         public ?string $fulfillment_policy,
         public ?CODSettingsSchema $cod_settings,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $received_date,
         #[StringEnumValidator(AmazonEnums::FULFILLMENT_ORDER_STATUS)]
         public string $fulfillment_order_status,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $status_updated_date,
         public ?array $notification_emails,
-
         public ?FeatureSettingListSchema $feature_constraints,
     ) {
     }

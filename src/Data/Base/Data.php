@@ -5,8 +5,6 @@ namespace Jasara\AmznSPA\Data\Base;
 class Data
 {
     use ToArrayObject;
-    use BuildsData;
-    use ValidatesData;
 
     public static function from(mixed ...$payload): static
     {
@@ -14,9 +12,9 @@ class Data
             $payload = $payload[0];
         }
 
-        $data = $payload instanceof static ? $payload : self::buildObject(static::class, $payload);
+        $data = $payload instanceof static ? $payload : (new DataBuilder(static::class, $payload))->build();
 
-        self::validateParameters($data);
+        (new DataValidator)->validate($data);
 
         return $data;
     }

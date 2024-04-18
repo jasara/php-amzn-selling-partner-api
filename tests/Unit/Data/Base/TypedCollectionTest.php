@@ -52,4 +52,17 @@ class TypedCollectionTest extends UnitTestCase
             new \stdClass(),
         ]);
     }
+
+    public function testSucceedsIfDataCanBeMappedToType(): void
+    {
+        $collection = RestrictedResourcesListSchema::make([
+            new RestrictedResourceSchema(method: 'GET', path: '/path', data_elements: null),
+            ['method' => 'GET', 'path' => '/path'],
+        ]);
+
+        $this->assertInstanceOf(RestrictedResourcesListSchema::class, $collection);
+        $this->assertCount(2, $collection);
+        $this->assertInstanceOf(RestrictedResourceSchema::class, $collection[0]);
+        $this->assertInstanceOf(RestrictedResourceSchema::class, $collection[1]);
+    }
 }

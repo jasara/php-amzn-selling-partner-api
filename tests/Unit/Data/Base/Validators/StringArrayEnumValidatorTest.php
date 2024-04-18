@@ -19,10 +19,9 @@ class StringArrayEnumValidatorTest extends UnitTestCase
         $validator->validate(['INVALID', 'InboundRecommended']);
     }
 
-    public function testThrowsValidationErrorIfNull(): void
+    public function testPassesIfNull(): void
     {
-        $this->expectException(DataValidationException::class);
-        $this->expectExceptionMessage('Value cannot be null');
+        $this->expectNotToPerformAssertions();
 
         $validator = new StringArrayEnumValidator(['InboundRecommended', 'InboundNotRecommended']);
         $validator->validate(null);

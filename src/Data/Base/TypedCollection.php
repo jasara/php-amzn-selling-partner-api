@@ -17,11 +17,25 @@ class TypedCollection extends Collection
     public function __construct(
         object|array ...$items,
     ) {
-        if (!class_exists(static::ITEM_CLASS)) {
-            throw new \InvalidArgumentException('Invalid item class: '.static::ITEM_CLASS);
+        if (! class_exists(static::ITEM_CLASS)) {
+            throw new \InvalidArgumentException('Invalid item class: ' . static::ITEM_CLASS);
         }
 
-        parent::__construct(Arr::flatten($items, 1));
+        $items = Arr::flatten($items, 1);
+
+        $items = array_map(function ($item) {
+            if (is_a($item, static::ITEM_CLASS) || ! is_a(static::ITEM_CLASS, Data::class, true)) {
+                return $item;
+            }
+
+            try {
+                return static::ITEM_CLASS::from($item);
+            } catch (\Throwable $e) {
+                throw new \UnexpectedValueException('Item data cannot be converted to ' . static::ITEM_CLASS . ': ' . $e->getMessage());
+            }
+        }, $items);
+
+        parent::__construct($items);
 
         $this->ensure(static::ITEM_CLASS);
     }

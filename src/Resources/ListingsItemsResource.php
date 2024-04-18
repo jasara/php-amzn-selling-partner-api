@@ -2,7 +2,6 @@
 
 namespace Jasara\AmznSPA\Resources;
 
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
@@ -36,19 +35,15 @@ class ListingsItemsResource implements ResourceContract
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku), array_filter([
-            'marketplaceIds' => $marketplace_ids,
-            'issueLocale' => $issue_locale,
-            'includedData' => $included_data,
-        ]));
+        $response = $this->http
+            ->responseClass(GetListingsItemResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku), array_filter([
+                'marketplaceIds' => $marketplace_ids,
+                'issueLocale' => $issue_locale,
+                'includedData' => $included_data,
+            ]));
 
-        $errors = Arr::get($response, 'errors');
-
-        return new GetListingsItemResponse(
-            errors: $errors,
-            item: $errors ? null : $response,
-            metadata: Arr::get($response, 'metadata'),
-        );
+        return $response;
     }
 
     public function putListingsItem(
@@ -63,17 +58,19 @@ class ListingsItemsResource implements ResourceContract
         $request_array = (array) $request->toArrayObject();
         $request_array['attributes'] = $request->attributes->toArrayObject();
 
-        $response = $this->http->put(
-            $this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku).'?'.http_build_query(
-                array_filter([
-                    'marketplaceIds' => implode(',', $marketplace_ids),
-                    'issueLocale' => $issue_locale,
-                ])
-            ),
-            $request_array,
-        );
+        $response = $this->http
+            ->responseClass(ListingsItemSubmissionResponse::class)
+            ->put(
+                $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
+                    array_filter([
+                        'marketplaceIds' => implode(',', $marketplace_ids),
+                        'issueLocale' => $issue_locale,
+                    ])
+                ),
+                $request_array,
+            );
 
-        return new ListingsItemSubmissionResponse($response);
+        return $response;
     }
 
     public function deleteListingsItem(
@@ -84,12 +81,14 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->delete($this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku), array_filter([
-            'marketplaceIds' => implode(',', $marketplace_ids),
-            'issueLocale' => $issue_locale,
-        ]));
+        $response = $this->http
+            ->responseClass(ListingsItemSubmissionResponse::class)
+            ->delete($this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku), array_filter([
+                'marketplaceIds' => implode(',', $marketplace_ids),
+                'issueLocale' => $issue_locale,
+            ]));
 
-        return new ListingsItemSubmissionResponse($response);
+        return $response;
     }
 
     public function patchListingsItem(
@@ -101,16 +100,18 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->patch(
-            $this->endpoint.self::BASE_PATH.'items/'.$seller_id.'/'.rawurlencode($sku).'?'.http_build_query(
-                array_filter([
-                    'marketplaceIds' => implode(',', $marketplace_ids),
-                    'issueLocale' => $issue_locale,
-                ])
-            ),
-            (array) $request->toArrayObject()
-        );
+        $response = $this->http
+            ->responseClass(ListingsItemSubmissionResponse::class)
+            ->patch(
+                $this->endpoint . self::BASE_PATH . 'items/' . $seller_id . '/' . rawurlencode($sku) . '?' . http_build_query(
+                    array_filter([
+                        'marketplaceIds' => implode(',', $marketplace_ids),
+                        'issueLocale' => $issue_locale,
+                    ])
+                ),
+                (array) $request->toArrayObject()
+            );
 
-        return new ListingsItemSubmissionResponse($response);
+        return $response;
     }
 }

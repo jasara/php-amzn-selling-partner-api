@@ -13,7 +13,7 @@ class StringArrayEnumValidator implements Validator
     public function validate(mixed $value): void
     {
         if (is_null($value)) {
-            throw new DataValidationException('Value cannot be null');
+            return;
         }
 
         $this->validateArray($value, $this->enum);
@@ -22,8 +22,8 @@ class StringArrayEnumValidator implements Validator
     private function validateArray(array $array, array $allowed_values): void
     {
         foreach ($array as $string) {
-            if (!in_array($string, $allowed_values)) {
-                throw new DataValidationException($string.' is not an allowed result. Valid values are: '.implode(',', $allowed_values));
+            if (! in_array($string, $allowed_values)) {
+                throw new DataValidationException($string . ' is not an allowed result. Valid values are: ' . implode(',', $allowed_values));
             }
         }
     }

@@ -9,7 +9,6 @@ use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class ShipmentSchema extends BaseSchema
 {
@@ -17,7 +16,6 @@ class ShipmentSchema extends BaseSchema
         public string $shipment_id,
         public string $amazon_order_id,
         public ?string $seller_order_id,
-
         public ItemListSchema $item_list,
         public AddressSchema $ship_from_address,
         public AddressSchema $ship_to_address,
@@ -29,9 +27,9 @@ class ShipmentSchema extends BaseSchema
         #[StringEnumValidator(['Purchased', 'RefundPending', 'RefundRejected', 'RefundApplied'])]
         public string $status,
         public ?string $tracking_id,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public CarbonImmutable $created_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $last_update_date,
     ) {
     }

@@ -7,7 +7,6 @@ use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class PackageTrackingDetailsSchema extends BaseSchema
 {
@@ -18,9 +17,9 @@ class PackageTrackingDetailsSchema extends BaseSchema
         public ?string $carrier_code,
         public ?string $carrier_phone_number,
         public ?string $carrier_url,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $ship_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $estimated_arrival_date,
         public ?TrackingAddressSchema $ship_to_address,
         #[StringEnumValidator(AmazonEnums::CURRENT_STATUS)]

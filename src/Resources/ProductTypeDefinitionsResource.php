@@ -31,12 +31,14 @@ class ProductTypeDefinitionsResource implements ResourceContract
             $this->validateIsArrayOfStrings($keywords);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'productTypes', array_filter([
-            'marketplaceIds' => $marketplace_ids,
-            'keywords' => $keywords,
-        ]));
+        $response = $this->http
+            ->responseClass(ProductTypeListResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'productTypes', array_filter([
+                'marketplaceIds' => $marketplace_ids,
+                'keywords' => $keywords,
+            ]));
 
-        return new ProductTypeListResponse($response);
+        return $response;
     }
 
     public function getDefinitionsProductType(
@@ -63,15 +65,17 @@ class ProductTypeDefinitionsResource implements ResourceContract
             $this->validateStringEnum($locale, Locale::class);
         }
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'productTypes/'.$product_type, array_filter([
-            'sellerId ' => $seller_id,
-            'marketplaceIds' => $marketplace_ids,
-            'productTypeVersion' => $product_type_version,
-            'requirements' => $requirements,
-            'requirementsEnforced' => $requirements_enforced,
-            'locale' => $locale,
-        ]));
+        $response = $this->http
+            ->responseClass(ProductTypeDefinitionResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'productTypes/' . $product_type, array_filter([
+                'sellerId ' => $seller_id,
+                'marketplaceIds' => $marketplace_ids,
+                'productTypeVersion' => $product_type_version,
+                'requirements' => $requirements,
+                'requirementsEnforced' => $requirements_enforced,
+                'locale' => $locale,
+            ]));
 
-        return new ProductTypeDefinitionResponse($response);
+        return $response;
     }
 }

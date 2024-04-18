@@ -66,7 +66,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokens(
+        $config->setTokens(AuthTokens::from(
             refresh_token: null,
         ));
 
@@ -171,6 +171,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = $this->setupMinimalConfig(null, $http);
         $config->setRestrictedDataToken(new RestrictedDataToken(
             access_token: Str::random(),
+            expires_at: 3600,
             path: Str::random(),
         ));
 
@@ -211,7 +212,7 @@ class AmznSPAHttpTest extends UnitTestCase
         ]);
 
         $config = $this->setupMinimalConfig(null, $http);
-        $config->setTokens(new AuthTokens(
+        $config->setTokens(AuthTokens::from(
             refresh_token: Str::random(),
         ));
 
@@ -233,6 +234,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = $this->setupMinimalConfig(null, $http);
         $config->setGrantlessToken(new GrantlessToken(
             access_token: null,
+            expires_at: 0,
         ));
 
         $amzn = new AmznSPA($config);
@@ -306,7 +308,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = $this->setupMinimalConfig(null, $http);
 
         $amzn = new AmznSPA($config);
-        $amzn->notifications->createDestination(Str::random(), new DestinationResourceSpecificationSchema());
+        $amzn->notifications->createDestination(Str::random(), DestinationResourceSpecificationSchema::from());
     }
 
     public function testInvalidInputResponseReturned()
@@ -495,7 +497,7 @@ class AmznSPAHttpTest extends UnitTestCase
             Str::random(),
             ['ATVPDKIKX0DER'],
             null,
-            new ListingsItemPatchRequest(
+            ListingsItemPatchRequest::from(
                 product_type: Str::random(),
                 patches: [],
             )

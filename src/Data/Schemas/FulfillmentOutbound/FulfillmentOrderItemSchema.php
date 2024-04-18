@@ -6,7 +6,6 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Schemas\AmountSchema;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Spatie\DataTransferObject\Attributes\CastWith;
 
 class FulfillmentOrderItemSchema extends BaseSchema
 {
@@ -20,9 +19,9 @@ class FulfillmentOrderItemSchema extends BaseSchema
         public ?string $order_item_disposition,
         public int $cancelled_quantity,
         public int $unfulfillable_quantity,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $estimated_ship_date,
-        #[CastWith(CarbonFromStringCaster::class)]
+        #[CarbonFromStringCaster]
         public ?CarbonImmutable $estimated_arrival_date,
         public ?AmountSchema $per_unit_price,
         public ?AmountSchema $per_unit_tax,
