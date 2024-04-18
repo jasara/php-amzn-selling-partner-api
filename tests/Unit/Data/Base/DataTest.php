@@ -3,23 +3,32 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Jasara\AmznSPA\Data\Base\Data;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelDataOutputSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(Data::class)]
 class DataTest extends UnitTestCase
 {
-    public function testToArrayReturnsCasedArray(): void
+    public function testToArrayReturnsArray(): void
     {
-        $data = NonPartneredSmallParcelPackageOutputSchema::from(
-            carrier_name: 'carrier_name',
-            package_status: 'SHIPPED',
-        );
+        $data = NonPartneredSmallParcelDataOutputSchema::from([
+            'package_list' => [
+                [
+                    'carrier_name' => 'carrier_name2',
+                    'package_status' => 'IN_TRANSIT',
+                ],
+            ],
+        ]);
 
         $this->assertEquals([
-            'carrierName' => 'carrier_name',
-            'packageStatus' => 'SHIPPED',
+            'package_list' => [
+                [
+                    'carrier_name' => 'carrier_name2',
+                    'package_status' => 'IN_TRANSIT',
+                    'tracking_id' => null,
+                ],
+            ],
         ], $data->toArray());
     }
 }

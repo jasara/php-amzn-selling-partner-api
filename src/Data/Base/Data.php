@@ -2,9 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Base;
 
-class Data
+use Illuminate\Contracts\Support\Arrayable;
+
+class Data implements Arrayable
 {
     use ToArrayObject;
+    use ToArray;
 
     public static function from(mixed ...$payload): static
     {
@@ -17,10 +20,5 @@ class Data
         (new DataValidator)->validate($data);
 
         return $data;
-    }
-
-    public function toArray(): array
-    {
-        return $this->toArrayObject()->getArrayCopy();
     }
 }
