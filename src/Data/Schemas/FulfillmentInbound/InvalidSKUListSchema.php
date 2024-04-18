@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class InvalidSkuListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = InvalidSkuSchema::class;
+    public const ITEM_CLASS = InvalidSkuSchema::class;
 }

@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ServiceTypeListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = ServiceTypeSchema::class;
+    public const ITEM_CLASS = ServiceTypeSchema::class;
 }

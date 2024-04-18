@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ClassificationRefinementListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = ClassificationRefinementSchema::class;
+    public const ITEM_CLASS = ClassificationRefinementSchema::class;
 }

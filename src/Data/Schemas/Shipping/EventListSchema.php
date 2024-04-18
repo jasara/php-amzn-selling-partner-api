@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class EventListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = EventSchema::class;
+    public const ITEM_CLASS = EventSchema::class;
 }

@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class OrderListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = OrderSchema::class;
+    public const ITEM_CLASS = OrderSchema::class;
 }

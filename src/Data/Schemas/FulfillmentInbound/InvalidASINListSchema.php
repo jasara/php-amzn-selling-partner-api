@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class InvalidAsinListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = InvalidAsinSchema::class;
+    public const ITEM_CLASS = InvalidAsinSchema::class;
 }

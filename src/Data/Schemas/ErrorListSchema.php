@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ErrorListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = ErrorSchema::class;
+    public const ITEM_CLASS = ErrorSchema::class;
 }

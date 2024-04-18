@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  */
 class TypedCollection extends Collection
 {
-    public const string ITEM_CLASS = 'defined_by_child_class';
+    public const ITEM_CLASS = 'defined_by_child_class';
 
     public function __construct(
         object|array ...$items,

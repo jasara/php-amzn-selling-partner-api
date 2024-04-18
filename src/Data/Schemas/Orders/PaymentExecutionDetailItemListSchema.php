@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class PaymentExecutionDetailItemListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = PaymentExecutionDetailItemSchema::class;
+    public const ITEM_CLASS = PaymentExecutionDetailItemSchema::class;
 }

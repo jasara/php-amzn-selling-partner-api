@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AvailableCarrierWillPickUpOptionsListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = AvailableCarrierWillPickUpOptionSchema::class;
+    public const ITEM_CLASS = AvailableCarrierWillPickUpOptionSchema::class;
 }

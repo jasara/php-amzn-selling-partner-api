@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class TemporarilyUnavailableCarrierListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = TemporarilyUnavailableCarrierSchema::class;
+    public const ITEM_CLASS = TemporarilyUnavailableCarrierSchema::class;
 }

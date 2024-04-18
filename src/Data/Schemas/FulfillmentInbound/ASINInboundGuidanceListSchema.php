@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AsinInboundGuidanceListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = AsinInboundGuidanceSchema::class;
+    public const ITEM_CLASS = AsinInboundGuidanceSchema::class;
 }

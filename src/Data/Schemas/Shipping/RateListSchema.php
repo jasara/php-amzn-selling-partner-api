@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class RateListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = RateSchema::class;
+    public const ITEM_CLASS = RateSchema::class;
 }

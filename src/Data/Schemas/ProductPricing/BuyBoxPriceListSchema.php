@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class BuyBoxPriceListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = BuyBoxPriceTypeSchema::class;
+    public const ITEM_CLASS = BuyBoxPriceTypeSchema::class;
 }

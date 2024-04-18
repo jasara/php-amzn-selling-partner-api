@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class GetFulfillmentPreviewItemListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = GetFulfillmentPreviewItemSchema::class;
+    public const ITEM_CLASS = GetFulfillmentPreviewItemSchema::class;
 }

@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ReturnItemListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = ReturnItemSchema::class;
+    public const ITEM_CLASS = ReturnItemSchema::class;
 }

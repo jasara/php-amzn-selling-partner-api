@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AdditionalSellerInputsListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = AdditionalSellerInputSchema::class;
+    public const ITEM_CLASS = AdditionalSellerInputSchema::class;
 }

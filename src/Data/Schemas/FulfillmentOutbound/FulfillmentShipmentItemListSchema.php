@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class FulfillmentShipmentItemListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = FulfillmentShipmentItemSchema::class;
+    public const ITEM_CLASS = FulfillmentShipmentItemSchema::class;
 }

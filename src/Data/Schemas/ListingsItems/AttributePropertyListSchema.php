@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class AttributePropertyListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = AttributePropertySchema::class;
+    public const ITEM_CLASS = AttributePropertySchema::class;
 }

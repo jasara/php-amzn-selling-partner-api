@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class PatchListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = PatchOperationSchema::class;
+    public const ITEM_CLASS = PatchOperationSchema::class;
 }

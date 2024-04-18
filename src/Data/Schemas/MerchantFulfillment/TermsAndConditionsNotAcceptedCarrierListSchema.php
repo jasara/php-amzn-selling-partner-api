@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class TermsAndConditionsNotAcceptedCarrierListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = TermsAndConditionsNotAcceptedCarrierSchema::class;
+    public const ITEM_CLASS = TermsAndConditionsNotAcceptedCarrierSchema::class;
 }

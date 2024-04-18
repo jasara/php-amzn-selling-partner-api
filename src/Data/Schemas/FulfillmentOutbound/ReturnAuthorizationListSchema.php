@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ReturnAuthorizationListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = ReturnAuthorizationSchema::class;
+    public const ITEM_CLASS = ReturnAuthorizationSchema::class;
 }

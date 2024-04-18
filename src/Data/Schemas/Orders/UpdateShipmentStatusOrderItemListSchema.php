@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class UpdateShipmentStatusOrderItemListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = UpdateShipmentStatusOrderItemSchema::class;
+    public const ITEM_CLASS = UpdateShipmentStatusOrderItemSchema::class;
 }

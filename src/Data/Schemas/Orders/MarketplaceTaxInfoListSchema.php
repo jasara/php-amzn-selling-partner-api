@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class MarketplaceTaxInfoListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = TaxClassificationSchema::class;
+    public const ITEM_CLASS = TaxClassificationSchema::class;
 }

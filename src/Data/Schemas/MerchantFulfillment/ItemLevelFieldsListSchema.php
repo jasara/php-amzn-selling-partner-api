@@ -9,5 +9,5 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
  */
 class ItemLevelFieldsListSchema extends TypedCollection
 {
-    public const string ITEM_CLASS = ItemLevelFieldsSchema::class;
+    public const ITEM_CLASS = ItemLevelFieldsSchema::class;
 }
