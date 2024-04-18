@@ -18,4 +18,9 @@ class Data
 
         return $data;
     }
+
+    public function toArray(): array
+    {
+        return $this->toArrayObject()->getArrayCopy();
+    }
 }
