@@ -39,4 +39,19 @@ class TypedCollection extends Collection
 
         $this->ensure(static::ITEM_CLASS);
     }
+
+    public function map(callable $callback)
+    {
+        return $this->toBase()->map($callback);
+    }
+
+    public function pluck($value, $key = null)
+    {
+        return $this->toBase()->pluck($value, $key);
+    }
+
+    public function reduce(callable $callback, $initial = null)
+    {
+        return $this->toBase()->reduce($callback, $initial);
+    }
 }

@@ -275,7 +275,7 @@ class AmznSPAHttp
         $response = $amzn->tokens->createRestrictedDataToken($request);
 
         if ($response->errors) {
-            throw new AmznSPAException(implode(',', $response->errors->toBase()->pluck('message')->toArray() ?: []));
+            throw new AmznSPAException(implode(',', $response->errors->pluck('message')->toArray() ?: []));
         }
 
         $this->config->setRestrictedDataToken(new RestrictedDataToken(

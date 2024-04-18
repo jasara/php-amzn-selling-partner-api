@@ -72,4 +72,31 @@ class TypedCollectionTest extends UnitTestCase
         $this->assertInstanceOf(RestrictedResourceSchema::class, $collection[0]);
         $this->assertInstanceOf(RestrictedResourceSchema::class, $collection[1]);
     }
+
+    public function testCanMapValues(): void
+    {
+        $collection = RestrictedResourcesListSchema::make([
+            new RestrictedResourceSchema(method: 'GET', path: '/path', data_elements: null),
+        ]);
+
+        $this->assertEquals(['GET'], $collection->map(fn (RestrictedResourceSchema $resource) => $resource->method)->toArray());
+    }
+
+    public function testCanPluckValues(): void
+    {
+        $collection = RestrictedResourcesListSchema::make([
+            new RestrictedResourceSchema(method: 'GET', path: '/path', data_elements: null),
+        ]);
+
+        $this->assertEquals(['GET'], $collection->pluck('method')->toArray());
+    }
+
+    public function testCanReduceValues(): void
+    {
+        $collection = RestrictedResourcesListSchema::make([
+            new RestrictedResourceSchema(method: 'GET', path: '/path', data_elements: null),
+        ]);
+
+        $this->assertEquals('GET', $collection->reduce(fn (string $carry, RestrictedResourceSchema $resource) => $carry . $resource->method, ''));
+    }
 }

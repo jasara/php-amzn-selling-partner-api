@@ -36,7 +36,7 @@ trait ToArrayObject
         }
 
         return new \ArrayObject(array_filter($data, function ($value) {
-            return !is_null($value);
+            return ! is_null($value);
         }));
     }
 
@@ -70,7 +70,7 @@ trait ToArrayObject
 
     private function mapWithCollection(string $case, Collection $value): array
     {
-        return $value->toBase()->map(function ($item) use ($case) {
+        return $value->map(function ($item) use ($case) {
             return $this->toArrayObject($item, $case);
         })->toArray();
     }
