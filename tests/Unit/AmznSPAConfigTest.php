@@ -22,6 +22,7 @@ use Psr\Log\LogLevel;
 use Symfony\Component\HttpKernel\Log\Logger;
 
 #[CoversClass(AmznSPAConfig::class)]
+#[CoversClass(ApplicationKeys::class)]
 class AmznSPAConfigTest extends UnitTestCase
 {
     public function testGetNewConfig()

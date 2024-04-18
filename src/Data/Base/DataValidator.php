@@ -12,30 +12,8 @@ class DataValidator
         $reflection = new \ReflectionClass($data);
 
         foreach ($reflection->getProperties() as $property) {
-            if (! $property->isInitialized($data)) {
-                continue;
-            }
-
             $property->setAccessible(true);
             $property_value = $property->getValue($data);
-
-            // If is iterable, validate all items that are data objects
-            if (is_iterable($property_value)) {
-                foreach ($property_value as $item) {
-                    if ($item instanceof Data) {
-                        $this->validate($item);
-                    }
-                }
-
-                continue;
-            }
-
-            // If is data object, validate it recursively
-            if ($property_value instanceof Data) {
-                $this->validate($property_value);
-
-                continue;
-            }
 
             foreach ($this->getValidators($property) as $validator) {
                 try {

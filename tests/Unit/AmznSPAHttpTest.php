@@ -535,4 +535,22 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_outbound->cancelFulfillmentOrder('some-order-id');
     }
+
+    public function testCannotSetResponseThatIsNotBaseResponse()
+    {
+        $this->expectExceptionMessage('Response class must extend BaseResponse');
+
+        $http = new AmznSPAHttp($this->setupMinimalConfig());
+        $http->responseClass('stdClass');
+    }
+
+    public function testReturnsArrayWithNoResponseClassSet()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('reports/get-report-document');
+
+        $http = new AmznSPAHttp($config);
+        $response = $http->get($config->getMarketplace()->getBaseUrl() . '/orders/v0/orders');
+
+        $this->assertIsArray($response);
+    }
 }

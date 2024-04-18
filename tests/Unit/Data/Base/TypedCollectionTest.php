@@ -53,6 +53,13 @@ class TypedCollectionTest extends UnitTestCase
         ]);
     }
 
+    public function testThrowsExceptionIfItemClassIsInvalid(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        TypedCollection::make();
+    }
+
     public function testSucceedsIfDataCanBeMappedToType(): void
     {
         $collection = RestrictedResourcesListSchema::make([

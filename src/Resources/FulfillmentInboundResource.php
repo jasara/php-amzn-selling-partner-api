@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
@@ -235,19 +234,6 @@ class FulfillmentInboundResource implements ResourceContract
                 'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
                 'NextToken' => $next_token,
             ]));
-
-        return $response;
-    }
-
-    private function setEmptyShipFromAddressToNull(array $response): array
-    {
-        $response['payload']['shipment_data'] = array_map(function (array $shipment_data) {
-            if (Arr::get($shipment_data, 'ship_from_address') === []) {
-                $shipment_data['ship_from_address'] = null;
-            }
-
-            return $shipment_data;
-        }, $response['payload']['shipment_data']);
 
         return $response;
     }

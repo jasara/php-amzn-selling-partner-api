@@ -7,10 +7,12 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\TransportDetailInputSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
+#[CoversClass(PutTransportDetailsRequest::class)]
 class PutTransportDetailsRequestTest extends UnitTestCase
 {
-    public function testReadyDate()
+    public function testReadyDate(): void
     {
         $ready_date = CarbonImmutable::now()->addWeekdays(10);
         $request = PutTransportDetailsRequest::from(

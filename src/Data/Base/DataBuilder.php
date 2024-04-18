@@ -72,19 +72,19 @@ class DataBuilder
         }
 
         if ($parameter->getType() instanceof \ReflectionUnionType) {
-            foreach ($parameter->getType()->getTypes() as $type) {
-                if ($type->getName() === 'null') {
-                    continue;
-                }
-
+            $types = array_filter(
+                $parameter->getType()->getTypes(),
+                fn ($type) => $type->getName() !== 'null',
+            );
+            foreach ($types as $type) {
                 try {
                     return self::getValueFromNamedType($type, $payload_value);
-                } catch (\InvalidArgumentException) {
+                } catch (\Throwable) {
                     continue;
                 }
             }
 
-            throw new \InvalidArgumentException("Unsupported parameter union for: {$parameter->getName()}");
+            throw new \InvalidArgumentException("Unsupported parameter union for: {$parameter->getName()}"); // @codeCoverageIgnore
         }
 
         return self::getValueFromNamedType($parameter->getType()->getName(), $payload_value);

@@ -3,10 +3,14 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Carbon\CarbonImmutable;
+use Jasara\AmznSPA\Contracts\IsFlatResponse;
 use Jasara\AmznSPA\Data\Base\Data;
 use Jasara\AmznSPA\Data\Base\DataBuilder;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
+use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentInfoSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelDataOutputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputListSchema;
@@ -78,6 +82,15 @@ class DataBuilderTest extends UnitTestCase
         $this->assertEquals('IN_TRANSIT', $data->package_list[1]->package_status);
     }
 
+    public function testBuildDataFailsIfInvalidDataSentToCollectionParameter(): void
+    {
+        $this->expectExceptionMessage('Expected iterable for collection parameter');
+
+        NonPartneredSmallParcelDataOutputSchema::from([
+            'package_list' => 'INVALID',
+        ]);
+    }
+
     public function testBuildDataWithNestedData(): void
     {
         $data = CreateUploadDestinationResponse::from([
@@ -109,6 +122,17 @@ class DataBuilderTest extends UnitTestCase
         $this->assertInstanceOf(CarbonImmutable::class, $data->expires_in);
         $this->assertGreaterThanOrEqual(3598, $data->expires_in->diffInSeconds());
         $this->assertLessThanOrEqual(3600, $data->expires_in->diffInSeconds());
+    }
+
+    public function testBuildsDataWithInvalidData(): void
+    {
+        $this->expectExceptionMessage('Missing required parameter: name');
+
+        AddressSchema::from([
+            'address_line_1' => 'address_line_1',
+            'country_code' => 'CA',
+            'postal_code' => 'postal_code',
+        ]);
     }
 
     public function testBuildsDataWithCarbonCaster(): void
@@ -143,5 +167,53 @@ class DataBuilderTest extends UnitTestCase
 
         $this->assertInstanceOf(FeesEstimateErrorSchema::class, $data);
         $this->assertIsArray($data->detail);
+    }
+
+    public function testBuildDataWithNoParameters(): void
+    {
+        $data = CreateFulfillmentOrderResponse::from();
+
+        $this->assertInstanceOf(CreateFulfillmentOrderResponse::class, $data);
+    }
+
+    public function testBuildDataWithFlatResponse(): void
+    {
+        $data = GetCatalogItemResponse::from([
+            'asin' => 'asin',
+        ]);
+
+        $this->assertInstanceOf(GetCatalogItemResponse::class, $data);
+        $this->assertEquals('asin', $data->item->asin);
+    }
+
+    public function testBuildDataWithEmptyFlatResponseIsIsError(): void
+    {
+        $data = GetCatalogItemResponse::from([
+            'errors' => [],
+        ]);
+
+        $this->assertInstanceOf(GetCatalogItemResponse::class, $data);
+        $this->assertNull($data->item);
+    }
+
+    public function testBuildDataWithFlatResponseFailsIfParameterDoesntExist(): void
+    {
+        $this->expectExceptionMessage('Missing required parameter: invalid');
+
+        $class = new class('test') extends Data implements IsFlatResponse {
+            public function __construct(
+                public string $not_matching,
+            ) {
+            }
+
+            public static function mapResponseToParameter(): string
+            {
+                return 'invalid';
+            }
+        };
+
+        $class::from([
+            'invalid' => 'invalid',
+        ]);
     }
 }

@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
@@ -90,10 +89,6 @@ class OrdersResource implements ResourceContract
         $response = $this->http
             ->responseClass(GetOrderResponse::class)
             ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id);
-
-        if (Arr::get($response, 'payload') === []) {
-            $response['payload'] = null;
-        }
 
         return $response;
     }

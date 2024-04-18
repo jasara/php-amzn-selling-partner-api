@@ -5,7 +5,6 @@ namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound;
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
-use Jasara\AmznSPA\Data\Base\Casts\EmptyArrayToNullCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
@@ -15,7 +14,6 @@ class InboundShipmentInfoSchema extends BaseSchema
     public function __construct(
         public ?string $shipment_id,
         public ?string $shipment_name,
-        #[EmptyArrayToNullCaster]
         public ?AddressSchema $ship_from_address,
         public ?string $destination_fulfillment_center_id,
         #[StringEnumValidator(AmazonEnums::SHIPMENT_STATUSES)]
