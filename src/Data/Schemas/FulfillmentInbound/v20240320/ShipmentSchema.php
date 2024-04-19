@@ -1,0 +1,32 @@
+<?php
+
+namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320;
+
+use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
+
+class ShipmentSchema extends BaseSchema
+{
+    public function __construct(
+        #[RuleValidator(['min:1', 'max:1024'])]
+        public ?string $amazon_reference_id,
+        public ?ContactInformationSchema $contact_information,
+        public DatesSchema $dates,
+        public ShipmentDestinationSchema $destination,
+        #[RuleValidator(['size:38'])]
+        public string $inbound_plan_id,
+        public ?string $name,
+        public ?PalletInformationSchema $pallet_information,
+        #[RuleValidator(['size:38'])]
+        public string $placement_option_id,
+        #[RuleValidator(['size:38'])]
+        public ?string $selected_transportation_option_id,
+        public ?SelfShipAppointmentDetailsListSchema $self_ship_appointment_details,
+        #[RuleValidator(['size:38'])]
+        public string $shipment_id,
+        public ShipmentSourceSchema $shipment_source,
+        public ShipmentStatus $status,
+        public TrackingDetailsSchema $tracking_details,
+    ) {
+    }
+}

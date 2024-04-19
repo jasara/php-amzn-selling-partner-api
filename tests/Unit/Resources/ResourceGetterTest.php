@@ -8,7 +8,8 @@ use Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20220401Resource;
 use Jasara\AmznSPA\Resources\FbaInboundEligibilityResource;
 use Jasara\AmznSPA\Resources\FbaInventoryResource;
 use Jasara\AmznSPA\Resources\FeedsResource;
-use Jasara\AmznSPA\Resources\FulfillmentInboundResource;
+use Jasara\AmznSPA\Resources\FulfillmentInbound\FulfillmentInbound20240320Resource;
+use Jasara\AmznSPA\Resources\FulfillmentInbound\FulfillmentInboundV0Resource;
 use Jasara\AmznSPA\Resources\FulfillmentOutboundResource;
 use Jasara\AmznSPA\Resources\ListingsItemsResource;
 use Jasara\AmznSPA\Resources\LwaResource;
@@ -38,7 +39,9 @@ class ResourceGetterTest extends UnitTestCase
     #[TestWith(['getFbaInboundEligibility', FbaInboundEligibilityResource::class])]
     #[TestWith(['getFbaInventory', FbaInventoryResource::class])]
     #[TestWith(['getFeeds', FeedsResource::class])]
-    #[TestWith(['getFulfillmentInbound', FulfillmentInboundResource::class])]
+    #[TestWith(['getFulfillmentInbound', FulfillmentInboundV0Resource::class])]
+    #[TestWith(['getFulfillmentInboundv0', FulfillmentInboundV0Resource::class])]
+    #[TestWith(['getFulfillmentInbound20240320', FulfillmentInbound20240320Resource::class])]
     #[TestWith(['getFulfillmentOutbound', FulfillmentOutboundResource::class])]
     #[TestWith(['getListingsItems', ListingsItemsResource::class])]
     #[TestWith(['getLwa', LwaResource::class])]

@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Jasara\AmznSPA\Data\Base\Data;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelDataOutputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelDataOutputSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

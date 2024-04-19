@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentItemSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentItemSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 

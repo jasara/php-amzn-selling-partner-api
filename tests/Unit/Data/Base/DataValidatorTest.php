@@ -7,8 +7,8 @@ use Jasara\AmznSPA\Data\Base\DataValidator;
 use Jasara\AmznSPA\Data\Base\Validators\DataValidationException;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemListSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentPlanRequestItemListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentPlanRequestItemSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -21,10 +21,10 @@ class DataValidatorTest extends UnitTestCase
         $this->expectExceptionMessage('The length of the string');
 
         AddressSchema::from([
-            'name' => Str::random(60),
+            'name' => Str::random(),
             'address_line_1' => Str::random(),
             'country_code' => Str::random(2),
-            'postal_code' => Str::random(),
+            'postal_code' => Str::random(60),
         ]);
     }
 
@@ -34,15 +34,15 @@ class DataValidatorTest extends UnitTestCase
         $this->expectExceptionMessage('The length of the string');
 
         CreateInboundShipmentPlanRequest::from([
-            'ship_from_address' => new AddressSchema(
-                name: Str::random(60),
+            'ship_from_address' => AddressSchema::from(
+                name: Str::random(10),
                 address_line_1: Str::random(),
                 address_line_2: null,
                 district_or_county: null,
                 city: null,
                 state_or_province_code: null,
                 country_code: Str::random(2),
-                postal_code: Str::random(),
+                postal_code: Str::random(60),
                 email: null,
                 phone: null,
             ),

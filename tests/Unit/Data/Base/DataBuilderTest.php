@@ -12,11 +12,11 @@ use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentInfoSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelDataOutputSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputListSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\NonPartneredSmallParcelPackageOutputSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentInfoSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelDataOutputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelPackageOutputListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelPackageOutputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationListSchema;
 use Jasara\AmznSPA\Data\Schemas\ProductFees\FeesEstimateErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\Uploads\UploadDestinationSchema;
@@ -122,8 +122,7 @@ class DataBuilderTest extends UnitTestCase
         $this->assertInstanceOf(CreateRestrictedDataTokenResponse::class, $data);
         $this->assertEquals('restricted_data_token', $data->restricted_data_token);
         $this->assertInstanceOf(CarbonImmutable::class, $data->expires_in);
-        $this->assertGreaterThanOrEqual(3598, $data->expires_in->diffInSeconds(absolute: true));
-        $this->assertLessThanOrEqual(3600, $data->expires_in->diffInSeconds());
+        $this->assertEqualsWithDelta(3600, $data->expires_in->diffInSeconds(absolute: true), 2);
     }
 
     public function testBuildsDataWithInvalidData(): void

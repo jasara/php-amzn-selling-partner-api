@@ -4,8 +4,8 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Requests;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\TransportDetailInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\TransportDetailInputSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
