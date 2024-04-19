@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CancelSelfShipAppo
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\ConfirmTransportationOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CreateInboundPlanRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GeneratePlacementOptionsRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateSelfShipAppointmentSlotsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateTransportationOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\SetPackingInformationRequest;
@@ -396,7 +397,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $shipment_id,
-        GeneratePlacementOptionsRequest $body,
+        GenerateSelfShipAppointmentSlotsRequest $body,
     ): GenerateSelfShipAppointmentSlotsResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
@@ -480,13 +481,13 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
         #[RuleValidator(['integer', 'min:1', 'max:100'])]
-        ?int $page_size,
+        ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
-        ?string $pagination_token,
+        ?string $pagination_token = null,
         #[RuleValidator(['size:38'])]
-        string $placement_option_id,
+        ?string $placement_option_id = null,
         #[RuleValidator(['size:38'])]
-        string $shipment_id,
+        ?string $shipment_id = null,
     ): ListTransportationOptionsResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 

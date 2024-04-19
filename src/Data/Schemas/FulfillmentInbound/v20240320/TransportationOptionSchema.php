@@ -3,8 +3,9 @@
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320;
 
 use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class TransportationOptionSchema
+class TransportationOptionSchema extends BaseSchema
 {
     public function __construct(
         public ?AppointmentSlotSchema $appointment_slot,
