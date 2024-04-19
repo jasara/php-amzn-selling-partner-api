@@ -1,0 +1,44 @@
+{
+    "packingOptions": [
+        {
+            "inboundPlanId": "wf1234abcd-1234-abcd-5678-1234abcd5678",
+            "packingOptionId": "po1234abcd-1234-abcd-5678-1234abcd5678",
+            "packingGroups": [
+                "pg1234abcd-1234-abcd-5678-1234abcd5678"
+            ],
+            "fees": [
+                {
+                    "value": {
+                        "code": "USD",
+                        "amount": 1.0
+                    },
+                    "type": "FEE",
+                    "target": "Placement Services",
+                    "description": "description"
+                }
+            ],
+            "discounts": [
+                {
+                    "value": {
+                        "code": "USD",
+                        "amount": 1.0
+                    },
+                    "type": "DISCOUNT",
+                    "target": "Placement Services",
+                    "description": "description"
+                }
+            ],
+            "expiration": "2024-01-01T00:00:00.000Z",
+            "status": "OFFERED",
+            "supportedShippingConfigurations": [
+                {
+                    "shippingSolution": "AMAZON_PARTNERED_CARRIER",
+                    "shippingMode": "GROUND_SMALL_PARCEL"
+                }
+            ]
+        }
+    ],
+    "pagination": {
+        "nextToken": "nextPaginationToken"
+    }
+}

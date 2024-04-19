@@ -1,0 +1,26 @@
+{
+    "items": [
+        {
+            "quantity": 5,
+            "expiration": "2024-01-01",
+            "manufacturingLotCode": "manufacturingLotCode",
+            "prepInstructions": [
+                {
+                    "prepType": "ITEM_POLYBAGGING",
+                    "prepOwner": "AMAZON",
+                    "fee": {
+                        "code": "USD",
+                        "amount": 10.0
+                    }
+                }
+            ],
+            "msku": "msku",
+            "asin": "asin",
+            "fnsku": "fnsku",
+            "labelOwner": "AMAZON"
+        }
+    ],
+    "pagination": {
+        "nextToken": "nextPaginationToken"
+    }
+}
