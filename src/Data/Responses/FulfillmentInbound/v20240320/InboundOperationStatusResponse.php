@@ -12,7 +12,7 @@ class InboundOperationStatusResponse extends BaseResponse
     public function __construct(
         #[RuleValidator(['min:1', 'max:1024'])]
         public string $operation,
-        #[RuleValidator(['size:38'])]
+        #[RuleValidator(['min:36', 'max:38'])]
         public string $operation_id,
         public OperationProblemListSchema $operation_problems,
         public OperationStatus $operation_status,

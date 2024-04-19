@@ -10,7 +10,7 @@ class AppointmentSlotSchema extends BaseSchema
     public function __construct(
         #[RuleValidator(['size:38'])]
         public string $slot_id,
-        public AppointmentSlotTimeSchema $start_time,
+        public AppointmentSlotTimeSchema $slot_time,
     ) {
     }
 }

@@ -24,7 +24,7 @@ class ShipmentSchema extends BaseSchema
         public ?SelfShipAppointmentDetailsListSchema $self_ship_appointment_details,
         #[RuleValidator(['size:38'])]
         public string $shipment_id,
-        public ShipmentSourceSchema $shipment_source,
+        public ShipmentSourceSchema $source,
         public ShipmentStatus $status,
         public TrackingDetailsSchema $tracking_details,
     ) {

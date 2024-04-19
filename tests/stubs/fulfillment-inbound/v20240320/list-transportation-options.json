@@ -1,0 +1,34 @@
+{
+    "transportationOptions": [
+        {
+            "inboundPlanId": "wf1234abcd-1234-abcd-5678-1234abcd5678",
+            "placementOptionId": "pl1234abcd-1234-abcd-5678-1234abcd5678",
+            "shipmentId": "sh1234abcd-1234-abcd-5678-1234abcd5678",
+            "transportationOptionId": "to1234abcd-1234-abcd-5678-1234abcd5678",
+            "shippingSolution": "AMAZON_PARTNERED_CARRIER",
+            "carrier": {
+                "name": "name",
+                "alphaCode": "USPS"
+            },
+            "shippingMode": "GROUND_SMALL_PARCEL",
+            "quote": {
+                "cost": {
+                    "code": "USD",
+                    "amount": 500.0
+                },
+                "voidableUntil": "2024-01-01T00:00:00.000Z",
+                "expiration": "2024-01-01T00:00:00.000Z"
+            },
+            "appointmentSlot": {
+                "slotId": "aa1234abcd-1234-abcd-5678-1234abcd5678",
+                "slotTime": {
+                    "startTime": "2024-01-01T00:00Z",
+                    "endTime": "2024-01-01T00:00Z"
+                }
+            }
+        }
+    ],
+    "pagination": {
+        "nextToken": "nextPaginationToken"
+    }
+}
