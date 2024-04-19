@@ -3,16 +3,19 @@
 namespace Jasara\AmznSPA\Data\Schemas;
 
 use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
+use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
 
 class AddressSchema extends BaseSchema
 {
     public function __construct(
-        #[MaxLengthValidator(50)]
+        #[RuleValidator(['max:50'])]
         public string $name,
         #[MaxLengthValidator(180)]
         public string $address_line_1,
         #[MaxLengthValidator(60)]
         public ?string $address_line_2,
+        #[RuleValidator(['min:1', 'max:50'])]
+        public ?string $company_name,
         #[MaxLengthValidator(25)]
         public ?string $district_or_county,
         #[MaxLengthValidator(30)]

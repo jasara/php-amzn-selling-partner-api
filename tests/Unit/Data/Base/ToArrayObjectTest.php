@@ -5,7 +5,7 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 use Jasara\AmznSPA\Data\Base\ToArrayObject;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\PartneredLtlDataInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchema;
 use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\AdditionalSellerInputSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;

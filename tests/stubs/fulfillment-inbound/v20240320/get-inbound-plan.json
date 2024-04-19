@@ -1,0 +1,27 @@
+{
+    "inboundPlanId": "wf1234abcd-1234-abcd-5678-1234abcd5678",
+    "name": "FBA (03/20/2024, 12:01 PM)",
+    "createdAt": "2024-03-20T12:01:00Z",
+    "lastUpdatedAt": "2024-03-28T13:15:30Z",
+    "status": "ACTIVE",
+    "marketplaceIds": [
+        "A2EUQ1WTGCTBG2"
+    ],
+    "packingOptions": [],
+    "placementOptions": [],
+    "shipments": [],
+    "sourceAddress": {
+        "name": "name",
+        "addressLine1": "123 example street",
+        "addressLine2": "Floor 19",
+        "city": "Toronto",
+        "stateOrProvinceCode": "ON",
+        "countryCode": "CA",
+        "postalCode": "M1M1M1",
+        "companyName": "Acme"
+    },
+    "contactInformation": {
+        "email": "email@email.com",
+        "phoneNumber": "1234567890"
+    }
+}

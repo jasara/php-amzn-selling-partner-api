@@ -1,0 +1,55 @@
+{
+    "inboundPlans": [
+        {
+            "inboundPlanId": "wf1234abcd-1234-abcd-5678-1234abcd5678",
+            "name": "FBA (03/08/2023, 01:15 PM)",
+            "createdAt": "2023-03-08T13:15:30Z",
+            "lastUpdatedAt": "2023-03-08T13:15:30Z",
+            "status": "ACTIVE",
+            "marketplaceIds": [
+                "A2EUQ1WTGCTBG2"
+            ],
+            "sourceAddress": {
+                "name": "name",
+                "addressLine1": "123 example street",
+                "addressLine2": "Floor 19",
+                "city": "Toronto",
+                "stateOrProvinceCode": "ON",
+                "countryCode": "CA",
+                "postalCode": "M1M1M1",
+                "companyName": "Acme"
+            },
+            "contactInformation": {
+                "email": "email@email.com",
+                "phoneNumber": "1234567890"
+            }
+        },
+        {
+            "inboundPlanId": "wf2234abcd-1234-abcd-5678-1234abcd5678",
+            "name": "FBA (03/08/2023, 01:15 PM)",
+            "createdAt": "2023-03-08T13:15:30Z",
+            "lastUpdatedAt": "2023-03-08T13:15:30Z",
+            "status": "ACTIVE",
+            "marketplaceIds": [
+                "A2EUQ1WTGCTBG2"
+            ],
+            "sourceAddress": {
+                "name": "name",
+                "addressLine1": "123 example street",
+                "addressLine2": "Floor 19",
+                "city": "Toronto",
+                "stateOrProvinceCode": "ON",
+                "countryCode": "CA",
+                "postalCode": "M1M1M1",
+                "companyName": "Acme"
+            },
+            "contactInformation": {
+                "email": "email@email.com",
+                "phoneNumber": "1234567890"
+            }
+        }
+    ],
+    "pagination": {
+        "nextToken": "nextPaginationToken"
+    }
+}

@@ -9,28 +9,30 @@ use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
 
 /**
- * @property \Jasara\AmznSPA\Resources\AuthorizationResource $authorization
- * @property \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource $catalog_items
- * @property \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource $catalog_items20201201
- * @property \Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20220401Resource $catalog_items20220401
- * @property \Jasara\AmznSPA\Resources\FbaInboundEligibilityResource $fba_inbound_eligibility
- * @property \Jasara\AmznSPA\Resources\FbaInventoryResource $fba_inventory
- * @property \Jasara\AmznSPA\Resources\FeedsResource $feeds
- * @property \Jasara\AmznSPA\Resources\FulfillmentInboundResource $fulfillment_inbound
- * @property \Jasara\AmznSPA\Resources\FulfillmentOutboundResource $fulfillment_outbound
- * @property \Jasara\AmznSPA\Resources\ListingsItemsResource $listings_items
- * @property \Jasara\AmznSPA\Resources\LwaResource $lwa
- * @property \Jasara\AmznSPA\Resources\MerchantFulfillmentResource $merchant_fulfillment
- * @property \Jasara\AmznSPA\Resources\NotificationsResource $notifications
- * @property \Jasara\AmznSPA\Resources\OrdersResource $orders
- * @property \Jasara\AmznSPA\Resources\ProductFeesResource $product_fees
- * @property \Jasara\AmznSPA\Resources\ProductPricingResource $product_pricing
- * @property \Jasara\AmznSPA\Resources\ProductTypeDefinitionsResource $product_type_definitions
- * @property \Jasara\AmznSPA\Resources\ReportsResource $reports
- * @property \Jasara\AmznSPA\Resources\SellersResource $sellers
- * @property \Jasara\AmznSPA\Resources\ShippingResource $shipping
- * @property \Jasara\AmznSPA\Resources\TokensResource $tokens
- * @property \Jasara\AmznSPA\Resources\UploadsResource $uploads
+ * @property Resources\AuthorizationResource $authorization
+ * @property Resources\CatalogItems\CatalogItems20201201Resource $catalog_items
+ * @property Resources\CatalogItems\CatalogItems20201201Resource $catalog_items20201201
+ * @property Resources\CatalogItems\CatalogItems20220401Resource $catalog_items20220401
+ * @property Resources\FbaInboundEligibilityResource $fba_inbound_eligibility
+ * @property Resources\FbaInventoryResource $fba_inventory
+ * @property Resources\FeedsResource $feeds
+ * @property Resources\FulfillmentInbound\FulfillmentInboundV0Resource $fulfillment_inbound
+ * @property Resources\FulfillmentInbound\FulfillmentInboundV0Resource $fulfillment_inboundv0
+ * @property Resources\FulfillmentInbound\FulfillmentInbound20240320Resource $fulfillment_inbound20240320
+ * @property Resources\FulfillmentOutboundResource $fulfillment_outbound
+ * @property Resources\ListingsItemsResource $listings_items
+ * @property Resources\LwaResource $lwa
+ * @property Resources\MerchantFulfillmentResource $merchant_fulfillment
+ * @property Resources\NotificationsResource $notifications
+ * @property Resources\OrdersResource $orders
+ * @property Resources\ProductFeesResource $product_fees
+ * @property Resources\ProductPricingResource $product_pricing
+ * @property Resources\ProductTypeDefinitionsResource $product_type_definitions
+ * @property Resources\ReportsResource $reports
+ * @property Resources\SellersResource $sellers
+ * @property Resources\ShippingResource $shipping
+ * @property Resources\TokensResource $tokens
+ * @property Resources\UploadsResource $uploads
  **/
 class AmznSPA
 {
