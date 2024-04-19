@@ -1,0 +1,24 @@
+{
+    "items": [
+        {
+            "quantity": 5,
+            "prepInstructions": [
+                {
+                    "prepType": "ITEM_POLYBAGGING",
+                    "prepOwner": "AMAZON",
+                    "fee": {
+                        "code": "USD",
+                        "amount": 10.0
+                    }
+                }
+            ],
+            "msku": "msku",
+            "asin": "asin",
+            "fnsku": "fnsku",
+            "labelOwner": "AMAZON"
+        }
+    ],
+    "pagination": {
+        "nextToken": "nextPaginationToken"
+    }
+}

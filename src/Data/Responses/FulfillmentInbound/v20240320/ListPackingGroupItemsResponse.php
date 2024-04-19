@@ -9,7 +9,7 @@ use Jasara\AmznSPA\Data\Schemas\PaginationSchema;
 class ListPackingGroupItemsResponse extends BaseResponse
 {
     public function __construct(
-        public ItemListSchema $packing_options,
+        public ItemListSchema $items,
         public ?PaginationSchema $pagination,
     ) {
     }

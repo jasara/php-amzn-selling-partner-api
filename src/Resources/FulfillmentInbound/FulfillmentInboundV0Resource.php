@@ -3,29 +3,28 @@
 namespace Jasara\AmznSPA\Resources\FulfillmentInbound;
 
 use Carbon\CarbonImmutable;
-use Illuminate\Support\Arr;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\InboundShipmentRequest;
-use Jasara\AmznSPA\DataTransferObjects\Requests\FulfillmentInbound\PutTransportDetailsRequest;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\ConfirmPreorderResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\ConfirmTransportResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\CreateInboundShipmentPlanResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\EstimateTransportResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetBillOfLadingResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetInboundGuidanceResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetLabelsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPreorderInfoResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetPrepInstructionsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetShipmentItemsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetShipmentsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\GetTransportDetailsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\InboundShipmentResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\PutTransportDetailsResponse;
-use Jasara\AmznSPA\DataTransferObjects\Responses\FulfillmentInbound\VoidTransportResponse;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\InboundShipmentRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\ConfirmPreorderResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\ConfirmTransportResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\CreateInboundShipmentPlanResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\EstimateTransportResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetBillOfLadingResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetInboundGuidanceResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetLabelsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetPreorderInfoResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetPrepInstructionsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetShipmentItemsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetShipmentsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetTransportDetailsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\InboundShipmentResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\PutTransportDetailsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\VoidTransportResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class FulfillmentInboundV0Resource implements ResourceContract
@@ -45,57 +44,69 @@ class FulfillmentInboundV0Resource implements ResourceContract
         $this->validateIsArrayOfStrings($seller_sku_list);
         $this->validateIsArrayOfStrings($asin_list);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'itemsGuidance', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'SellerSKUList' => $seller_sku_list,
-            'ASINList' => $asin_list,
-        ]));
+        $response = $this->http
+            ->responseClass(GetInboundGuidanceResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'itemsGuidance', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'SellerSKUList' => $seller_sku_list,
+                'ASINList' => $asin_list,
+            ]));
 
-        return new GetInboundGuidanceResponse($response);
+        return $response;
     }
 
     public function createInboundShipmentPlan(CreateInboundShipmentPlanRequest $request): CreateInboundShipmentPlanResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'plans', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(CreateInboundShipmentPlanResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'plans', (array) $request->toArrayObject());
 
-        return new CreateInboundShipmentPlanResponse($response);
+        return $response;
     }
 
     public function updateInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
     {
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id, (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(InboundShipmentResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, (array) $request->toArrayObject());
 
-        return new InboundShipmentResponse($response);
+        return $response;
     }
 
     public function createInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id, (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(InboundShipmentResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, (array) $request->toArrayObject());
 
-        return new InboundShipmentResponse($response);
+        return $response;
     }
 
     public function getPreorderInfo(string $shipment_id, string $marketplace_id): GetPreorderInfoResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/preorder', [
-            'MarketplaceId' => $marketplace_id,
-        ]);
+        $response = $this->http
+            ->responseClass(GetPreorderInfoResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/preorder', [
+                'MarketplaceId' => $marketplace_id,
+            ]);
 
-        return new GetPreorderInfoResponse($response);
+        return $response;
     }
 
     public function confirmPreorder(string $shipment_id, string $marketplace_id, CarbonImmutable $need_by_date): ConfirmPreorderResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/preorder/confirm', [
-            'MarketplaceId' => $marketplace_id,
-            'NeedByDate' => $need_by_date->toDateString(),
-        ]);
+        $response = $this->http
+            ->responseClass(ConfirmPreorderResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/preorder/confirm', [
+                'MarketplaceId' => $marketplace_id,
+                'NeedByDate' => $need_by_date->toDateString(),
+            ]);
 
-        return new ConfirmPreorderResponse($response);
+        return $response;
     }
 
     public function getPrepInstructions(string $ship_to_country_code, array $seller_sku_list = [], array $asin_list = []): GetPrepInstructionsResponse
@@ -104,48 +115,60 @@ class FulfillmentInboundV0Resource implements ResourceContract
         $this->validateIsArrayOfStrings($seller_sku_list);
         $this->validateIsArrayOfStrings($asin_list);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'prepInstructions', array_filter([
-            'ShipToCountryCode' => $ship_to_country_code,
-            'SellerSKUList' => $seller_sku_list,
-            'ASINList' => $asin_list,
-        ]));
+        $response = $this->http
+            ->responseClass(GetPrepInstructionsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'prepInstructions', array_filter([
+                'ShipToCountryCode' => $ship_to_country_code,
+                'SellerSKUList' => $seller_sku_list,
+                'ASINList' => $asin_list,
+            ]));
 
-        return new GetPrepInstructionsResponse($response);
+        return $response;
     }
 
     public function getTransportDetails(string $shipment_id): GetTransportDetailsResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/transport');
+        $response = $this->http
+            ->responseClass(GetTransportDetailsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport');
 
-        return new GetTransportDetailsResponse($response);
+        return $response;
     }
 
     public function putTransportDetails(string $shipment_id, PutTransportDetailsRequest $request): PutTransportDetailsResponse
     {
-        $response = $this->http->put($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/transport', (array) $request->toArrayObject());
+        $response = $this->http
+            ->responseClass(PutTransportDetailsResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport', (array) $request->toArrayObject());
 
-        return new PutTransportDetailsResponse($response);
+        return $response;
     }
 
     public function voidTransport(string $shipment_id): VoidTransportResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/transport/void', []);
+        $response = $this->http
+            ->responseClass(VoidTransportResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport/void', []);
 
-        return new VoidTransportResponse($response);
+        return $response;
     }
 
     public function estimateTransport(string $shipment_id): EstimateTransportResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/transport/estimate', []);
+        $response = $this->http
+            ->responseClass(EstimateTransportResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport/estimate', []);
 
-        return new EstimateTransportResponse($response);
+        return $response;
     }
 
     public function confirmTransport(string $shipment_id): ConfirmTransportResponse
     {
-        $response = $this->http->post($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/transport/confirm', []);
+        $response = $this->http
+            ->responseClass(ConfirmTransportResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport/confirm', []);
 
-        return new ConfirmTransportResponse($response);
+        return $response;
     }
 
     public function getLabels(
@@ -162,24 +185,28 @@ class FulfillmentInboundV0Resource implements ResourceContract
         $this->validateStringEnum($label_type, ['BARCODE_2D', 'UNIQUE', 'PALLET', 'DEFAULT']);
         $this->validateIsArrayOfStrings($package_labels_to_print);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/labels', array_filter([
-            'PageType' => $page_type,
-            'LabelType' => $label_type,
-            'NumberOfPackages' => $number_of_packages,
-            'PackageLabelsToPrint' => $package_labels_to_print,
-            'NumberOfPallets' => $number_of_pallets,
-            'PageSize' => $page_size,
-            'PageStartIndex' => $page_start_index,
-        ]));
+        $response = $this->http
+            ->responseClass(GetLabelsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/labels', array_filter([
+                'PageType' => $page_type,
+                'LabelType' => $label_type,
+                'NumberOfPackages' => $number_of_packages,
+                'PackageLabelsToPrint' => $package_labels_to_print,
+                'NumberOfPallets' => $number_of_pallets,
+                'PageSize' => $page_size,
+                'PageStartIndex' => $page_start_index,
+            ]));
 
-        return new GetLabelsResponse($response);
+        return $response;
     }
 
     public function getBillOfLading(string $shipment_id): GetBillOfLadingResponse
     {
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/billOfLading');
+        $response = $this->http
+            ->responseClass(GetBillOfLadingResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/billOfLading');
 
-        return new GetBillOfLadingResponse($response);
+        return $response;
     }
 
     public function getShipments(
@@ -196,30 +223,17 @@ class FulfillmentInboundV0Resource implements ResourceContract
         $this->validateIsArrayOfStrings($shipment_status_list, AmazonEnums::SHIPMENT_STATUSES);
         $this->validateIsArrayOfStrings($shipment_id_list);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'QueryType' => $query_type,
-            'ShipmentStatusList' => $shipment_status_list,
-            'ShipmentIdList' => $shipment_id_list,
-            'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'NextToken' => $next_token,
-        ]));
-
-        $response = $this->setEmptyShipFromAddressToNull($response);
-
-        return new GetShipmentsResponse($response);
-    }
-
-    private function setEmptyShipFromAddressToNull(array $response): array
-    {
-        $response['payload']['shipment_data'] = array_map(function (array $shipment_data) {
-            if (Arr::get($shipment_data, 'ship_from_address') === []) {
-                $shipment_data['ship_from_address'] = null;
-            }
-
-            return $shipment_data;
-        }, $response['payload']['shipment_data']);
+        $response = $this->http
+            ->responseClass(GetShipmentsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'QueryType' => $query_type,
+                'ShipmentStatusList' => $shipment_status_list,
+                'ShipmentIdList' => $shipment_id_list,
+                'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'NextToken' => $next_token,
+            ]));
 
         return $response;
     }
@@ -228,11 +242,13 @@ class FulfillmentInboundV0Resource implements ResourceContract
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipments/'.$shipment_id.'/items', [
-            'MarketplaceId' => $marketplace_id,
-        ]);
+        $response = $this->http
+            ->responseClass(GetShipmentItemsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/items', [
+                'MarketplaceId' => $marketplace_id,
+            ]);
 
-        return new GetShipmentItemsResponse($response);
+        return $response;
     }
 
     public function getShipmentItems(
@@ -245,14 +261,16 @@ class FulfillmentInboundV0Resource implements ResourceContract
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($query_type, ['DATE_RANGE', 'NEXT_TOKEN']);
 
-        $response = $this->http->get($this->endpoint.self::BASE_PATH.'shipmentItems', array_filter([
-            'MarketplaceId' => $marketplace_id,
-            'QueryType' => $query_type,
-            'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
-            'NextToken' => $next_token,
-        ]));
+        $response = $this->http
+            ->responseClass(GetShipmentItemsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'shipmentItems', array_filter([
+                'MarketplaceId' => $marketplace_id,
+                'QueryType' => $query_type,
+                'LastUpdatedAfter' => $last_updated_after?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'LastUpdatedBefore' => $last_updated_before?->tz('UTC')->format('Y-m-d\TH:i:s\Z'),
+                'NextToken' => $next_token,
+            ]));
 
-        return new GetShipmentItemsResponse($response);
+        return $response;
     }
 }
