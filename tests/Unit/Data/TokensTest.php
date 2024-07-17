@@ -66,4 +66,21 @@ class TokensTest extends UnitTestCase
         $this->assertEquals($refresh_token, $dto->refresh_token);
         $this->assertEquals($expires_at, $dto->expires_at);
     }
+
+    public function testSetupTokensWithNoExpiry()
+    {
+        $access_token = Str::random();
+        $refresh_token = Str::random();
+        $expires_at = null;
+
+        $dto = new AuthTokens(
+            access_token: $access_token,
+            refresh_token: $refresh_token,
+            expires_at: $expires_at,
+        );
+
+        $this->assertEquals($access_token, $dto->access_token);
+        $this->assertEquals($refresh_token, $dto->refresh_token);
+        $this->assertEquals($expires_at, $dto->expires_at);
+    }
 }
