@@ -56,15 +56,23 @@ class TokensTest extends UnitTestCase
         $refresh_token = Str::random();
         $expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
 
-        $dto = new AuthTokens(
+        $auth_tokens = new AuthTokens(
             access_token: $access_token,
             refresh_token: $refresh_token,
             expires_at: $expires_at,
         );
 
-        $this->assertEquals($access_token, $dto->access_token);
-        $this->assertEquals($refresh_token, $dto->refresh_token);
-        $this->assertEquals($expires_at, $dto->expires_at);
+        $this->assertEquals($access_token, $auth_tokens->access_token);
+        $this->assertEquals($refresh_token, $auth_tokens->refresh_token);
+        $this->assertEquals($expires_at, $auth_tokens->expires_at);
+
+        $grantless_token = new GrantlessToken(
+            access_token: $access_token,
+            expires_at: $expires_at,
+        );
+
+        $this->assertEquals($access_token, $grantless_token->access_token);
+        $this->assertEquals($expires_at, $grantless_token->expires_at);
     }
 
     public function testSetupTokensWithNoExpiry()
@@ -73,14 +81,22 @@ class TokensTest extends UnitTestCase
         $refresh_token = Str::random();
         $expires_at = null;
 
-        $dto = new AuthTokens(
+        $auth_tokens = new AuthTokens(
             access_token: $access_token,
             refresh_token: $refresh_token,
             expires_at: $expires_at,
         );
 
-        $this->assertEquals($access_token, $dto->access_token);
-        $this->assertEquals($refresh_token, $dto->refresh_token);
-        $this->assertEquals($expires_at, $dto->expires_at);
+        $this->assertEquals($access_token, $auth_tokens->access_token);
+        $this->assertEquals($refresh_token, $auth_tokens->refresh_token);
+        $this->assertEquals($expires_at, $auth_tokens->expires_at);
+
+        $grantless_token = new GrantlessToken(
+            access_token: $access_token,
+            expires_at: $expires_at,
+        );
+
+        $this->assertEquals($access_token, $grantless_token->access_token);
+        $this->assertNull($grantless_token->expires_at);
     }
 }
