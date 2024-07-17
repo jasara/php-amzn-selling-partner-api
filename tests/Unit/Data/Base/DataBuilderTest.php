@@ -122,7 +122,7 @@ class DataBuilderTest extends UnitTestCase
         $this->assertInstanceOf(CreateRestrictedDataTokenResponse::class, $data);
         $this->assertEquals('restricted_data_token', $data->restricted_data_token);
         $this->assertInstanceOf(CarbonImmutable::class, $data->expires_in);
-        $this->assertGreaterThanOrEqual(3598, $data->expires_in->diffInSeconds());
+        $this->assertGreaterThanOrEqual(3598, $data->expires_in->diffInSeconds(absolute: true));
         $this->assertLessThanOrEqual(3600, $data->expires_in->diffInSeconds());
     }
 

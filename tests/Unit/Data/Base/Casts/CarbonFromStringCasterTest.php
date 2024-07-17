@@ -17,4 +17,12 @@ class CarbonFromStringCasterTest extends UnitTestCase
         $this->assertInstanceOf(\Carbon\CarbonImmutable::class, $carbon);
         $this->assertEquals('2021-01-01', $carbon->toDateString());
     }
+
+    public function testCastsNullToNull(): void
+    {
+        $caster = new CarbonFromStringCaster();
+        $carbon = $caster->cast(null);
+
+        $this->assertNull($carbon);
+    }
 }

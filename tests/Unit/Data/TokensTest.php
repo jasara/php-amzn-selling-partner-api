@@ -29,7 +29,7 @@ class TokensTest extends UnitTestCase
 
         $this->assertEquals($access_token, $auth_tokens->access_token);
         $this->assertEquals($refresh_token, $auth_tokens->refresh_token);
-        $this->assertEqualsWithDelta($expires_in, $auth_tokens->expires_at->diffInSeconds(CarbonImmutable::now()), 2);
+        $this->assertEqualsWithDelta($expires_in, $auth_tokens->expires_at->diffInSeconds(CarbonImmutable::now(), true), 2);
 
         $grantless_token = new GrantlessToken(
             access_token: $access_token,
@@ -37,7 +37,7 @@ class TokensTest extends UnitTestCase
         );
 
         $this->assertEquals($access_token, $grantless_token->access_token);
-        $this->assertEqualsWithDelta($expires_in, $grantless_token->expires_at->diffInSeconds(CarbonImmutable::now()), 2);
+        $this->assertEqualsWithDelta($expires_in, $grantless_token->expires_at->diffInSeconds(CarbonImmutable::now(), true), 2);
 
         $restricted_data_token = new RestrictedDataToken(
             access_token: $access_token,
@@ -47,7 +47,7 @@ class TokensTest extends UnitTestCase
 
         $this->assertEquals($access_token, $restricted_data_token->access_token);
         $this->assertEquals('/bearer', $restricted_data_token->path);
-        $this->assertEqualsWithDelta($expires_in, $restricted_data_token->expires_at->diffInSeconds(CarbonImmutable::now()), 2);
+        $this->assertEqualsWithDelta($expires_in, $restricted_data_token->expires_at->diffInSeconds(CarbonImmutable::now(), absolute: true), 2);
     }
 
     public function testSetupTokensWithExistingDate()
