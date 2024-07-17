@@ -73,6 +73,16 @@ class TokensTest extends UnitTestCase
 
         $this->assertEquals($access_token, $grantless_token->access_token);
         $this->assertEquals($expires_at, $grantless_token->expires_at);
+
+        $restricted_data_token = new RestrictedDataToken(
+            access_token: $access_token,
+            path: '/bearer',
+            expires_at: $expires_at,
+        );
+
+        $this->assertEquals($access_token, $restricted_data_token->access_token);
+        $this->assertEquals('/bearer', $restricted_data_token->path);
+        $this->assertEquals($expires_at, $restricted_data_token->expires_at);
     }
 
     public function testSetupTokensWithNoExpiry()
@@ -98,5 +108,15 @@ class TokensTest extends UnitTestCase
 
         $this->assertEquals($access_token, $grantless_token->access_token);
         $this->assertNull($grantless_token->expires_at);
+
+        $restricted_data_token = new RestrictedDataToken(
+            access_token: $access_token,
+            path: '/bearer',
+            expires_at: $expires_at,
+        );
+
+        $this->assertEquals($access_token, $restricted_data_token->access_token);
+        $this->assertEquals('/bearer', $restricted_data_token->path);
+        $this->assertNull($restricted_data_token->expires_at);
     }
 }
