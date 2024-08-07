@@ -4,7 +4,7 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
-use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\GetAuthorizationCodeResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class AuthorizationResource implements ResourceContract

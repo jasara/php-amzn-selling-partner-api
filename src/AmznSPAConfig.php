@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA;
 
 use Carbon\CarbonImmutable;
+use Closure;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Jasara\AmznSPA\Constants\Marketplace;
@@ -18,19 +19,12 @@ use Symfony\Component\HttpKernel\Log\Logger;
 class AmznSPAConfig
 {
     use ValidatesParameters;
-
     private PendingRequest $http;
-
     private AuthTokens $tokens;
-
     private Marketplace $marketplace;
-
     private ApplicationKeys $application_keys;
-
     private GrantlessToken $grantless_token;
-
     private RestrictedDataToken $restricted_data_token;
-
     private LoggerInterface $logger;
 
     public function __construct(
@@ -39,9 +33,9 @@ class AmznSPAConfig
         private ?string $redirect_url = null,
         private bool $use_test_endpoints = false,
         private ?bool $get_rdt_tokens = true,
-        private ?\Closure $save_lwa_tokens_callback = null,
-        private ?\Closure $authentication_exception_callback = null,
-        private ?\Closure $response_callback = null,
+        private ?Closure $save_lwa_tokens_callback = null,
+        private ?Closure $authentication_exception_callback = null,
+        private ?Closure $response_callback = null,
         ?LoggerInterface $logger = null,
         ?string $aws_access_key = null,
         ?string $aws_secret_key = null,
@@ -119,17 +113,17 @@ class AmznSPAConfig
         return $this->redirect_url;
     }
 
-    public function getSaveLwaTokensCallback(): \Closure
+    public function getSaveLwaTokensCallback(): ?Closure
     {
         return $this->save_lwa_tokens_callback;
     }
 
-    public function getAuthenticationExceptionCallback(): \Closure
+    public function getAuthenticationExceptionCallback(): ?Closure
     {
         return $this->authentication_exception_callback;
     }
 
-    public function getResponseCallback(): \Closure
+    public function getResponseCallback(): ?Closure
     {
         return $this->response_callback;
     }
@@ -175,17 +169,17 @@ class AmznSPAConfig
         $this->grantless_token = $token;
     }
 
-    public function setSaveLwaTokensCallback(\Closure $callback): void
+    public function setSaveLwaTokensCallback(Closure $callback): void
     {
         $this->save_lwa_tokens_callback = $callback;
     }
 
-    public function setAuthenticationExceptionCallback(\Closure $callback): void
+    public function setAuthenticationExceptionCallback(Closure $callback): void
     {
         $this->authentication_exception_callback = $callback;
     }
 
-    public function setResponseCallback(\Closure $callback): void
+    public function setResponseCallback(Closure $callback): void
     {
         $this->response_callback = $callback;
     }
@@ -209,6 +203,6 @@ class AmznSPAConfig
 
     public function isPropertySet(string $property): bool
     {
-        return isset($this->$property) && !is_null($this->$property);
+        return isset($this->$property) && ! is_null($this->$property);
     }
 }

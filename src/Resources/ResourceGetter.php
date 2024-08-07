@@ -41,9 +41,19 @@ class ResourceGetter
         return $this->constructResource(NotificationsResource::class, 'notifications');
     }
 
-    public function getFulfillmentInbound(): FulfillmentInboundResource
+    public function getFulfillmentInbound(): FulfillmentInbound\FulfillmentInboundV0Resource
     {
-        return $this->constructResource(FulfillmentInboundResource::class);
+        return $this->constructResource(FulfillmentInbound\FulfillmentInboundV0Resource::class);
+    }
+
+    public function getFulfillmentInboundV0(): FulfillmentInbound\FulfillmentInboundV0Resource
+    {
+        return $this->constructResource(FulfillmentInbound\FulfillmentInboundV0Resource::class);
+    }
+
+    public function getFulfillmentInbound20240320(): FulfillmentInbound\FulfillmentInbound20240320Resource
+    {
+        return $this->constructResource(FulfillmentInbound\FulfillmentInbound20240320Resource::class);
     }
 
     public function getFeeds(): FeedsResource
@@ -147,7 +157,7 @@ class ResourceGetter
     private function validateAndSetupHttpForStandardResource(?string $grantless_resource = null): AmznSPAHttp
     {
         $this->validateObjectProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
-        if (!$grantless_resource) {
+        if (! $grantless_resource) {
             $this->validateObjectProperties($this->config->getTokens(), ['refresh_token']);
         }
 

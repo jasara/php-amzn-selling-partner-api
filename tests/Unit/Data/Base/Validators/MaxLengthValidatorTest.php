@@ -18,14 +18,14 @@ class MaxLengthValidatorTest extends UnitTestCase
         $this->expectExceptionMessage('The length of the string');
 
         AddressSchema::from([
-            'name' => Str::random(60),
+            'name' => Str::random(10),
             'address_line_1' => Str::random(),
             'address_line_2' => null,
             'district_or_county' => Str::random(),
             'city' => Str::random(),
             'state_or_province_code' => Str::random(),
             'country_code' => Str::random(2),
-            'postal_code' => Str::random(),
+            'postal_code' => Str::random(50),
         ]);
     }
 }

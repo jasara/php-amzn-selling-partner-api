@@ -6,7 +6,7 @@ use Jasara\AmznSPA\Contracts\PascalCaseRequestContract;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\InboundShipmentPlanRequestItemListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentPlanRequestItemListSchema;
 
 class CreateInboundShipmentPlanRequest extends BaseRequest implements PascalCaseRequestContract
 {

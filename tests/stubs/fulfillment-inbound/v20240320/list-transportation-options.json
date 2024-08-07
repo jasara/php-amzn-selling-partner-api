@@ -1,0 +1,32 @@
+{
+    "transportationOptions": [
+        {
+            "carrier": {
+                "alphaCode": "ABCD",
+                "name": "Carrier Name"
+            },
+            "carrierAppointment": {
+                "endTime": "2024-01-06T14:48:00.000Z",
+                "startTime": "2024-01-05T14:48:00.000Z"
+            },
+            "preconditions": [
+                "CONFIRMED_DELIVERY_WINDOW"
+            ],
+            "quote": {
+                "cost": {
+                    "amount": 5.5,
+                    "code": "CAD"
+                },
+                "expiration": "2024-01-06T14:48:00.000Z",
+                "voidableUntil": "2024-01-05T14:48:00.000Z"
+            },
+            "shipmentId": "sh1234abcd-1234-abcd-5678-1234abcd5678",
+            "shippingMode": "GROUND_SMALL_PARCEL",
+            "shippingSolution": "AMAZON_PARTNERED_CARRIER",
+            "transportationOptionId": "to1234abcd-1234-abcd-5678-1234abcd5678"
+        }
+    ],
+    "pagination": {
+        "nextToken": "nextPaginationToken"
+    }
+}
