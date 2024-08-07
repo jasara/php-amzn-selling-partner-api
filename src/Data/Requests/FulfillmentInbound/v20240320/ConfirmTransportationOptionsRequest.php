@@ -3,12 +3,12 @@
 namespace Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320;
 
 use Jasara\AmznSPA\Data\Requests\BaseRequest;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\TransportationSelectionListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\TransportationSelectionSchemaList;
 
 class ConfirmTransportationOptionsRequest extends BaseRequest
 {
     public function __construct(
-        public TransportationSelectionListSchema $transportation_selections,
+        public TransportationSelectionSchemaList $transportation_selections,
     ) {
     }
 }

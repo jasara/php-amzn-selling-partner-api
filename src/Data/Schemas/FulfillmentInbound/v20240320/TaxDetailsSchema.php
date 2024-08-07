@@ -11,7 +11,7 @@ class TaxDetailsSchema extends BaseSchema
         public ?CurrencySchema $declared_value,
         #[RuleValidator(['min:1', 'max:1024'])]
         public ?string $hsn_code,
-        public TaxRateListSchema $tax_rates,
+        public TaxRateSchemaList $tax_rates,
     ) {
     }
 }

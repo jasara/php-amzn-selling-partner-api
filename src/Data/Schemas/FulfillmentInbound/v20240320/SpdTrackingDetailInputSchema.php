@@ -7,7 +7,7 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class SpdTrackingDetailInputSchema extends BaseSchema
 {
     public function __construct(
-        public SpdTrackingItemInputListSchema $spd_tracking_items,
+        public SpdTrackingItemInputSchemaList $spd_tracking_items,
     ) {
     }
 }

@@ -10,10 +10,10 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class PlacementOptionSchema extends BaseSchema
 {
     public function __construct(
-        public IncentiveListSchema $discounts,
+        public IncentiveSchemaList $discounts,
         #[CarbonFromStringCaster]
         public ?CarbonImmutable $expiration,
-        public ?IncentiveListSchema $fees,
+        public ?IncentiveSchemaList $fees,
         #[RuleValidator(['size:38'])]
         public string $placement_option_id,
         public array $shipment_ids,

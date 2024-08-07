@@ -10,17 +10,17 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class PackingOptionSchema extends BaseSchema
 {
     public function __construct(
-        public IncentiveListSchema $discounts,
+        public IncentiveSchemaList $discounts,
         #[CarbonFromStringCaster]
         public ?CarbonImmutable $expiration,
-        public IncentiveListSchema $fees,
+        public IncentiveSchemaList $fees,
         #[RuleValidator(['size:38'])]
         public string $inbound_plan_id,
         public array $packing_groups,
         #[RuleValidator(['size:38'])]
         public string $packing_option_id,
         public PackingOptionStatus $status,
-        public ShippingConfigurationListSchema $supported_shipping_configurations,
+        public ShippingConfigurationSchemaList $supported_shipping_configurations,
     ) {
     }
 }

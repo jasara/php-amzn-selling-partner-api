@@ -9,9 +9,9 @@ use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ContactInformationSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\InboundPlanStatus;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PackingOptionSummaryListSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PlacementOptionSummaryListSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ShipmentSummaryListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PackingOptionSummarySchemaList;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PlacementOptionSummarySchemaList;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ShipmentSummarySchemaList;
 
 class GetInboundPlanResponse extends BaseResponse
 {
@@ -25,9 +25,9 @@ class GetInboundPlanResponse extends BaseResponse
         public string $inbound_plan_id,
         public array $marketplace_ids,
         public string $name,
-        public PackingOptionSummaryListSchema $packing_options,
-        public PlacementOptionSummaryListSchema $placement_options,
-        public ShipmentSummaryListSchema $shipments,
+        public PackingOptionSummarySchemaList $packing_options,
+        public PlacementOptionSummarySchemaList $placement_options,
+        public ShipmentSummarySchemaList $shipments,
         public AddressSchema $source_address,
         public InboundPlanStatus $status,
     ) {

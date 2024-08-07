@@ -9,42 +9,59 @@ use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CancelSelfShipAppointmentRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\ConfirmTransportationOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CreateInboundPlanRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CreateMarketplaceItemLabelsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GeneratePlacementOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateSelfShipAppointmentSlotsRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateShipmentContentUpdatePreviewsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateTransportationOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\SetPackingInformationRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateItemComplianceDetailsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsRequest;
+use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CancelInboundPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CancelSelfShipAppointmentResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmDeliveryWindowOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmPackingOptionResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmPlacementOptionResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmShipmentContentUpdatePreviewResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CreateInboundPlanResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CreateMarketplaceItemLabelsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateDeliveryWindowOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GeneratePackingOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GeneratePlacementOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateSelfShipAppointmentSlotsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateShipmentContentUpdatePreviewsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetDeliveryChallanDocumentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetInboundPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetSelfShipAppointmentSlotsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetShipmentContentUpdatePreviewResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\InboundOperationStatusResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListDeliveryWindowOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlanBoxesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlanItemsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlanPalletsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlansResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListItemComplianceDetailsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupBoxesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupItemsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPlacementOptionsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentBoxesResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentContentUpdatePreviewsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentItemsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentPalletsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\SetPackingInformationResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateItemComplianceDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsResponse;
 use Jasara\AmznSPA\Data\Schemas\Common\SortOrder;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\InboundPlanStatus;
@@ -157,6 +174,277 @@ class FulfillmentInbound20240320Resource implements ResourceContract
                 'pageSize' => $page_size,
                 'paginationToken' => $pagination_token,
             ]));
+
+        return $response;
+    }
+
+    public function updateInboundPlanName(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['min:1', 'max:40'])]
+        string $name,
+    ): BaseResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        return $this->http
+            ->responseClass(BaseResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/name', [
+                'name' => $name,
+            ]);
+    }
+
+    public function listPackingGroupBoxes(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $packing_group_id,
+        #[RuleValidator(['integer', 'min:1', 'max:100'])]
+        ?int $page_size = null,
+        #[RuleValidator(['min:0', 'max:1024'])]
+        ?string $pagination_token = null,
+    ): ListPackingGroupBoxesResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListPackingGroupBoxesResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/packingGroups/' . $packing_group_id . '/boxes', array_filter([
+                'pageSize' => $page_size,
+                'paginationToken' => $pagination_token,
+            ]));
+
+        return $response;
+    }
+
+    public function listShipmentBoxes(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['integer', 'min:1', 'max:1000'])]
+        ?int $page_size = null,
+        #[RuleValidator(['min:0', 'max:1024'])]
+        ?string $pagination_token = null,
+    ): ListShipmentBoxesResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListShipmentBoxesResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/boxes', array_filter([
+                'pageSize' => $page_size,
+                'paginationToken' => $pagination_token,
+            ]));
+
+        return $response;
+    }
+
+    public function listShipmentContentUpdatePreviews(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['integer', 'min:1', 'max:20'])]
+        ?int $page_size = null,
+        #[RuleValidator(['min:0', 'max:1024'])]
+        ?string $pagination_token = null,
+    ): ListShipmentContentUpdatePreviewsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListShipmentContentUpdatePreviewsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews', array_filter([
+                'pageSize' => $page_size,
+                'paginationToken' => $pagination_token,
+            ]));
+
+        return $response;
+    }
+
+    public function generateShipmentContentUpdatePreviews(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        GenerateShipmentContentUpdatePreviewsRequest $body,
+    ): GenerateShipmentContentUpdatePreviewsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(GenerateShipmentContentUpdatePreviewsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews', (array) $body->toArrayObject());
+
+        return $response;
+    }
+
+    public function getShipmentContentUpdatePreview(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['size:38'])]
+        string $content_update_preview_id,
+    ): GetShipmentContentUpdatePreviewResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(GetShipmentContentUpdatePreviewResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews/' . $content_update_preview_id);
+
+        return $response;
+    }
+
+    public function confirmShipmentContentUpdatePreview(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['size:38'])]
+        string $content_update_preview_id,
+    ): ConfirmShipmentContentUpdatePreviewResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ConfirmShipmentContentUpdatePreviewResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews/' . $content_update_preview_id . '/confirmation', []);
+
+        return $response;
+    }
+
+    public function listDeliveryWindowOptions(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['integer', 'min:1', 'max:100'])]
+        ?int $page_size = null,
+        #[RuleValidator(['min:0', 'max:1024'])]
+        ?string $pagination_token = null,
+    ): ListDeliveryWindowOptionsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListDeliveryWindowOptionsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/deliveryWindowOptions', array_filter([
+                'pageSize' => $page_size,
+                'paginationToken' => $pagination_token,
+            ]));
+
+        return $response;
+    }
+
+    public function generateDeliveryWindowOptions(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+    ): GenerateDeliveryWindowOptionsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(GenerateDeliveryWindowOptionsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/deliveryWindowOptions', []);
+
+        return $response;
+    }
+
+    public function confirmDeliveryWindowOptions(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['size:38'])]
+        string $delivery_window_option_id,
+    ): ConfirmDeliveryWindowOptionsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ConfirmDeliveryWindowOptionsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/deliveryWindowOptions/' . $delivery_window_option_id . '/confirmation', []);
+
+        return $response;
+    }
+
+    public function listShipmentItems(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['integer', 'min:1', 'max:1000'])]
+        ?int $page_size = null,
+        #[RuleValidator(['min:0', 'max:1024'])]
+        ?string $pagination_token = null,
+    ): ListShipmentItemsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListShipmentItemsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/items', array_filter([
+                'pageSize' => $page_size,
+                'paginationToken' => $pagination_token,
+            ]));
+
+        return $response;
+    }
+
+    public function updateShipmentName(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        string $name,
+    ): BaseResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        return $this->http
+            ->responseClass(BaseResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/name', [
+                'name' => $name,
+            ]);
+    }
+
+    public function listShipmentPallets(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        #[RuleValidator(['integer', 'min:1', 'max:1000'])]
+        ?int $page_size = null,
+        #[RuleValidator(['min:0', 'max:1024'])]
+        ?string $pagination_token = null,
+    ): ListShipmentPalletsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListShipmentPalletsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/pallets', array_filter([
+                'pageSize' => $page_size,
+                'paginationToken' => $pagination_token,
+            ]));
+
+        return $response;
+    }
+
+    public function updateShipmentSourceAddress(
+        #[RuleValidator(['size:38'])]
+        string $inbound_plan_id,
+        #[RuleValidator(['size:38'])]
+        string $shipment_id,
+        UpdateShipmentSourceAddressRequest $body,
+    ): UpdateShipmentSourceAddressResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(UpdateShipmentSourceAddressResponse::class)
+            ->put($this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/sourceAddress', (array) $body->toArrayObject());
+
+        return $response;
+    }
+
+    public function createMarketplaceItemLabels(
+        CreateMarketplaceItemLabelsRequest $body,
+    ): CreateMarketplaceItemLabelsResponse {
+        $response = $this->http
+            ->responseClass(CreateMarketplaceItemLabelsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'items/labels', (array) $body->toArrayObject());
 
         return $response;
     }

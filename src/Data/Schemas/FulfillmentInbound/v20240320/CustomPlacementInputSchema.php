@@ -8,7 +8,7 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class CustomPlacementInputSchema extends BaseSchema
 {
     public function __construct(
-        public ItemInputListSchema $items,
+        public ItemInputSchemaList $items,
         #[RuleValidator(['min:1', 'max:1024'])]
         public string $warehouse_id,
     ) {

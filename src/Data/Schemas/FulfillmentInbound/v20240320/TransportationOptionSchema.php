@@ -8,12 +8,9 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class TransportationOptionSchema extends BaseSchema
 {
     public function __construct(
-        public ?AppointmentSlotSchema $appointment_slot,
         public CarrierSchema $carrier,
-        #[RuleValidator(['size:38'])]
-        public string $inbound_plan_id,
-        #[RuleValidator(['size:38'])]
-        public string $placement_option_id,
+        public ?CarrierAppointmentSchema $carrier_appointment,
+        public array $preconditions,
         public ?QuoteSchema $quote,
         #[RuleValidator(['size:38'])]
         public string $shipment_id,

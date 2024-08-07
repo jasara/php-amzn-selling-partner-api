@@ -6,7 +6,7 @@ use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
 use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ContactInformationSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ItemInputListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ItemInputSchemaList;
 
 class CreateInboundPlanRequest extends BaseRequest
 {
@@ -14,7 +14,7 @@ class CreateInboundPlanRequest extends BaseRequest
         public ContactInformationSchema $contact_information,
         #[RuleValidator(['array', 'max:1'])]
         public array $destination_marketplaces,
-        public ItemInputListSchema $items,
+        public ItemInputSchemaList $items,
         #[RuleValidator(['min:1', 'max:40'])]
         public ?string $name,
         public ?AddressSchema $source_address,

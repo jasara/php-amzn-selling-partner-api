@@ -11,9 +11,10 @@ class BoxSchema extends BaseSchema
     public function __construct(
         #[RuleValidator(['min:1', 'max:1024'])]
         public ?string $box_id,
+        public ?BoxContentInformationSource $content_information_source,
         public ?RegionSchema $destination_region,
         public ?DimensionsSchema $dimensions,
-        public ?ItemListSchema $items,
+        public ?ItemSchemaList $items,
         #[RuleValidator(['size:38'])]
         public string $package_id,
         #[RuleValidator(['integer', 'min:1', 'max:10000'])]

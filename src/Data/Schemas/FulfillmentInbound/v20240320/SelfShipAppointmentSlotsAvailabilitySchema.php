@@ -11,7 +11,7 @@ class SelfShipAppointmentSlotsAvailabilitySchema extends BaseSchema
     public function __construct(
         #[CarbonFromStringCaster]
         public ?CarbonImmutable $expires_at,
-        public ?AppointmentSlotListSchema $slots,
+        public ?AppointmentSlotSchemaList $slots,
     ) {
     }
 }

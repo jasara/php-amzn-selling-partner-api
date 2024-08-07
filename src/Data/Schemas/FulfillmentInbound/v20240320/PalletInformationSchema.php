@@ -9,7 +9,7 @@ class PalletInformationSchema extends BaseSchema
     public function __construct(
         public ?CurrencySchema $declared_value,
         public ?FreightClass $freight_class,
-        public PalletInputListSchema $pallets,
+        public PalletInputSchemaList $pallets,
     ) {
     }
 }
