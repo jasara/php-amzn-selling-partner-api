@@ -1038,11 +1038,11 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
             body: UpdateShipmentSourceAddressRequest::from([
                 'address' => [
                     'name' => 'John Doe',
-                    'addressLine1' => '123 Main St',
+                    'address_line_1' => '123 Main St',
                     'city' => 'Anytown',
-                    'stateOrProvinceCode' => 'NY',
-                    'postalCode' => '12345',
-                    'countryCode' => 'US',
+                    'state_or_province_code' => 'NY',
+                    'postal_code' => '12345',
+                    'country_code' => 'US',
                 ],
             ]),
         );
