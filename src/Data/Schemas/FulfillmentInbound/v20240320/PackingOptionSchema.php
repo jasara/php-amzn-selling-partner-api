@@ -14,8 +14,6 @@ class PackingOptionSchema extends BaseSchema
         #[CarbonFromStringCaster]
         public ?CarbonImmutable $expiration,
         public IncentiveSchemaList $fees,
-        #[RuleValidator(['size:38'])]
-        public string $inbound_plan_id,
         public array $packing_groups,
         #[RuleValidator(['size:38'])]
         public string $packing_option_id,

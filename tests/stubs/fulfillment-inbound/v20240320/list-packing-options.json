@@ -1,7 +1,6 @@
 {
     "packingOptions": [
         {
-            "inboundPlanId": "wf1234abcd-1234-abcd-5678-1234abcd5678",
             "packingOptionId": "po1234abcd-1234-abcd-5678-1234abcd5678",
             "packingGroups": [
                 "pg1234abcd-1234-abcd-5678-1234abcd5678"

@@ -12,16 +12,14 @@
     "shipments": [],
     "sourceAddress": {
         "name": "name",
+        "companyName": "Acme",
         "addressLine1": "123 example street",
-        "addressLine2": "Floor 19",
+        "addressLine2": "Unit 102",
         "city": "Toronto",
-        "stateOrProvinceCode": "ON",
         "countryCode": "CA",
+        "stateOrProvinceCode": "ON",
         "postalCode": "M1M1M1",
-        "companyName": "Acme"
-    },
-    "contactInformation": {
-        "email": "email@email.com",
-        "phoneNumber": "1234567890"
+        "phoneNumber": "1234567890",
+        "email": "email@email.com"
     }
 }

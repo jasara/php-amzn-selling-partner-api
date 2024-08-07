@@ -7,7 +7,6 @@ use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
-use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ContactInformationSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\InboundPlanStatus;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PackingOptionSummarySchemaList;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PlacementOptionSummarySchemaList;
@@ -16,7 +15,6 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\ShipmentSummarySche
 class GetInboundPlanResponse extends BaseResponse
 {
     public function __construct(
-        public ContactInformationSchema $contact_information,
         #[CarbonFromStringCaster]
         public CarbonImmutable $created_at,
         #[CarbonFromStringCaster]

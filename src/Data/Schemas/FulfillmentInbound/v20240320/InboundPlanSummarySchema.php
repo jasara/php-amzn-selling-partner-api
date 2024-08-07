@@ -11,7 +11,6 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class InboundPlanSummarySchema extends BaseSchema
 {
     public function __construct(
-        public ContactInformationSchema $contact_information,
         #[CarbonFromStringCaster]
         public CarbonImmutable $created_at,
         #[CarbonFromStringCaster]

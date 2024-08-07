@@ -7,4 +7,5 @@ enum InboundPlanStatus: string
     case Active = 'ACTIVE';
     case Voided = 'VOIDED';
     case Shipped = 'SHIPPED';
+    case Errored = 'ERRORED';
 }

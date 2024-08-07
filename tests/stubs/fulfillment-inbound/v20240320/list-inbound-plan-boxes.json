@@ -40,7 +40,8 @@
                 "countryCode": "US",
                 "state": "CA",
                 "warehouseId": "ABC1"
-            }
+            },
+            "contentInformationSource": "BOX_CONTENT_PROVIDED"
         }
     ],
     "pagination": {
