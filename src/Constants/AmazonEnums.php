@@ -24,7 +24,6 @@ class AmazonEnums
         'Refurbished',
         'Club',
     ];
-
     public const NOTIFICATION_TYPES = [
         'ANY_OFFER_CHANGED',
         'FEED_PROCESSING_FINISHED',
@@ -42,7 +41,6 @@ class AmazonEnums
         'ACCOUNT_STATUS_CHANGED',
         'EXTERNAL_FULFILLMENT_SHIPMENT_STATUS_CHANGE',
     ];
-
     public const FEED_TYPES = [
         // Listing feeds
         'JSON_LISTINGS_FEED',
@@ -84,7 +82,6 @@ class AmazonEnums
         // Easy Ship feeds
         'POST_EASYSHIP_DOCUMENTS',
     ];
-
     public const REPORT_TYPES = [
         // Vendor retail analytics reports
         'GET_VENDOR_SALES_DIAGNOSTIC_REPORT',
@@ -205,7 +202,6 @@ class AmazonEnums
         'GET_B2B_PRODUCT_OPPORTUNITIES_RECOMMENDED_FOR_YOU',
         'GET_B2B_PRODUCT_OPPORTUNITIES_NOT_YET_ON_AMAZON',
     ];
-
     public const REPORT_PERIODS = [
         'PT5M',
         'PT15M',
@@ -226,7 +222,6 @@ class AmazonEnums
         'P30D',
         'P1M',
     ];
-
     public const PREP_INSTRUCTIONS = [
         'Polybagging',
         'BubbleWrapping',
@@ -246,7 +241,6 @@ class AmazonEnums
         'NoPrep',
         'NONE',
     ];
-
     public const SHIPMENT_STATUSES = [
         'WORKING',
         'SHIPPED',
@@ -261,7 +255,6 @@ class AmazonEnums
         'READY_TO_SHIP',
         'CREATING', // Not valid for searches
     ];
-
     public const PACKAGE_STATUSES = [
         'SHIPPED',
         'IN_TRANSIT',
@@ -271,7 +264,6 @@ class AmazonEnums
         'CLOSED',
         'DELETED',
     ];
-
     public const SELLER_FREIGHT_CLASSES = [
         '50',
         '55',
@@ -292,7 +284,6 @@ class AmazonEnums
         '400',
         '500',
     ];
-
     public const TRANSPORT_STATUSES = [
         'WORKING',
         'ESTIMATING',
@@ -306,7 +297,6 @@ class AmazonEnums
         'ERROR_IN_VOIDING',
         'ERROR',
     ];
-
     public const PAGE_TYPES = [
         'PackageLabel_Letter_2',
         'PackageLabel_Letter_4',
@@ -321,14 +311,12 @@ class AmazonEnums
         'PackageLabel_Thermal_NonPCP',
         'PackageLabel_Thermal_No_Carrier_Rotation',
     ];
-
     public const BOX_CONTENTS_SOURCES = [
         'NONE',
         'FEED',
         '2D_BARCODE',
         'INTERACTIVE',
     ];
-
     public const PROCESSING_STATUSES = [
         'CANCELLED',
         'DONE',
@@ -336,7 +324,6 @@ class AmazonEnums
         'IN_PROGRESS',
         'IN_QUEUE',
     ];
-
     public const INCLUDED_DATA_ITEMS = [
         'attributes',
         'identifiers',
@@ -349,7 +336,6 @@ class AmazonEnums
         'variations',
         'vendorDetails',
     ];
-
     public const REPLENISHMENT_CATEGORIES = [
         'ALLOCATED',
         'BASIC_REPLENISHMENT',
@@ -362,7 +348,6 @@ class AmazonEnums
         'OBSOLETE',
         'PLANNED_REPLENISHMENT',
     ];
-
     public const INBOUND_CARRIER_NAMES = [
         'USPS',
         'DHL_EXPRESS_USA_INC',
@@ -379,7 +364,6 @@ class AmazonEnums
         'TNT',
         'YODEL',
     ];
-
     public const MF_CARRIER_CODES = [
         'USPS',
         'UPS',
@@ -602,7 +586,6 @@ class AmazonEnums
         'ZTO Express',
         'Tourline',
     ];
-
     public const ITEM_CONDITION = [
         'NEW',
         'USED',
@@ -615,7 +598,6 @@ class AmazonEnums
         'Refurbished',
         'Club',
     ];
-
     public const DELIVERY_EXPERIENCE_OPTION = [
         'DeliveryConfirmationWithAdultSignature',
         'DeliveryConfirmationWithSignature',
@@ -623,7 +605,6 @@ class AmazonEnums
         'NoTracking',
         'NoPreference',
     ];
-
     public const PREDEFINED_PACKAGE_DIMENSIONS = [
         'FedEx_Box_10kg',
         'FedEx_Box_25kg',
@@ -676,14 +657,12 @@ class AmazonEnums
         'USPS_SmallFlatRateBox',
         'USPS_SmallFlatRateEnvelope',
     ];
-
     public const DELIVERY_EXPERIENCE_TYPE = [
         'DeliveryConfirmationWithAdultSignature',
         'DeliveryConfirmationWithSignature',
         'DeliveryConfirmationWithoutSignature',
         'NoTracking',
     ];
-
     public const LABEL_FORMAT = [
         'PDF',
         'PNG',
@@ -691,14 +670,12 @@ class AmazonEnums
         'ZPL300',
         'ShippingServiceDefault',
     ];
-
     public const NAME = [
         'FBAPerUnitFulfillmentFee',
         'FBAPerOrderFulfillmentFee',
         'FBATransportationFee',
         'FBAFulfillmentCODFee',
     ];
-
     public const FULFILLMENT_ORDER_STATUS = [
         'NEW',
         'RECEIVED',
@@ -710,7 +687,6 @@ class AmazonEnums
         'UNFULFILLABLE',
         'INVALID',
     ];
-
     public const CURRENT_STATUS = [
         'IN_TRANSIT',
         'DELIVERED',
@@ -721,7 +697,6 @@ class AmazonEnums
         'AVAILABLE_FOR_PICKUP',
         'CUSTOMER_ACTION',
     ];
-
     public const ADDITIONAL_LOCATION_INFO = [
         'AS_INSTRUCTED',
         'CARPORT',
@@ -750,7 +725,6 @@ class AmazonEnums
         'SECURE_LOCATION',
         'SIDE_DOOR',
     ];
-
     public const RETURN_ITEM_DISPOSITION = [
         'Sellable',
         'Defective',
@@ -758,7 +732,6 @@ class AmazonEnums
         'CarrierDamaged',
         'FulfillerDamaged',
     ];
-
     public const IN_ELIGIBILITY_REASON_LIST = [
         'FBA_INB_0004',
         'FBA_INB_0006',
@@ -797,9 +770,9 @@ class AmazonEnums
         'FBA_INB_0100',
         'FBA_INB_0103',
         'FBA_INB_0104',
+        'FBA_INB_0342',
         'UNKNOWN_INB_ERROR_CODE',
     ];
-
     public const ORDER_STATUS = [
         'Pending',
         'Unshipped',
@@ -810,7 +783,6 @@ class AmazonEnums
         'InvoiceUnconfirmed',
         'PendingAvailability',
     ];
-
     public const ORDER_TYPE = [
         'StandardOrder',
         'LongLeadTimeOrder',
@@ -818,7 +790,6 @@ class AmazonEnums
         'BackOrder',
         'SourcingOnDemandOrder',
     ];
-
     public const INCLUDED_DATA = [
         'summaries',
         'attributes',
@@ -827,7 +798,6 @@ class AmazonEnums
         'fulfillmentAvailability',
         'procurement',
     ];
-
     public const CONDITION_TYPE = [
         'new_new',
         'new_open_box',
@@ -843,7 +813,6 @@ class AmazonEnums
         'collectible_acceptable',
         'club_club',
     ];
-
     public const AGGREGATION_TIME_PERIOD = [
         'FiveMinutes',
         'TenMinutes',
