@@ -8,42 +8,58 @@ use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CancelSelfShipAppointmentRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\ConfirmTransportationOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CreateInboundPlanRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\CreateMarketplaceItemLabelsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GeneratePlacementOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateSelfShipAppointmentSlotsRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateShipmentContentUpdatePreviewsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\GenerateTransportationOptionsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\SetPackingInformationRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateItemComplianceDetailsRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowRequest;
+use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsRequest;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CancelInboundPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CancelSelfShipAppointmentResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmDeliveryWindowOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmPackingOptionResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmPlacementOptionResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmShipmentContentUpdatePreviewResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CreateInboundPlanResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CreateMarketplaceItemLabelsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateDeliveryWindowOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GeneratePackingOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GeneratePlacementOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateSelfShipAppointmentSlotsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateShipmentContentUpdatePreviewsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GenerateTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetDeliveryChallanDocumentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetInboundPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetSelfShipAppointmentSlotsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetShipmentContentUpdatePreviewResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\InboundOperationStatusResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListDeliveryWindowOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlanBoxesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlanItemsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlanPalletsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListInboundPlansResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListItemComplianceDetailsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupBoxesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupItemsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPlacementOptionsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentBoxesResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentContentUpdatePreviewsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentItemsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentPalletsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\SetPackingInformationResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateItemComplianceDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsResponse;
 use Jasara\AmznSPA\Resources\FulfillmentInbound\FulfillmentInbound20240320Resource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -721,6 +737,347 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($operation_id) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/operations/' . $operation_id, $request->url());
+
+            return true;
+        });
+    }
+
+    public function testUpdateInboundPlanName(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/update-inbound-plan-name');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $inbound_plan_id = Str::random(38);
+        $name = 'Updated Plan Name';
+        $amzn->fulfillment_inbound20240320->updateInboundPlanName(
+            inbound_plan_id: $inbound_plan_id,
+            name: $name,
+        );
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $name) {
+            $this->assertEquals('PUT', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/name', $request->url());
+            $this->assertEquals(['name' => $name], $request->data());
+
+            return true;
+        });
+    }
+
+    public function testListPackingGroupBoxes(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-packing-group-boxes');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listPackingGroupBoxes(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            packing_group_id: $packing_group_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ListPackingGroupBoxesResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $packing_group_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/packingGroups/' . $packing_group_id . '/boxes', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testListShipmentBoxes(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-shipment-boxes');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listShipmentBoxes(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ListShipmentBoxesResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/boxes', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testListShipmentContentUpdatePreviews(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-shipment-content-update-previews');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listShipmentContentUpdatePreviews(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ListShipmentContentUpdatePreviewsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGenerateShipmentContentUpdatePreviews(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/generate-shipment-content-update-previews');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->generateShipmentContentUpdatePreviews(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+            body: GenerateShipmentContentUpdatePreviewsRequest::from([
+                'boxes' => [],
+                'items' => [],
+            ]),
+        );
+
+        $this->assertInstanceOf(GenerateShipmentContentUpdatePreviewsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGetShipmentContentUpdatePreview(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/get-shipment-content-update-preview');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->getShipmentContentUpdatePreview(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+            content_update_preview_id: $content_update_preview_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(GetShipmentContentUpdatePreviewResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id, $content_update_preview_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews/' . $content_update_preview_id, $request->url());
+
+            return true;
+        });
+    }
+
+    public function testConfirmShipmentContentUpdatePreview(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/confirm-shipment-content-update-preview');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->confirmShipmentContentUpdatePreview(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+            content_update_preview_id: $content_update_preview_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ConfirmShipmentContentUpdatePreviewResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id, $content_update_preview_id) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/contentUpdatePreviews/' . $content_update_preview_id . '/confirmation', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testListDeliveryWindowOptions(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-delivery-window-options');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listDeliveryWindowOptions(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ListDeliveryWindowOptionsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/deliveryWindowOptions', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGenerateDeliveryWindowOptions(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/generate-delivery-window-options');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->generateDeliveryWindowOptions(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(GenerateDeliveryWindowOptionsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/deliveryWindowOptions', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testConfirmDeliveryWindowOptions(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/confirm-delivery-window-options');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->confirmDeliveryWindowOptions(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+            delivery_window_option_id: $delivery_window_option_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ConfirmDeliveryWindowOptionsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id, $delivery_window_option_id) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/deliveryWindowOptions/' . $delivery_window_option_id . '/confirmation', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testListShipmentItems(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-shipment-items');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listShipmentItems(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ListShipmentItemsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/items', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testUpdateShipmentName(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/update-shipment-name');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $inbound_plan_id = Str::random(38);
+        $shipment_id = Str::random(38);
+        $name = 'Updated Shipment Name';
+        $amzn->fulfillment_inbound20240320->updateShipmentName(
+            inbound_plan_id: $inbound_plan_id,
+            shipment_id: $shipment_id,
+            name: $name,
+        );
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id, $name) {
+            $this->assertEquals('PUT', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/name', $request->url());
+            $this->assertEquals(['name' => $name], $request->data());
+
+            return true;
+        });
+    }
+
+    public function testListShipmentPallets(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-shipment-pallets');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listShipmentPallets(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+        );
+
+        $this->assertInstanceOf(ListShipmentPalletsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/pallets', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testUpdateShipmentSourceAddress(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/update-shipment-source-address');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->updateShipmentSourceAddress(
+            inbound_plan_id: $inbound_plan_id = Str::random(38),
+            shipment_id: $shipment_id = Str::random(38),
+            body: UpdateShipmentSourceAddressRequest::from([
+                'address' => [
+                    'name' => 'John Doe',
+                    'addressLine1' => '123 Main St',
+                    'city' => 'Anytown',
+                    'stateOrProvinceCode' => 'NY',
+                    'postalCode' => '12345',
+                    'countryCode' => 'US',
+                ],
+            ]),
+        );
+
+        $this->assertInstanceOf(UpdateShipmentSourceAddressResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
+            $this->assertEquals('PUT', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/sourceAddress', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testCreateMarketplaceItemLabels(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/create-marketplace-item-labels');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->createMarketplaceItemLabels(
+            CreateMarketplaceItemLabelsRequest::from([
+                'marketplace_id' => 'ATVPDKIKX0DER',
+                'label_type' => 'STANDARD_FORMAT',
+                'msku_quantities' => [
+                    ['msku' => 'SKU123', 'quantity' => 10],
+                ],
+            ]),
+        );
+
+        $this->assertInstanceOf(CreateMarketplaceItemLabelsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/items/labels', $request->url());
 
             return true;
         });
