@@ -1,25 +1,26 @@
 <?php
 
-namespace Jasara\AmznSPA\Data\Schemas;
+namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
 use Jasara\AmznSPA\Data\Base\Validators\MaxLengthValidator;
 use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
+use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
-class AddressSchema extends BaseSchema
+class MerchantFulfillmentAddressSchema extends BaseSchema
 {
     public function __construct(
-        #[RuleValidator(['max:50'])]
+        #[RuleValidator(['max:30'])]
         public string $name,
         #[MaxLengthValidator(180)]
         public string $address_line_1,
         #[MaxLengthValidator(60)]
         public ?string $address_line_2,
-        #[RuleValidator(['min:1', 'max:50'])]
-        public ?string $company_name,
-        #[MaxLengthValidator(25)]
+        #[MaxLengthValidator(60)]
+        public ?string $address_line_3,
         public ?string $district_or_county,
         #[MaxLengthValidator(30)]
         public ?string $city,
+        #[MaxLengthValidator(30)]
         public ?string $state_or_province_code,
         #[MaxLengthValidator(2)]
         public string $country_code,
@@ -27,7 +28,7 @@ class AddressSchema extends BaseSchema
         public string $postal_code,
         public ?string $email,
         #[MaxLengthValidator(30)]
-        public ?string $phone_number,
+        public ?string $phone,
     ) {
     }
 }

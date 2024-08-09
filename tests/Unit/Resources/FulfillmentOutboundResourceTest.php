@@ -22,6 +22,7 @@ use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\GetPackageTrackingDetailsR
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\ListAllFulfillmentOrdersResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\ListReturnReasonCodesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\UpdateFulfillmentOrderResponse;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\FulfillmentOutboundAddressSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -89,6 +90,11 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('empty');
 
+        $setup_address = $this->setupAddress();
+        $address = FulfillmentOutboundAddressSchema::from(array_merge($setup_address->toArray(), [
+            'state_or_region' => $setup_address->state_or_province_code,
+        ]));
+
         $request = CreateFulfillmentOrderRequest::from(
             marketplace_id: 'ATVPDKIKX0DER',
             seller_fulfillment_order_id: Str::random(),
@@ -96,7 +102,7 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
             displayable_order_date: CarbonImmutable::now(),
             displayable_order_comment: Str::random(),
             shipping_speed_category: 'Expedited',
-            destination_address: $this->setupAddress(),
+            destination_address: $address,
             fulfillment_action: 'Hold',
             fulfillment_policy: 'fulfillment_policy',
             cod_settings: [

@@ -13,6 +13,7 @@ use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\CreateShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetAdditionalSellerInputsResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetEligibleShipmentServicesResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
+use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\MerchantFulfillmentAddressSchema;
 use Jasara\AmznSPA\Tests\Setup\SetupMerchantFulfillmentRequest;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -90,7 +91,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
             },
             function (Request $request) use ($shipment_id) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/'.$shipment_id, $request->url());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id, $request->url());
 
                 return true;
             },
@@ -114,7 +115,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/'.$shipment_id, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id, $request->url());
 
             return true;
         });
@@ -135,7 +136,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($shipment_id) {
             $this->assertEquals('PUT', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/'.$shipment_id.'/cancel', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/mfn/v0/shipments/' . $shipment_id . '/cancel', $request->url());
 
             return true;
         });
@@ -169,7 +170,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-additional-seller-inputs-old');
         $request = new GetAdditionalSellerInputsRequest(
             shipping_service_id: Str::random(),
-            ship_from_address: $this->setupAddress(),
+            ship_from_address: MerchantFulfillmentAddressSchema::from($this->setupAddress()->toArray()),
             order_id: Str::random()
         );
 
@@ -193,7 +194,7 @@ class MerchantFulfillmentResourceTest extends UnitTestCase
         list($config, $http) = $this->setupConfigWithFakeHttp('merchant-fulfillment/get-additional-seller-inputs-old');
         $request = new GetAdditionalSellerInputsRequest(
             shipping_service_id: Str::random(),
-            ship_from_address: $this->setupAddress(),
+            ship_from_address: MerchantFulfillmentAddressSchema::from($this->setupAddress()->toArray()),
             order_id: Str::random()
         );
 

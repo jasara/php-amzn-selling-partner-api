@@ -4,7 +4,6 @@ namespace Jasara\AmznSPA\Data\Schemas\MerchantFulfillment;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
-use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems\v20201201\ItemListSchema;
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
@@ -15,7 +14,7 @@ class ShipmentRequestDetailsSchema extends BaseSchema
         public string $amazon_order_id,
         public ?string $seller_order_id,
         public ItemListSchema $item_list,
-        public AddressSchema $ship_from_address,
+        public MerchantFulfillmentAddressSchema $ship_from_address,
         public PackageDimensionsSchema $package_dimensions,
         public WeightSchema $weight,
         #[CarbonFromStringCaster]

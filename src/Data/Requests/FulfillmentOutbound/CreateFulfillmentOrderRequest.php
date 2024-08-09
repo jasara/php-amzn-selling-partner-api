@@ -6,11 +6,11 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\StringEnumValidator;
 use Jasara\AmznSPA\Data\Requests\BaseRequest;
-use Jasara\AmznSPA\Data\Schemas\AddressSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\CODSettingsSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\CreateFulfillmentOrderItemListSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\DeliveryWindowSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\FeatureSettingListSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentOutbound\FulfillmentOutboundAddressSchema;
 
 class CreateFulfillmentOrderRequest extends BaseRequest
 {
@@ -22,7 +22,7 @@ class CreateFulfillmentOrderRequest extends BaseRequest
         public string $displayable_order_comment,
         #[StringEnumValidator(['Standard', 'Expedited', 'Priority', 'ScheduledDelivery'])]
         public string $shipping_speed_category,
-        public AddressSchema $destination_address,
+        public FulfillmentOutboundAddressSchema $destination_address,
         public CreateFulfillmentOrderItemListSchema $items,
         public ?DeliveryWindowSchema $delivery_window = null,
         #[StringEnumValidator(['Ship', 'Hold'])]

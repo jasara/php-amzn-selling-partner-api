@@ -2,6 +2,8 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320;
 
+use Carbon\CarbonImmutable;
+use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
 use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
@@ -10,8 +12,8 @@ class ItemSchema extends BaseSchema
     public function __construct(
         #[RuleValidator(['min:1', 'max:10'])]
         public string $asin,
-        #[RuleValidator(['date_format:Y-m-d'])]
-        public ?string $expiration,
+        #[CarbonFromStringCaster]
+        public ?CarbonImmutable $expiration,
         #[RuleValidator(['min:1', 'max:10'])]
         public string $fnsku,
         public LabelOwner $label_owner,
