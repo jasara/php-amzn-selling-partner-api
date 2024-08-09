@@ -96,9 +96,6 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_inbound20240320->createInboundPlan(CreateInboundPlanRequest::from([
-            'contact_information' => [
-                'email' => 'test@test.com',
-            ],
             'destination_marketplaces' => [
                 'ATVPDKIKX0DER',
             ],
@@ -109,6 +106,16 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
                     'prep_owner' => 'AMAZON',
                     'quantity' => 1,
                 ],
+            ],
+            'source_address' => [
+                'name' => Str::random(10),
+                'address_line_1' => Str::random(),
+                'address_line_2' => null,
+                'district_or_county' => Str::random(),
+                'city' => Str::random(),
+                'state_or_province_code' => Str::random(),
+                'country_code' => Str::random(2),
+                'postal_code' => Str::random(),
             ],
         ]));
 

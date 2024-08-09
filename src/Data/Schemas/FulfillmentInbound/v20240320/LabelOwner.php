@@ -6,4 +6,5 @@ enum LabelOwner: string
 {
     case Amazon = 'AMAZON';
     case Seller = 'SELLER';
+    case None = 'NONE';
 }
