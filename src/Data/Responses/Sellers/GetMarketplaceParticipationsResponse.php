@@ -3,12 +3,12 @@
 namespace Jasara\AmznSPA\Data\Responses\Sellers;
 
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
-use Jasara\AmznSPA\Data\Schemas\Sellers\MarketplaceParticipationListSchema;
+use Jasara\AmznSPA\Data\Schemas\Sellers\MarketplaceParticipationSchemaList;
 
 class GetMarketplaceParticipationsResponse extends BaseResponse
 {
     public function __construct(
-        public ?MarketplaceParticipationListSchema $payload,
+        public ?MarketplaceParticipationSchemaList $payload,
     ) {
     }
 }

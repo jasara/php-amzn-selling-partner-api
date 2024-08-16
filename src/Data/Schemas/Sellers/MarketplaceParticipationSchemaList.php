@@ -7,7 +7,7 @@ use Jasara\AmznSPA\Data\Base\TypedCollection;
 /**
  * @template-extends TypedCollection<MarketplaceParticipationSchema>
  */
-class MarketplaceParticipationListSchema extends TypedCollection
+class MarketplaceParticipationSchemaList extends TypedCollection
 {
     public const ITEM_CLASS = MarketplaceParticipationSchema::class;
 }
