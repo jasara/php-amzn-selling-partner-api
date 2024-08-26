@@ -739,7 +739,7 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         );
 
         $this->assertInstanceOf(InboundOperationStatusResponse::class, $response);
-        $this->assertEquals('The dimension does not match what is expected.', $response->operation_problems[0]->message);
+        $this->assertEquals('The dimension does not match what is expected.', $response->operation->operation_problems[0]->message);
 
         $http->assertSent(function (Request $request) use ($operation_id) {
             $this->assertEquals('GET', $request->method());
