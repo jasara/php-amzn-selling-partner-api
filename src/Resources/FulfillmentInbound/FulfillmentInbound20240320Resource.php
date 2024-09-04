@@ -525,7 +525,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
             ->responseClass(ListPackingGroupItemsResponse::class)
             ->get(
                 $this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id
-                . '/packingGroups/' . $packing_group_id
+                . '/packingGroups/' . $packing_group_id 
                 . '/items',
                 array_filter([
                     'pageSize' => $page_size,
