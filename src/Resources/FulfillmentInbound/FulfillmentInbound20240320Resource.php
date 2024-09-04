@@ -515,8 +515,6 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
-        string $packing_option_id,
-        #[RuleValidator(['size:38'])]
         string $packing_group_id,
         #[RuleValidator(['integer', 'min:1', 'max:100'])]
         ?int $page_size = null,
@@ -527,8 +525,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
             ->responseClass(ListPackingGroupItemsResponse::class)
             ->get(
                 $this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id
-                . '/packingOptions/' . $packing_option_id
-                . '/packingGroups/' . $packing_group_id
+                . '/packingGroups/' . $packing_group_id 
                 . '/items',
                 array_filter([
                     'pageSize' => $page_size,

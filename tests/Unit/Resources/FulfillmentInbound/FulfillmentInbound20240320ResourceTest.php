@@ -310,17 +310,15 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_inbound20240320->listPackingGroupItems(
             inbound_plan_id: $inbound_plan_id = Str::random(38),
-            packing_option_id: $packing_option_id = Str::random(38),
             packing_group_id: $packing_group_id = Str::random(38),
         );
 
         $this->assertInstanceOf(ListPackingGroupItemsResponse::class, $response);
         $this->assertEquals('ITEM_POLYBAGGING', $response->items[0]->prep_instructions[0]->prep_type->value);
 
-        $http->assertSent(function (Request $request) use ($inbound_plan_id, $packing_option_id, $packing_group_id) {
+        $http->assertSent(function (Request $request) use ($inbound_plan_id, $packing_group_id) {
             $this->assertEquals('GET', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id
-            . '/packingOptions/' . $packing_option_id
             . '/packingGroups/' . $packing_group_id
             . '/items', $request->url());
 
