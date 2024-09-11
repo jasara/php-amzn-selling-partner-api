@@ -8,9 +8,12 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class CurrencySchema extends BaseSchema
 {
     public function __construct(
-        public string $amount,
+        public float $amount,
         public string $code,
     ) {
+        if (strlen($this->code) !== 3) {
+            throw new \InvalidArgumentException('Currency code must be exactly 3 characters long.');
+        }
     }
 
     public function asMoney(): Money
