@@ -26,6 +26,9 @@ class AmznSPAConfig
     private GrantlessToken $grantless_token;
     private RestrictedDataToken $restricted_data_token;
     private LoggerInterface $logger;
+    private bool $use_proxy;
+    private string $proxy_url;
+    private string $proxy_auth_token;
 
     public function __construct(
         string $marketplace_id,
@@ -48,6 +51,9 @@ class AmznSPAConfig
         ?CarbonImmutable $grantless_access_token_expires_at = null,
         ?string $restricted_data_token = null,
         ?CarbonImmutable $restricted_data_token_expires_at = null,
+        ?bool $use_proxy = false,
+        ?string $proxy_url = '',
+        ?string $proxy_auth_token = ''
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -76,6 +82,10 @@ class AmznSPAConfig
         );
 
         $this->logger = $logger ?: new Logger();
+
+        $this->use_proxy = $use_proxy;
+        $this->proxy_url = $proxy_url;
+        $this->proxy_auth_token = $proxy_auth_token;
     }
 
     public function getHttp(): PendingRequest
@@ -136,6 +146,31 @@ class AmznSPAConfig
     public function shouldUseTestEndpoints(): bool
     {
         return $this->use_test_endpoints;
+    }
+
+    public function shouldUseProxy(): bool
+    {
+        return $this->use_proxy && $this->proxy_url && $this->proxy_auth_token;
+    }
+
+    public function getProxyUrl(): string
+    {
+        return $this->proxy_url;
+    }
+
+    public function setProxyUrl(string $proxy_url): void
+    {
+         $this->proxy_url = $proxy_url;
+    }
+
+    public function getProxyAuthToken(): string
+    {
+        return $this->proxy_auth_token;
+    }
+
+    public function setProxyAuthToken(string $proxy_auth_token): void
+    {
+         $this->proxy_auth_token = $proxy_auth_token;
     }
 
     public function shouldGetRdtTokens(): bool

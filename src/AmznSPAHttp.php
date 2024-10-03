@@ -287,16 +287,22 @@ class AmznSPAHttp
 
     private function setupHttp(PendingRequest $http, bool $grantless = false, string $url = '', string $method = ''): void
     {
-        $this->http = $http->withHeaders([
-            'x-amz-access-token' => $this->getToken($grantless, $url, $method),
-            'user-agent' => $this->buildUserAgent(),
-        ]);
+        if ($this->config->shouldUseProxy()) {
+            $this->http = $http->withHeaders([
+                'Authorization' => "Bearer {$this->config->getProxyAuthToken()}"
+            ]);
+        } else {
+            $this->http = $http->withHeaders([
+                'x-amz-access-token' => $this->getToken($grantless, $url, $method),
+                'user-agent' => $this->buildUserAgent(),
+            ]);
+
+            $this->signRequest($this->config->getMarketplace()->getAwsRegion());
+        }
 
         $middleware = new HttpLoggerMiddleware($this->config->getLogger());
 
         $this->http->withMiddleware($middleware->buildCallable());
-
-        $this->signRequest($this->config->getMarketplace()->getAwsRegion());
     }
 
     private function getToken(bool $grantless, string $url, string $method): string
@@ -470,11 +476,11 @@ class AmznSPAHttp
 
             $message = Arr::get($e->response->json(), 'errors.0.message', '');
             if (Str::contains($message, [
-                'Access to requested resource is denied',
-                'Invalid partyId',
-                'hasn\'t registered in FBA in marketplace',
-                'No MWS Authorization exists',
-                'No MWS Authorization found',
+                    'Access to requested resource is denied',
+                    'Invalid partyId',
+                    'hasn\'t registered in FBA in marketplace',
+                    'No MWS Authorization exists',
+                    'No MWS Authorization found',
             ])) {
                 return true;
             }
