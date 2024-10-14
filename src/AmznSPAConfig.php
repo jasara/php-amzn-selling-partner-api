@@ -11,6 +11,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Data\ApplicationKeys;
 use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Data\GrantlessToken;
+use Jasara\AmznSPA\Data\Proxy;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Log\LoggerInterface;
@@ -26,9 +27,6 @@ class AmznSPAConfig
     private GrantlessToken $grantless_token;
     private RestrictedDataToken $restricted_data_token;
     private LoggerInterface $logger;
-    private bool $use_proxy;
-    private string $proxy_url;
-    private string $proxy_auth_token;
 
     public function __construct(
         string $marketplace_id,
@@ -51,9 +49,7 @@ class AmznSPAConfig
         ?CarbonImmutable $grantless_access_token_expires_at = null,
         ?string $restricted_data_token = null,
         ?CarbonImmutable $restricted_data_token_expires_at = null,
-        ?bool $use_proxy = false,
-        ?string $proxy_url = '',
-        ?string $proxy_auth_token = ''
+        private ?Proxy $proxy = null
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -82,10 +78,6 @@ class AmznSPAConfig
         );
 
         $this->logger = $logger ?: new Logger();
-
-        $this->use_proxy = $use_proxy;
-        $this->proxy_url = $proxy_url;
-        $this->proxy_auth_token = $proxy_auth_token;
     }
 
     public function getHttp(): PendingRequest
@@ -150,27 +142,32 @@ class AmznSPAConfig
 
     public function shouldUseProxy(): bool
     {
-        return $this->use_proxy && $this->proxy_url && $this->proxy_auth_token;
+        return $this->proxy?->url && $this->proxy?->auth_token;
     }
 
-    public function getProxyUrl(): string
+    public function setProxy(Proxy $proxy): void
     {
-        return $this->proxy_url;
+        $this->proxy = $proxy;
+    }
+
+    public function getProxyUrl(): string|null
+    {
+        return $this->proxy?->url;
     }
 
     public function setProxyUrl(string $proxy_url): void
     {
-         $this->proxy_url = $proxy_url;
+        $this->proxy->url = $proxy_url;
     }
 
-    public function getProxyAuthToken(): string
+    public function getProxyAuthToken(): string|null
     {
-        return $this->proxy_auth_token;
+        return $this->proxy?->auth_token;
     }
 
     public function setProxyAuthToken(string $proxy_auth_token): void
     {
-         $this->proxy_auth_token = $proxy_auth_token;
+        $this->proxy->auth_token = $proxy_auth_token;
     }
 
     public function shouldGetRdtTokens(): bool
@@ -238,6 +235,6 @@ class AmznSPAConfig
 
     public function isPropertySet(string $property): bool
     {
-        return isset($this->$property) && ! is_null($this->$property);
+        return isset($this->$property) && !is_null($this->$property);
     }
 }
