@@ -145,6 +145,11 @@ class AmznSPAConfig
         return $this->proxy?->url && $this->proxy?->auth_token;
     }
 
+    public function getProxy(): Proxy|null
+    {
+        return $this->proxy;
+    }
+
     public function setProxy(Proxy $proxy): void
     {
         $this->proxy = $proxy;
@@ -155,19 +160,9 @@ class AmznSPAConfig
         return $this->proxy?->url;
     }
 
-    public function setProxyUrl(string $proxy_url): void
-    {
-        $this->proxy->url = $proxy_url;
-    }
-
     public function getProxyAuthToken(): string|null
     {
         return $this->proxy?->auth_token;
-    }
-
-    public function setProxyAuthToken(string $proxy_auth_token): void
-    {
-        $this->proxy->auth_token = $proxy_auth_token;
     }
 
     public function shouldGetRdtTokens(): bool
