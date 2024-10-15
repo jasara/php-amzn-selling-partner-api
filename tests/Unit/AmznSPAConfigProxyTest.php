@@ -2,24 +2,15 @@
 
 namespace Jasara\AmznSPA\Tests\Unit;
 
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\Marketplace;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Data\ApplicationKeys;
-use Jasara\AmznSPA\Data\AuthTokens;
-use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Data\Proxy;
-use Jasara\AmznSPA\Data\RestrictedDataToken;
-use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Psr\Log\LogLevel;
-use Symfony\Component\HttpKernel\Log\Logger;
 
 #[CoversClass(AmznSPAConfig::class)]
 #[CoversClass(ApplicationKeys::class)]
@@ -83,13 +74,13 @@ class AmznSPAConfigProxyTest extends UnitTestCase
         $this->assertEquals($proxy_auth_token, $config->getProxyAuthToken());
 
         $proxy_url = Str::random();
-        $config->setProxyUrl($proxy_url);
-
-        $this->assertEquals($proxy_url, $config->getProxyUrl());
-
         $proxy_auth_token = Str::random();
-        $config->setProxyAuthToken($proxy_auth_token);
+        $config->setProxy(Proxy::from(
+            url: $proxy_url,
+            auth_token: $proxy_auth_token
+        ));
 
-        $this->assertEquals($proxy_auth_token, $config->getProxyAuthToken());
+        $this->assertEquals($proxy_url, $config->getProxy()->url);
+        $this->assertEquals($proxy_auth_token, $config->getProxy()->auth_token);
     }
 }

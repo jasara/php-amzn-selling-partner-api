@@ -13,6 +13,7 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Data\GrantlessToken;
+use Jasara\AmznSPA\Data\Proxy;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\CreateInboundShipmentPlanResponse;
@@ -468,6 +469,33 @@ class AmznSPAHttpTest extends UnitTestCase
         } catch (ConnectionException $e) {
             $this->markTestSkipped('No connection');
         }
+    }
+
+    /**
+     * An actual live API call is required here, in order to test the request signing and test endpoints.
+     */
+    #[Group('external')]
+    public function testSetupHttpProxy()
+    {
+        $this->expectException(RequestException::class);
+
+        $config = new AmznSPAConfig(
+            marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
+            application_id: Str::random(),
+            proxy: Proxy::from(
+                url: 'https://www.amazon.com',
+                auth_token: Str::random(),
+            )
+        );
+
+        $this->assertTrue($config->shouldUseProxy());
+
+        $amzn = new AmznSPA($config);
+
+        // try {
+            $amzn->listings_items->getListingsItem(Str::random(), Str::random(), ['ATVPDKIKX0DER']);
+        // } catch (\Exception $e) {
+        // }
     }
 
     public function testRateLimitExceptionIsThrownIfResponseHasCode429()
