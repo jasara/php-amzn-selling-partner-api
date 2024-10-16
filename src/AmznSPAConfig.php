@@ -11,6 +11,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Data\ApplicationKeys;
 use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Data\GrantlessToken;
+use Jasara\AmznSPA\Data\Proxy;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 use Psr\Log\LoggerInterface;
@@ -48,6 +49,7 @@ class AmznSPAConfig
         ?CarbonImmutable $grantless_access_token_expires_at = null,
         ?string $restricted_data_token = null,
         ?CarbonImmutable $restricted_data_token_expires_at = null,
+        private ?Proxy $proxy = null
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -138,6 +140,31 @@ class AmznSPAConfig
         return $this->use_test_endpoints;
     }
 
+    public function shouldUseProxy(): bool
+    {
+        return $this->proxy?->url && $this->proxy?->auth_token;
+    }
+
+    public function getProxy(): Proxy|null
+    {
+        return $this->proxy;
+    }
+
+    public function setProxy(Proxy $proxy): void
+    {
+        $this->proxy = $proxy;
+    }
+
+    public function getProxyUrl(): string|null
+    {
+        return $this->proxy?->url;
+    }
+
+    public function getProxyAuthToken(): string|null
+    {
+        return $this->proxy?->auth_token;
+    }
+
     public function shouldGetRdtTokens(): bool
     {
         return $this->get_rdt_tokens;
@@ -203,6 +230,6 @@ class AmznSPAConfig
 
     public function isPropertySet(string $property): bool
     {
-        return isset($this->$property) && ! is_null($this->$property);
+        return isset($this->$property) && !is_null($this->$property);
     }
 }
