@@ -11,7 +11,7 @@ class ShipmentSchema extends BaseSchema
         #[RuleValidator(['min:1', 'max:1024'])]
         public ?string $amazon_reference_id,
         public ?ContactInformationSchema $contact_information,
-        public DatesSchema $dates,
+        public ?DatesSchema $dates,
         public ShipmentDestinationSchema $destination,
         public ?FreightInformationSchema $freight_information,
         public ?string $name,

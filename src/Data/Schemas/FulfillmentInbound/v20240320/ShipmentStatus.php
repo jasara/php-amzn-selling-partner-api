@@ -16,4 +16,5 @@ enum ShipmentStatus: string
     case Receiving = 'RECEIVING';
     case Shipped = 'SHIPPED';
     case Working = 'WORKING';
+    case Unconfirmed = 'UNCONFIRMED';
 }
