@@ -12,7 +12,7 @@ class BoxInputSchema extends BaseSchema
         #[RuleValidator(['min:1', 'max:1024'])]
         public ?string $box_id,
         public BoxContentInformationSource $content_information_source,
-        public BoxContentSchemaList $contents,
+        public ItemInputSchemaList $items,
         public DimensionsSchema $dimensions,
         #[RuleValidator(['integer', 'min:1', 'max:10000'])]
         public int $quantity,
