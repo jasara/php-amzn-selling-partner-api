@@ -433,7 +433,18 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testSetProxyHeaders()
     {
-        [$config, $http] = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'orders/get-orders']);
+        $http = $this->fakeHttpStub(['orders/get-orders']);
+
+        $proxy_auth_token = Str::random();
+        $proxy = new Proxy(
+            url: 'https://www.example.com',
+            headers: [
+                'Authorization' => "Bearer {$proxy_auth_token}",
+                'X-Marketplace-Id' => 'ATVPDKIKX0DER',
+            ],
+        );
+
+        $config = $this->setupMinimalProxyConfig($proxy, null, $http);
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
@@ -442,15 +453,11 @@ class AmznSPAHttpTest extends UnitTestCase
         );
 
         $request_validation = [
-            function (Request $request) {
-                $this->assertEquals('POST', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
-
-                return true;
-            },
-            function (Request $request) {
+            function (Request $request) use ($proxy_auth_token) {
                 $this->assertEquals('GET', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+                $this->assertEquals('https://www.example.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+                $this->assertEquals("Bearer {$proxy_auth_token}", $request->header('Authorization')[0]);
+                $this->assertEquals('ATVPDKIKX0DER', $request->header('X-Marketplace-Id')[0]);
 
                 return true;
             },
