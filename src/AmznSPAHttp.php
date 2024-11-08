@@ -288,9 +288,7 @@ class AmznSPAHttp
     private function setupHttp(PendingRequest $http, bool $grantless = false, string $url = '', string $method = ''): void
     {
         if ($proxy = $this->config->getProxy()) {
-            $this->http = $http->withHeaders([
-                'Authorization' => "Bearer {$proxy->auth_token}",
-            ]);
+            $this->http = $http->withHeaders($proxy->headers);
         } else {
             $this->http = $http->withHeaders([
                 'x-amz-access-token' => $this->getToken($grantless, $url, $method),

@@ -6,7 +6,7 @@ class Proxy
 {
     public function __construct(
         public readonly string $url,
-        public readonly string $auth_token,
+        public readonly array $headers,
     ) {
     }
 }

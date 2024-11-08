@@ -148,9 +148,11 @@ class ResourceGetter
 
     private function constructResource(string $class, ?string $grantless_resource = null): ResourceContract
     {
+        $url = $this->config->getProxy() ? $this->config->getProxy()->url : $this->config->getMarketplace()->getBaseUrl();
+
         return new $class(
             $this->validateAndSetupHttpForStandardResource($grantless_resource),
-            $this->config->getMarketplace()->getBaseUrl(),
+            $url,
         );
     }
 

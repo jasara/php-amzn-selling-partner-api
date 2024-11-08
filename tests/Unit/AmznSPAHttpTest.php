@@ -431,6 +431,34 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->assertSentInOrder($request_validation);
     }
 
+    public function testSetProxyHeaders()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp(['tokens/create-restricted-data-token', 'orders/get-orders']);
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $amzn->orders->getOrders(
+            marketplace_ids: ['ATVPDKIKX0DER'],
+        );
+
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
+
+                return true;
+            },
+            function (Request $request) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
+    }
+
     public function testInvalidPartyId()
     {
         $this->expectException(AuthenticationException::class);
@@ -484,7 +512,7 @@ class AmznSPAHttpTest extends UnitTestCase
             application_id: Str::random(),
             proxy: new Proxy(
                 url: 'https://www.amazon.com',
-                auth_token: Str::random(),
+                headers: [],
             )
         );
 

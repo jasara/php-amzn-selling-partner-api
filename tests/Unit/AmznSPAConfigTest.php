@@ -45,9 +45,13 @@ class AmznSPAConfigTest extends UnitTestCase
         $grantless_access_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
         $restricted_data_token = Str::random();
         $restricted_data_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
+
+        $proxy_auth_token = Str::random();
         $proxy = new Proxy(
             url: Str::random(),
-            auth_token: Str::random(),
+            headers: [
+                'Authorization' => "Bearer {$proxy_auth_token}",
+            ],
         );
 
         $config = new AmznSPAConfig(
@@ -99,7 +103,7 @@ class AmznSPAConfigTest extends UnitTestCase
         $this->assertTrue($config->shouldGetRdtTokens());
 
         $this->assertEquals($proxy->url, $config->getProxy()->url);
-        $this->assertEquals($proxy->auth_token, $config->getProxy()->auth_token);
+        $this->assertEquals($proxy->headers, $config->getProxy()->headers);
     }
 
     public function testSetters()
