@@ -15,6 +15,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Data\ApplicationKeys;
 use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Data\GrantlessToken;
+use Jasara\AmznSPA\Data\Proxy;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -45,6 +46,14 @@ class AmznSPAConfigTest extends UnitTestCase
         $restricted_data_token = Str::random();
         $restricted_data_token_expires_at = CarbonImmutable::now()->addSeconds(rand(100, 500));
 
+        $proxy_auth_token = Str::random();
+        $proxy = new Proxy(
+            url: Str::random(),
+            headers: [
+                'Authorization' => "Bearer {$proxy_auth_token}",
+            ],
+        );
+
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id,
             application_id: $application_id,
@@ -61,6 +70,7 @@ class AmznSPAConfigTest extends UnitTestCase
             restricted_data_token: $restricted_data_token,
             restricted_data_token_expires_at: $restricted_data_token_expires_at,
             use_test_endpoints: true,
+            proxy: $proxy,
         );
 
         $this->assertInstanceOf(Marketplace::class, $config->getMarketplace());
@@ -91,6 +101,9 @@ class AmznSPAConfigTest extends UnitTestCase
 
         $this->assertTrue($config->shouldUseTestEndpoints());
         $this->assertTrue($config->shouldGetRdtTokens());
+
+        $this->assertEquals($proxy->url, $config->getProxy()->url);
+        $this->assertEquals($proxy->headers, $config->getProxy()->headers);
     }
 
     public function testSetters()

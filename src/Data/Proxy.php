@@ -2,13 +2,11 @@
 
 namespace Jasara\AmznSPA\Data;
 
-use Jasara\AmznSPA\Data\Base\Data;
-
-class Proxy extends Data
+class Proxy
 {
     public function __construct(
-        public ?string $url,
-        public ?string $auth_token,
+        public readonly string $url,
+        public readonly array $headers,
     ) {
     }
 }

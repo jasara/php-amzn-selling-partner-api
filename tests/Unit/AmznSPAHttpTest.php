@@ -431,6 +431,41 @@ class AmznSPAHttpTest extends UnitTestCase
         $http->assertSentInOrder($request_validation);
     }
 
+    public function testSetProxyHeaders()
+    {
+        $http = $this->fakeHttpStub(['orders/get-orders']);
+
+        $proxy_auth_token = Str::random();
+        $proxy = new Proxy(
+            url: 'https://www.example.com',
+            headers: [
+                'Authorization' => "Bearer {$proxy_auth_token}",
+                'X-Marketplace-Id' => 'ATVPDKIKX0DER',
+            ],
+        );
+
+        $config = $this->setupMinimalProxyConfig($proxy, null, $http);
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $amzn->orders->getOrders(
+            marketplace_ids: ['ATVPDKIKX0DER'],
+        );
+
+        $request_validation = [
+            function (Request $request) use ($proxy_auth_token) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://www.example.com/orders/v0/orders?MarketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+                $this->assertEquals("Bearer {$proxy_auth_token}", $request->header('Authorization')[0]);
+                $this->assertEquals('ATVPDKIKX0DER', $request->header('X-Marketplace-Id')[0]);
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
+    }
+
     public function testInvalidPartyId()
     {
         $this->expectException(AuthenticationException::class);
@@ -482,13 +517,13 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            proxy: Proxy::from(
+            proxy: new Proxy(
                 url: 'https://www.amazon.com',
-                auth_token: Str::random(),
+                headers: [],
             )
         );
 
-        $this->assertTrue($config->shouldUseProxy());
+        $this->assertNotNull($config->getProxy());
 
         $amzn = new AmznSPA($config);
 

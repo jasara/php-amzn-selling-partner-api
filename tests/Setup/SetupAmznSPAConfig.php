@@ -6,6 +6,7 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\Constants\MarketplacesList;
+use Jasara\AmznSPA\Data\Proxy;
 
 trait SetupAmznSPAConfig
 {
@@ -22,6 +23,32 @@ trait SetupAmznSPAConfig
             aws_secret_key: Str::random(),
             lwa_client_id: Str::random(),
             lwa_client_secret: Str::random(),
+        );
+
+        if ($http) {
+            $config->setHttp($http);
+        }
+
+        return $config;
+    }
+
+    public function setupMinimalProxyConfig(
+        Proxy $proxy,
+        string $marketplace_id = null,
+        Factory $http = null,
+    ): AmznSPAConfig {
+        $config = new AmznSPAConfig(
+            marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],
+            application_id: Str::random(),
+            redirect_url: Str::random() . '.com',
+            lwa_refresh_token: Str::random(),
+            lwa_access_token: Str::random(),
+            grantless_access_token: Str::random(),
+            aws_access_key: Str::random(),
+            aws_secret_key: Str::random(),
+            lwa_client_id: Str::random(),
+            lwa_client_secret: Str::random(),
+            proxy: $proxy,
         );
 
         if ($http) {
