@@ -148,20 +148,18 @@ class ResourceGetter
 
     private function constructResource(string $class, ?string $grantless_resource = null): ResourceContract
     {
-        $url = $this->config->shouldUseProxy() ? $this->config->getProxyUrl() : $this->config->getMarketplace()->getBaseUrl();
-
         return new $class(
             $this->validateAndSetupHttpForStandardResource($grantless_resource),
-            $url,
+            $this->config->getMarketplace()->getBaseUrl(),
         );
     }
 
     private function validateAndSetupHttpForStandardResource(?string $grantless_resource = null): AmznSPAHttp
     {
-        if (!$this->config->shouldUseProxy()) {
+        if (! $this->config->getProxy()) {
             $this->validateObjectProperties($this->config->getApplicationKeys(), ['lwa_client_id', 'lwa_client_secret', 'aws_access_key', 'aws_secret_key']);
 
-            if (!$grantless_resource) {
+            if (! $grantless_resource) {
                 $this->validateObjectProperties($this->config->getTokens(), ['refresh_token']);
             }
         }

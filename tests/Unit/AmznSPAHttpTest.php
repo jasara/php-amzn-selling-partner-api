@@ -482,13 +482,13 @@ class AmznSPAHttpTest extends UnitTestCase
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
-            proxy: Proxy::from(
+            proxy: new Proxy(
                 url: 'https://www.amazon.com',
                 auth_token: Str::random(),
             )
         );
 
-        $this->assertTrue($config->shouldUseProxy());
+        $this->assertNotNull($config->getProxy());
 
         $amzn = new AmznSPA($config);
 

@@ -287,9 +287,9 @@ class AmznSPAHttp
 
     private function setupHttp(PendingRequest $http, bool $grantless = false, string $url = '', string $method = ''): void
     {
-        if ($this->config->shouldUseProxy()) {
+        if ($proxy = $this->config->getProxy()) {
             $this->http = $http->withHeaders([
-                'Authorization' => "Bearer {$this->config->getProxyAuthToken()}"
+                'Authorization' => "Bearer {$proxy->auth_token}",
             ]);
         } else {
             $this->http = $http->withHeaders([
@@ -476,11 +476,11 @@ class AmznSPAHttp
 
             $message = Arr::get($e->response->json(), 'errors.0.message', '');
             if (Str::contains($message, [
-                    'Access to requested resource is denied',
-                    'Invalid partyId',
-                    'hasn\'t registered in FBA in marketplace',
-                    'No MWS Authorization exists',
-                    'No MWS Authorization found',
+                'Access to requested resource is denied',
+                'Invalid partyId',
+                'hasn\'t registered in FBA in marketplace',
+                'No MWS Authorization exists',
+                'No MWS Authorization found',
             ])) {
                 return true;
             }

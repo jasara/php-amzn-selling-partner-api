@@ -12,11 +12,9 @@ class ProxyTest extends UnitTestCase
 {
     public function testSetupTokens()
     {
-        $proxy_url = Str::random();
-        $proxy_auth_token = Str::random();
         $proxy = new Proxy(
-            url: $proxy_url,
-            auth_token: $proxy_auth_token
+            url: $proxy_url = Str::random(),
+            auth_token: $proxy_auth_token = Str::random(),
         );
 
         $this->assertEquals($proxy_url, $proxy->url);
