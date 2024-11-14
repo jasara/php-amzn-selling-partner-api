@@ -874,7 +874,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
 
         $response = $this->http
             ->responseClass(ListPrepDetailsResponse::class)
-            ->get($this->endpoint . self::BASE_PATH . 'prepDetails', [
+            ->get($this->endpoint . self::BASE_PATH . 'items/prepDetails', [
                 'marketplaceId' => $marketplace_id,
                 'mskus' => $mskus,
             ]);

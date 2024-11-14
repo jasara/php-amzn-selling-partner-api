@@ -1113,7 +1113,7 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($mskus) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/prepDetails?marketplaceId=ATVPDKIKX0DER&mskus=msku1,msku2', urldecode($request->url()));
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/items/prepDetails?marketplaceId=ATVPDKIKX0DER&mskus=msku1,msku2', urldecode($request->url()));
 
             return true;
         });
