@@ -99,4 +99,16 @@ class TypedCollectionTest extends UnitTestCase
 
         $this->assertEquals('GET', $collection->reduce(fn (string $carry, RestrictedResourceSchema $resource) => $carry . $resource->method, ''));
     }
+
+    public function testToArrayObject(): void
+    {
+        $collection = RestrictedResourcesListSchema::make([
+            new RestrictedResourceSchema(method: 'GET', path: '/path', data_elements: null),
+        ]);
+
+        $array_object = $collection->toArrayObject();
+
+        $this->assertEquals('GET', $array_object[0]['method']);
+        $this->assertEquals('/path', $array_object[0]['path']);
+    }
 }

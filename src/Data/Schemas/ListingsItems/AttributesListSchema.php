@@ -11,7 +11,7 @@ class AttributesListSchema extends TypedCollection
 {
     public const ITEM_CLASS = AttributeSchema::class;
 
-    public function toArrayObject(): \ArrayObject
+    public function toArrayObject(string $case = 'camel'): \ArrayObject
     {
         $array_object = new \ArrayObject();
         $attribute_names = $this->pluck('name')->unique()->toArray();

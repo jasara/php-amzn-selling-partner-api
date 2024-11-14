@@ -2,9 +2,10 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
+use Illuminate\Support\Collection;
+use Jasara\AmznSPA\Data\Base\Data;
 use Jasara\AmznSPA\Data\Base\ToArrayObject;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
-use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchema;
 use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\AdditionalSellerInputSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\ProcessingDirectiveSchema;
@@ -27,22 +28,12 @@ class ToArrayObjectTest extends UnitTestCase
 
     public function testReturnsDataUsingCollection(): void
     {
-        $data = ListingsItemPatchRequest::from([
-            'product_type' => 'test',
-            'patches' => [
-                [
-                    'op' => 'add',
-                    'path' => '/path',
-                ],
-            ],
-        ]);
+        $test = new Collection(['abc']);
+        $data = new CollectionTest($test);
 
         $array_object = $data->toArrayObject();
 
-        $this->assertEquals('test', $array_object['productType']);
-        $this->assertCount(1, $array_object['patches']);
-        $this->assertEquals('add', $array_object['patches'][0]['op']);
-        $this->assertEquals('/path', $array_object['patches'][0]['path']);
+        $this->assertEquals('abc', $array_object['test'][0]);
     }
 
     public function testReturnsDataUsingCarbonImmutable(): void
@@ -80,5 +71,13 @@ class ToArrayObjectTest extends UnitTestCase
         $array_object = $request->toArrayObject();
 
         $this->assertEquals('LTL', $array_object['ShipmentType']);
+    }
+}
+
+class CollectionTest extends Data
+{
+    public function __construct(
+        public Collection $test,
+    ) {
     }
 }

@@ -51,7 +51,7 @@ trait ToArrayObject
         return match (true) {
             $has_mapper => $this->mapWithMapper($property, $value),
             $value instanceof Data => $this->mapWithData($case, $value),
-            $value instanceof TypedCollection => $value->toArrayObject(),
+            $value instanceof TypedCollection => $value->toArrayObject(case: $case),
             $value instanceof Collection => $this->mapWithCollection($case, $value),
             $value instanceof CarbonImmutable => $this->mapWithCarbonImmutable($value),
             $value instanceof BackedEnum => $value->value,
@@ -74,7 +74,13 @@ trait ToArrayObject
     private function mapWithCollection(string $case, Collection $value): array
     {
         return $value->map(function ($item) use ($case) {
-            return $this->toArrayObject($item, $case);
+            return match (true) {
+                $item instanceof TypedCollection => $item->toArrayObject(case: $case),
+                $item instanceof Collection => $item->toArrayObject(),
+                $item instanceof Data => $item->toArrayObject(case: $case),
+                $item instanceof BackedEnum => $item->value,
+                default => $item,
+            };
         })->toArray();
     }
 
