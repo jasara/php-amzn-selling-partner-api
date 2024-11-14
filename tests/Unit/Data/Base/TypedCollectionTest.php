@@ -3,6 +3,8 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Jasara\AmznSPA\Data\Base\TypedCollection;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepType;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepTypeList;
 use Jasara\AmznSPA\Data\Schemas\Tokens\RestrictedResourceSchema;
 use Jasara\AmznSPA\Data\Schemas\Tokens\RestrictedResourcesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -110,5 +112,10 @@ class TypedCollectionTest extends UnitTestCase
 
         $this->assertEquals('GET', $array_object[0]['method']);
         $this->assertEquals('/path', $array_object[0]['path']);
+
+        $enum = PrepType::Sharp;
+        $collection = new PrepTypeList([$enum]);
+        $array_object = $collection->toArrayObject();
+        $this->assertEquals($enum->value, $array_object[0]);
     }
 }
