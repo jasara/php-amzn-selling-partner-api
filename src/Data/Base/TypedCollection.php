@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Data\Base;
 
+use BackedEnum;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -53,5 +54,18 @@ class TypedCollection extends Collection
     public function reduce(callable $callback, $initial = null)
     {
         return $this->toBase()->reduce($callback, $initial);
+    }
+
+    public function toArrayObject(): \ArrayObject
+    {
+        return new \ArrayObject($this->map(function ($item) {
+            return match (true) {
+                $item instanceof TypedCollection => $item->toArrayObject(),
+                $item instanceof Collection => $item->toArrayObject(),
+                $item instanceof Data => $item->toArrayObject(),
+                $item instanceof BackedEnum => $item->value,
+                default => $item,
+            };
+        })->toArray());
     }
 }

@@ -50,6 +50,7 @@ use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupB
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupItemsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPlacementOptionsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPrepDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentBoxesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentContentUpdatePreviewsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentItemsResponse;
@@ -57,10 +58,16 @@ use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentPalle
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\SetPackingInformationResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\SetPrepDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateItemComplianceDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsResponse;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\MskuPrepDetailInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\MskuPrepDetailInputSchemaList;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepCategory;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepType;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepTypeList;
 use Jasara\AmznSPA\Resources\FulfillmentInbound\FulfillmentInbound20240320Resource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -1083,6 +1090,66 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/items/labels', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testListPrepDetails(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/list-prep-details');
+
+        $mskus = ['msku1', 'msku2'];
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->listPrepDetails(
+            marketplace_id: 'ATVPDKIKX0DER',
+            mskus: $mskus,
+        );
+
+        $this->assertInstanceOf(ListPrepDetailsResponse::class, $response);
+        $this->assertEquals('msku1', $response->msku_prep_details[0]->msku);
+
+        $http->assertSent(function (Request $request) use ($mskus) {
+            $this->assertEquals('GET', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/prepDetails?marketplaceId=ATVPDKIKX0DER&mskus=msku1,msku2', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testSetPrepDetails(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('fulfillment-inbound/v20240320/set-prep-details');
+
+        $msku_prep_details = MskuPrepDetailInputSchemaList::make([
+            new MskuPrepDetailInputSchema(
+                msku: 'msku1',
+                prep_category: PrepCategory::Sharp,
+                prep_types: PrepTypeList::make([
+                    PrepType::Sharp,
+                ]),
+            ),
+        ]);
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->fulfillment_inbound20240320->setPrepDetails(
+            marketplace_id: 'ATVPDKIKX0DER',
+            msku_prep_details: $msku_prep_details,
+        );
+
+        $this->assertInstanceOf(SetPrepDetailsResponse::class, $response);
+        $this->assertEquals('1234abcd-1234-abcd-5678-1234abcd1102', $response->operation_id);
+
+        $http->assertSent(function (Request $request) use ($msku_prep_details) {
+            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/items/prepDetails', (string) $request->url());
+            $this->assertEquals('ATVPDKIKX0DER', $request->data()['marketplaceId']);
+            ray($request->data());
+            $this->assertEquals('SHARP', $request->data()['mskuPrepDetails'][0]['prepCategory']);
+            $this->assertEquals('SHARP', $request->data()['mskuPrepDetails'][0]['prepTypes'][0]);
 
             return true;
         });

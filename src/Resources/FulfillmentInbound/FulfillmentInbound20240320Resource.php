@@ -52,6 +52,7 @@ use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupB
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingGroupItemsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPackingOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPlacementOptionsResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListPrepDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentBoxesResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentContentUpdatePreviewsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentItemsResponse;
@@ -59,12 +60,14 @@ use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListShipmentPalle
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ListTransportationOptionsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ScheduleSelfShipAppointmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\SetPackingInformationResponse;
+use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\SetPrepDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateItemComplianceDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsResponse;
 use Jasara\AmznSPA\Data\Schemas\Common\SortOrder;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\InboundPlanStatus;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\MskuPrepDetailInputSchemaList;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\SortBy;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -525,7 +528,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
             ->responseClass(ListPackingGroupItemsResponse::class)
             ->get(
                 $this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id
-                . '/packingGroups/' . $packing_group_id 
+                . '/packingGroups/' . $packing_group_id
                 . '/items',
                 array_filter([
                     'pageSize' => $page_size,
@@ -858,6 +861,39 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         $response = $this->http
             ->responseClass(InboundOperationStatusResponse::class)
             ->get($this->endpoint . self::BASE_PATH . 'operations/' . $operation_id);
+
+        return $response;
+    }
+
+    public function listPrepDetails(
+        string $marketplace_id,
+        #[RuleValidator(['min:1', 'max:100'])]
+        array $mskus,
+    ): ListPrepDetailsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(ListPrepDetailsResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'prepDetails', [
+                'marketplaceId' => $marketplace_id,
+                'mskus' => $mskus,
+            ]);
+
+        return $response;
+    }
+
+    public function setPrepDetails(
+        string $marketplace_id,
+        MskuPrepDetailInputSchemaList $msku_prep_details,
+    ): SetPrepDetailsResponse {
+        $this->validateAttributes(__FUNCTION__, ...func_get_args());
+
+        $response = $this->http
+            ->responseClass(SetPrepDetailsResponse::class)
+            ->post($this->endpoint . self::BASE_PATH . 'items/prepDetails', [
+                'marketplaceId' => $marketplace_id,
+                'mskuPrepDetails' => $msku_prep_details->toArrayObject(),
+            ]);
 
         return $response;
     }

@@ -2,6 +2,7 @@
 
 namespace Jasara\AmznSPA\Data\Base;
 
+use BackedEnum;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -50,8 +51,10 @@ trait ToArrayObject
         return match (true) {
             $has_mapper => $this->mapWithMapper($property, $value),
             $value instanceof Data => $this->mapWithData($case, $value),
+            $value instanceof TypedCollection => $value->toArrayObject(),
             $value instanceof Collection => $this->mapWithCollection($case, $value),
             $value instanceof CarbonImmutable => $this->mapWithCarbonImmutable($value),
+            $value instanceof BackedEnum => $value->value,
             default => $value,
         };
     }
