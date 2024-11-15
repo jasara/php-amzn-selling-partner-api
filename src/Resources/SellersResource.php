@@ -4,6 +4,7 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Sellers\GetAccountResponse;
 use Jasara\AmznSPA\Data\Responses\Sellers\GetMarketplaceParticipationsResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -19,7 +20,7 @@ class SellersResource implements ResourceContract
     ) {
     }
 
-    public function getMarketplaceParticipations(): GetMarketplaceParticipationsResponse
+    public function getMarketplaceParticipations(): GetMarketplaceParticipationsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetMarketplaceParticipationsResponse::class)
@@ -28,7 +29,7 @@ class SellersResource implements ResourceContract
         return $response;
     }
 
-    public function getAccount(): GetAccountResponse
+    public function getAccount(): GetAccountResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetAccountResponse::class)

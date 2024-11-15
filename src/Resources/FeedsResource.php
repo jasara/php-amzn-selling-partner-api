@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\Feeds\CreateFeedDocumentSpecification;
 use Jasara\AmznSPA\Data\Requests\Feeds\CreateFeedSpecification;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Feeds\CreateFeedDocumentResponse;
 use Jasara\AmznSPA\Data\Responses\Feeds\CreateFeedResponse;
 use Jasara\AmznSPA\Data\Responses\Feeds\GetFeedDocumentResponse;
@@ -36,7 +37,7 @@ class FeedsResource implements ResourceContract
         ?CarbonImmutable $created_since = null,
         ?CarbonImmutable $created_until = null,
         ?string $next_token = null,
-    ): GetFeedsResponse {
+    ): GetFeedsResponse|ErrorListResponse {
         if ($feed_types) {
             $this->validateIsArrayOfStrings($feed_types, AmazonEnums::FEED_TYPES);
         }
@@ -62,7 +63,7 @@ class FeedsResource implements ResourceContract
         return $response;
     }
 
-    public function createFeed(CreateFeedSpecification $request): CreateFeedResponse
+    public function createFeed(CreateFeedSpecification $request): CreateFeedResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateFeedResponse::class)
@@ -71,7 +72,7 @@ class FeedsResource implements ResourceContract
         return $response;
     }
 
-    public function getFeed(string $feed_id): GetFeedResponse
+    public function getFeed(string $feed_id): GetFeedResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFeedResponse::class)
@@ -80,7 +81,7 @@ class FeedsResource implements ResourceContract
         return $response;
     }
 
-    public function cancelFeed(string $feed_id): BaseResponse
+    public function cancelFeed(string $feed_id): BaseResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(BaseResponse::class)
@@ -89,7 +90,7 @@ class FeedsResource implements ResourceContract
         return $response;
     }
 
-    public function createFeedDocument(CreateFeedDocumentSpecification $request): CreateFeedDocumentResponse
+    public function createFeedDocument(CreateFeedDocumentSpecification $request): CreateFeedDocumentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateFeedDocumentResponse::class)
@@ -98,7 +99,7 @@ class FeedsResource implements ResourceContract
         return $response;
     }
 
-    public function getFeedDocument(string $feed_document_id): GetFeedDocumentResponse
+    public function getFeedDocument(string $feed_document_id): GetFeedDocumentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFeedDocumentResponse::class)

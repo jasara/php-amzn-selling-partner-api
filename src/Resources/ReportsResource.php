@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\Reports\CreateReportScheduleSpecification;
 use Jasara\AmznSPA\Data\Requests\Reports\CreateReportSpecification;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\CreateReportResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\CreateReportScheduleResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
@@ -38,7 +39,7 @@ class ReportsResource implements ResourceContract
         ?CarbonImmutable $created_since = null,
         ?CarbonImmutable $created_until = null,
         ?string $next_token = null,
-    ): GetReportsResponse {
+    ): GetReportsResponse|ErrorListResponse {
         if ($report_types) {
             $this->validateIsArrayOfStrings($report_types, AmazonEnums::REPORT_TYPES);
         }
@@ -64,7 +65,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function createReport(CreateReportSpecification $request): CreateReportResponse
+    public function createReport(CreateReportSpecification $request): CreateReportResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateReportResponse::class)
@@ -73,7 +74,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function getReport(string $report_id): GetReportResponse
+    public function getReport(string $report_id): GetReportResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetReportResponse::class)
@@ -82,7 +83,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function cancelReport(string $report_id): BaseResponse
+    public function cancelReport(string $report_id): BaseResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(BaseResponse::class)
@@ -91,7 +92,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function getReportSchedules(array $report_types): GetReportSchedulesResponse
+    public function getReportSchedules(array $report_types): GetReportSchedulesResponse|ErrorListResponse
     {
         $this->validateIsArrayOfStrings($report_types, AmazonEnums::REPORT_TYPES);
 
@@ -102,7 +103,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function createReportSchedule(CreateReportScheduleSpecification $request): CreateReportScheduleResponse
+    public function createReportSchedule(CreateReportScheduleSpecification $request): CreateReportScheduleResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateReportScheduleResponse::class)
@@ -111,7 +112,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function getReportSchedule(string $report_schedule_id): GetReportScheduleResponse
+    public function getReportSchedule(string $report_schedule_id): GetReportScheduleResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetReportScheduleResponse::class)
@@ -120,7 +121,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function cancelReportSchedule(string $report_schedule_id): BaseResponse
+    public function cancelReportSchedule(string $report_schedule_id): BaseResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(BaseResponse::class)
@@ -129,7 +130,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function getReportDocument(string $report_document_id): GetReportDocumentResponse
+    public function getReportDocument(string $report_document_id): GetReportDocumentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetReportDocumentResponse::class)
@@ -138,7 +139,7 @@ class ReportsResource implements ResourceContract
         return $response;
     }
 
-    public function getRestrictedReportDocument(string $report_document_id): GetReportDocumentResponse
+    public function getRestrictedReportDocument(string $report_document_id): GetReportDocumentResponse|ErrorListResponse
     {
         $this->http->useRestrictedDataToken();
 

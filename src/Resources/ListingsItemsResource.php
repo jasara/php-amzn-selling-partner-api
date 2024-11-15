@@ -8,6 +8,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPutRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\ListingsItemSubmissionResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -29,7 +30,7 @@ class ListingsItemsResource implements ResourceContract
         array $marketplace_ids,
         ?string $issue_locale = null,
         ?array $included_data = null,
-    ): GetListingsItemResponse {
+    ): GetListingsItemResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
         if ($included_data) {
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA);
@@ -52,7 +53,7 @@ class ListingsItemsResource implements ResourceContract
         array $marketplace_ids,
         ?string $issue_locale,
         ListingsItemPutRequest $request,
-    ): ListingsItemSubmissionResponse {
+    ): ListingsItemSubmissionResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $request_array = (array) $request->toArrayObject();
@@ -78,7 +79,7 @@ class ListingsItemsResource implements ResourceContract
         string $sku,
         array $marketplace_ids,
         ?string $issue_locale,
-    ): ListingsItemSubmissionResponse {
+    ): ListingsItemSubmissionResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http
@@ -97,7 +98,7 @@ class ListingsItemsResource implements ResourceContract
         array $marketplace_ids,
         ?string $issue_locale,
         ListingsItemPatchRequest $request,
-    ): ListingsItemSubmissionResponse {
+    ): ListingsItemSubmissionResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         $response = $this->http

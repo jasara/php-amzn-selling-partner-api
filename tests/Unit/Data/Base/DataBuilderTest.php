@@ -3,6 +3,7 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Str;
 use Jasara\AmznSPA\Contracts\IsFlatResponse;
 use Jasara\AmznSPA\Data\Base\Data;
 use Jasara\AmznSPA\Data\Base\DataBuilder;
@@ -17,6 +18,9 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelDat
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelPackageOutputListSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelPackageOutputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\MskuPrepDetailInputSchema;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepCategory;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepType;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationListSchema;
 use Jasara\AmznSPA\Data\Schemas\ProductFees\FeesEstimateErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\Uploads\UploadDestinationSchema;
@@ -223,5 +227,20 @@ class DataBuilderTest extends UnitTestCase
         $class::from([
             'invalid' => 'invalid',
         ]);
+    }
+
+    public function testBuildDataWithEnum(): void
+    {
+        $data = MskuPrepDetailInputSchema::from(
+            msku: Str::random(),
+            prep_category: 'TEXTILE',
+            prep_types: [
+                PrepType::ItemBoxing,
+            ],
+        );
+
+        $this->assertInstanceOf(MskuPrepDetailInputSchema::class, $data);
+        $this->assertEquals(PrepCategory::Textile, $data->prep_category);
+        $this->assertEquals(PrepType::ItemBoxing, $data->prep_types[0]);
     }
 }

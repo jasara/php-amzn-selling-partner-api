@@ -21,6 +21,7 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentDeli
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CancelInboundPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\CancelSelfShipAppointmentResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\ConfirmDeliveryWindowOptionsResponse;
@@ -90,7 +91,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?InboundPlanStatus $status = null,
         ?SortBy $sort_by = null,
         ?SortOrder $sort_order = null,
-    ): ListInboundPlansResponse {
+    ): ListInboundPlansResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -106,7 +107,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         return $response;
     }
 
-    public function createInboundPlan(CreateInboundPlanRequest $request): CreateInboundPlanResponse
+    public function createInboundPlan(CreateInboundPlanRequest $request): CreateInboundPlanResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateInboundPlanResponse::class)
@@ -118,7 +119,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function getInboundPlan(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-    ): GetInboundPlanResponse {
+    ): GetInboundPlanResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -135,7 +136,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListInboundPlanBoxesResponse {
+    ): ListInboundPlanBoxesResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -151,7 +152,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function cancelInboundPlan(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-    ): CancelInboundPlanResponse {
+    ): CancelInboundPlanResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -168,7 +169,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListInboundPlanItemsResponse {
+    ): ListInboundPlanItemsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -186,7 +187,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['min:1', 'max:40'])]
         string $name,
-    ): BaseResponse {
+    ): BaseResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         return $this->http
@@ -205,7 +206,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListPackingGroupBoxesResponse {
+    ): ListPackingGroupBoxesResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -227,7 +228,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListShipmentBoxesResponse {
+    ): ListShipmentBoxesResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -249,7 +250,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListShipmentContentUpdatePreviewsResponse {
+    ): ListShipmentContentUpdatePreviewsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -268,7 +269,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $shipment_id,
         GenerateShipmentContentUpdatePreviewsRequest $body,
-    ): GenerateShipmentContentUpdatePreviewsResponse {
+    ): GenerateShipmentContentUpdatePreviewsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -285,7 +286,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $shipment_id,
         #[RuleValidator(['size:38'])]
         string $content_update_preview_id,
-    ): GetShipmentContentUpdatePreviewResponse {
+    ): GetShipmentContentUpdatePreviewResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -302,7 +303,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $shipment_id,
         #[RuleValidator(['size:38'])]
         string $content_update_preview_id,
-    ): ConfirmShipmentContentUpdatePreviewResponse {
+    ): ConfirmShipmentContentUpdatePreviewResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -321,7 +322,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListDeliveryWindowOptionsResponse {
+    ): ListDeliveryWindowOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -339,7 +340,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $shipment_id,
-    ): GenerateDeliveryWindowOptionsResponse {
+    ): GenerateDeliveryWindowOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -356,7 +357,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $shipment_id,
         #[RuleValidator(['size:38'])]
         string $delivery_window_option_id,
-    ): ConfirmDeliveryWindowOptionsResponse {
+    ): ConfirmDeliveryWindowOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -375,7 +376,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListShipmentItemsResponse {
+    ): ListShipmentItemsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -394,7 +395,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $shipment_id,
         string $name,
-    ): BaseResponse {
+    ): BaseResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         return $this->http
@@ -413,7 +414,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListShipmentPalletsResponse {
+    ): ListShipmentPalletsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -432,7 +433,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $shipment_id,
         UpdateShipmentSourceAddressRequest $body,
-    ): UpdateShipmentSourceAddressResponse {
+    ): UpdateShipmentSourceAddressResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -444,7 +445,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
 
     public function createMarketplaceItemLabels(
         CreateMarketplaceItemLabelsRequest $body,
-    ): CreateMarketplaceItemLabelsResponse {
+    ): CreateMarketplaceItemLabelsResponse|ErrorListResponse {
         $response = $this->http
             ->responseClass(CreateMarketplaceItemLabelsResponse::class)
             ->post($this->endpoint . self::BASE_PATH . 'items/labels', (array) $body->toArrayObject());
@@ -456,7 +457,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
         SetPackingInformationRequest $body,
-    ): SetPackingInformationResponse {
+    ): SetPackingInformationResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -473,7 +474,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListPackingOptionsResponse {
+    ): ListPackingOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -489,7 +490,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function generatePackingOptions(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-    ): GeneratePackingOptionsResponse {
+    ): GeneratePackingOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -504,7 +505,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $packing_option_id,
-    ): ConfirmPackingOptionResponse {
+    ): ConfirmPackingOptionResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -523,7 +524,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListPackingGroupItemsResponse {
+    ): ListPackingGroupItemsResponse|ErrorListResponse {
         $response = $this->http
             ->responseClass(ListPackingGroupItemsResponse::class)
             ->get(
@@ -546,7 +547,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListInboundPlanPalletsResponse {
+    ): ListInboundPlanPalletsResponse|ErrorListResponse {
         $response = $this->http
             ->responseClass(ListInboundPlanPalletsResponse::class)
             ->get(
@@ -567,7 +568,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): ListPlacementOptionsResponse {
+    ): ListPlacementOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -587,7 +588,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
         GeneratePlacementOptionsRequest $body,
-    ): GeneratePlacementOptionsResponse {
+    ): GeneratePlacementOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -602,7 +603,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $placement_option_id,
-    ): ConfirmPlacementOptionResponse {
+    ): ConfirmPlacementOptionResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -617,7 +618,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $shipment_id,
-    ): GetShipmentResponse {
+    ): GetShipmentResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -632,7 +633,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $shipment_id,
-    ): GetDeliveryChallanDocumentResponse {
+    ): GetDeliveryChallanDocumentResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -648,7 +649,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $shipment_id,
         UpdateShipmentDeliveryWindowRequest $body,
-    ): UpdateShipmentDeliveryWindowResponse {
+    ): UpdateShipmentDeliveryWindowResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -667,7 +668,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
-    ): GetSelfShipAppointmentSlotsResponse {
+    ): GetSelfShipAppointmentSlotsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -686,7 +687,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $shipment_id,
         GenerateSelfShipAppointmentSlotsRequest $body,
-    ): GenerateSelfShipAppointmentSlotsResponse {
+    ): GenerateSelfShipAppointmentSlotsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -704,7 +705,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $slot_id,
         CancelSelfShipAppointmentRequest $body,
-    ): CancelSelfShipAppointmentResponse {
+    ): CancelSelfShipAppointmentResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -728,7 +729,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $slot_id,
         ScheduleSelfShipAppointmentRequest $body,
-    ): ScheduleSelfShipAppointmentResponse {
+    ): ScheduleSelfShipAppointmentResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -750,7 +751,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $shipment_id,
         UpdateShipmentTrackingDetailsRequest $body,
-    ): UpdateShipmentTrackingDetailsResponse {
+    ): UpdateShipmentTrackingDetailsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -776,7 +777,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         ?string $placement_option_id = null,
         #[RuleValidator(['size:38'])]
         ?string $shipment_id = null,
-    ): ListTransportationOptionsResponse {
+    ): ListTransportationOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -795,7 +796,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
         GenerateTransportationOptionsRequest $body,
-    ): GenerateTransportationOptionsResponse {
+    ): GenerateTransportationOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -809,7 +810,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
         ConfirmTransportationOptionsRequest $body,
-    ): ConfirmTransportationOptionsResponse {
+    ): ConfirmTransportationOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -823,7 +824,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         #[RuleValidator(['array', 'min:1', 'max:100'])]
         array $mskus,
         string $marketplace_id,
-    ): ListItemComplianceDetailsResponse {
+    ): ListItemComplianceDetailsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
         $this->validateIsArrayOfStrings($mskus);
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
@@ -841,7 +842,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function updateItemComplianceDetails(
         string $marketplace_id,
         UpdateItemComplianceDetailsRequest $body,
-    ): UpdateItemComplianceDetailsResponse {
+    ): UpdateItemComplianceDetailsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -855,7 +856,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function getInboundOperationStatus(
         #[RuleValidator(['min:36', 'max:38'])]
         string $operation_id,
-    ): InboundOperationStatusResponse {
+    ): InboundOperationStatusResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -869,7 +870,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $marketplace_id,
         #[RuleValidator(['min:1', 'max:100'])]
         array $mskus,
-    ): ListPrepDetailsResponse {
+    ): ListPrepDetailsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http
@@ -885,7 +886,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function setPrepDetails(
         string $marketplace_id,
         MskuPrepDetailInputSchemaList $msku_prep_details,
-    ): SetPrepDetailsResponse {
+    ): SetPrepDetailsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
 
         $response = $this->http

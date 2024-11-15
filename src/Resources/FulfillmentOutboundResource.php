@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\CreateFulfillmentOrderReque
 use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\CreateFulfillmentReturnRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\GetFulfillmentPreviewRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentOutbound\UpdateFulfillmentOrderRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CancelFulfillmentOrderResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentReturnResponse;
@@ -35,7 +36,7 @@ class FulfillmentOutboundResource implements ResourceContract
     ) {
     }
 
-    public function getFulfillmentPreview(GetFulfillmentPreviewRequest $request): GetFulfillmentPreviewResponse
+    public function getFulfillmentPreview(GetFulfillmentPreviewRequest $request): GetFulfillmentPreviewResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFulfillmentPreviewResponse::class)
@@ -44,7 +45,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function listAllFulfillmentOrders(?CarbonImmutable $query_start_date = null, ?string $next_token = null): ListAllFulfillmentOrdersResponse
+    public function listAllFulfillmentOrders(?CarbonImmutable $query_start_date = null, ?string $next_token = null): ListAllFulfillmentOrdersResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(ListAllFulfillmentOrdersResponse::class)
@@ -56,7 +57,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function createFulfillmentOrder(CreateFulfillmentOrderRequest $request): CreateFulfillmentOrderResponse
+    public function createFulfillmentOrder(CreateFulfillmentOrderRequest $request): CreateFulfillmentOrderResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateFulfillmentOrderResponse::class)
@@ -65,7 +66,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function getPackageTrackingDetails(int $package_number): GetPackageTrackingDetailsResponse
+    public function getPackageTrackingDetails(int $package_number): GetPackageTrackingDetailsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetPackageTrackingDetailsResponse::class)
@@ -74,7 +75,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function listReturnReasonCodes(string $seller_sku, ?string $marketplace_id, ?string $seller_fulfillment_order_id, string $language): ListReturnReasonCodesResponse
+    public function listReturnReasonCodes(string $seller_sku, ?string $marketplace_id, ?string $seller_fulfillment_order_id, string $language): ListReturnReasonCodesResponse|ErrorListResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $response = $this->http
@@ -89,7 +90,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function createFulfillmentReturn(string $seller_fulfillment_order_id, CreateFulfillmentReturnRequest $request): CreateFulfillmentReturnResponse
+    public function createFulfillmentReturn(string $seller_fulfillment_order_id, CreateFulfillmentReturnRequest $request): CreateFulfillmentReturnResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateFulfillmentReturnResponse::class)
@@ -98,7 +99,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function getFulfillmentOrder(string $seller_fulfillment_order_id): GetFulfillmentOrderResponse
+    public function getFulfillmentOrder(string $seller_fulfillment_order_id): GetFulfillmentOrderResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFulfillmentOrderResponse::class)
@@ -107,7 +108,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function updateFulfillmentOrder(UpdateFulfillmentOrderRequest $request, string $seller_fulfillment_order_id): UpdateFulfillmentOrderResponse
+    public function updateFulfillmentOrder(UpdateFulfillmentOrderRequest $request, string $seller_fulfillment_order_id): UpdateFulfillmentOrderResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(UpdateFulfillmentOrderResponse::class)
@@ -116,7 +117,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function cancelFulfillmentOrder(string $seller_fulfillment_order_id): CancelFulfillmentOrderResponse
+    public function cancelFulfillmentOrder(string $seller_fulfillment_order_id): CancelFulfillmentOrderResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CancelFulfillmentOrderResponse::class)
@@ -125,7 +126,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function getFeatures(string $marketplace_id): GetFeaturesResponse
+    public function getFeatures(string $marketplace_id): GetFeaturesResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFeaturesResponse::class)
@@ -134,7 +135,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function getFeatureInventory(string $marketplace_id, string $feature_name, ?string $next_token = null): GetFeatureInventoryResponse
+    public function getFeatureInventory(string $marketplace_id, string $feature_name, ?string $next_token = null): GetFeatureInventoryResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFeatureInventoryResponse::class)
@@ -143,7 +144,7 @@ class FulfillmentOutboundResource implements ResourceContract
         return $response;
     }
 
-    public function getFeatureSKU(string $marketplace_id, string $feature_name, ?string $seller_sku): GetFeatureSkuResponse
+    public function getFeatureSKU(string $marketplace_id, string $feature_name, ?string $seller_sku): GetFeatureSkuResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetFeatureSkuResponse::class)

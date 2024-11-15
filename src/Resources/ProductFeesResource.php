@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\ProductFees\GetMyFeesEstimateRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\ProductFees\GetMyFeesEstimateResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -19,7 +20,7 @@ class ProductFeesResource implements ResourceContract
     ) {
     }
 
-    public function getMyFeesEstimateForSku(GetMyFeesEstimateRequest $request, string $seller_sku): GetMyFeesEstimateResponse
+    public function getMyFeesEstimateForSku(GetMyFeesEstimateRequest $request, string $seller_sku): GetMyFeesEstimateResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetMyFeesEstimateResponse::class)
@@ -28,7 +29,7 @@ class ProductFeesResource implements ResourceContract
         return $response;
     }
 
-    public function getMyFeesEstimateForAsin(GetMyFeesEstimateRequest $request, string $asin): GetMyFeesEstimateResponse
+    public function getMyFeesEstimateForAsin(GetMyFeesEstimateRequest $request, string $asin): GetMyFeesEstimateResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetMyFeesEstimateResponse::class)

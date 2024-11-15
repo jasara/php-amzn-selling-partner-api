@@ -6,6 +6,7 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\ProductPricing\GetOffersResponse;
 use Jasara\AmznSPA\Data\Responses\ProductPricing\GetPricingResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
@@ -28,7 +29,7 @@ class ProductPricingResource implements ResourceContract
         ?array $skus = [],
         ?string $item_condition = null,
         ?string $offer_type = null,
-    ): GetPricingResponse {
+    ): GetPricingResponse|ErrorListResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($asins);
         $this->validateIsArrayOfStrings($skus);
@@ -60,7 +61,7 @@ class ProductPricingResource implements ResourceContract
         ?array $asins = [],
         ?array $skus = [],
         ?string $customer_type = null,
-    ): GetPricingResponse {
+    ): GetPricingResponse|ErrorListResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($asins);
         $this->validateIsArrayOfStrings($skus);
@@ -87,7 +88,7 @@ class ProductPricingResource implements ResourceContract
         string $item_condition,
         string $seller_sku,
         ?string $customer_type = null,
-    ): GetOffersResponse {
+    ): GetOffersResponse|ErrorListResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($item_condition, AmazonEnums::ITEM_CONDITION);
         if ($customer_type) {
@@ -110,7 +111,7 @@ class ProductPricingResource implements ResourceContract
         string $item_condition,
         string $asin,
         ?string $customer_type = null,
-    ): GetOffersResponse {
+    ): GetOffersResponse|ErrorListResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($item_condition, AmazonEnums::ITEM_CONDITION);
         if ($customer_type) {

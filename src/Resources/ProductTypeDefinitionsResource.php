@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions\ProductTypeDefinitionResponse;
 use Jasara\AmznSPA\Data\Responses\ProductTypeDefinitions\ProductTypeListResponse;
 use Jasara\AmznSPA\Data\Schemas\ProductTypeDefinitions\Locale;
@@ -24,7 +25,7 @@ class ProductTypeDefinitionsResource implements ResourceContract
     public function searchDefinitionsProductTypes(
         array $marketplace_ids,
         ?array $keywords = null,
-    ): ProductTypeListResponse {
+    ): ProductTypeListResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         if ($keywords) {
@@ -49,7 +50,7 @@ class ProductTypeDefinitionsResource implements ResourceContract
         ?string $requirements = null,
         ?string $requirements_enforced = null,
         ?string $locale = null,
-    ): ProductTypeDefinitionResponse {
+    ): ProductTypeDefinitionResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         if ($product_type_version) {

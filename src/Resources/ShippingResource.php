@@ -9,6 +9,7 @@ use Jasara\AmznSPA\Data\Requests\Shipping\GetRatesRequest;
 use Jasara\AmznSPA\Data\Requests\Shipping\PurchaseLabelsRequest;
 use Jasara\AmznSPA\Data\Requests\Shipping\PurchaseShipmentRequest;
 use Jasara\AmznSPA\Data\Requests\Shipping\RetrieveShippingLabelRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Shipping\CancelShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Shipping\CreateShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Shipping\GetAccountResponse;
@@ -31,7 +32,7 @@ class ShippingResource implements ResourceContract
     ) {
     }
 
-    public function createShipment(CreateShipmentRequest $request): CreateShipmentResponse
+    public function createShipment(CreateShipmentRequest $request): CreateShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateShipmentResponse::class)
@@ -40,7 +41,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function getShipment(string $shipment_id): GetShipmentResponse
+    public function getShipment(string $shipment_id): GetShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetShipmentResponse::class)
@@ -49,7 +50,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function cancelShipment(string $shipment_id): CancelShipmentResponse
+    public function cancelShipment(string $shipment_id): CancelShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CancelShipmentResponse::class)
@@ -58,7 +59,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function purchaseLabels(string $shipment_id, PurchaseLabelsRequest $request): PurchaseLabelsResponse
+    public function purchaseLabels(string $shipment_id, PurchaseLabelsRequest $request): PurchaseLabelsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(PurchaseLabelsResponse::class)
@@ -67,7 +68,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function retrieveShippingLabel(string $shipment_id, string $tracking_id, RetrieveShippingLabelRequest $request): RetrieveShippingLabelResponse
+    public function retrieveShippingLabel(string $shipment_id, string $tracking_id, RetrieveShippingLabelRequest $request): RetrieveShippingLabelResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(RetrieveShippingLabelResponse::class)
@@ -76,7 +77,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function purchaseShipment(PurchaseShipmentRequest $request): PurchaseShipmentResponse
+    public function purchaseShipment(PurchaseShipmentRequest $request): PurchaseShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(PurchaseShipmentResponse::class)
@@ -85,7 +86,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function getRates(GetRatesRequest $request): GetRatesResponse
+    public function getRates(GetRatesRequest $request): GetRatesResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetRatesResponse::class)
@@ -94,7 +95,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function getAccount(): GetAccountResponse
+    public function getAccount(): GetAccountResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetAccountResponse::class)
@@ -103,7 +104,7 @@ class ShippingResource implements ResourceContract
         return $response;
     }
 
-    public function getTrackingInformation(string $tracking_id): GetTrackingInformationResponse
+    public function getTrackingInformation(string $tracking_id): GetTrackingInformationResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetTrackingInformationResponse::class)

@@ -4,6 +4,7 @@ namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -18,7 +19,7 @@ class UploadsResource implements ResourceContract
     ) {
     }
 
-    public function createUploadDestinationForResource(array $marketplace_ids, string $content_md5, string $resource, ?string $content_type = null): CreateUploadDestinationResponse
+    public function createUploadDestinationForResource(array $marketplace_ids, string $content_md5, string $resource, ?string $content_type = null): CreateUploadDestinationResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateUploadDestinationResponse::class)

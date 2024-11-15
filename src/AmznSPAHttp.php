@@ -11,9 +11,11 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Jasara\AmznSPA\Constants\JasaraNotes;
 use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\ErrorListSchema;
 use Jasara\AmznSPA\Data\Schemas\ErrorSchema;
@@ -531,8 +533,14 @@ class AmznSPAHttp
         $response_array = array_keys_to_snake($response->json() ?: []);
 
         if ($this->response_class) {
-            /** @var BaseResponse */
-            $mapped_response = $this->response_class::from($response_array);
+            try {
+                /** @var BaseResponse */
+                $mapped_response = $this->response_class::from($response_array);
+            } catch (InvalidArgumentException $e) {
+                if (str_contains($e->getMessage(), 'Missing required parameter') && array_key_exists('errors', $response_array)) {
+                    $mapped_response = new ErrorListResponse;
+                }
+            }
 
             if (array_key_exists('errors', $response_array)) {
                 $mapped_response->setErrors(

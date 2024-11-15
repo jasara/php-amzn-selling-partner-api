@@ -8,6 +8,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Responses\CatalogItems\v20220401\GetCatalogItemResponse;
 use Jasara\AmznSPA\Data\Responses\CatalogItems\v20220401\ItemSearchResults;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Schemas\CatalogItems\ItemIdentifierTypes;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -82,7 +83,7 @@ class CatalogItems20220401Resource implements ResourceContract
         array $marketplace_ids,
         ?array $included_data = null,
         ?string $locale = null,
-    ): GetCatalogItemResponse {
+    ): GetCatalogItemResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
         if ($included_data) {
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA_ITEMS);

@@ -16,6 +16,7 @@ use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Data\Proxy;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
@@ -616,5 +617,16 @@ class AmznSPAHttpTest extends UnitTestCase
         $response = $http->get($config->getMarketplace()->getBaseUrl() . '/orders/v0/orders');
 
         $this->assertIsArray($response);
+    }
+
+    public function testErrorResponseEvenIfResponseClassHasRequiredProperties()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('errors/unauthorized');
+
+        $amzn = new AmznSPA($config);
+        $response = $amzn->fulfillment_inbound20240320->listPrepDetails('ATVPDKIKX0DER', ['msku1']);
+
+        $this->assertInstanceOf(ErrorListResponse::class, $response);
+        $this->assertEquals($response->errors[0]->message, 'Access to requested resource is denied.');
     }
 }

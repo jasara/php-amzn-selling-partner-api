@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\InboundShipmentRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\ConfirmPreorderResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\ConfirmTransportResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\CreateInboundShipmentPlanResponse;
@@ -38,7 +39,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
     ) {
     }
 
-    public function getInboundGuidance(string $marketplace_id, array $seller_sku_list = [], array $asin_list = []): GetInboundGuidanceResponse
+    public function getInboundGuidance(string $marketplace_id, array $seller_sku_list = [], array $asin_list = []): GetInboundGuidanceResponse|ErrorListResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateIsArrayOfStrings($seller_sku_list);
@@ -55,7 +56,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function createInboundShipmentPlan(CreateInboundShipmentPlanRequest $request): CreateInboundShipmentPlanResponse
+    public function createInboundShipmentPlan(CreateInboundShipmentPlanRequest $request): CreateInboundShipmentPlanResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateInboundShipmentPlanResponse::class)
@@ -64,7 +65,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function updateInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
+    public function updateInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(InboundShipmentResponse::class)
@@ -73,7 +74,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function createInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse
+    public function createInboundShipment(string $shipment_id, InboundShipmentRequest $request): InboundShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(InboundShipmentResponse::class)
@@ -82,7 +83,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function getPreorderInfo(string $shipment_id, string $marketplace_id): GetPreorderInfoResponse
+    public function getPreorderInfo(string $shipment_id, string $marketplace_id): GetPreorderInfoResponse|ErrorListResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -95,7 +96,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function confirmPreorder(string $shipment_id, string $marketplace_id, CarbonImmutable $need_by_date): ConfirmPreorderResponse
+    public function confirmPreorder(string $shipment_id, string $marketplace_id, CarbonImmutable $need_by_date): ConfirmPreorderResponse|ErrorListResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -109,7 +110,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function getPrepInstructions(string $ship_to_country_code, array $seller_sku_list = [], array $asin_list = []): GetPrepInstructionsResponse
+    public function getPrepInstructions(string $ship_to_country_code, array $seller_sku_list = [], array $asin_list = []): GetPrepInstructionsResponse|ErrorListResponse
     {
         $this->validateStringEnum($ship_to_country_code, MarketplacesList::allCountryCodes());
         $this->validateIsArrayOfStrings($seller_sku_list);
@@ -126,7 +127,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function getTransportDetails(string $shipment_id): GetTransportDetailsResponse
+    public function getTransportDetails(string $shipment_id): GetTransportDetailsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetTransportDetailsResponse::class)
@@ -135,7 +136,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function putTransportDetails(string $shipment_id, PutTransportDetailsRequest $request): PutTransportDetailsResponse
+    public function putTransportDetails(string $shipment_id, PutTransportDetailsRequest $request): PutTransportDetailsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(PutTransportDetailsResponse::class)
@@ -144,7 +145,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function voidTransport(string $shipment_id): VoidTransportResponse
+    public function voidTransport(string $shipment_id): VoidTransportResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(VoidTransportResponse::class)
@@ -153,7 +154,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function estimateTransport(string $shipment_id): EstimateTransportResponse
+    public function estimateTransport(string $shipment_id): EstimateTransportResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(EstimateTransportResponse::class)
@@ -162,7 +163,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function confirmTransport(string $shipment_id): ConfirmTransportResponse
+    public function confirmTransport(string $shipment_id): ConfirmTransportResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(ConfirmTransportResponse::class)
@@ -180,7 +181,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         ?int $number_of_pallets = null,
         ?int $page_size = null,
         ?int $page_start_index = null
-    ): GetLabelsResponse {
+    ): GetLabelsResponse|ErrorListResponse {
         $this->validateStringEnum($page_type, AmazonEnums::PAGE_TYPES);
         $this->validateStringEnum($label_type, ['BARCODE_2D', 'UNIQUE', 'PALLET', 'DEFAULT']);
         $this->validateIsArrayOfStrings($package_labels_to_print);
@@ -200,7 +201,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function getBillOfLading(string $shipment_id): GetBillOfLadingResponse
+    public function getBillOfLading(string $shipment_id): GetBillOfLadingResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetBillOfLadingResponse::class)
@@ -217,7 +218,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         ?CarbonImmutable $last_updated_after = null,
         ?CarbonImmutable $last_updated_before = null,
         ?string $next_token = null,
-    ): GetShipmentsResponse {
+    ): GetShipmentsResponse|ErrorListResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($query_type, ['SHIPMENT', 'DATE_RANGE', 'NEXT_TOKEN']);
         $this->validateIsArrayOfStrings($shipment_status_list, AmazonEnums::SHIPMENT_STATUSES);
@@ -238,7 +239,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         return $response;
     }
 
-    public function getShipmentItemsByShipmentId(string $shipment_id, string $marketplace_id): GetShipmentItemsResponse
+    public function getShipmentItemsByShipmentId(string $shipment_id, string $marketplace_id): GetShipmentItemsResponse|ErrorListResponse
     {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
@@ -257,7 +258,7 @@ class FulfillmentInboundV0Resource implements ResourceContract
         ?CarbonImmutable $last_updated_after = null,
         ?CarbonImmutable $last_updated_before = null,
         ?string $next_token = null,
-    ): GetShipmentItemsResponse {
+    ): GetShipmentItemsResponse|ErrorListResponse {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
         $this->validateStringEnum($query_type, ['DATE_RANGE', 'NEXT_TOKEN']);
 

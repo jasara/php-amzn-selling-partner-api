@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FbaInboundEligibility\GetItemEligibilityPreviewResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -19,7 +20,7 @@ class FbaInboundEligibilityResource implements ResourceContract
     ) {
     }
 
-    public function getItemEligibilityPreview(?array $marketplace_ids, string $asin, string $program): GetItemEligibilityPreviewResponse
+    public function getItemEligibilityPreview(?array $marketplace_ids, string $asin, string $program): GetItemEligibilityPreviewResponse|ErrorListResponse
     {
         if ($marketplace_ids) {
             $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());

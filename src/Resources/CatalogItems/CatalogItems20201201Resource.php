@@ -8,6 +8,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
 use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\ItemSearchResults;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class CatalogItems20201201Resource implements ResourceContract
@@ -31,7 +32,7 @@ class CatalogItems20201201Resource implements ResourceContract
         ?string $page_token = null,
         ?string $keywords_locale = null,
         ?string $locale = null,
-    ): ItemSearchResults {
+    ): ItemSearchResults|ErrorListResponse {
         $this->validateIsArrayOfStrings($keywords);
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
         if ($included_data) {
@@ -66,7 +67,7 @@ class CatalogItems20201201Resource implements ResourceContract
         array $marketplace_ids,
         ?array $included_data = null,
         ?string $locale = null,
-    ): GetCatalogItemResponse {
+    ): GetCatalogItemResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
         if ($included_data) {
             $this->validateIsArrayOfStrings($included_data, AmazonEnums::INCLUDED_DATA_ITEMS);

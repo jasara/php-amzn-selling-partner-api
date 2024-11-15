@@ -6,6 +6,7 @@ use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FbaInventory\GetInventorySummariesResponse;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
@@ -28,7 +29,7 @@ class FbaInventoryResource implements ResourceContract
         ?CarbonImmutable $start_date_time = null,
         ?array $seller_skus = null,
         ?string $next_token = null,
-    ): GetInventorySummariesResponse {
+    ): GetInventorySummariesResponse|ErrorListResponse {
         $this->validateStringEnum($granularity_type, ['Marketplace']);
         if ($seller_skus) {
             $this->validateIsArrayOfStrings($seller_skus);

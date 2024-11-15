@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\Tokens\CreateRestrictedDataTokenRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 
 class TokensResource implements ResourceContract
@@ -17,7 +18,7 @@ class TokensResource implements ResourceContract
     ) {
     }
 
-    public function createRestrictedDataToken(CreateRestrictedDataTokenRequest $request): CreateRestrictedDataTokenResponse
+    public function createRestrictedDataToken(CreateRestrictedDataTokenRequest $request): CreateRestrictedDataTokenResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateRestrictedDataTokenResponse::class)

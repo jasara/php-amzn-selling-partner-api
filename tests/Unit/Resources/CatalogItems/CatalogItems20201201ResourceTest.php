@@ -34,7 +34,7 @@ class CatalogItems20201201ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($keyword) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items?keywords='.$keyword.'&marketplaceIds=ATVPDKIKX0DER&includedData=images&brandNames=BRAND&classificationIds=ID', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items?keywords=' . $keyword . '&marketplaceIds=ATVPDKIKX0DER&includedData=images&brandNames=BRAND&classificationIds=ID', $request->url());
 
             return true;
         });
@@ -59,7 +59,7 @@ class CatalogItems20201201ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/'.$asin.'?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/' . $asin . '?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
 
             return true;
         });
@@ -84,7 +84,7 @@ class CatalogItems20201201ResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($asin) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/'.$asin.'?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/catalog/2020-12-01/items/' . $asin . '?marketplaceIds=ATVPDKIKX0DER&includedData=images', $request->url());
 
             return true;
         });

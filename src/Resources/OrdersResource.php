@@ -8,6 +8,7 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\Orders\UpdateShipmentStatusRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsBuyerInfoResponse;
@@ -45,7 +46,7 @@ class OrdersResource implements ResourceContract
         ?string $actual_fulfillment_supply_source_id = null,
         ?bool $is_ispu = null,
         ?string $store_chain_store_id = null,
-    ): GetOrdersResponse {
+    ): GetOrdersResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
         if ($order_statuses) {
@@ -82,7 +83,7 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
-    public function getOrder(string $order_id): GetOrderResponse
+    public function getOrder(string $order_id): GetOrderResponse|ErrorListResponse
     {
         $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
 
@@ -93,7 +94,7 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
-    public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse
+    public function getOrderBuyerInfo(string $order_id): GetOrderBuyerInfoResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetOrderBuyerInfoResponse::class)
@@ -102,7 +103,7 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
-    public function getOrderAddress(string $order_id): GetOrderAddressResponse
+    public function getOrderAddress(string $order_id): GetOrderAddressResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetOrderAddressResponse::class)
@@ -111,7 +112,7 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
-    public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse
+    public function getOrderItems(string $order_id, ?string $next_token = null): GetOrderItemsResponse|ErrorListResponse
     {
         $this->http->setRestrictedDataElements(['buyerInfo']);
 
@@ -122,7 +123,7 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
-    public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse
+    public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetOrderItemsBuyerInfoResponse::class)
@@ -131,7 +132,7 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
-    public function updateShipmentStatus(string $order_id, UpdateShipmentStatusRequest $request): BaseResponse
+    public function updateShipmentStatus(string $order_id, UpdateShipmentStatusRequest $request): BaseResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(BaseResponse::class)

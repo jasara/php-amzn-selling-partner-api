@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Resources;
 use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\CreateDestinationResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\CreateSubscriptionResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\DeleteDestinationResponse;
@@ -28,7 +29,7 @@ class NotificationsResource implements ResourceContract
     ) {
     }
 
-    public function getSubscription(string $notification_type): GetSubscriptionResponse
+    public function getSubscription(string $notification_type): GetSubscriptionResponse|ErrorListResponse
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
@@ -44,7 +45,7 @@ class NotificationsResource implements ResourceContract
         ?string $payload_version = null,
         ?string $destination_id = null,
         ?ProcessingDirectiveSchema $processing_directive = null,
-    ): CreateSubscriptionResponse {
+    ): CreateSubscriptionResponse|ErrorListResponse {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
         $response = $this->http
@@ -61,7 +62,7 @@ class NotificationsResource implements ResourceContract
         return $response;
     }
 
-    public function getSubscriptionById(string $notification_type, string $subscription_id): GetSubscriptionByIdResponse
+    public function getSubscriptionById(string $notification_type, string $subscription_id): GetSubscriptionByIdResponse|ErrorListResponse
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
@@ -72,7 +73,7 @@ class NotificationsResource implements ResourceContract
         return $response;
     }
 
-    public function deleteSubscriptionById(string $notification_type, string $subscription_id): DeleteSubscriptionByIdResponse
+    public function deleteSubscriptionById(string $notification_type, string $subscription_id): DeleteSubscriptionByIdResponse|ErrorListResponse
     {
         $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
 
@@ -83,7 +84,7 @@ class NotificationsResource implements ResourceContract
         return $response;
     }
 
-    public function getDestinations(): GetDestinationsResponse
+    public function getDestinations(): GetDestinationsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetDestinationsResponse::class)
@@ -92,7 +93,7 @@ class NotificationsResource implements ResourceContract
         return $response;
     }
 
-    public function createDestination(string $name, DestinationResourceSpecificationSchema $resource_specification): CreateDestinationResponse
+    public function createDestination(string $name, DestinationResourceSpecificationSchema $resource_specification): CreateDestinationResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateDestinationResponse::class)
@@ -104,7 +105,7 @@ class NotificationsResource implements ResourceContract
         return $response;
     }
 
-    public function getDestination(string $destination_id): GetDestinationResponse
+    public function getDestination(string $destination_id): GetDestinationResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetDestinationResponse::class)
@@ -113,7 +114,7 @@ class NotificationsResource implements ResourceContract
         return $response;
     }
 
-    public function deleteDestination(string $destination_id): DeleteDestinationResponse
+    public function deleteDestination(string $destination_id): DeleteDestinationResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(DeleteDestinationResponse::class)

@@ -41,7 +41,7 @@ class DataBuilder
         $parameters = $constructor->getParameters();
 
         if (is_a($this->class, IsFlatResponse::class, true)) {
-            return $this->buildFlatResponse(...$parameters);
+            return $this->buildFlatResponse($this->class, ...$parameters);
         }
 
         $arguments = [];
@@ -96,15 +96,15 @@ class DataBuilder
     ): mixed {
         return match (true) {
             is_a($type_name, Data::class, true) => $type_name::from($payload_value),
-            is_a($type_name, BackedEnum::class, true) => $type_name::from($payload_value),
             is_a($type_name, TypedCollection::class, true) => self::getTypedCollectionValue($type_name, $payload_value),
             is_a($type_name, Collection::class, true) => $type_name::make($payload_value),
+            is_a($payload_value, $type_name, true) => $payload_value,
+            is_a($type_name, BackedEnum::class, true) => $type_name::from($payload_value),
             $type_name === 'int' => (int) $payload_value,
             $type_name === 'float' => (float) $payload_value,
             $type_name === 'string' => (string) $payload_value,
             $type_name === 'array' => (array) $payload_value,
             $type_name === 'bool' => (bool) $payload_value,
-            is_a($payload_value, $type_name, true) => $payload_value,
             default => throw new \InvalidArgumentException("Unsupported parameter type: {$type_name} with value: {$payload_value} for class {$this->class}"),
         };
     }
@@ -128,10 +128,14 @@ class DataBuilder
         return $type_name::make($collection_values);
     }
 
+    /**
+     * @param class-string<IsFlatResponse&Data> $class
+     */
     private function buildFlatResponse(
+        string $class,
         ReflectionParameter ...$parameters,
     ): Data {
-        $map_to_parameter = $this->class::mapResponseToParameter();
+        $map_to_parameter = $class::mapResponseToParameter();
 
         $parameter = array_filter($parameters, fn ($parameter) => $parameter->getName() === $map_to_parameter)[0] ?? null;
 
@@ -141,13 +145,13 @@ class DataBuilder
 
         // Return an empty response on flat response classes
         if ($parameter->allowsNull() && array_keys($this->payload) === ['errors']) {
-            return new $this->class(...[
-                $this->class::mapResponseToParameter() => null,
+            return new $class(...[
+                $class::mapResponseToParameter() => null,
             ]);
         }
 
-        return new $this->class(...[
-            $this->class::mapResponseToParameter() => (new self($parameter->getType()->getName(), $this->payload))->build(),
+        return new $class(...[
+            $class::mapResponseToParameter() => (new self($parameter->getType()->getName(), $this->payload))->build(),
         ]);
     }
 

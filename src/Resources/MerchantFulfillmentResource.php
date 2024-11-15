@@ -7,6 +7,7 @@ use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Requests\MerchantFulfillment\CreateShipmentRequest;
 use Jasara\AmznSPA\Data\Requests\MerchantFulfillment\GetAdditionalSellerInputsRequest;
 use Jasara\AmznSPA\Data\Requests\MerchantFulfillment\GetEligibleShipmentServicesRequest;
+use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\CancelShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\CreateShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetAdditionalSellerInputsResponse;
@@ -25,7 +26,7 @@ class MerchantFulfillmentResource implements ResourceContract
     ) {
     }
 
-    public function getEligibleShipmentServicesOld(GetEligibleShipmentServicesRequest $request): GetEligibleShipmentServicesResponse
+    public function getEligibleShipmentServicesOld(GetEligibleShipmentServicesRequest $request): GetEligibleShipmentServicesResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetEligibleShipmentServicesResponse::class)
@@ -34,7 +35,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function getEligibleShipmentServices(GetEligibleShipmentServicesRequest $request): GetEligibleShipmentServicesResponse
+    public function getEligibleShipmentServices(GetEligibleShipmentServicesRequest $request): GetEligibleShipmentServicesResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetEligibleShipmentServicesResponse::class)
@@ -43,7 +44,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function getShipment(string $shipment_id): GetShipmentResponse
+    public function getShipment(string $shipment_id): GetShipmentResponse|ErrorListResponse
     {
         $this->http->useRestrictedDataToken();
 
@@ -54,7 +55,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function cancelShipment(string $shipment_id): CancelShipmentResponse
+    public function cancelShipment(string $shipment_id): CancelShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CancelShipmentResponse::class)
@@ -63,7 +64,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function cancelShipmentOld(string $shipment_id): CancelShipmentResponse
+    public function cancelShipmentOld(string $shipment_id): CancelShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CancelShipmentResponse::class)
@@ -72,7 +73,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function createShipment(CreateShipmentRequest $request): CreateShipmentResponse
+    public function createShipment(CreateShipmentRequest $request): CreateShipmentResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(CreateShipmentResponse::class)
@@ -81,7 +82,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function getAdditionalSellerInputsOld(GetAdditionalSellerInputsRequest $request): GetAdditionalSellerInputsResponse
+    public function getAdditionalSellerInputsOld(GetAdditionalSellerInputsRequest $request): GetAdditionalSellerInputsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetAdditionalSellerInputsResponse::class)
@@ -90,7 +91,7 @@ class MerchantFulfillmentResource implements ResourceContract
         return $response;
     }
 
-    public function getAdditionalSellerInputs(GetAdditionalSellerInputsRequest $request): GetAdditionalSellerInputsResponse
+    public function getAdditionalSellerInputs(GetAdditionalSellerInputsRequest $request): GetAdditionalSellerInputsResponse|ErrorListResponse
     {
         $response = $this->http
             ->responseClass(GetAdditionalSellerInputsResponse::class)
