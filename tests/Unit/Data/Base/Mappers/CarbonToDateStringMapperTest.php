@@ -24,4 +24,12 @@ class CarbonToDateStringMapperTest extends UnitTestCase
         $mapper = new CarbonToDateStringMapper();
         $mapper->map('2021-01-01');
     }
+
+    public function testReturnsNullIfNull(): void
+    {
+        $mapper = new CarbonToDateStringMapper();
+        $result = $mapper->map(null);
+
+        $this->assertNull($result);
+    }
 }

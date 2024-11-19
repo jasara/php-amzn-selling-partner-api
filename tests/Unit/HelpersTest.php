@@ -2,6 +2,9 @@
 
 namespace Jasara\AmznSPA\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\CoversFunction;
+
+#[CoversFunction('array_keys_to_snake')]
 class HelpersTest extends UnitTestCase
 {
     public function testArrayKeysToSnake()
