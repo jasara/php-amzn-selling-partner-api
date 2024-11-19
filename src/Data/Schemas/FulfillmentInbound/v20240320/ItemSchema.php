@@ -4,6 +4,7 @@ namespace Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320;
 
 use Carbon\CarbonImmutable;
 use Jasara\AmznSPA\Data\Base\Casts\CarbonFromStringCaster;
+use Jasara\AmznSPA\Data\Base\Mappers\CarbonToDateStringMapper;
 use Jasara\AmznSPA\Data\Base\Validators\RuleValidator;
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 
@@ -13,6 +14,7 @@ class ItemSchema extends BaseSchema
         #[RuleValidator(['min:1', 'max:10'])]
         public string $asin,
         #[CarbonFromStringCaster]
+        #[CarbonToDateStringMapper]
         public ?CarbonImmutable $expiration,
         #[RuleValidator(['min:1', 'max:10'])]
         public string $fnsku,
