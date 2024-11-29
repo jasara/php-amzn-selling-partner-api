@@ -10,7 +10,7 @@ class TaxCollectionSchema extends BaseSchema
     public function __construct(
         #[StringEnumValidator(['MarketplaceFacilitator'])]
         public ?string $model,
-        #[StringEnumValidator(['Amazon Services, Inc.'])]
+        #[StringEnumValidator(['Amazon Services, Inc.', ''])]
         public ?string $responsible_party,
     ) {
     }

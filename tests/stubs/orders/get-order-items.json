@@ -31,7 +31,11 @@
                 "SerialNumberRequired": false,
                 "IossNumber": "",
                 "DeemedResellerCategory": "IOSS",
-                "StoreChainStoreId": "ISPU_StoreId"
+                "StoreChainStoreId": "ISPU_StoreId",
+                "TaxCollection": {
+                    "Model": "MarketplaceFacilitator",
+                    "ResponsibleParty": ""
+                }
             }
         ]
     }
