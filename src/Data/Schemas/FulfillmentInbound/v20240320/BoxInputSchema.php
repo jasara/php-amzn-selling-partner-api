@@ -9,10 +9,8 @@ use Jasara\AmznSPA\Data\Schemas\WeightSchema;
 class BoxInputSchema extends BaseSchema
 {
     public function __construct(
-        #[RuleValidator(['min:1', 'max:1024'])]
-        public ?string $box_id,
         public BoxContentInformationSource $content_information_source,
-        public ItemInputSchemaList $items,
+        public ?ItemInputSchemaList $items,
         public DimensionsSchema $dimensions,
         #[RuleValidator(['integer', 'min:1', 'max:10000'])]
         public int $quantity,
