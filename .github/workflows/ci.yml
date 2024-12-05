@@ -6,12 +6,14 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
 
-    steps:           
+    steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
           php_version: "8.2"
+      - name: PHPStan Analysis
+        run: vendor/bin/phpstan analyse -c phpstan.neon
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         with:
