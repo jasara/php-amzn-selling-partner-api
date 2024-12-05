@@ -9,7 +9,6 @@ use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Traits\HasConfig;
 
 /**
- * @property Resources\AuthorizationResource $authorization
  * @property Resources\CatalogItems\CatalogItems20201201Resource $catalog_items
  * @property Resources\CatalogItems\CatalogItems20201201Resource $catalog_items20201201
  * @property Resources\CatalogItems\CatalogItems20220401Resource $catalog_items20220401
