@@ -19,7 +19,7 @@ class ItemSummaryByMarketplaceSchema extends BaseSchema
         public ?string $condition_type,
         public array $status,
         public ?string $fnsku,
-        public string $item_name,
+        public ?string $item_name,
         #[CarbonFromStringCaster]
         public CarbonImmutable $created_date,
         #[CarbonFromStringCaster]
