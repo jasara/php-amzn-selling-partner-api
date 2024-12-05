@@ -12,19 +12,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
+          coverage: pcov
       - name: Install PHP Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
       - name: PHPStan Analysis
         run: vendor/bin/phpstan analyse -c phpstan.neon
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@v3
-        with:
-          php_version: "8.2"
-          php_extensions: pcov
-          bootstrap: vendor/autoload.php
-          configuration: phpunit.xml
-          memory_limit: 1G
-          test_suffix: Test.php
+      - name: PHPUnit
+        run: phpunit --passthru-php="'-d' 'pcov.enabled=1' '-d' 'pcov.directory=.' '-d' 'pcov.exclude=~vendor~'"
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
