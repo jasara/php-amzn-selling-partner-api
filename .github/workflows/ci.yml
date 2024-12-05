@@ -8,10 +8,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
-        uses: php-actions/composer@v6
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: "8.2"
+          php-version: 8.2
+      - name: Install PHP Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
       - name: PHPStan Analysis
         run: vendor/bin/phpstan analyse -c phpstan.neon
       - name: PHPUnit Tests
