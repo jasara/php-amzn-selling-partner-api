@@ -46,6 +46,7 @@ class Marketplace
             'NA' => 'us-east-1',
             'EU' => 'eu-west-1',
             'FE' => 'us-west-2',
+            default => throw new \InvalidArgumentException('Invalid region'),
         };
     }
 
@@ -55,6 +56,7 @@ class Marketplace
             'NA' => 'https://sellingpartnerapi-na.amazon.com',
             'EU' => 'https://sellingpartnerapi-eu.amazon.com',
             'FE' => 'https://sellingpartnerapi-fe.amazon.com',
+            default => throw new \InvalidArgumentException('Invalid region'),
         };
     }
 }

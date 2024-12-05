@@ -14,7 +14,7 @@ class MoneySchemaTest extends UnitTestCase
     {
         $schema = new MoneySchema(
             currency_code: 'USD',
-            amount: 10,
+            amount: '10.00',
         );
 
         $this->assertInstanceOf(Money::class, $schema->asMoney());

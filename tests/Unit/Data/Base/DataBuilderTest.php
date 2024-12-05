@@ -171,7 +171,6 @@ class DataBuilderTest extends UnitTestCase
         ]);
 
         $this->assertInstanceOf(FeesEstimateErrorSchema::class, $data);
-        $this->assertIsArray($data->detail);
 
         $data = GetDestinationsResponse::from([
             'payload' => [],

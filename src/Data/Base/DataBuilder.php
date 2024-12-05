@@ -87,7 +87,11 @@ class DataBuilder
             throw new \InvalidArgumentException("Unsupported parameter union for: {$parameter->getName()}"); // @codeCoverageIgnore
         }
 
-        return self::getValueFromNamedType($parameter->getType()->getName(), $payload_value);
+        if (($type = $parameter->getType()) instanceof \ReflectionNamedType) {
+            return self::getValueFromNamedType($type->getName(), $payload_value);
+        }
+
+        return $payload_value;
     }
 
     private function getValueFromNamedType(
@@ -139,7 +143,7 @@ class DataBuilder
 
         $parameter = array_filter($parameters, fn ($parameter) => $parameter->getName() === $map_to_parameter)[0] ?? null;
 
-        if (! $parameter) {
+        if (! $parameter || ! $parameter->getType() instanceof \ReflectionNamedType) {
             throw new \InvalidArgumentException("Missing required parameter: {$map_to_parameter} for {$this->class}");
         }
 
@@ -151,7 +155,9 @@ class DataBuilder
         }
 
         return new $class(...[
-            $class::mapResponseToParameter() => (new self($parameter->getType()->getName(), $this->payload))->build(),
+            $class::mapResponseToParameter() => (
+                new self($parameter->getType()->getName(), $this->payload))
+                    ->build(),
         ]);
     }
 
@@ -191,10 +197,12 @@ class DataBuilder
             return false;
         }
 
-        $param_is_iterable = is_a($parameter->getType()->getName(), \Iterator::class, true) || is_a($parameter->getType()->getName(), \IteratorAggregate::class, true);
+        if ($parameter->getType() instanceof \ReflectionNamedType) {
+            $param_is_iterable = is_a($parameter->getType()->getName(), \Iterator::class, true) || is_a($parameter->getType()->getName(), \IteratorAggregate::class, true);
 
-        if (! $param_is_iterable) {
-            return true;
+            if (! $param_is_iterable) {
+                return true;
+            }
         }
 
         return false;

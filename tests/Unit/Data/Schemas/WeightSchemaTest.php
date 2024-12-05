@@ -13,7 +13,7 @@ class WeightSchemaTest extends UnitTestCase
     public function testAsUom()
     {
         $schema = new WeightSchema(
-            value: rand(1, 10),
+            value: (string) rand(1, 10),
             unit: 'pounds',
         );
 

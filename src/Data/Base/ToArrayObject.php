@@ -76,7 +76,7 @@ trait ToArrayObject
         return $value->map(function ($item) use ($case) {
             return match (true) {
                 $item instanceof TypedCollection => $item->toArrayObject(case: $case),
-                $item instanceof Collection => $item->toArrayObject(),
+                $item instanceof Collection => $item->toArray(),
                 $item instanceof Data => $item->toArrayObject(case: $case),
                 $item instanceof BackedEnum => $item->value,
                 default => $item,

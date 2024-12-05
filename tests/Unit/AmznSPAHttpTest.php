@@ -606,6 +606,7 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->expectExceptionMessage('Response class must extend BaseResponse');
 
         $http = new AmznSPAHttp($this->setupMinimalConfig());
+        // @phpstan-ignore-next-line
         $http->responseClass('stdClass');
     }
 

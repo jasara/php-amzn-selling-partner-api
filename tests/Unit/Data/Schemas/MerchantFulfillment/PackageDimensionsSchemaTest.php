@@ -13,9 +13,9 @@ class PackageDimensionsSchemaTest extends UnitTestCase
     public function testAsUom()
     {
         $schema = PackageDimensionsSchema::from(
-            length: rand(1, 10),
-            width: rand(1, 10),
-            height: rand(1, 10),
+            length: (string) rand(1, 10),
+            width: (string) rand(1, 10),
+            height: (string) rand(1, 10),
             unit: 'inches',
         );
 

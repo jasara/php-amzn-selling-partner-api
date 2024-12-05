@@ -37,7 +37,6 @@ use Jasara\AmznSPA\Traits\HasConfig;
 class AmznSPA
 {
     use HasConfig;
-    private ?string $version = null;
 
     public function __construct(AmznSPAConfig $config)
     {
@@ -54,7 +53,7 @@ class AmznSPA
             throw new InvalidResourceException($name . ' is not a supported resource.');
         }
 
-        return $resource_getter->{$function}($this->version);
+        return $resource_getter->{$function}();
     }
 
     public function usingMarketplace(string $marketplace_id): self

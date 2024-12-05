@@ -112,7 +112,7 @@ class AmznSPAConfig
         return $this->application_keys;
     }
 
-    public function getRedirectUrl(): string
+    public function getRedirectUrl(): ?string
     {
         return $this->redirect_url;
     }
@@ -212,6 +212,6 @@ class AmznSPAConfig
 
     public function isPropertySet(string $property): bool
     {
-        return isset($this->$property) && ! is_null($this->$property);
+        return isset($this->$property);
     }
 }

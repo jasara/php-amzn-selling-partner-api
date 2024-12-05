@@ -15,7 +15,16 @@ class TypedCollection extends Collection
 {
     public const ITEM_CLASS = 'defined_by_child_class';
 
-    public function __construct(
+    /**
+     * @inheritDoc
+     * @return static
+     */
+    public static function make($items = []): static
+    {
+        return new static($items);
+    }
+
+    final public function __construct(
         object|array ...$items,
     ) {
         if (! class_exists(static::ITEM_CLASS)) {

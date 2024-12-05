@@ -127,7 +127,7 @@ class ValidatesParametersTest extends UnitTestCase
 
     public function testValidatesStringEnumInvalidEnumClassPassed()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('Only enum classes are allowed as string values for allowed_values.');
 
         $stub = new ResourceStub();
@@ -188,6 +188,7 @@ class ResourceStub
 
     public function passInvalidEnumClassToStringEnumValidator(): void
     {
+        // @phpstan-ignore-next-line
         $this->validateStringEnum('notvalid', ' notanenum');
     }
 }

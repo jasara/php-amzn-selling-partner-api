@@ -18,6 +18,7 @@ class AmznSPATest extends UnitTestCase
         $this->expectException(InvalidResourceException::class);
 
         $amzn = new AmznSPA($this->setupMinimalConfig());
+        // @phpstan-ignore-next-line
         $amzn->not_a_resource;
     }
 

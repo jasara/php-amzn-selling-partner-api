@@ -35,7 +35,6 @@ class AmznSPAHttp
 {
     use ValidatesParameters;
     private PendingRequest $http;
-    private ?Request $request = null;
     private bool $retried = false;
     private array $restricted_data_elements = [];
     private bool $use_restricted_data_token = false;
@@ -50,11 +49,11 @@ class AmznSPAHttp
     }
 
     /**
-     * @template TResponse of BaseResponse
+     * @template TSetResponse of BaseResponse
      *
-     * @param class-string<TResponse> $response_class
+     * @param class-string<TSetResponse> $response_class
      *
-     * @return AmznSpaHttp<TResponse>
+     * @return self<TSetResponse>
      */
     public function responseClass(
         string $response_class,
@@ -184,7 +183,7 @@ class AmznSPAHttp
 
             $this->callResponseCallback($response);
 
-            return $this->handleResponse($response, $method, $url);
+            return $this->handleResponse($response);
         } catch (RequestException $e) {
             $this->callResponseCallback($e->response);
 
@@ -193,7 +192,7 @@ class AmznSPAHttp
                     throw new GrantlessAuthenticationException($e->response);
                 }
 
-                throw new AuthenticationException($e->response, $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null);
+                throw new AuthenticationException($e->response, $this->config->getAuthenticationExceptionCallback());
             }
 
             if ($e->response->status() === 429) {
@@ -201,7 +200,7 @@ class AmznSPAHttp
             }
 
             if ($this->shouldReturnErrorResponse($e)) {
-                return $this->handleResponse($e->response, $method, $url);
+                return $this->handleResponse($e->response);
             }
 
             $this->handleRequestException($e, $grantless);
@@ -427,9 +426,9 @@ class AmznSPAHttp
 
     private function callResponseCallback(Response $response): void
     {
-        if ($this->config->isPropertySet('response_callback')) {
-            $callback = $this->config->getResponseCallback();
+        $callback = $this->config->getResponseCallback();
 
+        if ($callback) {
             $callback($response);
         }
     }
@@ -539,6 +538,8 @@ class AmznSPAHttp
             } catch (InvalidArgumentException $e) {
                 if (str_contains($e->getMessage(), 'Missing required parameter') && array_key_exists('errors', $response_array)) {
                     $mapped_response = new ErrorListResponse;
+                } else {
+                    throw $e;
                 }
             }
 

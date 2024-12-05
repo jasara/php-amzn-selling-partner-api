@@ -23,11 +23,11 @@ class ResourceGetter
         return new LwaResource(
             $this->config->getHttp(),
             $this->config->getMarketplace(),
-            $this->config->isPropertySet('redirect_url') ? $this->config->getRedirectUrl() : null,
+            $this->config->getRedirectUrl(),
             $this->config->getApplicationKeys(),
-            $this->config->isPropertySet('save_lwa_tokens_callback') ? $this->config->getSaveLwaTokensCallback() : null,
-            $this->config->isPropertySet('authentication_exception_callback') ? $this->config->getAuthenticationExceptionCallback() : null,
-            $this->config->isPropertySet('response_callback') ? $this->config->getResponseCallback() : null,
+            $this->config->getSaveLwaTokensCallback(),
+            $this->config->getAuthenticationExceptionCallback(),
+            $this->config->getResponseCallback(),
         );
     }
 

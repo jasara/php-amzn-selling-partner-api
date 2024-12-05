@@ -1,0 +1,12 @@
+includes:
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+  level: 5
+  paths:
+    - src
+    - tests
+  ignoreErrors:
+    - '#should return .+ but returns Jasara\\AmznSPA\\Contracts\\ResourceContract#'
+    - '#Parameter \#1 \$value of class PhpUnitsOfMeasure\\PhysicalQuantity\\.+ constructor expects float, string given#'

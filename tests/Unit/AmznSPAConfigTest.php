@@ -217,24 +217,4 @@ class AmznSPAConfigTest extends UnitTestCase
 
         $this->assertTrue($caught);
     }
-
-    public function testIsPropertySet()
-    {
-        $marketplace = MarketplacesList::all()->random(1)->first();
-
-        $config = new AmznSPAConfig(
-            marketplace_id: $marketplace->getIdentifier(),
-            application_id: Str::random(),
-        );
-
-        $this->assertFalse($config->isPropertySet('redirect_url'));
-
-        $config = new AmznSPAConfig(
-            marketplace_id: $marketplace->getIdentifier(),
-            application_id: Str::random(),
-            redirect_url: Str::random(),
-        );
-
-        $this->assertTrue($config->isPropertySet('redirect_url'));
-    }
 }

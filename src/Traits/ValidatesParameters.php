@@ -33,7 +33,7 @@ trait ValidatesParameters
     private function validateObjectProperties(object $object_to_validate, array $required_properties): void
     {
         foreach ($required_properties as $property) {
-            if (! isset($object_to_validate->$property) || is_null($object_to_validate->$property)) {
+            if (! isset($object_to_validate->$property)) {
                 throw new InvalidParametersException(Str::of($property)->replace('_', ' ')->title() . ' is not set.');
             }
         }
@@ -48,6 +48,9 @@ trait ValidatesParameters
         }
     }
 
+    /**
+     * @param class-string<\BackedEnum>|string[] $allowed_values
+     */
     private function validateStringEnum(string $string, string|array $allowed_values): void
     {
         if (is_string($allowed_values)) {
