@@ -18,7 +18,7 @@ jobs:
       - name: PHPStan Analysis
         run: vendor/bin/phpstan analyse -c phpstan.neon
       - name: PHPUnit
-        run: phpunit --passthru-php="'-d' 'pcov.enabled=1' '-d' 'pcov.directory=.' '-d' 'pcov.exclude=~vendor~'"
+        run: vendor/bin/phpunit --passthru-php="'-d' 'pcov.enabled=1' '-d' 'pcov.directory=.' '-d' 'pcov.exclude=~vendor~'"
       - name: Archive code coverage results
         uses: actions/upload-artifact@v4
         with:
