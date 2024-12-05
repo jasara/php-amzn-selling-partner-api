@@ -2,7 +2,6 @@
 
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
-use Jasara\AmznSPA\Resources\AuthorizationResource;
 use Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20201201Resource;
 use Jasara\AmznSPA\Resources\CatalogItems\CatalogItems20220401Resource;
 use Jasara\AmznSPA\Resources\FbaInboundEligibilityResource;
@@ -32,7 +31,6 @@ use PHPUnit\Framework\Attributes\TestWith;
 #[CoversClass(ResourceGetter::class)]
 class ResourceGetterTest extends UnitTestCase
 {
-    #[TestWith(['getAuthorization', AuthorizationResource::class])]
     #[TestWith(['getCatalogItems', CatalogItems20201201Resource::class])]
     #[TestWith(['getCatalogItems20201201', CatalogItems20201201Resource::class])]
     #[TestWith(['getCatalogItems20220401', CatalogItems20220401Resource::class])]

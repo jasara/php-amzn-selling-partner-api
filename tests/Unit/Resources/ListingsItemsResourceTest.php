@@ -158,7 +158,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('DELETE', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', $request->url());
 
             return true;
         });

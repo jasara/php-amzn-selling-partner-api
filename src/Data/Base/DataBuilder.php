@@ -87,11 +87,13 @@ class DataBuilder
             throw new \InvalidArgumentException("Unsupported parameter union for: {$parameter->getName()}"); // @codeCoverageIgnore
         }
 
+        $value = $payload_value;
+
         if (($type = $parameter->getType()) instanceof \ReflectionNamedType) {
-            return self::getValueFromNamedType($type->getName(), $payload_value);
+            $value = self::getValueFromNamedType($type->getName(), $payload_value);
         }
 
-        return $payload_value;
+        return $value;
     }
 
     private function getValueFromNamedType(

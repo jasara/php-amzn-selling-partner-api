@@ -31,11 +31,6 @@ class ResourceGetter
         );
     }
 
-    public function getAuthorization(): AuthorizationResource
-    {
-        return $this->constructResource(AuthorizationResource::class, 'migration');
-    }
-
     public function getNotifications(): NotificationsResource
     {
         return $this->constructResource(NotificationsResource::class, 'notifications');

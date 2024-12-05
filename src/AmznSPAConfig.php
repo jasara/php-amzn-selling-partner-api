@@ -209,9 +209,4 @@ class AmznSPAConfig
 
         $this->marketplace = MarketplacesList::getMarketplaceById($marketplace_id);
     }
-
-    public function isPropertySet(string $property): bool
-    {
-        return isset($this->$property);
-    }
 }

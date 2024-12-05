@@ -16,8 +16,10 @@ class JasaraNotes
     {
         $error_message = json_decode('"' . $error_message . '"'); // Decode Unicode
 
-        if (array_key_exists($error_message, self::NOTES_MAP)) {
-            return self::NOTES_MAP[$error_message];
+        foreach (self::NOTES_MAP as $key => $note) {
+            if (str_contains($error_message, $key)) {
+                return $note;
+            }
         }
 
         return null;

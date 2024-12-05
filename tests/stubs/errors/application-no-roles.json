@@ -1,9 +1,0 @@
-{
-    "errors": [
-        {
-            "code": "InvalidInput",
-            "message": "The application isn\\u0027t configured with roles.",
-            "details": ""
-        }
-    ]
-}

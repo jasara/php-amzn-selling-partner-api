@@ -7,6 +7,7 @@ use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\AmznSPAConfig;
 use Jasara\AmznSPA\AmznSPAHttp;
@@ -16,9 +17,9 @@ use Jasara\AmznSPA\Data\GrantlessToken;
 use Jasara\AmznSPA\Data\Proxy;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Responses\BaseResponse;
+use Jasara\AmznSPA\Data\Responses\CatalogItems\v20220401\GetCatalogItemResponse;
 use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\CreateInboundShipmentPlanResponse;
-use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetAuthorizationCodeResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
@@ -36,6 +37,7 @@ use PHPUnit\Framework\Attributes\Group;
 
 #[CoversClass(AmznSPAHttp::class)]
 #[CoversClass(AuthenticationException::class)]
+#[CoversClass(GrantlessAuthenticationException::class)]
 #[CoversClass(HttpLoggerMiddleware::class)]
 class AmznSPAHttpTest extends UnitTestCase
 {
@@ -350,21 +352,16 @@ class AmznSPAHttpTest extends UnitTestCase
 
     public function testMetadata()
     {
-        [$config, $http] = $this->setupConfigWithFakeHttp('errors/application-no-roles');
-
-        $seller_id = Str::random();
-        $developer_id = Str::random();
-        $mws_auth_token = Str::random();
+        [$config, $http] = $this->setupConfigWithFakeHttp('errors/invalid-party-id');
 
         $amzn = new AmznSPA($config);
-        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->authorization->getAuthorizationCodeFromMwsToken($seller_id, $developer_id, $mws_auth_token);
+        $response = $amzn->catalog_items20220401->getCatalogItem('ASIN', ['ATVPDKIKX0DER']);
 
-        $this->assertInstanceOf(GetAuthorizationCodeResponse::class, $response);
+        $this->assertInstanceOf(GetCatalogItemResponse::class, $response);
         $this->assertNotNull($response->metadata);
         $this->assertNotNull($response->metadata->amzn_request_id);
         $this->assertNotNull($response->metadata->jasara_notes);
-        $this->assertStringContainsString('approved but not published yet', $response->metadata->jasara_notes);
+        $this->assertStringContainsString('The Seller ID for this Seller is not valid.', $response->metadata->jasara_notes);
     }
 
     public function testDelete()
@@ -629,5 +626,15 @@ class AmznSPAHttpTest extends UnitTestCase
 
         $this->assertInstanceOf(ErrorListResponse::class, $response);
         $this->assertEquals($response->errors[0]->message, 'Access to requested resource is denied.');
+    }
+
+    public function testThrowsInvalidArgumentExceptionIfResponseHasErrorsInDifferentFormat()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        [$config] = $this->setupConfigWithFakeHttp('errors/invalid-client');
+
+        $amzn = new AmznSPA($config);
+        $amzn->fulfillment_inbound20240320->listPrepDetails('ATVPDKIKX0DER', ['msku1']);
     }
 }
