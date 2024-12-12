@@ -4,6 +4,7 @@ namespace Jasara\AmznSPA\Data\Base\Validators;
 
 use Attribute;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
@@ -35,7 +36,7 @@ class RuleValidator implements Contract
         ]);
 
         if ($validator->fails()) {
-            throw new DataValidationException('Invalid value: ' . $value . ', errors: ' . implode(',', $validator->errors()->get('value')));
+            throw new DataValidationException('Invalid value: ' . Str::limit(var_export($value, true), 50) . ', errors: ' . implode(',', $validator->errors()->get('value')));
         }
     }
 }
