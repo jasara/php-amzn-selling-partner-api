@@ -756,7 +756,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
 
         $response = $this->http
             ->responseClass(UpdateShipmentTrackingDetailsResponse::class)
-            ->post(
+            ->put(
                 $this->endpoint . self::BASE_PATH . 'inboundPlans/' . $inbound_plan_id
                     . '/shipments/' . $shipment_id
                     . '/trackingDetails',

@@ -605,7 +605,7 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         $this->assertEquals('1234abcd-1234-abcd-5678-1234abcd5609', $response->operation_id);
 
         $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
-            $this->assertEquals('POST', $request->method());
+            $this->assertEquals('PUT', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/inbound/fba/2024-03-20/inboundPlans/' . $inbound_plan_id . '/shipments/' . $shipment_id . '/trackingDetails', $request->url());
 
             return true;
