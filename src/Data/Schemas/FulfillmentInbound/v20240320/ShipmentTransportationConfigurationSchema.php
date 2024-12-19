@@ -10,7 +10,7 @@ class ShipmentTransportationConfigurationSchema extends BaseSchema
     public function __construct(
         public ?ContactInformationSchema $contact_information,
         public ?FreightInformationSchema $freight_information,
-        public ?PalletInputSchemaList $pallet_information,
+        public ?PalletInputSchemaList $pallets,
         public WindowInputSchema $ready_to_ship_window,
         #[RuleValidator(['size:38'])]
         public string $shipment_id,
