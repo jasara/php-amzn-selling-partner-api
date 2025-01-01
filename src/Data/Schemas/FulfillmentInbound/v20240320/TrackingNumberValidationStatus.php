@@ -6,4 +6,5 @@ enum TrackingNumberValidationStatus: string
 {
     case Validated = 'VALIDATED';
     case NotValidated = 'NOT_VALIDATED';
+    case NotSupported = 'NOT_SUPPORTED';
 }
