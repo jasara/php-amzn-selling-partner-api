@@ -132,7 +132,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function listInboundPlanBoxes(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-        #[RuleValidator(['integer', 'min:1', 'max:30'])]
+        #[RuleValidator(['integer', 'min:1', 'max:1000'])]
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
@@ -165,7 +165,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function listInboundPlanItems(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-        #[RuleValidator(['integer', 'min:1', 'max:30'])]
+        #[RuleValidator(['integer', 'min:1', 'max:1000'])]
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
@@ -470,7 +470,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function listPackingOptions(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-        #[RuleValidator(['integer', 'min:1', 'max:30'])]
+        #[RuleValidator(['integer', 'min:1', 'max:20'])]
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
@@ -564,7 +564,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function listPlacementOptions(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-        #[RuleValidator(['integer', 'min:1', 'max:1000'])]
+        #[RuleValidator(['integer', 'min:1', 'max:20'])]
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
@@ -769,7 +769,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     public function listTransportationOptions(
         #[RuleValidator(['size:38'])]
         string $inbound_plan_id,
-        #[RuleValidator(['integer', 'min:1', 'max:100'])]
+        #[RuleValidator(['integer', 'min:1', 'max:20'])]
         ?int $page_size = null,
         #[RuleValidator(['min:0', 'max:1024'])]
         ?string $pagination_token = null,
