@@ -62,30 +62,35 @@ class HttpLoggerMiddleware
 
     private function cleanData(array $data): array
     {
-        $filtered_keys = [
-            'x-amz-access-token' => '[filtered]',
-            'mwsAuthToken' => '[filtered]',
-            'authorizationCode' => '[filtered]',
-            'restrictedDataToken' => '[filtered]',
-            'access_token' => '[filtered]',
-            'refresh_token' => '[filtered]',
-            'BuyerEmail' => '[filtered]',
-            'BuyerName' => '[filtered]',
-            'BuyerCounty' => '[filtered]',
-            'BuyerTaxInfo' => '[filtered]',
-            'AddressLine1' => '[filtered]',
-            'AddressLine2' => '[filtered]',
-            'Phone' => '[filtered]',
-        ];
-
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $data[$key] = $this->cleanData($value);
             }
+
+            if ($this->shouldFilterKey($key)) {
+                $data[$key] = '[filtered]';
+            }
         }
 
-        $filtered_data = array_intersect_key($filtered_keys, $data) + $data;
+        return $data;
+    }
 
-        return $filtered_data;
+    private function shouldFilterKey(string $key): bool
+    {
+        $key = strtolower($key);
+
+        $filtered_keys = ['authorizationcode', 'buyeremail', 'buyername', 'buyercounty', 'buyertaxinfo', 'addressline1', 'addressline2', 'phone'];
+
+        if (str_contains($key, 'secret')) {
+            return true;
+        }
+        if (str_contains($key, 'token')) {
+            return true;
+        }
+        if (in_array($key, $filtered_keys)) {
+            return true;
+        }
+
+        return false;
     }
 }
