@@ -18,6 +18,14 @@ class WeightSchema extends BaseSchema
 
     public function asMass(): Mass
     {
+        if($this->unit === 'KG') {
+            $this->unit = 'kg';
+        }
+
+        if($this->unit === 'LB') {
+            $this->unit = 'lb';
+        }
+
         return new Mass($this->value, $this->unit);
     }
 }
