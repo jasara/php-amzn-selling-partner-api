@@ -22,6 +22,11 @@ class WeightSchema extends BaseSchema
             $this->unit = 'kg';
         }
 
+        if($this->unit === 'g') {
+            $this->unit = 'kg';
+            $this->value = $this->value / 1000;
+        }
+
         if($this->unit === 'LB') {
             $this->unit = 'lb';
         }
