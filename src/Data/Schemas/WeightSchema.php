@@ -18,8 +18,6 @@ class WeightSchema extends BaseSchema
 
     public function asMass(): Mass
     {
-        $this->unit = strtolower($this->unit);
-
-        return new Mass($this->value, $this->unit);
+        return new Mass($this->value, strtolower($this->unit));
     }
 }
