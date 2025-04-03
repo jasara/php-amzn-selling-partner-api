@@ -34,10 +34,6 @@ class DataBuilder
     {
         $reflection = new \ReflectionClass($this->class);
         $constructor = $reflection->getConstructor();
-        if (is_null($constructor)) {
-            return new $this->class();
-        }
-
         $parameters = $constructor->getParameters();
 
         if (is_a($this->class, IsFlatResponse::class, true)) {
