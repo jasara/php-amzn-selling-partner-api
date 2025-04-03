@@ -9,6 +9,10 @@ class Data implements Arrayable
     use ToArrayObject;
     use ToArray;
 
+    public function __construct()
+    {
+    }
+
     public static function from(mixed ...$payload): static
     {
         if (count($payload) && func_num_args() !== 0) {
