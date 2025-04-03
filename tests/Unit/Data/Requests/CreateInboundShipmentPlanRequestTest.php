@@ -8,7 +8,6 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\CreateInboundShipmentPlanReq
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(CreateInboundShipmentPlanRequest::class)]
 #[CoversClass(MaxLengthValidator::class)]
 class CreateInboundShipmentPlanRequestTest extends UnitTestCase
 {

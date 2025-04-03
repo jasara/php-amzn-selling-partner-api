@@ -10,7 +10,7 @@ use Jasara\AmznSPA\Constants\JasaraNotes;
 
 class AuthenticationException extends AmznSPAException
 {
-    public function __construct(Response $response = null, ?Closure $callback = null)
+    public function __construct(?Response $response = null, ?Closure $callback = null)
     {
         $message = $response ? $this->getMessageFromResponse($response) : '';
 

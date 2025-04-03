@@ -3,18 +3,14 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Responses\Notifications;
 
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\Data\Responses\BaseResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\GetSubscriptionResponse;
 use Jasara\AmznSPA\Data\Schemas\ErrorListSchema;
 use Jasara\AmznSPA\Data\Schemas\ErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\SubscriptionSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(BaseResponse::class)]
-#[CoversClass(GetSubscriptionResponse::class)]
-#[CoversClass(ErrorListSchema::class)]
-#[CoversClass(ErrorSchema::class)]
+#[CoversNothing]
 class GetSubscriptionResponseTest extends UnitTestCase
 {
     public function testSetupClass()

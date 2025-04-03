@@ -9,7 +9,6 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentItemSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(InboundShipmentItemSchema::class)]
 #[CoversClass(CarbonFromStringCaster::class)]
 class InboundShipmentItemSchemaTest extends UnitTestCase
 {

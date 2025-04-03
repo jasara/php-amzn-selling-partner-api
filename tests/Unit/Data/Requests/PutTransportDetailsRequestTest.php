@@ -7,9 +7,9 @@ use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\PutTransportDetailsRequest;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\TransportDetailInputSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(PutTransportDetailsRequest::class)]
+#[CoversNothing]
 class PutTransportDetailsRequestTest extends UnitTestCase
 {
     public function testReadyDate(): void

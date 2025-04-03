@@ -10,7 +10,7 @@ use Jasara\AmznSPA\Data\Proxy;
 
 trait SetupAmznSPAConfig
 {
-    public function setupMinimalConfig(string $marketplace_id = null, Factory $http = null): AmznSPAConfig
+    public function setupMinimalConfig(?string $marketplace_id = null, ?Factory $http = null): AmznSPAConfig
     {
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],
@@ -34,8 +34,8 @@ trait SetupAmznSPAConfig
 
     public function setupMinimalProxyConfig(
         Proxy $proxy,
-        string $marketplace_id = null,
-        Factory $http = null,
+        ?string $marketplace_id = null,
+        ?Factory $http = null,
     ): AmznSPAConfig {
         $config = new AmznSPAConfig(
             marketplace_id: $marketplace_id ?: MarketplacesList::allIdentifiers()[rand(0, 15)],

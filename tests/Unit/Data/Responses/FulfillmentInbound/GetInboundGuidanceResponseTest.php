@@ -5,9 +5,9 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Responses\FulfillmentInbound;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\GetInboundGuidanceResponse;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\GetInboundGuidanceResultSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(GetInboundGuidanceResponse::class)]
+#[CoversNothing]
 class GetInboundGuidanceResponseTest extends UnitTestCase
 {
     public function testSetupDtoSuccess()

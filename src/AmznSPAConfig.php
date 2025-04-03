@@ -54,7 +54,7 @@ class AmznSPAConfig
     ) {
         $this->validateStringEnum($marketplace_id, MarketplacesList::allIdentifiers());
 
-        $this->http = (new Factory())->connectTimeout(10);
+        $this->http = (new Factory())->createPendingRequest()->connectTimeout(10);
         $this->tokens = new AuthTokens(
             refresh_token: $lwa_refresh_token,
             access_token: $lwa_access_token,
@@ -155,7 +155,7 @@ class AmznSPAConfig
     public function setHttp(Factory|PendingRequest $http): void
     {
         if ($http instanceof Factory) {
-            $this->http = $http->connectTimeout(30);
+            $this->http = $http->createPendingRequest()->connectTimeout(30);
 
             return;
         }

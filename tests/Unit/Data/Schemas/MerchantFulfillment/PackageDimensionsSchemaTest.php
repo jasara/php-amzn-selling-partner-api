@@ -4,10 +4,10 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas;
 
 use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\PackageDimensionsSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PhpUnitsOfMeasure\PhysicalQuantity\Length;
 
-#[CoversClass(PackageDimensionsSchema::class)]
+#[CoversNothing]
 class PackageDimensionsSchemaTest extends UnitTestCase
 {
     public function testAsUom()

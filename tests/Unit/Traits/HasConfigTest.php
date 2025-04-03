@@ -9,9 +9,9 @@ use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Data\AuthTokens;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversTrait;
 
-#[CoversClass(\Jasara\AmznSPA\Traits\HasConfig::class)]
+#[CoversTrait(\Jasara\AmznSPA\Traits\HasConfig::class)]
 class HasConfigTest extends UnitTestCase
 {
     public function testGetAccessTokenNotSetException()

@@ -27,7 +27,6 @@ use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 #[CoversClass(\Jasara\AmznSPA\Resources\FulfillmentOutboundResource::class)]
-#[CoversClass(\Jasara\AmznSPA\Data\Requests\BaseRequest::class)]
 class FulfillmentOutboundResourceTest extends UnitTestCase
 {
     public function testGetFulfillmentPreview()

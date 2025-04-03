@@ -15,6 +15,7 @@ use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributeSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\TestWith;
 
 #[CoversClass(\Jasara\AmznSPA\Resources\ListingsItemsResource::class)]
 class ListingsItemsResourceTest extends UnitTestCase
@@ -197,9 +198,7 @@ class ListingsItemsResourceTest extends UnitTestCase
         });
     }
 
-    /**
-     * @testWith ["amzn.gr.CW - #4 Brown-5gI2bvgCaM-7Cz8-VG"]
-     */
+    #[TestWith(['amzn.gr.CW - #4 Brown-5gI2bvgCaM-7Cz8-VG'])]
     public function testGetListingsItemSkuIssues(string $sku): void
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/get-listings-item');

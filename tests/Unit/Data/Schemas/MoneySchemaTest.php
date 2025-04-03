@@ -5,9 +5,9 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas;
 use Brick\Money\Money;
 use Jasara\AmznSPA\Data\Schemas\MoneySchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(MoneySchema::class)]
+#[CoversNothing]
 class MoneySchemaTest extends UnitTestCase
 {
     public function testAsMoney()

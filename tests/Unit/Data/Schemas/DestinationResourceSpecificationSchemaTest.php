@@ -3,14 +3,13 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas;
 
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\EventBridgeResourceSpecificationSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(BaseRequest::class)]
+#[CoversNothing]
 class DestinationResourceSpecificationSchemaTest extends UnitTestCase
 {
     public function testToArray()

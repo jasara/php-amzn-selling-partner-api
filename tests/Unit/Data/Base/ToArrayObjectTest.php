@@ -10,9 +10,9 @@ use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\PartneredLtlDataInputSchem
 use Jasara\AmznSPA\Data\Schemas\MerchantFulfillment\AdditionalSellerInputSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversTrait;
 
-#[CoversClass(ToArrayObject::class)]
+#[CoversTrait(ToArrayObject::class)]
 class ToArrayObjectTest extends UnitTestCase
 {
     public function testReturnsDataUsingMappers(): void

@@ -4,10 +4,10 @@ namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas;
 
 use Jasara\AmznSPA\Data\Schemas\WeightSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
 
-#[CoversClass(WeightSchema::class)]
+#[CoversNothing]
 class WeightSchemaTest extends UnitTestCase
 {
     public function testAsUom()

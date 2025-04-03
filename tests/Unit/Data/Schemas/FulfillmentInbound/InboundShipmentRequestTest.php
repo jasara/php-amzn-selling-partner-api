@@ -3,12 +3,11 @@
 namespace Jasara\AmznSPA\Tests\Unit\Data\Schemas\FulfillmentInbound;
 
 use Illuminate\Support\Str;
-use Jasara\AmznSPA\Data\Requests\BaseRequest;
 use Jasara\AmznSPA\Data\Requests\FulfillmentInbound\InboundShipmentRequest;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(BaseRequest::class)]
+#[CoversNothing]
 class InboundShipmentRequestTest extends UnitTestCase
 {
     public function testToArrayObject()

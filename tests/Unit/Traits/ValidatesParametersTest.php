@@ -14,9 +14,9 @@ use Jasara\AmznSPA\Resources\LwaResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversTrait;
 
-#[CoversClass(ValidatesParameters::class)]
+#[CoversTrait(ValidatesParameters::class)]
 class ValidatesParametersTest extends UnitTestCase
 {
     public function testRequiredParametersInObjectException()

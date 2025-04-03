@@ -9,9 +9,9 @@ use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\EventBridgeResourceSchema;
 use Jasara\AmznSPA\Data\Schemas\Notifications\SqsResourceSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(CreateDestinationResponse::class)]
+#[CoversNothing]
 class CreateDestinationResponseTest extends UnitTestCase
 {
     public function testSetupClass()

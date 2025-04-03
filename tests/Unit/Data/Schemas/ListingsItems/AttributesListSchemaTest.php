@@ -7,9 +7,9 @@ use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertySchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributeSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributesListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-#[CoversClass(AttributesListSchema::class)]
+#[CoversNothing]
 class AttributesListSchemaTest extends UnitTestCase
 {
     public function testReturnsArrayObject(): void
