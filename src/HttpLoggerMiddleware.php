@@ -53,6 +53,10 @@ class HttpLoggerMiddleware
         }
 
         $params = array_filter($params);
+        foreach ($params as $key => $param) {
+            $params['query_param_' . $key] = $param;
+            unset($params[$key]);
+        }
 
         return
             $this->cleanData(
