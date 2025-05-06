@@ -56,9 +56,6 @@ class ListingsItemsResource implements ResourceContract
     ): ListingsItemSubmissionResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
 
-        $request_array = (array) $request->toArrayObject();
-        $request_array['attributes'] = $request->attributes->toArrayObject();
-
         $response = $this->http
             ->responseClass(ListingsItemSubmissionResponse::class)
             ->put(
@@ -68,7 +65,7 @@ class ListingsItemsResource implements ResourceContract
                         'issueLocale' => $issue_locale,
                     ])
                 ),
-                $request_array,
+                deep_array_conversion($request->toArrayObject()),
             );
 
         return $response;
@@ -112,7 +109,7 @@ class ListingsItemsResource implements ResourceContract
                         'issueLocale' => $issue_locale,
                     ])
                 ),
-                (array) $request->toArrayObject()
+                deep_array_conversion($request->toArrayObject()),
             );
 
         return $response;

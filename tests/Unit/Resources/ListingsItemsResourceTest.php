@@ -193,6 +193,7 @@ class ListingsItemsResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($seller_id, $sku) {
             $this->assertEquals('PATCH', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+            $this->assertIsArray($request->data()['patches']);
 
             return true;
         });

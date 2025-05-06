@@ -67,7 +67,10 @@ class FeedsResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateFeedResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'feeds', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'feeds',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -94,7 +97,10 @@ class FeedsResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateFeedDocumentResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'documents', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'documents',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

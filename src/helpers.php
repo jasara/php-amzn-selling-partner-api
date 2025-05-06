@@ -3,7 +3,7 @@
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-if (!function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
+if (! function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
     function array_keys_to_snake(array $array): array
     {
         $snakecased_array = [];
@@ -29,5 +29,22 @@ if (!function_exists('array_keys_to_snake')) { // @codeCoverageIgnore
         }
 
         return $snakecased_array;
+    }
+}
+
+if (! function_exists('deep_array_conversion')) { // @codeCoverageIgnore
+    function deep_array_conversion(mixed $array_object)
+    {
+        if (is_object($array_object)) {
+            $array_object = (array) $array_object;
+        }
+
+        if (is_array($array_object)) {
+            foreach ($array_object as $key => $value) {
+                $array_object[$key] = deep_array_conversion($value);
+            }
+        }
+
+        return $array_object;
     }
 }

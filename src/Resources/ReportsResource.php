@@ -69,7 +69,10 @@ class ReportsResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateReportResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'reports', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'reports',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -107,7 +110,10 @@ class ReportsResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateReportScheduleResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'schedules', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'schedules',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

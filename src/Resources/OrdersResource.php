@@ -136,7 +136,10 @@ class OrdersResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(BaseResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/shipment', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/shipment',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

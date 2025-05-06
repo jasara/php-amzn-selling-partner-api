@@ -40,7 +40,10 @@ class FulfillmentOutboundResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetFulfillmentPreviewResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/preview', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'fulfillmentOrders/preview',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -61,7 +64,10 @@ class FulfillmentOutboundResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateFulfillmentOrderResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'fulfillmentOrders', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'fulfillmentOrders',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -94,7 +100,10 @@ class FulfillmentOutboundResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateFulfillmentReturnResponse::class)
-            ->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return', (array) $request->toArrayObject());
+            ->put(
+                $this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id . '/return',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -112,7 +121,10 @@ class FulfillmentOutboundResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(UpdateFulfillmentOrderResponse::class)
-            ->put($this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id, (array) $request->toArrayObject());
+            ->put(
+                $this->endpoint . self::BASE_PATH . 'fulfillmentOrders/' . $seller_fulfillment_order_id,
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

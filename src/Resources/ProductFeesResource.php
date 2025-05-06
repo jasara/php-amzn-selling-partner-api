@@ -24,7 +24,10 @@ class ProductFeesResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetMyFeesEstimateResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/feesEstimate', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'listings/' . $seller_sku . '/feesEstimate',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -33,7 +36,10 @@ class ProductFeesResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetMyFeesEstimateResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'items/' . $asin . '/feesEstimate', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'items/' . $asin . '/feesEstimate',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

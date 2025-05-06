@@ -111,7 +111,10 @@ class FulfillmentInbound20240320Resource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateInboundPlanResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'inboundPlans', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'inboundPlans',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

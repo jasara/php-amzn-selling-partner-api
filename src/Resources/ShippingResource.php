@@ -36,7 +36,10 @@ class ShippingResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateShipmentResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'shipments', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'shipments',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -63,7 +66,10 @@ class ShippingResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(PurchaseLabelsResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/purchaseLabels', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/purchaseLabels',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -72,7 +78,10 @@ class ShippingResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(RetrieveShippingLabelResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/containers/' . $tracking_id . '/label', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/containers/' . $tracking_id . '/label',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -81,7 +90,10 @@ class ShippingResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(PurchaseShipmentResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'purchaseShipment', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'purchaseShipment',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -90,7 +102,10 @@ class ShippingResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetRatesResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'rates', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'rates',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

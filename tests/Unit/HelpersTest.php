@@ -2,9 +2,11 @@
 
 namespace Jasara\AmznSPA\Tests\Unit;
 
+use ArrayObject;
 use PHPUnit\Framework\Attributes\CoversFunction;
 
 #[CoversFunction('array_keys_to_snake')]
+#[CoversFunction('deep_array_conversion')]
 class HelpersTest extends UnitTestCase
 {
     public function testArrayKeysToSnake()
@@ -49,5 +51,26 @@ class HelpersTest extends UnitTestCase
         $this->assertArrayHasKey('test_collection', $array['test_camel']['test_deep_array_with_objects'][0]);
         $this->assertArrayHasKey('collection_property', $array['test_camel']['test_deep_array_with_objects'][0]['test_collection']);
         $this->assertArrayHasKey('deep_object_2', $array['test_camel']['test_deep_array_with_objects'][1]);
+    }
+
+    public function testDeepArrayConversion():void
+    {
+        $source = new ArrayObject([
+            'level1' => '1',
+            'level2' => new ArrayObject([
+                'level3' => '3',
+                'level4' => new ArrayObject([
+                    'level5' => '5',
+                ]),
+            ]),
+        ]);
+
+        $target = deep_array_conversion($source);
+
+        $this->assertEquals('1', $target['level1']);
+        $this->assertIsArray($target['level2']);
+        $this->assertEquals('3', $target['level2']['level3']);
+        $this->assertIsArray($target['level2']['level4']);
+        $this->assertEquals('5', $target['level2']['level4']['level5']);
     }
 }

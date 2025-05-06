@@ -22,7 +22,10 @@ class TokensResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateRestrictedDataTokenResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'restrictedDataToken', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'restrictedDataToken',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return CreateRestrictedDataTokenResponse::from($response);
     }

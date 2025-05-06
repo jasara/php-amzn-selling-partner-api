@@ -30,7 +30,10 @@ class MerchantFulfillmentResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetEligibleShipmentServicesResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'eligibleServices', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'eligibleServices',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -39,7 +42,10 @@ class MerchantFulfillmentResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetEligibleShipmentServicesResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'eligibleShippingServices', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'eligibleShippingServices',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -77,7 +83,10 @@ class MerchantFulfillmentResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateShipmentResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'shipments/', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'shipments/',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -86,7 +95,10 @@ class MerchantFulfillmentResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetAdditionalSellerInputsResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'sellerInputs', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'sellerInputs',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -95,7 +107,10 @@ class MerchantFulfillmentResource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(GetAdditionalSellerInputsResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'additionalSellerInputs', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'additionalSellerInputs',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }

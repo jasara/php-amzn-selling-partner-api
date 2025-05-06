@@ -60,7 +60,10 @@ class FulfillmentInboundV0Resource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(CreateInboundShipmentPlanResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'plans', (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'plans',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -69,7 +72,10 @@ class FulfillmentInboundV0Resource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(InboundShipmentResponse::class)
-            ->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, (array) $request->toArrayObject());
+            ->put(
+                $this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id,
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -78,7 +84,10 @@ class FulfillmentInboundV0Resource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(InboundShipmentResponse::class)
-            ->post($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id, (array) $request->toArrayObject());
+            ->post(
+                $this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id,
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
@@ -140,7 +149,10 @@ class FulfillmentInboundV0Resource implements ResourceContract
     {
         $response = $this->http
             ->responseClass(PutTransportDetailsResponse::class)
-            ->put($this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport', (array) $request->toArrayObject());
+            ->put(
+                $this->endpoint . self::BASE_PATH . 'shipments/' . $shipment_id . '/transport',
+                deep_array_conversion($request->toArrayObject()),
+            );
 
         return $response;
     }
