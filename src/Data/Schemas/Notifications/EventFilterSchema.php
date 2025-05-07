@@ -12,6 +12,7 @@ class EventFilterSchema extends BaseSchema
         public ?array $marketplace_ids,
         #[StringEnumValidator(['ANY_OFFER_CHANGED'])]
         public string $event_filter_type,
+        public array $order_change_types
     ) {
     }
 }
