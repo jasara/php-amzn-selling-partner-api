@@ -96,6 +96,7 @@ class NotificationsResourceTest extends UnitTestCase
                         'aggregation_time_period' => 'FiveMinutes',
                     ],
                     'event_filter_type' => 'ANY_OFFER_CHANGED',
+                    'order_change_types' => ['OrderStatusChange'],
                 ],
             ]),
         );
