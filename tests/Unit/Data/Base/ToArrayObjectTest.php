@@ -52,12 +52,14 @@ class ToArrayObjectTest extends UnitTestCase
         $data = ProcessingDirectiveSchema::from([
             'event_filter' => [
                 'event_filter_type' => 'ANY_OFFER_CHANGED',
+                'order_change_types' => ['OrderStatusChange'],
             ],
         ]);
 
         $array_object = $data->toArrayObject();
 
         $this->assertEquals('ANY_OFFER_CHANGED', $array_object['event_filter']['event_filter_type']);
+        $this->assertEquals('OrderStatusChange', $array_object['event_filter']['order_change_types'][0]);
     }
 
     public function testReturnsDataUsingPascalCase(): void
