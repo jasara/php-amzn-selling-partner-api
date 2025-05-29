@@ -24,7 +24,9 @@ use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\Exceptions\AmznSPAConnectionTimeoutException;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
+use Jasara\AmznSPA\Exceptions\AmznSPAServiceUnavailableException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Exceptions\InvalidParametersException;
@@ -537,6 +539,32 @@ class AmznSPAHttpTest extends UnitTestCase
         [$config] = $this->setupConfigWithFakeHttp('errors/rate-limit', 429);
 
         $this->expectException(RateLimitException::class);
+
+        $amzn = new AmznSPA($config);
+        $amzn->feeds->cancelFeed('some-feed-id');
+    }
+
+    public function testUnavailableExceptionIsThrownIfResponseHasCode503()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('errors/rate-limit', 503);
+
+        $this->expectException(AmznSPAServiceUnavailableException::class);
+
+        $amzn = new AmznSPA($config);
+        $amzn->feeds->cancelFeed('some-feed-id');
+    }
+
+    public function testConnectionTimeoutExceptionIsThrownIfConnectionTimesOut()
+    {
+        $http = new Factory;
+
+        $http->fake([
+            '*' => fn () => throw new ConnectionException('Connection timed out after 1.00 seconds'),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $this->expectException(AmznSPAConnectionTimeoutException::class);
 
         $amzn = new AmznSPA($config);
         $amzn->feeds->cancelFeed('some-feed-id');

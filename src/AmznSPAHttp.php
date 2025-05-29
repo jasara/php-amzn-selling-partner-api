@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA;
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
 use GuzzleHttp\Middleware;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Request;
 use Illuminate\Http\Client\RequestException;
@@ -20,7 +21,9 @@ use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\ErrorListSchema;
 use Jasara\AmznSPA\Data\Schemas\ErrorSchema;
 use Jasara\AmznSPA\Data\Schemas\MetadataSchema;
+use Jasara\AmznSPA\Exceptions\AmznSPAConnectionTimeoutException;
 use Jasara\AmznSPA\Exceptions\AmznSPAException;
+use Jasara\AmznSPA\Exceptions\AmznSPAServiceUnavailableException;
 use Jasara\AmznSPA\Exceptions\AuthenticationException;
 use Jasara\AmznSPA\Exceptions\GrantlessAuthenticationException;
 use Jasara\AmznSPA\Exceptions\InvalidParametersException;
@@ -199,6 +202,10 @@ class AmznSPAHttp
                 throw new RateLimitException(previous: $e);
             }
 
+            if ($e->response->status() === 503) {
+                throw new AmznSPAServiceUnavailableException(previous: $e);
+            }
+
             if ($this->shouldReturnErrorResponse($e)) {
                 return $this->handleResponse($e->response);
             }
@@ -206,6 +213,12 @@ class AmznSPAHttp
             $this->handleRequestException($e, $grantless);
 
             return $this->call($method, $url, $data, $grantless);
+        } catch (ConnectionException $e) {
+            if (str_contains($e->getMessage(), 'Connection timed out after')) {
+                throw new AmznSPAConnectionTimeoutException(previous: $e);
+            }
+
+            throw $e;
         }
     }
 
