@@ -570,6 +570,22 @@ class AmznSPAHttpTest extends UnitTestCase
         $amzn->feeds->cancelFeed('some-feed-id');
     }
 
+    public function testConnectionExceptionThatIsntTimeoutExceptionIsRethrown(): void
+    {
+        $http = new Factory;
+
+        $http->fake([
+            '*' => fn () => throw new ConnectionException('Other exception'),
+        ]);
+
+        $config = $this->setupMinimalConfig(null, $http);
+
+        $this->expectException(ConnectionException::class);
+
+        $amzn = new AmznSPA($config);
+        $amzn->feeds->cancelFeed('some-feed-id');
+    }
+
     public function testExceptionIsThrownIfResponseHasNoData()
     {
         $this->expectException(RequestException::class);
