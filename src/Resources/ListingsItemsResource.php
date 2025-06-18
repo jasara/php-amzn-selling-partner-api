@@ -188,7 +188,7 @@ class ListingsItemsResource implements ResourceContract
             $this->validateStringEnum($sort_order, AmazonEnums::SORT_ORDER);
         }
         
-        if ($page_size && ($page_size < 1 || $page_size > 20)) {
+        if ($page_size !== null && ($page_size < 1 || $page_size > 20)) {
             throw new \InvalidArgumentException('page_size must be between 1 and 20');
         }
 
