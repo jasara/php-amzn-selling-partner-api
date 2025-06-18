@@ -13,7 +13,7 @@ class ItemSummaryByMarketplaceSchema extends BaseSchema
 {
     public function __construct(
         public string $marketplace_id,
-        public string $asin,
+        public ?string $asin,
         public string $product_type,
         #[StringEnumValidator(AmazonEnums::CONDITION_TYPE)]
         public ?string $condition_type,

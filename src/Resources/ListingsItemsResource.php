@@ -139,7 +139,7 @@ class ListingsItemsResource implements ResourceContract
         ?array $without_status = null,
         ?SortBy $sort_by = SortBy::LAST_UPDATED_DATE,
         ?SortOrder $sort_order = SortOrder::DESC,
-        ?int $page_size = 10,
+        ?int $page_size = 20,
         ?string $page_token = null,
     ): SearchListingsItemsResponse|ErrorListResponse {
         $this->validateIsArrayOfStrings($marketplace_ids, MarketplacesList::allIdentifiers());
