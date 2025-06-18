@@ -6,6 +6,11 @@ use Jasara\AmznSPA\AmznSPAHttp;
 use Jasara\AmznSPA\Constants\AmazonEnums;
 use Jasara\AmznSPA\Constants\MarketplacesList;
 use Jasara\AmznSPA\Contracts\ResourceContract;
+use Jasara\AmznSPA\Enums\IdentifiersType;
+use Jasara\AmznSPA\Enums\IssueSeverity;
+use Jasara\AmznSPA\Enums\ListingsStatus;
+use Jasara\AmznSPA\Enums\SortBy;
+use Jasara\AmznSPA\Enums\SortOrder;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPutRequest;
 use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
@@ -122,7 +127,7 @@ class ListingsItemsResource implements ResourceContract
         ?string $issue_locale = null,
         ?array $included_data = null,
         ?array $identifiers = null,
-        ?string $identifiers_type = null,
+        ?IdentifiersType $identifiers_type = null,
         ?string $variation_parent_sku = null,
         ?string $package_hierarchy_sku = null,
         ?string $created_after = null,
@@ -132,8 +137,8 @@ class ListingsItemsResource implements ResourceContract
         ?array $with_issue_severity = null,
         ?array $with_status = null,
         ?array $without_status = null,
-        ?string $sort_by = 'lastUpdatedDate',
-        ?string $sort_order = 'DESC',
+        ?SortBy $sort_by = SortBy::LAST_UPDATED_DATE,
+        ?SortOrder $sort_order = SortOrder::DESC,
         ?int $page_size = 10,
         ?string $page_token = null,
     ): SearchListingsItemsResponse|ErrorListResponse {
@@ -153,11 +158,8 @@ class ListingsItemsResource implements ResourceContract
             }
         }
         
-        if ($identifiers_type) {
-            $this->validateStringEnum($identifiers_type, AmazonEnums::IDENTIFIERS_TYPE);
-            if (!$identifiers) {
-                throw new \InvalidArgumentException('identifiers is required when identifiers_type is provided');
-            }
+        if ($identifiers_type && !$identifiers) {
+            throw new \InvalidArgumentException('identifiers is required when identifiers_type is provided');
         }
         
         if ($variation_parent_sku && ($identifiers || $package_hierarchy_sku)) {
@@ -169,23 +171,15 @@ class ListingsItemsResource implements ResourceContract
         }
         
         if ($with_issue_severity) {
-            $this->validateIsArrayOfStrings($with_issue_severity, AmazonEnums::ISSUE_SEVERITY);
+            $this->validateIsArrayOfEnumValues($with_issue_severity, IssueSeverity::class);
         }
         
         if ($with_status) {
-            $this->validateIsArrayOfStrings($with_status, AmazonEnums::LISTINGS_STATUS);
+            $this->validateIsArrayOfEnumValues($with_status, ListingsStatus::class);
         }
         
         if ($without_status) {
-            $this->validateIsArrayOfStrings($without_status, AmazonEnums::LISTINGS_STATUS);
-        }
-        
-        if ($sort_by) {
-            $this->validateStringEnum($sort_by, AmazonEnums::SORT_BY);
-        }
-        
-        if ($sort_order) {
-            $this->validateStringEnum($sort_order, AmazonEnums::SORT_ORDER);
+            $this->validateIsArrayOfEnumValues($without_status, ListingsStatus::class);
         }
         
         if ($page_size !== null && ($page_size < 1 || $page_size > 20)) {
@@ -199,7 +193,7 @@ class ListingsItemsResource implements ResourceContract
                 'issueLocale' => $issue_locale,
                 'includedData' => $included_data,
                 'identifiers' => $identifiers,
-                'identifiersType' => $identifiers_type,
+                'identifiersType' => $identifiers_type?->value,
                 'variationParentSku' => $variation_parent_sku,
                 'packageHierarchySku' => $package_hierarchy_sku,
                 'createdAfter' => $created_after,
@@ -209,8 +203,8 @@ class ListingsItemsResource implements ResourceContract
                 'withIssueSeverity' => $with_issue_severity,
                 'withStatus' => $with_status,
                 'withoutStatus' => $without_status,
-                'sortBy' => $sort_by,
-                'sortOrder' => $sort_order,
+                'sortBy' => $sort_by?->value,
+                'sortOrder' => $sort_order?->value,
                 'pageSize' => $page_size,
                 'pageToken' => $page_token,
             ]));

@@ -89,4 +89,21 @@ trait ValidatesParameters
             }
         }
     }
+
+    /**
+     * @param class-string<\BackedEnum> $enum_class
+     */
+    private function validateIsArrayOfEnumValues(array $array, string $enum_class): void
+    {
+        if (Arr::isAssoc($array)) {
+            throw new InvalidParametersException('Arrays of enum values must not be associative arrays (they must be sequential).');
+        }
+
+        foreach ($array as $value) {
+            if (! is_string($value)) {
+                throw new InvalidParametersException('There is an invalid value in the array, the array can only contain strings.');
+            }
+            $this->validateStringEnum($value, $enum_class);
+        }
+    }
 }

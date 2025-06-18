@@ -10,6 +10,11 @@ use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPutRequest;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\ListingsItemSubmissionResponse;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\SearchListingsItemsResponse;
+use Jasara\AmznSPA\Enums\IdentifiersType;
+use Jasara\AmznSPA\Enums\IssueSeverity;
+use Jasara\AmznSPA\Enums\ListingsStatus;
+use Jasara\AmznSPA\Enums\SortBy;
+use Jasara\AmznSPA\Enums\SortOrder;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertyListSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertySchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributeSchema;
@@ -235,7 +240,7 @@ class ListingsItemsResourceTest extends UnitTestCase
             marketplace_ids: ['ATVPDKIKX0DER'],
             included_data: ['summaries', 'offers'],
             identifiers: ['GM-ZDPI-9B4E'],
-            identifiers_type: 'SKU',
+            identifiers_type: IdentifiersType::SKU,
             page_size: 1,
         );
 
@@ -269,8 +274,8 @@ class ListingsItemsResourceTest extends UnitTestCase
             with_issue_severity: ['ERROR'],
             with_status: ['BUYABLE'],
             without_status: ['DISCOVERABLE'],
-            sort_by: 'sku',
-            sort_order: 'ASC',
+            sort_by: SortBy::SKU,
+            sort_order: SortOrder::ASC,
             page_size: 5,
             page_token: 'next-page-token'
         );
@@ -332,7 +337,7 @@ class ListingsItemsResourceTest extends UnitTestCase
             seller_id: $seller_id,
             marketplace_ids: ['ATVPDKIKX0DER'],
             identifiers: $identifiers,
-            identifiers_type: 'SKU'
+            identifiers_type: IdentifiersType::SKU
         );
     }
 
@@ -370,7 +375,7 @@ class ListingsItemsResourceTest extends UnitTestCase
         $amzn->listings_items->searchListingsItems(
             seller_id: $seller_id,
             marketplace_ids: ['ATVPDKIKX0DER'],
-            identifiers_type: 'SKU'
+            identifiers_type: IdentifiersType::SKU
         );
     }
 
@@ -390,7 +395,7 @@ class ListingsItemsResourceTest extends UnitTestCase
             seller_id: $seller_id,
             marketplace_ids: ['ATVPDKIKX0DER'],
             identifiers: ['SKU-123'],
-            identifiers_type: 'SKU',
+            identifiers_type: IdentifiersType::SKU,
             variation_parent_sku: 'PARENT-SKU-123'
         );
     }
@@ -431,7 +436,7 @@ class ListingsItemsResourceTest extends UnitTestCase
             seller_id: $seller_id,
             marketplace_ids: ['ATVPDKIKX0DER'],
             identifiers: ['SKU-123'],
-            identifiers_type: 'SKU',
+            identifiers_type: IdentifiersType::SKU,
             package_hierarchy_sku: 'PACKAGE-SKU-123'
         );
     }
@@ -513,5 +518,43 @@ class ListingsItemsResourceTest extends UnitTestCase
 
             return true;
         });
+    }
+
+    public function testSearchListingsItemsValidationInvalidIssueSeverity()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\Jasara\AmznSPA\Exceptions\InvalidParametersException::class);
+        $this->expectExceptionMessage('INVALID is not in the list of allowed values: WARNING,ERROR');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            with_issue_severity: ['INVALID']
+        );
+    }
+
+    public function testSearchListingsItemsValidationInvalidStatus()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\Jasara\AmznSPA\Exceptions\InvalidParametersException::class);
+        $this->expectExceptionMessage('INVALID is not in the list of allowed values: BUYABLE,DISCOVERABLE');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            with_status: ['INVALID']
+        );
     }
 }
