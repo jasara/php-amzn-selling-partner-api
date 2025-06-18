@@ -14,6 +14,7 @@ use Jasara\AmznSPA\Resources\LwaResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
+use Jasara\AmznSPA\Enums\IssueSeverity;
 use PHPUnit\Framework\Attributes\CoversTrait;
 
 #[CoversTrait(ValidatesParameters::class)]
@@ -180,6 +181,41 @@ class ValidatesParametersTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn->fulfillment_inbound->getShipments('ATVPDKIKX0DER', 'SHIPMENT', ['WORKING']);
     }
+
+    public function testValidatesArrayOfEnumValuesException()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('INVALID is not in the list of allowed values: WARNING,ERROR');
+
+        $stub = new ResourceStub();
+        $stub->testValidateArrayOfEnumValues(['INVALID'], IssueSeverity::class);
+    }
+
+    public function testValidatesArrayOfEnumValuesNotSequentialException()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('Arrays of enum values must not be associative arrays (they must be sequential).');
+
+        $stub = new ResourceStub();
+        $stub->testValidateArrayOfEnumValues([0 => 'WARNING', 2 => 'ERROR'], IssueSeverity::class);
+    }
+
+    public function testValidatesArrayOfEnumValuesInvalidTypeException()
+    {
+        $this->expectException(InvalidParametersException::class);
+        $this->expectExceptionMessage('There is an invalid value in the array, the array can only contain strings.');
+
+        $stub = new ResourceStub();
+        $stub->testValidateArrayOfEnumValues([123], IssueSeverity::class);
+    }
+
+    public function testValidatesArrayOfEnumValuesPasses()
+    {
+        $stub = new ResourceStub();
+        $result = $stub->testValidateArrayOfEnumValues(['WARNING', 'ERROR'], IssueSeverity::class);
+        
+        $this->assertTrue($result); // Should not throw exception
+    }
 }
 
 class ResourceStub
@@ -190,5 +226,11 @@ class ResourceStub
     {
         // @phpstan-ignore-next-line
         $this->validateStringEnum('notvalid', ' notanenum');
+    }
+
+    public function testValidateArrayOfEnumValues(array $array, string $enum_class): bool
+    {
+        $this->validateIsArrayOfEnumValues($array, $enum_class);
+        return true;
     }
 }
