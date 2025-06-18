@@ -9,6 +9,7 @@ use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPutRequest;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\ListingsItemSubmissionResponse;
+use Jasara\AmznSPA\Data\Responses\ListingsItems\SearchListingsItemsResponse;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertyListSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertySchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributeSchema;
@@ -216,6 +217,38 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku, $seller_id) {
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '/' . $sku . '?marketplaceIds=ATVPDKIKX0DER', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testSearchListingsItems()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            included_data: ['summaries', 'offers'],
+            identifiers: ['GM-ZDPI-9B4E'],
+            identifiers_type: 'SKU',
+            page_size: 1,
+        );
+
+        $this->assertInstanceOf(SearchListingsItemsResponse::class, $response);
+        $this->assertEquals(1, $response->number_of_results);
+        $this->assertEquals('GM-ZDPI-9B4E', $response->items[0]->sku);
+        $this->assertNotNull($response->pagination);
+        $this->assertEquals('xsdflkj324lkjsdlkj3423klkjsdfkljlk2j34klj2l3k4jlksdjl234', $response->pagination->next_token);
+
+        $http->assertSent(function (Request $request) use ($seller_id) {
+            $this->assertEquals('GET', $request->method());
+            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&includedData=summaries,offers&identifiers=GM-ZDPI-9B4E&identifiersType=SKU&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=1';
+            $this->assertEquals($expectedUrl, urldecode($request->url()));
 
             return true;
         });

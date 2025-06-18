@@ -797,6 +797,8 @@ class AmazonEnums
         'offers',
         'fulfillmentAvailability',
         'procurement',
+        'relationships',
+        'productTypes',
     ];
     public const CONDITION_TYPE = [
         'new_new',
@@ -816,5 +818,33 @@ class AmazonEnums
     public const AGGREGATION_TIME_PERIOD = [
         'FiveMinutes',
         'TenMinutes',
+    ];
+    public const IDENTIFIERS_TYPE = [
+        'ASIN',
+        'EAN',
+        'FNSKU',
+        'GTIN',
+        'ISBN',
+        'JAN',
+        'MINSAN',
+        'SKU',
+        'UPC',
+    ];
+    public const SORT_BY = [
+        'sku',
+        'createdDate',
+        'lastUpdatedDate',
+    ];
+    public const SORT_ORDER = [
+        'ASC',
+        'DESC',
+    ];
+    public const ISSUE_SEVERITY = [
+        'WARNING',
+        'ERROR',
+    ];
+    public const LISTINGS_STATUS = [
+        'BUYABLE',
+        'DISCOVERABLE',
     ];
 }
