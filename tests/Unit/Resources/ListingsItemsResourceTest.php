@@ -313,7 +313,7 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id) {
             $this->assertEquals('GET', $request->method());
-            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&packageHierarchySku=PACKAGE-SKU-123&createdAfter=2024-01-01T00:00:00Z&createdBefore=2024-12-31T23:59:59Z&lastUpdatedAfter=2024-06-01T00:00:00Z&lastUpdatedBefore=2024-06-30T23:59:59Z&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10';
+            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&packageHierarchySku=PACKAGE-SKU-123&createdAfter=2024-01-01T00:00:00Z&createdBefore=2024-12-31T23:59:59Z&lastUpdatedAfter=2024-06-01T00:00:00Z&lastUpdatedBefore=2024-06-30T23:59:59Z&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=20';
             $this->assertEquals($expectedUrl, urldecode($request->url()));
 
             return true;
