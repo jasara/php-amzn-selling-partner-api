@@ -1,0 +1,104 @@
+{
+  "responses": [
+    {
+      "request": {
+        "marketplaceId": "MARKETPLACE_ID",
+        "sku": "MY_SKU",
+        "segment": {
+          "segmentDetails": {
+            "sampleLocation": {
+              "postalCode": {
+                "countryCode": "US",
+                "value": "98109"
+              }
+            }
+          }
+        }
+      },
+      "status": {
+        "statusCode": 200,
+        "reasonPhrase": "Success"
+      },
+      "headers": {},
+      "body": {
+        "offerIdentifier": {
+          "asin": "ASIN",
+          "sku": "MY_SKU",
+          "marketplaceId": "MARKETPLACE_ID",
+          "fulfillmentType": "AFN",
+          "sellerId": "MY_SELLER_ID"
+        },
+        "featuredOfferExpectedPriceResults": [
+          {
+            "featuredOfferExpectedPrice": {
+              "listingPrice": {
+                "amount": 10.00,
+                "currencyCode": "USD"
+              },
+              "points": {
+                "pointsNumber": 3,
+                "pointsMonetaryValue": {
+                  "amount": 0.03,
+                  "currencyCode": "USD"
+                }
+              }
+            },
+            "resultStatus": "VALID_FOEP",
+            "competingFeaturedOffer": {
+              "offerIdentifier": {
+                "asin": "ASIN",
+                "marketplaceId": "MARKETPLACE_ID",
+                "fulfillmentType": "AFN",
+                "sellerId": "OTHER_SELLER_ID"
+              },
+              "condition": "New",
+              "price": {
+                "listingPrice": {
+                  "amount": 12.00,
+                  "currencyCode": "USD"
+                },
+                "shippingPrice": {
+                  "amount": 0,
+                  "currencyCode": "USD"
+                },
+                "points": {
+                  "pointsNumber": 3,
+                  "pointsMonetaryValue": {
+                    "amount": 0.03,
+                    "currencyCode": "USD"
+                  }
+                }
+              }
+            },
+            "currentFeaturedOffer": {
+              "offerIdentifier": {
+                "asin": "ASIN",
+                "marketplaceId": "MARKETPLACE_ID",
+                "fulfillmentType": "AFN",
+                "sellerId": "OTHER_SELLER_ID"
+              },
+              "condition": "New",
+              "price": {
+                "listingPrice": {
+                  "amount": 12.00,
+                  "currencyCode": "USD"
+                },
+                "shippingPrice": {
+                  "amount": 0,
+                  "currencyCode": "USD"
+                },
+                "points": {
+                  "pointsNumber": 3,
+                  "pointsMonetaryValue": {
+                    "amount": 0.03,
+                    "currencyCode": "USD"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

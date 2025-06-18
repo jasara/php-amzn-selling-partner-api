@@ -17,6 +17,7 @@ use Jasara\AmznSPA\Resources\NotificationsResource;
 use Jasara\AmznSPA\Resources\OrdersResource;
 use Jasara\AmznSPA\Resources\ProductFeesResource;
 use Jasara\AmznSPA\Resources\ProductPricingResource;
+use Jasara\AmznSPA\Resources\ProductPricing20220501Resource;
 use Jasara\AmznSPA\Resources\ProductTypeDefinitionsResource;
 use Jasara\AmznSPA\Resources\ReportsResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
@@ -48,6 +49,7 @@ class ResourceGetterTest extends UnitTestCase
     #[TestWith(['getOrders', OrdersResource::class])]
     #[TestWith(['getProductFees', ProductFeesResource::class])]
     #[TestWith(['getProductPricing', ProductPricingResource::class])]
+    #[TestWith(['getProductPricing20220501', ProductPricing20220501Resource::class])]
     #[TestWith(['getProductTypeDefinitions', ProductTypeDefinitionsResource::class])]
     #[TestWith(['getReports', ReportsResource::class])]
     #[TestWith(['getSellers', SellersResource::class])]
