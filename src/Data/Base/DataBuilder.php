@@ -127,7 +127,7 @@ class DataBuilder
             $collection_values[] = self::getValueFromNamedType($type_name::ITEM_CLASS, $raw_value);
         }
 
-        return $type_name::make($collection_values);
+        return new $type_name(...$collection_values);
     }
 
     /**

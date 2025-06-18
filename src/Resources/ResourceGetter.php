@@ -86,6 +86,11 @@ class ResourceGetter
         return $this->constructResource(ProductPricingResource::class);
     }
 
+    public function getProductPricing20220501(): ProductPricing20220501Resource
+    {
+        return $this->constructResource(ProductPricing20220501Resource::class);
+    }
+
     public function getFulfillmentOutbound(): FulfillmentOutboundResource
     {
         return $this->constructResource(FulfillmentOutboundResource::class);
