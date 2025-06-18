@@ -9,6 +9,12 @@ use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPatchRequest;
 use Jasara\AmznSPA\Data\Requests\ListingsItems\ListingsItemPutRequest;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\GetListingsItemResponse;
 use Jasara\AmznSPA\Data\Responses\ListingsItems\ListingsItemSubmissionResponse;
+use Jasara\AmznSPA\Data\Responses\ListingsItems\SearchListingsItemsResponse;
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\IdentifiersType;
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\IssueSeverity;
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\ListingsStatus;
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\SortBy;
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\SortOrder;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertyListSchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributePropertySchema;
 use Jasara\AmznSPA\Data\Schemas\ListingsItems\AttributeSchema;
@@ -219,5 +225,336 @@ class ListingsItemsResourceTest extends UnitTestCase
 
             return true;
         });
+    }
+
+    public function testSearchListingsItems()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            included_data: ['summaries', 'offers'],
+            identifiers: ['GM-ZDPI-9B4E'],
+            identifiers_type: IdentifiersType::SKU,
+            page_size: 1,
+        );
+
+        $this->assertInstanceOf(SearchListingsItemsResponse::class, $response);
+        $this->assertEquals(1, $response->number_of_results);
+        $this->assertEquals('GM-ZDPI-9B4E', $response->items[0]->sku);
+        $this->assertNotNull($response->pagination);
+        $this->assertEquals('xsdflkj324lkjsdlkj3423klkjsdfkljlk2j34klj2l3k4jlksdjl234', $response->pagination->next_token);
+
+        $http->assertSent(function (Request $request) use ($seller_id) {
+            $this->assertEquals('GET', $request->method());
+            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&includedData=summaries,offers&identifiers=GM-ZDPI-9B4E&identifiersType=SKU&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=1';
+            $this->assertEquals($expectedUrl, urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testSearchListingsItemsWithVariationParentSku()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            variation_parent_sku: 'PARENT-SKU-123',
+            with_issue_severity: ['ERROR'],
+            with_status: ['BUYABLE'],
+            without_status: ['DISCOVERABLE'],
+            sort_by: SortBy::SKU,
+            sort_order: SortOrder::ASC,
+            page_size: 5,
+            page_token: 'next-page-token'
+        );
+
+        $this->assertInstanceOf(SearchListingsItemsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($seller_id) {
+            $this->assertEquals('GET', $request->method());
+            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&variationParentSku=PARENT-SKU-123&withIssueSeverity=ERROR&withStatus=BUYABLE&withoutStatus=DISCOVERABLE&sortBy=sku&sortOrder=ASC&pageSize=5&pageToken=next-page-token';
+            $this->assertEquals($expectedUrl, urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testSearchListingsItemsWithPackageHierarchySku()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            package_hierarchy_sku: 'PACKAGE-SKU-123',
+            created_after: '2024-01-01T00:00:00Z',
+            created_before: '2024-12-31T23:59:59Z',
+            last_updated_after: '2024-06-01T00:00:00Z',
+            last_updated_before: '2024-06-30T23:59:59Z'
+        );
+
+        $this->assertInstanceOf(SearchListingsItemsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($seller_id) {
+            $this->assertEquals('GET', $request->method());
+            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&packageHierarchySku=PACKAGE-SKU-123&createdAfter=2024-01-01T00:00:00Z&createdBefore=2024-12-31T23:59:59Z&lastUpdatedAfter=2024-06-01T00:00:00Z&lastUpdatedBefore=2024-06-30T23:59:59Z&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=10';
+            $this->assertEquals($expectedUrl, urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testSearchListingsItemsValidationIdentifiersTooMany()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+        $identifiers = array_fill(0, 21, 'SKU-' . Str::random()); // 21 identifiers (exceeds limit)
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Maximum 20 identifiers allowed');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            identifiers: $identifiers,
+            identifiers_type: IdentifiersType::SKU
+        );
+    }
+
+    public function testSearchListingsItemsValidationIdentifiersWithoutType()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('identifiers_type is required when identifiers is provided');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            identifiers: ['SKU-123']
+        );
+    }
+
+    public function testSearchListingsItemsValidationIdentifiersTypeWithoutIdentifiers()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('identifiers is required when identifiers_type is provided');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            identifiers_type: IdentifiersType::SKU
+        );
+    }
+
+    public function testSearchListingsItemsValidationVariationParentSkuWithIdentifiers()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('variation_parent_sku cannot be used with identifiers or package_hierarchy_sku');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            identifiers: ['SKU-123'],
+            identifiers_type: IdentifiersType::SKU,
+            variation_parent_sku: 'PARENT-SKU-123'
+        );
+    }
+
+    public function testSearchListingsItemsValidationVariationParentSkuWithPackageHierarchy()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('variation_parent_sku cannot be used with identifiers or package_hierarchy_sku');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            variation_parent_sku: 'PARENT-SKU-123',
+            package_hierarchy_sku: 'PACKAGE-SKU-123'
+        );
+    }
+
+    public function testSearchListingsItemsValidationPackageHierarchySkuWithIdentifiers()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('package_hierarchy_sku cannot be used with identifiers or variation_parent_sku');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            identifiers: ['SKU-123'],
+            identifiers_type: IdentifiersType::SKU,
+            package_hierarchy_sku: 'PACKAGE-SKU-123'
+        );
+    }
+
+    public function testSearchListingsItemsValidationPageSizeTooSmall()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('page_size must be between 1 and 20');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            page_size: 0
+        );
+    }
+
+    public function testSearchListingsItemsValidationPageSizeTooLarge()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('page_size must be between 1 and 20');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            page_size: 21
+        );
+    }
+
+    public function testSearchListingsItemsWithAllParametersNull()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            issue_locale: null,
+            included_data: null,
+            identifiers: null,
+            identifiers_type: null,
+            variation_parent_sku: null,
+            package_hierarchy_sku: null,
+            created_after: null,
+            created_before: null,
+            last_updated_after: null,
+            last_updated_before: null,
+            with_issue_severity: null,
+            with_status: null,
+            without_status: null,
+            sort_by: null,
+            sort_order: null,
+            page_size: null,
+            page_token: null
+        );
+
+        $this->assertInstanceOf(SearchListingsItemsResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($seller_id) {
+            $this->assertEquals('GET', $request->method());
+            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER';
+            $this->assertEquals($expectedUrl, urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testSearchListingsItemsValidationInvalidIssueSeverity()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\Jasara\AmznSPA\Exceptions\InvalidParametersException::class);
+        $this->expectExceptionMessage('INVALID is not in the list of allowed values: WARNING,ERROR');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            with_issue_severity: ['INVALID']
+        );
+    }
+
+    public function testSearchListingsItemsValidationInvalidStatus()
+    {
+        [$config] = $this->setupConfigWithFakeHttp('listings-items/search-listings-items');
+
+        $seller_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+
+        $this->expectException(\Jasara\AmznSPA\Exceptions\InvalidParametersException::class);
+        $this->expectExceptionMessage('INVALID is not in the list of allowed values: BUYABLE,DISCOVERABLE');
+
+        $amzn->listings_items->searchListingsItems(
+            seller_id: $seller_id,
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            with_status: ['INVALID']
+        );
     }
 }

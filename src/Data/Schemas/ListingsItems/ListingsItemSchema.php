@@ -9,15 +9,17 @@ class ListingsItemSchema extends BaseSchema
     public function __construct(
         public string $sku,
 
-        public ?ItemSummaryListSchema $summaries,
-        public ?array $attributes,
+        public ?ItemSummaryListSchema $summaries = null,
+        public ?array $attributes = null,
 
-        public ?IssuesListSchema $issues,
+        public ?IssuesListSchema $issues = null,
 
-        public ?ItemOfferListSchema $offers,
+        public ?ItemOfferListSchema $offers = null,
 
-        public ?FulfillmentAvailabilityListSchema $fulfillment_availability,
-        public ?ItemProcurementSchema $procurement,
+        public ?FulfillmentAvailabilityListSchema $fulfillment_availability = null,
+        public ?ItemProcurementSchema $procurement = null,
+        public ?array $relationships = null,
+        public ?array $product_types = null,
     ) {
     }
 }

@@ -797,6 +797,8 @@ class AmazonEnums
         'offers',
         'fulfillmentAvailability',
         'procurement',
+        'relationships',
+        'productTypes',
     ];
     public const CONDITION_TYPE = [
         'new_new',
