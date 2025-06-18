@@ -26,6 +26,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property Resources\OrdersResource $orders
  * @property Resources\ProductFeesResource $product_fees
  * @property Resources\ProductPricingResource $product_pricing
+ * @property Resources\ProductPricing20220501Resource $product_pricing_20220501
  * @property Resources\ProductTypeDefinitionsResource $product_type_definitions
  * @property Resources\ReportsResource $reports
  * @property Resources\SellersResource $sellers
