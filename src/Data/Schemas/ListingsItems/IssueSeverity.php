@@ -1,6 +1,6 @@
 <?php
 
-namespace Jasara\AmznSPA\Data\Schemas\ListingsItems\Enums;
+namespace Jasara\AmznSPA\Data\Schemas\ListingsItems;
 
 enum IssueSeverity: string
 {

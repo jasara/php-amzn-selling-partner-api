@@ -14,7 +14,7 @@ use Jasara\AmznSPA\Resources\LwaResource;
 use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
-use Jasara\AmznSPA\Enums\IssueSeverity;
+use Jasara\AmznSPA\Data\Schemas\ListingsItems\IssueSeverity;
 use PHPUnit\Framework\Attributes\CoversTrait;
 
 #[CoversTrait(ValidatesParameters::class)]
