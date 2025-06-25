@@ -1,6 +1,6 @@
 <?php
 
-namespace Data\Schemas\Notifications;
+namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 
 enum NotificationType: string
 {

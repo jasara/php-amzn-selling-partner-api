@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
-use Data\Schemas\Notifications\NotificationType;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\CreateDestinationResponse;
@@ -15,6 +14,7 @@ use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\GetSubscriptionByIdResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\GetSubscriptionResponse;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
+use Jasara\AmznSPA\Data\Schemas\Notifications\NotificationType;
 use Jasara\AmznSPA\Data\Schemas\Notifications\ProcessingDirectiveSchema;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
