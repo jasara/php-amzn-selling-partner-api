@@ -3,7 +3,7 @@
 namespace Jasara\AmznSPA\Resources;
 
 use Jasara\AmznSPA\AmznSPAHttp;
-use Jasara\AmznSPA\Constants\AmazonEnums;
+use Data\Schemas\Notifications\NotificationType;
 use Jasara\AmznSPA\Contracts\ResourceContract;
 use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\CreateDestinationResponse;
@@ -31,7 +31,7 @@ class NotificationsResource implements ResourceContract
 
     public function getSubscription(string $notification_type): GetSubscriptionResponse|ErrorListResponse
     {
-        $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
+        $this->validateStringEnum($notification_type, NotificationType::cases());
 
         $response = $this->http
             ->responseClass(GetSubscriptionResponse::class)
@@ -46,7 +46,7 @@ class NotificationsResource implements ResourceContract
         ?string $destination_id = null,
         ?ProcessingDirectiveSchema $processing_directive = null,
     ): CreateSubscriptionResponse|ErrorListResponse {
-        $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
+        $this->validateStringEnum($notification_type, NotificationType::cases());
 
         $response = $this->http
             ->responseClass(CreateSubscriptionResponse::class)
@@ -64,7 +64,7 @@ class NotificationsResource implements ResourceContract
 
     public function getSubscriptionById(string $notification_type, string $subscription_id): GetSubscriptionByIdResponse|ErrorListResponse
     {
-        $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
+        $this->validateStringEnum($notification_type, NotificationType::cases());
 
         $response = $this->http
             ->responseClass(GetSubscriptionByIdResponse::class)
@@ -75,7 +75,7 @@ class NotificationsResource implements ResourceContract
 
     public function deleteSubscriptionById(string $notification_type, string $subscription_id): DeleteSubscriptionByIdResponse|ErrorListResponse
     {
-        $this->validateStringEnum($notification_type, AmazonEnums::NOTIFICATION_TYPES);
+        $this->validateStringEnum($notification_type, NotificationType::cases());
 
         $response = $this->http
             ->responseClass(DeleteSubscriptionByIdResponse::class)
