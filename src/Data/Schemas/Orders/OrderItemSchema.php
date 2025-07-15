@@ -47,6 +47,7 @@ class OrderItemSchema extends BaseSchema
         #[StringEnumValidator(['IOSS', 'UOSS', 'CA_MPF'])]
         public ?string $deemed_reseller_category,
         public ?ItemBuyerInfoSchema $buyer_info,
+        public ?BuyerRequestedCancelSchema $buyer_requested_cancel,
     ) {
     }
 }
