@@ -3,7 +3,6 @@
 namespace Jasara\AmznSPA\Data\Schemas\Orders;
 
 use Jasara\AmznSPA\Data\Schemas\BaseSchema;
-use Jasara\AmznSPA\Data\Schemas\ErrorListSchema;
 
 class RegulatedOrderSchema extends BaseSchema
 {
@@ -12,7 +11,6 @@ class RegulatedOrderSchema extends BaseSchema
         public RegulatedInformationSchema $regulated_information,
         public bool $requires_dosage_label,
         public RegulatedOrderVerificationStatusSchema $regulated_order_verification_status,
-        public ErrorListSchema $errors,
     ) {
     }
 }

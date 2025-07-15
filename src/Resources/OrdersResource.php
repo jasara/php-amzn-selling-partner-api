@@ -13,8 +13,10 @@ use Jasara\AmznSPA\Data\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderRegulatedInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrdersResponse;
+use Jasara\AmznSPA\Data\Schemas\Orders\RegulatedOrderVerificationStatusSchema;
 use Jasara\AmznSPA\Traits\ValidatesParameters;
 
 class OrdersResource implements ResourceContract
@@ -123,6 +125,15 @@ class OrdersResource implements ResourceContract
         return $response;
     }
 
+    public function getOrderRegulatedInfo(string $order_id): GetOrderRegulatedInfoResponse|ErrorListResponse
+    {
+        $response = $this->http
+            ->responseClass(GetOrderRegulatedInfoResponse::class)
+            ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/regulatedInfo');
+
+        return $response;
+    }
+
     public function getOrderItemsBuyerInfo(string $order_id, ?string $next_token = null): GetOrderItemsBuyerInfoResponse|ErrorListResponse
     {
         $response = $this->http
@@ -138,6 +149,18 @@ class OrdersResource implements ResourceContract
             ->responseClass(BaseResponse::class)
             ->post(
                 $this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/shipment',
+                deep_array_conversion($request->toArrayObject()),
+            );
+
+        return $response;
+    }
+
+    public function updateVerificationStatus(string $order_id, RegulatedOrderVerificationStatusSchema $request): BaseResponse|ErrorListResponse
+    {
+        $response = $this->http
+            ->responseClass(BaseResponse::class)
+            ->patch(
+                $this->endpoint . self::BASE_PATH . 'orders/' . $order_id . '/regulatedInfo',
                 deep_array_conversion($request->toArrayObject()),
             );
 
