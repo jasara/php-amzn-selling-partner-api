@@ -12,8 +12,11 @@ use Jasara\AmznSPA\Data\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderRegulatedInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrdersResponse;
+use Jasara\AmznSPA\Data\Schemas\Orders\RegulatedOrderVerificationStatusSchema;
+use Jasara\AmznSPA\Data\Schemas\Orders\ValidRejectionReasonsListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -103,6 +106,29 @@ class OrdersResourceTest extends UnitTestCase
         ];
 
         $http->assertSentInOrder($request_validation);
+    }
+
+    public function testGetRegulatedOrder()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('/orders/get-order-regulated-info');
+
+        $order_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->getOrderRegulatedInfo($order_id);
+
+        $this->assertInstanceOf(GetOrderRegulatedInfoResponse::class, $response);
+        $this->assertEquals('205-1725759-9209952', $response->payload->amazon_order_id);
+        $this->assertEquals('Approved', $response->payload->regulated_order_verification_status->status);
+
+        $http->assertSent(function (Request $request) use ($order_id) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/regulatedInfo', $request->url());
+
+                return true;
+            },
+        );
     }
 
     public function testGetOrderEmptyResponse()
@@ -236,6 +262,33 @@ class OrdersResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/shipment', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testUpdateVerificationStatus()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('empty', 204);
+
+        $order_id = Str::random();
+
+        $request = RegulatedOrderVerificationStatusSchema::from(
+            status: 'ACCEPTED',
+            external_reviewer_id: 'external-reviewer-id',
+            valid_rejection_reasons: new ValidRejectionReasonsListSchema([]),
+            rejection_reason_id: null,
+        );
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->updateVerificationStatus($order_id, $request);
+
+        $this->assertInstanceOf(BaseResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($order_id) {
+            $this->assertEquals('PATCH', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/regulatedInfo', urldecode($request->url()));
 
             return true;
         });

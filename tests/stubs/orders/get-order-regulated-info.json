@@ -1,0 +1,23 @@
+{
+    "payload": {
+      "AmazonOrderId": "205-1725759-9209952",
+      "RequiresDosageLabel": true,
+      "RegulatedInformation": {
+        "Fields": [
+          {
+            "FieldLabel": "Species",
+            "FieldId": "petsSpecies",
+            "FieldValue": "Cat",
+            "FieldType": "Text"
+          }
+        ]
+      },
+      "RegulatedOrderVerificationStatus": {
+        "Status": "Approved",
+        "RequiresMerchantAction": false,
+        "ExternalReviewerId": "externalId",
+        "ReviewDate": "1970-01-19T03:59:27Z",
+        "ValidRejectionReasons": []
+      }
+    }
+  }

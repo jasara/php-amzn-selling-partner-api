@@ -42,6 +42,7 @@ class OrderSchema extends BaseSchema
         public ?CarbonImmutable $latest_delivery_date,
         public ?bool $is_business_order,
         public ?bool $is_prime,
+        public ?bool $has_regulated_items,
         public ?bool $is_premium_order,
         public ?bool $is_global_express_enabled,
         public ?string $replaced_order_id,
