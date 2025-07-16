@@ -110,9 +110,7 @@ class OrdersResourceTest extends UnitTestCase
 
     public function testGetRegulatedOrder()
     {
-        [$config, $http] = $this->setupConfigWithFakeHttp([
-            '/orders/get-order-regulated-info',
-        ]);
+        [$config, $http] = $this->setupConfigWithFakeHttp('/orders/get-order-regulated-info');
 
         $order_id = Str::random();
 
@@ -124,16 +122,13 @@ class OrdersResourceTest extends UnitTestCase
         $this->assertEquals('205-1725759-9209952', $response->payload->amazon_order_id);
         $this->assertEquals('Approved', $response->payload->regulated_order_verification_status->status);
 
-        $request_validation = [
-            function (Request $request) use ($order_id) {
+        $http->assertSent(function (Request $request) use ($order_id) {
                 $this->assertEquals('GET', $request->method());
                 $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/regulatedInfo', $request->url());
 
                 return true;
             },
-        ];
-
-        $http->assertSentInOrder($request_validation);
+        );
     }
 
     public function testGetOrderEmptyResponse()
