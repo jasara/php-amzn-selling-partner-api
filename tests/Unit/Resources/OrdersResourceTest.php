@@ -112,17 +112,18 @@ class OrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp([
             'tokens/create-restricted-data-token',
-            '/orders/get-order',
+            '/orders/get-order-regulated-info',
         ]);
 
         $order_id = Str::random();
 
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->orders->getOrder($order_id);
+        $response = $amzn->orders->getOrderRegulatedInfo($order_id);
 
         $this->assertInstanceOf(GetOrderRegulatedInfoResponse::class, $response);
-        $this->assertEquals('921-3175655-0452641', $response->payload->amazon_order_id);
+        $this->assertEquals('205-1725759-9209952', $response->payload->amazon_order_id);
+        $this->assertEquals('Approved', $response->payload->regulated_order_verification_status->status);
 
         $request_validation = [
             function (Request $request) {
