@@ -111,7 +111,6 @@ class OrdersResourceTest extends UnitTestCase
     public function testGetRegulatedOrder()
     {
         [$config, $http] = $this->setupConfigWithFakeHttp([
-            'tokens/create-restricted-data-token',
             '/orders/get-order-regulated-info',
         ]);
 
@@ -126,12 +125,6 @@ class OrdersResourceTest extends UnitTestCase
         $this->assertEquals('Approved', $response->payload->regulated_order_verification_status->status);
 
         $request_validation = [
-            function (Request $request) {
-                $this->assertEquals('POST', $request->method());
-                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
-
-                return true;
-            },
             function (Request $request) use ($order_id) {
                 $this->assertEquals('GET', $request->method());
                 $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/regulatedInfo', $request->url());
