@@ -12,8 +12,11 @@ use Jasara\AmznSPA\Data\Responses\Orders\GetOrderAddressResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsBuyerInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderItemsResponse;
+use Jasara\AmznSPA\Data\Responses\Orders\GetOrderRegulatedInfoResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrderResponse;
 use Jasara\AmznSPA\Data\Responses\Orders\GetOrdersResponse;
+use Jasara\AmznSPA\Data\Schemas\Orders\RegulatedOrderVerificationStatusSchema;
+use Jasara\AmznSPA\Data\Schemas\Orders\ValidRejectionReasonsListSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -97,6 +100,40 @@ class OrdersResourceTest extends UnitTestCase
             function (Request $request) use ($order_id) {
                 $this->assertEquals('GET', $request->method());
                 $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id, $request->url());
+
+                return true;
+            },
+        ];
+
+        $http->assertSentInOrder($request_validation);
+    }
+
+    public function testGetRegulatedOrder()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp([
+            'tokens/create-restricted-data-token',
+            '/orders/get-order',
+        ]);
+
+        $order_id = Str::random();
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->getOrder($order_id);
+
+        $this->assertInstanceOf(GetOrderRegulatedInfoResponse::class, $response);
+        $this->assertEquals('921-3175655-0452641', $response->payload->amazon_order_id);
+
+        $request_validation = [
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
+
+                return true;
+            },
+            function (Request $request) use ($order_id) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/regulatedInfo', $request->url());
 
                 return true;
             },
@@ -236,6 +273,33 @@ class OrdersResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($order_id) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/shipment', urldecode($request->url()));
+
+            return true;
+        });
+    }
+
+    public function testUpdateVerificationStatus()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('empty', 204);
+
+        $order_id = Str::random();
+
+        $request = RegulatedOrderVerificationStatusSchema::from(
+            status: 'ACCEPTED',
+            external_reviewer_id: 'external-reviewer-id',
+            valid_rejection_reasons: new ValidRejectionReasonsListSchema([]),
+            rejection_reason_id: null,
+        );
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders->updateVerificationStatus($order_id, $request);
+
+        $this->assertInstanceOf(BaseResponse::class, $response);
+
+        $http->assertSent(function (Request $request) use ($order_id) {
+            $this->assertEquals('PATCH', $request->method());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/orders/v0/orders/' . $order_id . '/regulatedInfo', urldecode($request->url()));
 
             return true;
         });

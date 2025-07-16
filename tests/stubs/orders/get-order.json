@@ -27,6 +27,7 @@
         "LatestDeliveryDate": "2019-05-12T21:59:59Z",
         "IsBusinessOrder": true,
         "IsPrime": false,
+        "HasRegulatedItems": false,
         "IsGlobalExpressEnabled": false,
         "IsPremiumOrder": false,
         "IsSoldByAB": true,
