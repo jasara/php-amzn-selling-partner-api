@@ -16,7 +16,7 @@ class OrderItemSchema extends BaseSchema
         public string $order_item_id,
         public ?string $title,
         public int $quantity_ordered,
-        public ?int $ouantity_shipped,
+        public ?int $quantity_shipped,
         public ?ProductInfoDetailSchema $product_info,
         public ?PointsGrantedDetailSchema $points_granted,
         public ?MoneySchema $item_price,
