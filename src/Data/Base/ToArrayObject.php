@@ -94,7 +94,6 @@ trait ToArrayObject
             'pascal' => Str::of($property->getName())->studly()
                 ->replace('Asin', 'ASIN')
                 ->replace('Sku', 'SKU'),
-            'snake' => Str::of($property->getName())->snake(),
             default => throw new \InvalidArgumentException('Invalid case provided'),
         };
     }
