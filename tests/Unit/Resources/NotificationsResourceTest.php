@@ -108,7 +108,7 @@ class NotificationsResourceTest extends UnitTestCase
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/notifications/v1/subscriptions/ANY_OFFER_CHANGED', $request->url());
             $this->assertEquals($payload_version, $request->data()['payloadVersion']);
-            $this->assertEquals('FiveMinutes', $request->data()['processingDirective']['event_filter']['aggregation_settings']['aggregation_time_period']);
+            $this->assertEquals('FiveMinutes', $request->data()['processingDirective']['eventFilter']['aggregationSettings']['aggregationTimePeriod']);
 
             return true;
         });

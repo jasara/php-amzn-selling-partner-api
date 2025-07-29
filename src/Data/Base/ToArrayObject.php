@@ -7,7 +7,6 @@ use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Jasara\AmznSPA\Contracts\PascalCaseRequestContract;
-use Jasara\AmznSPA\Contracts\SnakeCaseRequestContract;
 use Jasara\AmznSPA\Data\Base\Mappers\Mapper;
 
 trait ToArrayObject
@@ -19,9 +18,6 @@ trait ToArrayObject
 
         if ($class instanceof PascalCaseRequestContract) {
             $case = 'pascal';
-        }
-        if ($class instanceof SnakeCaseRequestContract) {
-            $case = 'snake';
         }
 
         $properties = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
@@ -98,7 +94,6 @@ trait ToArrayObject
             'pascal' => Str::of($property->getName())->studly()
                 ->replace('Asin', 'ASIN')
                 ->replace('Sku', 'SKU'),
-            'snake' => Str::of($property->getName())->snake(),
             default => throw new \InvalidArgumentException('Invalid case provided'),
         };
     }
