@@ -47,7 +47,7 @@ class ToArrayObjectTest extends UnitTestCase
         $this->assertEquals('2021-01-01T00:00:00Z', $array_object['valueAsTimestamp']);
     }
 
-    public function testReturnsDataUsingSnakeCase(): void
+    public function testReturnsDataUsingCamelCase(): void
     {
         $data = ProcessingDirectiveSchema::from([
             'event_filter' => [
@@ -58,8 +58,8 @@ class ToArrayObjectTest extends UnitTestCase
 
         $array_object = $data->toArrayObject();
 
-        $this->assertEquals('ANY_OFFER_CHANGED', $array_object['event_filter']['event_filter_type']);
-        $this->assertEquals('OrderStatusChange', $array_object['event_filter']['order_change_types'][0]);
+        $this->assertEquals('ANY_OFFER_CHANGED', $array_object['eventFilter']['eventFilterType']);
+        $this->assertEquals('OrderStatusChange', $array_object['eventFilter']['orderChangeTypes'][0]);
     }
 
     public function testReturnsDataUsingPascalCase(): void
