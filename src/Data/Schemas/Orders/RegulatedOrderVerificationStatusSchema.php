@@ -8,9 +8,12 @@ class RegulatedOrderVerificationStatusSchema extends BaseSchema
 {
     public function __construct(
         public string $status,
-        public string $external_reviewer_id,
+        public bool $requires_merchant_action,
         public ValidRejectionReasonsListSchema $valid_rejection_reasons,
-        public ?string $rejection_reason_id = null,
+        public ?RejectionReasonSchema $rejection_reason,
+        public ?string $review_date,
+        public ?string $external_reviewer_id,
+        public ?ValidVerificationDetailsListSchema $valid_verification_details,
     ) {
     }
 }
