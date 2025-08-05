@@ -18,6 +18,7 @@ use Jasara\AmznSPA\Data\Responses\Orders\GetOrdersResponse;
 use Jasara\AmznSPA\Data\Schemas\Orders\RegulatedOrderVerificationStatusSchema;
 use Jasara\AmznSPA\Data\Schemas\Orders\RejectionReasonSchema;
 use Jasara\AmznSPA\Data\Schemas\Orders\ValidRejectionReasonsListSchema;
+use Jasara\AmznSPA\Data\Schemas\Orders\ValidRejectionReasonsSchema;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -277,8 +278,7 @@ class OrdersResourceTest extends UnitTestCase
         $request = RegulatedOrderVerificationStatusSchema::from(
             status: 'ACCEPTED',
             requires_merchant_action: true,
-            rejection_reason: new RejectionReasonSchema('rejection_reason_id', 'rejection_reason_description'),
-            valid_rejection_reasons: new ValidRejectionReasonsListSchema([]),
+            valid_rejection_reasons: new ValidRejectionReasonsListSchema([new ValidRejectionReasonsSchema('rejection_reason_id', 'rejection_reason_description')]),
         );
 
         $amzn = new AmznSPA($config);
