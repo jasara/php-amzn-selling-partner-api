@@ -91,7 +91,6 @@ class ProductPricing20220501ResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/batches/products/pricing/2022-05-01/items/competitiveSummary', $request->url());
-            ray($request->data());
 
             return true;
         });
