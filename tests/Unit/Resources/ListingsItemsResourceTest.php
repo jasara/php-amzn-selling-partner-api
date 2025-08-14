@@ -252,8 +252,8 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id) {
             $this->assertEquals('GET', $request->method());
-            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&includedData=summaries,offers&identifiers=GM-ZDPI-9B4E&identifiersType=SKU&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=1';
-            $this->assertEquals($expectedUrl, urldecode($request->url()));
+            $expected_url = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&includedData=summaries,offers&identifiers=GM-ZDPI-9B4E&identifiersType=SKU&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=1';
+            $this->assertEquals($expected_url, urldecode($request->url()));
 
             return true;
         });
@@ -284,8 +284,8 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id) {
             $this->assertEquals('GET', $request->method());
-            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&variationParentSku=PARENT-SKU-123&withIssueSeverity=ERROR&withStatus=BUYABLE&withoutStatus=DISCOVERABLE&sortBy=sku&sortOrder=ASC&pageSize=5&pageToken=next-page-token';
-            $this->assertEquals($expectedUrl, urldecode($request->url()));
+            $expected_url = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&variationParentSku=PARENT-SKU-123&withIssueSeverity=ERROR&withStatus=BUYABLE&withoutStatus=DISCOVERABLE&sortBy=sku&sortOrder=ASC&pageSize=5&pageToken=next-page-token';
+            $this->assertEquals($expected_url, urldecode($request->url()));
 
             return true;
         });
@@ -313,8 +313,8 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id) {
             $this->assertEquals('GET', $request->method());
-            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&packageHierarchySku=PACKAGE-SKU-123&createdAfter=2024-01-01T00:00:00Z&createdBefore=2024-12-31T23:59:59Z&lastUpdatedAfter=2024-06-01T00:00:00Z&lastUpdatedBefore=2024-06-30T23:59:59Z&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=20';
-            $this->assertEquals($expectedUrl, urldecode($request->url()));
+            $expected_url = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER&packageHierarchySku=PACKAGE-SKU-123&createdAfter=2024-01-01T00:00:00Z&createdBefore=2024-12-31T23:59:59Z&lastUpdatedAfter=2024-06-01T00:00:00Z&lastUpdatedBefore=2024-06-30T23:59:59Z&sortBy=lastUpdatedDate&sortOrder=DESC&pageSize=20';
+            $this->assertEquals($expected_url, urldecode($request->url()));
 
             return true;
         });
@@ -513,8 +513,8 @@ class ListingsItemsResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($seller_id) {
             $this->assertEquals('GET', $request->method());
-            $expectedUrl = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER';
-            $this->assertEquals($expectedUrl, urldecode($request->url()));
+            $expected_url = 'https://sellingpartnerapi-na.amazon.com/listings/2021-08-01/items/' . $seller_id . '?marketplaceIds=ATVPDKIKX0DER';
+            $this->assertEquals($expected_url, urldecode($request->url()));
 
             return true;
         });

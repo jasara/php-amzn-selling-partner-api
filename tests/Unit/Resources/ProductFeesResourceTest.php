@@ -51,6 +51,7 @@ class ProductFeesResourceTest extends UnitTestCase
         $http->assertSent(function (Request $request) use ($seller_sku) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/products/fees/v0/listings/' . $seller_sku . '/feesEstimate', urldecode($request->url()));
+            ray($request->body());
 
             return true;
         });

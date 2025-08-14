@@ -10,10 +10,10 @@ use Jasara\AmznSPA\Data\Requests\ProductPricing\v20220501\CompetitiveSummaryRequ
 use Jasara\AmznSPA\Data\Requests\ProductPricing\v20220501\FeaturedOfferExpectedPriceRequest;
 use Jasara\AmznSPA\Data\Requests\ProductPricing\v20220501\FeaturedOfferExpectedPriceRequestList;
 use Jasara\AmznSPA\Data\Requests\ProductPricing\v20220501\GetFeaturedOfferExpectedPriceBatchRequest;
-use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\CompetitiveSummaryIncludedDataList;
-use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\HttpMethod;
 use Jasara\AmznSPA\Data\Responses\ProductPricing\v20220501\CompetitiveSummaryBatchResponse;
 use Jasara\AmznSPA\Data\Responses\ProductPricing\v20220501\GetFeaturedOfferExpectedPriceBatchResponse;
+use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\CompetitiveSummaryIncludedDataList;
+use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\HttpMethod;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
@@ -27,26 +27,26 @@ class ProductPricing20220501ResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
 
-        $featuredOfferRequest = new FeaturedOfferExpectedPriceRequest(
+        $featured_offer_request = new FeaturedOfferExpectedPriceRequest(
             marketplace_id: 'MARKETPLACE_ID',
             sku: 'MY_SKU',
             uri: '/test',
             method: HttpMethod::from('POST')
         );
 
-        $requestList = new FeaturedOfferExpectedPriceRequestList($featuredOfferRequest);
-        $request = new GetFeaturedOfferExpectedPriceBatchRequest($requestList);
+        $request_list = new FeaturedOfferExpectedPriceRequestList($featured_offer_request);
+        $request = new GetFeaturedOfferExpectedPriceBatchRequest($request_list);
 
         $response = $amzn->product_pricing_20220501->getFeaturedOfferExpectedPriceBatch($request);
 
         $this->assertInstanceOf(GetFeaturedOfferExpectedPriceBatchResponse::class, $response);
 
-        $responseData = $response->responses->first();
-        $this->assertEquals(200, $responseData->status->status_code);
-        $this->assertEquals('Success', $responseData->status->reason_phrase);
-        $this->assertEquals('ASIN', $responseData->body->offer_identifier->asin);
-        $this->assertEquals('MY_SKU', $responseData->body->offer_identifier->sku);
-        $this->assertEquals(10.00, $responseData->body->featured_offer_expected_price_results->first()->featured_offer_expected_price->listing_price->amount);
+        $response_data = $response->responses->first();
+        $this->assertEquals(200, $response_data->status->status_code);
+        $this->assertEquals('Success', $response_data->status->reason_phrase);
+        $this->assertEquals('ASIN', $response_data->body->offer_identifier->asin);
+        $this->assertEquals('MY_SKU', $response_data->body->offer_identifier->sku);
+        $this->assertEquals(10.00, $response_data->body->featured_offer_expected_price_results->first()->featured_offer_expected_price->listing_price->amount);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
@@ -63,34 +63,35 @@ class ProductPricing20220501ResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
 
-        $includedData = new CompetitiveSummaryIncludedDataList([]);
-        
-        $competitiveSummaryRequest = new CompetitiveSummaryRequest(
+        $included_data = new CompetitiveSummaryIncludedDataList([]);
+
+        $competitive_summary_request = new CompetitiveSummaryRequest(
             asin: 'B00ZIAODGE',
             marketplace_id: 'ATVPDKIKX0DER',
-            included_data: $includedData,
+            included_data: $included_data,
             method: HttpMethod::from('POST'),
             uri: '/test'
         );
 
-        $requestList = new CompetitiveSummaryRequestList($competitiveSummaryRequest);
-        $request = new CompetitiveSummaryBatchRequest($requestList);
+        $request_list = new CompetitiveSummaryRequestList($competitive_summary_request);
+        $request = new CompetitiveSummaryBatchRequest($request_list);
 
         $response = $amzn->product_pricing_20220501->getCompetitiveSummary($request);
 
         $this->assertInstanceOf(CompetitiveSummaryBatchResponse::class, $response);
 
-        $responseData = $response->responses->first();
-        $this->assertEquals(200, $responseData->status->status_code);
-        $this->assertEquals('Success', $responseData->status->reason_phrase);
-        $this->assertEquals('B00ZIAODGE', $responseData->body->asin);
-        $this->assertEquals('ATVPDKIKX0DER', $responseData->body->marketplace_id);
-        $this->assertEquals('New', $responseData->body->featured_buying_options->first()->buying_option_type->value);
-        $this->assertEquals(18.11, $responseData->body->featured_buying_options->first()->segmented_featured_offers->first()->listing_price->amount);
+        $response_data = $response->responses->first();
+        $this->assertEquals(200, $response_data->status->status_code);
+        $this->assertEquals('Success', $response_data->status->reason_phrase);
+        $this->assertEquals('B00ZIAODGE', $response_data->body->asin);
+        $this->assertEquals('ATVPDKIKX0DER', $response_data->body->marketplace_id);
+        $this->assertEquals('New', $response_data->body->featured_buying_options->first()->buying_option_type->value);
+        $this->assertEquals(18.11, $response_data->body->featured_buying_options->first()->segmented_featured_offers->first()->listing_price->amount);
 
         $http->assertSent(function (Request $request) {
             $this->assertEquals('POST', $request->method());
             $this->assertEquals('https://sellingpartnerapi-na.amazon.com/batches/products/pricing/2022-05-01/items/competitiveSummary', $request->url());
+            ray($request->data());
 
             return true;
         });

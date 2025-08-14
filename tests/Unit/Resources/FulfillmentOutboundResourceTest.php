@@ -70,16 +70,16 @@ class FulfillmentOutboundResourceTest extends UnitTestCase
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('fulfillment-outbound/list-all-fulfillment-orders');
 
-        $queryStartDate = CarbonImmutable::now()->toDateString();
+        $query_start_date = CarbonImmutable::now()->toDateString();
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
         $response = $amzn->fulfillment_outbound->listAllFulfillmentOrders(CarbonImmutable::now());
 
         $this->assertInstanceOf(ListAllFulfillmentOrdersResponse::class, $response);
 
-        $http->assertSent(function (Request $request) use ($queryStartDate) {
+        $http->assertSent(function (Request $request) use ($query_start_date) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders?queryStartDate=' . $queryStartDate, $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/outbound/2020-07-01/fulfillmentOrders?queryStartDate=' . $query_start_date, $request->url());
 
             return true;
         });
