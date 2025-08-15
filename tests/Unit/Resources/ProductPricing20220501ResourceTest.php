@@ -12,6 +12,7 @@ use Jasara\AmznSPA\Data\Requests\ProductPricing\v20220501\FeaturedOfferExpectedP
 use Jasara\AmznSPA\Data\Requests\ProductPricing\v20220501\GetFeaturedOfferExpectedPriceBatchRequest;
 use Jasara\AmznSPA\Data\Responses\ProductPricing\v20220501\CompetitiveSummaryBatchResponse;
 use Jasara\AmznSPA\Data\Responses\ProductPricing\v20220501\GetFeaturedOfferExpectedPriceBatchResponse;
+use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\CompetitiveSummaryIncludedData;
 use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\CompetitiveSummaryIncludedDataList;
 use Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501\HttpMethod;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -63,7 +64,9 @@ class ProductPricing20220501ResourceTest extends UnitTestCase
         $amzn = new AmznSPA($config);
         $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
 
-        $included_data = new CompetitiveSummaryIncludedDataList([]);
+        $included_data = new CompetitiveSummaryIncludedDataList([
+            CompetitiveSummaryIncludedData::FeaturedBuyingOptions,
+        ]);
 
         $competitive_summary_request = new CompetitiveSummaryRequest(
             asin: 'B00ZIAODGE',

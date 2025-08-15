@@ -2,12 +2,12 @@
 
 namespace Jasara\AmznSPA\Data\Schemas\ProductPricing\v20220501;
 
-use Jasara\AmznSPA\Data\Schemas\BaseSchema;
+use Jasara\AmznSPA\Data\Base\TypedCollection;
 
-class CompetitiveSummaryIncludedDataList extends BaseSchema
+/**
+ * @template-extends TypedCollection<CompetitiveSummaryIncludedData>
+ */
+class CompetitiveSummaryIncludedDataList extends TypedCollection
 {
-    public function __construct(
-        public array $competitive_summary_included_data,
-    ) {
-    }
+    public const ITEM_CLASS = CompetitiveSummaryIncludedData::class;
 }
