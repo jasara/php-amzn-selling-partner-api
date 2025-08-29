@@ -5,6 +5,7 @@ namespace Jasara\AmznSPA\Data\Schemas\Notifications;
 enum NotificationType: string
 {
     case OrderChange = 'ORDER_CHANGE';
+    case OrderStatusChange = 'ORDER_STATUS_CHANGE';
     case FeedProcessingFinished = 'FEED_PROCESSING_FINISHED';
     case ReportProcessingFinished = 'REPORT_PROCESSING_FINISHED';
     case ListingsItemStatusChange = 'LISTINGS_ITEM_STATUS_CHANGE';
