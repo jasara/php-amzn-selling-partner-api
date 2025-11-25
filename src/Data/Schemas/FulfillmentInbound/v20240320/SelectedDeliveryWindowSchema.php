@@ -19,7 +19,7 @@ class SelectedDeliveryWindowSchema extends BaseSchema
         #[CarbonFromStringCaster]
         public CarbonImmutable $end_date,
         #[CarbonFromStringCaster]
-        public CarbonImmutable $editable_until,
+        public ?CarbonImmutable $editable_until,
     ) {
     }
 }
