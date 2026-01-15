@@ -16,7 +16,6 @@ class AddressSchema extends BaseSchema
         public ?string $address_line_2,
         #[RuleValidator(['min:1', 'max:50'])]
         public ?string $company_name,
-        #[MaxLengthValidator(25)]
         public ?string $district_or_county,
         #[MaxLengthValidator(30)]
         public ?string $city,

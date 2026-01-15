@@ -17,7 +17,7 @@ class MaxLengthValidator implements Validator
         }
 
         if (mb_strlen($value) > $this->max_length) {
-            throw new DataValidationException("The length of the string: '{$value}' should be than or equal to {$this->max_length}. Current length: " . strlen($value));
+            throw new DataValidationException("The length of the string: '{$value}' should be less than or equal to {$this->max_length}. Current length: " . strlen($value));
         }
     }
 }
