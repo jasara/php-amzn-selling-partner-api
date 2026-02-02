@@ -169,13 +169,13 @@ class AmznSPAHttp
      */
     private function call(string $method, string $url, array $data = [], bool $grantless = false): array|object
     {
-        $this->setupHttp($this->config->getHttp(), $grantless, $url, $method);
-
-        if ($this->config->shouldUseTestEndpoints()) {
-            $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
-        }
-
         try {
+            $this->setupHttp($this->config->getHttp(), $grantless, $url, $method);
+
+            if ($this->config->shouldUseTestEndpoints()) {
+                $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
+            }
+
             /** @var Response $response */
             $response = $this->http->$method($url, $data);
 
