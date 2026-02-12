@@ -12,7 +12,6 @@ class DataValidator
         $reflection = new \ReflectionClass($data);
 
         foreach ($reflection->getProperties() as $property) {
-            $property->setAccessible(true);
             $property_value = $property->getValue($data);
 
             foreach ($this->getValidators($property) as $validator) {
