@@ -24,6 +24,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property Resources\MerchantFulfillmentResource $merchant_fulfillment
  * @property Resources\NotificationsResource $notifications
  * @property Resources\OrdersResource $orders
+ * @property Resources\Orders20260101Resource $orders20260101
  * @property Resources\ProductFeesResource $product_fees
  * @property Resources\ProductPricingResource $product_pricing
  * @property Resources\ProductPricing20220501Resource $product_pricing_20220501

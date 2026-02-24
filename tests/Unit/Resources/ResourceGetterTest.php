@@ -14,6 +14,7 @@ use Jasara\AmznSPA\Resources\ListingsItemsResource;
 use Jasara\AmznSPA\Resources\LwaResource;
 use Jasara\AmznSPA\Resources\MerchantFulfillmentResource;
 use Jasara\AmznSPA\Resources\NotificationsResource;
+use Jasara\AmznSPA\Resources\Orders20260101Resource;
 use Jasara\AmznSPA\Resources\OrdersResource;
 use Jasara\AmznSPA\Resources\ProductFeesResource;
 use Jasara\AmznSPA\Resources\ProductPricingResource;
@@ -47,6 +48,7 @@ class ResourceGetterTest extends UnitTestCase
     #[TestWith(['getMerchantFulfillment', MerchantFulfillmentResource::class])]
     #[TestWith(['getNotifications', NotificationsResource::class])]
     #[TestWith(['getOrders', OrdersResource::class])]
+    #[TestWith(['getOrders20260101', Orders20260101Resource::class])]
     #[TestWith(['getProductFees', ProductFeesResource::class])]
     #[TestWith(['getProductPricing', ProductPricingResource::class])]
     #[TestWith(['getProductPricing20220501', ProductPricing20220501Resource::class])]
