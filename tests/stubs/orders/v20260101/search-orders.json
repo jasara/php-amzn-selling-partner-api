@@ -1,0 +1,58 @@
+{
+    "orders": [
+        {
+            "orderId": "123-4567890-1234567",
+            "createdTime": "2024-01-15T10:30:00Z",
+            "lastUpdatedTime": "2024-01-15T11:00:00Z",
+            "salesChannel": {
+                "channelName": "AMAZON",
+                "marketplaceId": "ATVPDKIKX0DER",
+                "marketplaceName": "Amazon.com"
+            },
+            "fulfillment": {
+                "fulfillmentStatus": "SHIPPED",
+                "fulfilledBy": "AMAZON",
+                "fulfillmentServiceLevel": "STANDARD"
+            },
+            "orderItems": [
+                {
+                    "orderItemId": "12345678901234",
+                    "quantityOrdered": 1,
+                    "product": {
+                        "asin": "B08N5WRWNW",
+                        "title": "Test Product",
+                        "sellerSku": "SKU-123"
+                    }
+                }
+            ]
+        },
+        {
+            "orderId": "456-7890123-4567890",
+            "createdTime": "2024-01-14T08:00:00Z",
+            "lastUpdatedTime": "2024-01-14T09:00:00Z",
+            "salesChannel": {
+                "channelName": "AMAZON",
+                "marketplaceId": "ATVPDKIKX0DER",
+                "marketplaceName": "Amazon.com"
+            },
+            "fulfillment": {
+                "fulfillmentStatus": "PENDING",
+                "fulfilledBy": "MERCHANT"
+            },
+            "orderItems": [
+                {
+                    "orderItemId": "98765432109876",
+                    "quantityOrdered": 3,
+                    "product": {
+                        "asin": "B07XJ8C8F5",
+                        "title": "Another Product",
+                        "sellerSku": "SKU-456"
+                    }
+                }
+            ]
+        }
+    ],
+    "pagination": {
+        "nextToken": "eyJuZXh0VG9rZW4iOiJhYmMxMjMifQ=="
+    }
+}

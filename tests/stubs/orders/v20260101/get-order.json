@@ -1,0 +1,50 @@
+{
+    "order": {
+        "orderId": "123-4567890-1234567",
+        "createdTime": "2024-01-15T10:30:00Z",
+        "lastUpdatedTime": "2024-01-15T11:00:00Z",
+        "salesChannel": {
+            "channelName": "AMAZON",
+            "marketplaceId": "ATVPDKIKX0DER",
+            "marketplaceName": "Amazon.com"
+        },
+        "fulfillment": {
+            "fulfillmentStatus": "SHIPPED",
+            "fulfilledBy": "AMAZON",
+            "fulfillmentServiceLevel": "STANDARD"
+        },
+        "orderItems": [
+            {
+                "orderItemId": "12345678901234",
+                "quantityOrdered": 2,
+                "product": {
+                    "asin": "B08N5WRWNW",
+                    "title": "Test Product",
+                    "sellerSku": "SKU-123",
+                    "condition": {
+                        "conditionType": "NEW"
+                    },
+                    "price": {
+                        "unitPrice": {
+                            "amount": "29.99",
+                            "currencyCode": "USD"
+                        },
+                        "priceDesignation": "REGULAR_PRICE"
+                    }
+                },
+                "proceeds": {
+                    "proceedsTotal": {
+                        "amount": "59.98",
+                        "currencyCode": "USD"
+                    }
+                }
+            }
+        ],
+        "proceeds": {
+            "grandTotal": {
+                "amount": "59.98",
+                "currencyCode": "USD"
+            }
+        }
+    }
+}

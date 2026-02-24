@@ -116,6 +116,11 @@ class ResourceGetter
         return $this->constructResource(OrdersResource::class);
     }
 
+    public function getOrders20260101(): Orders20260101Resource
+    {
+        return $this->constructResource(Orders20260101Resource::class);
+    }
+
     public function getTokens(): TokensResource
     {
         return $this->constructResource(TokensResource::class);
