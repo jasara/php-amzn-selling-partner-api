@@ -81,6 +81,40 @@ final class Orders20260101ResourceTest extends UnitTestCase
         });
     }
 
+    public function testSearchOrdersWithRecipientDataUsesRdt(): void
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp([
+            'tokens/create-restricted-data-token',
+            'orders/v20260101/search-orders',
+        ]);
+
+        $created_after = CarbonImmutable::now()->subDays(7);
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->orders20260101->searchOrders(
+            created_after: $created_after,
+            included_data: ['RECIPIENT', 'FULFILLMENT'],
+        );
+
+        $this->assertInstanceOf(SearchOrdersResponse::class, $response);
+
+        $http->assertSentInOrder([
+            function (Request $request) {
+                $this->assertEquals('POST', $request->method());
+                $this->assertEquals('https://sellingpartnerapi-na.amazon.com/tokens/2021-03-01/restrictedDataToken', $request->url());
+
+                return true;
+            },
+            function (Request $request) {
+                $this->assertEquals('GET', $request->method());
+                $this->assertStringContainsString('/orders/2026-01-01/orders', $request->url());
+
+                return true;
+            },
+        ]);
+    }
+
     public function testGetOrder(): void
     {
         [$config, $http] = $this->setupConfigWithFakeHttp([
