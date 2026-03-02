@@ -358,7 +358,7 @@ class FulfillmentInbound20240320Resource implements ResourceContract
         string $inbound_plan_id,
         #[RuleValidator(['size:38'])]
         string $shipment_id,
-        #[RuleValidator(['size:38'])]
+        #[RuleValidator(['min:36', 'max:38'])]
         string $delivery_window_option_id,
     ): ConfirmDeliveryWindowOptionsResponse|ErrorListResponse {
         $this->validateAttributes(__FUNCTION__, ...func_get_args());
