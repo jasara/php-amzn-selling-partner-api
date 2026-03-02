@@ -10,7 +10,7 @@ use Jasara\AmznSPA\Data\Schemas\BaseSchema;
 class SelectedDeliveryWindowSchema extends BaseSchema
 {
     public function __construct(
-        #[RuleValidator(['in:AVAILABLE,CONGESTED,BLOCKED'])]
+        #[RuleValidator(['in:AVAILABLE,BLOCKED,CONGESTED,DISCOUNTED'])]
         public string $availability_type,
         #[RuleValidator(['min:36', 'max:38'])]
         public string $delivery_window_option_id,
