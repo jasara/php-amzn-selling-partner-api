@@ -14,6 +14,8 @@ class BoxSchema extends BaseSchema
         public ?BoxContentInformationSource $content_information_source,
         public ?RegionSchema $destination_region,
         public ?DimensionsSchema $dimensions,
+        public ?string $external_container_identifier,
+        public ?string $external_container_identifier_type,
         public ?ItemSchemaList $items,
         #[RuleValidator(['size:38'])]
         public string $package_id,
