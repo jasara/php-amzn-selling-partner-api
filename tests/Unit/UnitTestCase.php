@@ -21,7 +21,5 @@ class UnitTestCase extends TestCase
         $dotenv = Dotenv::createImmutable(__DIR__ . '/../..');
         $dotenv->safeLoad();
 
-        // @phpstan-ignore-next-line
-        ray()->clearAll();
     }
 }

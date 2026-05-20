@@ -61,13 +61,18 @@ class AmznSPAHttp
     public function responseClass(
         string $response_class,
     ): self {
-        if (! is_a($response_class, BaseResponse::class, true)) {
-            throw new AmznSPAException('Response class must extend BaseResponse');
-        }
+        $this->ensureResponseClass($response_class);
 
         $this->response_class = $response_class;
 
         return $this;
+    }
+
+    private function ensureResponseClass(string $response_class): void
+    {
+        if (! is_a($response_class, BaseResponse::class, true)) {
+            throw new AmznSPAException('Response class must extend BaseResponse');
+        }
     }
 
     /**

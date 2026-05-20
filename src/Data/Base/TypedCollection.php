@@ -5,6 +5,9 @@ namespace Jasara\AmznSPA\Data\Base;
 use BackedEnum;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use InvalidArgumentException;
+use Throwable;
+use UnexpectedValueException;
 
 /**
  * @template TValue
@@ -17,18 +20,25 @@ class TypedCollection extends Collection
 
     /**
      * @inheritDoc
-     * @return static
+     *
+     * @param object|array|null $items
+     * @param object|array ...$args
+     *
+     * @return static<TValue>
      */
-    public static function make($items = []): static
+    public static function make($items = [], ...$args): static
     {
-        return new static($items);
+        return new static($items, ...$args);
     }
 
+    /**
+     * @param object|array ...$items
+     */
     final public function __construct(
         object|array ...$items,
     ) {
         if (! class_exists(static::ITEM_CLASS)) {
-            throw new \InvalidArgumentException('Invalid item class: ' . static::ITEM_CLASS);
+            throw new InvalidArgumentException('Invalid item class: ' . static::ITEM_CLASS);
         }
 
         $items = Arr::flatten($items, 1);
@@ -40,8 +50,8 @@ class TypedCollection extends Collection
 
             try {
                 return static::ITEM_CLASS::from($item);
-            } catch (\Throwable $e) {
-                throw new \UnexpectedValueException('Item data cannot be converted to ' . static::ITEM_CLASS . ': ' . $e->getMessage());
+            } catch (Throwable $e) {
+                throw new UnexpectedValueException('Item data cannot be converted to ' . static::ITEM_CLASS . ': ' . $e->getMessage());
             }
         }, $items);
 

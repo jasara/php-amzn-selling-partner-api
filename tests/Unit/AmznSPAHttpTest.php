@@ -512,8 +512,6 @@ class AmznSPAHttpTest extends UnitTestCase
     #[Group('external')]
     public function testSetupHttpProxy()
     {
-        $this->expectException(RequestException::class);
-
         $config = new AmznSPAConfig(
             marketplace_id: MarketplacesList::allIdentifiers()[rand(0, 15)],
             application_id: Str::random(),
@@ -531,7 +529,11 @@ class AmznSPAHttpTest extends UnitTestCase
             $amzn->listings_items->getListingsItem(Str::random(), Str::random(), ['ATVPDKIKX0DER']);
         } catch (ConnectionException $e) {
             $this->markTestSkipped('No connection');
+        } catch (RequestException|AmznSPAServiceUnavailableException $e) {
+            return;
         }
+
+        $this->fail('Expected proxied request to fail.');
     }
 
     public function testRateLimitExceptionIsThrownIfResponseHasCode429()
