@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\VendorTransactionStatus\GetTransactionResponse;
 use Jasara\AmznSPA\Resources\VendorTransactionStatusResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -18,9 +18,9 @@ class VendorTransactionStatusResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-transaction-status/get-transaction');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorTransactionStatus();
-        $response = $resource->getTransaction(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_transaction_status->getTransaction(
             transaction_id: 'transactionIdValue',
         );
 

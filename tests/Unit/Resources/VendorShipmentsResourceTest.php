@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\VendorShipments\GetShipmentDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\VendorShipments\GetShipmentLabelsResponse;
 use Jasara\AmznSPA\Data\Responses\VendorShipments\SubmitShipmentConfirmationsResponse;
@@ -21,9 +21,9 @@ class VendorShipmentsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-shipments/submit-shipment-confirmations');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorShipments();
-        $response = $resource->submitShipmentConfirmations(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_shipments->submitShipmentConfirmations(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -51,9 +51,9 @@ class VendorShipmentsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-shipments/get-shipment-details');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorShipments();
-        $response = $resource->getShipmentDetails(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_shipments->getShipmentDetails(
             limit: 10,
             sort_order: 'sortOrderValue',
             next_token: 'nextTokenValue',
@@ -95,9 +95,9 @@ class VendorShipmentsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-shipments/submit-shipments');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorShipments();
-        $response = $resource->submitShipments(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_shipments->submitShipments(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -125,9 +125,9 @@ class VendorShipmentsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-shipments/get-shipment-labels');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorShipments();
-        $response = $resource->getShipmentLabels(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_shipments->getShipmentLabels(
             limit: 10,
             sort_order: 'sortOrderValue',
             next_token: 'nextTokenValue',

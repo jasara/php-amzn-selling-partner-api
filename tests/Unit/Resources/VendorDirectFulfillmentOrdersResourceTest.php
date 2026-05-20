@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentOrders\GetOrderResponse;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentOrders\GetOrdersResponse;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentOrders\SubmitAcknowledgementResponse;
@@ -20,9 +20,9 @@ class VendorDirectFulfillmentOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-orders/get-orders');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentOrders();
-        $response = $resource->getOrders(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_direct_fulfillment_orders->getOrders(
             created_after: 'createdAfterValue',
             created_before: 'createdBeforeValue',
             ship_from_party_id: 'shipFromPartyIdValue',
@@ -48,9 +48,9 @@ class VendorDirectFulfillmentOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-orders/get-order');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentOrders();
-        $response = $resource->getOrder(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_direct_fulfillment_orders->getOrder(
             purchase_order_number: 'purchaseOrderNumberValue',
         );
 
@@ -69,9 +69,9 @@ class VendorDirectFulfillmentOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-orders/submit-acknowledgement');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentOrders();
-        $response = $resource->submitAcknowledgement(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_direct_fulfillment_orders->submitAcknowledgement(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',

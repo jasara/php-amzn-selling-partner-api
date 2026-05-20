@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentInventory\SubmitInventoryUpdateResponse;
 use Jasara\AmznSPA\Resources\VendorDirectFulfillmentInventoryResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -18,9 +18,9 @@ class VendorDirectFulfillmentInventoryResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-inventory/submit-inventory-update');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentInventory();
-        $response = $resource->submitInventoryUpdate(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->vendor_direct_fulfillment_inventory->submitInventoryUpdate(
             warehouse_id: 'warehouseIdValue',
             request_body: [
                 'payload' => [

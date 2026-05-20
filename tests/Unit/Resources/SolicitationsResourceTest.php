@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\Solicitations\CreateProductReviewAndSellerFeedbackSolicitationResponse;
 use Jasara\AmznSPA\Data\Responses\Solicitations\GetSolicitationActionsForOrderResponse;
 use Jasara\AmznSPA\Resources\SolicitationsResource;
@@ -19,9 +19,9 @@ class SolicitationsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('solicitations/get-solicitation-actions-for-order');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getSolicitations();
-        $response = $resource->getSolicitationActionsForOrder(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->solicitations->getSolicitationActionsForOrder(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -43,9 +43,9 @@ class SolicitationsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('solicitations/create-product-review-and-seller-feedback-solicitation');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getSolicitations();
-        $response = $resource->createProductReviewAndSellerFeedbackSolicitation(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->solicitations->createProductReviewAndSellerFeedbackSolicitation(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',

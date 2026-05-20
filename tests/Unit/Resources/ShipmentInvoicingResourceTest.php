@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\ShipmentInvoicing\GetInvoiceStatusResponse;
 use Jasara\AmznSPA\Data\Responses\ShipmentInvoicing\GetShipmentDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\ShipmentInvoicing\SubmitInvoiceResponse;
@@ -20,9 +20,9 @@ class ShipmentInvoicingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('shipment-invoicing/get-shipment-details');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getShipmentInvoicing();
-        $response = $resource->getShipmentDetails(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->shipment_invoicing->getShipmentDetails(
             shipment_id: 'shipmentIdValue',
         );
 
@@ -41,9 +41,9 @@ class ShipmentInvoicingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('shipment-invoicing/submit-invoice');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getShipmentInvoicing();
-        $response = $resource->submitInvoice(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->shipment_invoicing->submitInvoice(
             shipment_id: 'shipmentIdValue',
             request_body: [
                 'payload' => [
@@ -72,9 +72,9 @@ class ShipmentInvoicingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('shipment-invoicing/get-invoice-status');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getShipmentInvoicing();
-        $response = $resource->getInvoiceStatus(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->shipment_invoicing->getInvoiceStatus(
             shipment_id: 'shipmentIdValue',
         );
 

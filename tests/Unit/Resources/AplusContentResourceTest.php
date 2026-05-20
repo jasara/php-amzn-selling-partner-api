@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\Resources\ResourceGetter;
+use Jasara\AmznSPA\AmznSPA;
 use Jasara\AmznSPA\Data\Responses\AplusContent\CreateContentDocumentResponse;
 use Jasara\AmznSPA\Data\Responses\AplusContent\GetContentDocumentResponse;
 use Jasara\AmznSPA\Data\Responses\AplusContent\ListContentDocumentAsinRelationsResponse;
@@ -27,9 +27,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/search-content-documents');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->searchContentDocuments(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->searchContentDocuments(
             marketplace_id: 'ATVPDKIKX0DER',
             page_token: 'pageTokenValue',
         );
@@ -49,9 +49,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/create-content-document');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->createContentDocument(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->createContentDocument(
             marketplace_id: 'ATVPDKIKX0DER',
             request_body: [
                 'payload' => [
@@ -80,9 +80,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/get-content-document');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->getContentDocument(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->getContentDocument(
             content_reference_key: 'contentReferenceKeyValue',
             marketplace_id: 'ATVPDKIKX0DER',
             included_data_set: [
@@ -106,9 +106,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/update-content-document');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->updateContentDocument(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->updateContentDocument(
             content_reference_key: 'contentReferenceKeyValue',
             marketplace_id: 'ATVPDKIKX0DER',
             request_body: [
@@ -138,9 +138,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/list-content-document-asin-relations');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->listContentDocumentAsinRelations(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->listContentDocumentAsinRelations(
             content_reference_key: 'contentReferenceKeyValue',
             marketplace_id: 'ATVPDKIKX0DER',
             included_data_set: [
@@ -169,9 +169,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/post-content-document-asin-relations');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->postContentDocumentAsinRelations(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->postContentDocumentAsinRelations(
             content_reference_key: 'contentReferenceKeyValue',
             marketplace_id: 'ATVPDKIKX0DER',
             request_body: [
@@ -201,9 +201,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/validate-content-document-asin-relations');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->validateContentDocumentAsinRelations(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->validateContentDocumentAsinRelations(
             marketplace_id: 'ATVPDKIKX0DER',
             asin_set: [
                 0 => 'asinSetOne',
@@ -236,9 +236,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/search-content-publish-records');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->searchContentPublishRecords(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->searchContentPublishRecords(
             marketplace_id: 'ATVPDKIKX0DER',
             asin: 'asinValue',
             page_token: 'pageTokenValue',
@@ -259,9 +259,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/post-content-document-approval-submission');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->postContentDocumentApprovalSubmission(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->postContentDocumentApprovalSubmission(
             content_reference_key: 'contentReferenceKeyValue',
             marketplace_id: 'ATVPDKIKX0DER',
         );
@@ -283,9 +283,9 @@ class AplusContentResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('aplus-content/post-content-document-suspend-submission');
 
-        $config->setMarketplace('ATVPDKIKX0DER');
-        $resource = (new ResourceGetter($config))->getAplusContent();
-        $response = $resource->postContentDocumentSuspendSubmission(
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $response = $amzn->aplus_content->postContentDocumentSuspendSubmission(
             content_reference_key: 'contentReferenceKeyValue',
             marketplace_id: 'ATVPDKIKX0DER',
         );
