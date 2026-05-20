@@ -10,6 +10,7 @@ use Jasara\AmznSPA\Data\Base\DataBuilder;
 use Jasara\AmznSPA\Data\Responses\CatalogItems\v20201201\GetCatalogItemResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentOutbound\CreateFulfillmentOrderResponse;
 use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationsResponse;
+use Jasara\AmznSPA\Data\Responses\Services\SetAppointmentFulfillmentDataResponse;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
@@ -195,6 +196,39 @@ class DataBuilderTest extends UnitTestCase
 
         $this->assertInstanceOf(GetCatalogItemResponse::class, $data);
         $this->assertEquals('asin', $data->item->asin);
+    }
+
+    public function testBuildDataWithScalarFlatResponse(): void
+    {
+        $data = SetAppointmentFulfillmentDataResponse::from([
+            'payload' => 'fulfillment-data-set',
+        ]);
+
+        $this->assertInstanceOf(SetAppointmentFulfillmentDataResponse::class, $data);
+        $this->assertEquals('fulfillment-data-set', $data->payload);
+    }
+
+    public function testBuildDataWithScalarFlatResponseWithoutMappedPayloadKey(): void
+    {
+        $class = new class extends Data implements IsFlatResponse {
+            public function __construct(
+                public array $payload = [],
+            ) {
+            }
+
+            public static function mapResponseToParameter(): string
+            {
+                return 'payload';
+            }
+        };
+
+        $data = $class::from([
+            'raw' => 'fulfillment-data-set',
+        ]);
+
+        $this->assertEquals([
+            'raw' => 'fulfillment-data-set',
+        ], $data->payload);
     }
 
     public function testBuildDataWithEmptyFlatResponseIsIsError(): void

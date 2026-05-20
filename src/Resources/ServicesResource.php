@@ -332,10 +332,6 @@ class ServicesResource implements ResourceContract
     {
         $query = $this->filterQuery($query);
 
-        if ($query === []) {
-            return '';
-        }
-
         foreach ($query as $key => $value) {
             if (is_array($value) && array_values($value) === $value) {
                 $query[$key] = implode(',', $value);
