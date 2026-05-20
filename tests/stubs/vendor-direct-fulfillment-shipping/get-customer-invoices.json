@@ -1,0 +1,13 @@
+{
+    "payload": {
+        "pagination": {
+            "nextToken": "MDAwMDAwMDAwMQ=="
+        },
+        "customerInvoices": [
+            {
+                "purchaseOrderNumber": "PO98676856",
+                "content": "base 64 content goes here"
+            }
+        ]
+    }
+}

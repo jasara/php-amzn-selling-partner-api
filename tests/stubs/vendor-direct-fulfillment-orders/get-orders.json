@@ -1,0 +1,192 @@
+{
+    "payload": {
+        "pagination": {
+            "nextToken": "MDAwMDAwMDAwMQ=="
+        },
+        "orders": [
+            {
+                "purchaseOrderNumber": "2JK3S9VC",
+                "orderDetails": {
+                    "customerOrderNumber": "123-ABC",
+                    "orderDate": "2020-02-20T13:51:00Z",
+                    "orderStatus": "NEW",
+                    "shipmentDetails": {
+                        "isPriorityShipment": false,
+                        "isScheduledDeliveryShipment": false,
+                        "isPslipRequired": true,
+                        "isGift": false,
+                        "shipMethod": "UPS_2ND",
+                        "shipmentDates": {
+                            "requiredShipDate": "2020-02-21T00:00:00Z",
+                            "promisedDeliveryDate": "2020-02-24T00:00:00Z"
+                        },
+                        "messageToCustomer": "This shipment completes your order. You can always check the status of your orders from the \"Your Account\" link at the top of each page of our site.Thank you for shopping at Amazon.com"
+                    },
+                    "taxTotal": {
+                        "taxLineItem": [
+                            {
+                                "taxRate": "0.1",
+                                "taxAmount": {
+                                    "currencyCode": "USD",
+                                    "amount": "190"
+                                },
+                                "type": "TOTAL"
+                            }
+                        ]
+                    },
+                    "sellingParty": {
+                        "partyId": "999US"
+                    },
+                    "shipFromParty": {
+                        "partyId": "ABCD"
+                    },
+                    "shipToParty": {
+                        "name": "ABCD",
+                        "attention": "ABCD",
+                        "addressLine1": "123 XYZ Street",
+                        "addressLine2": "Apt 5",
+                        "city": "San Jose",
+                        "stateOrRegion": "CA",
+                        "postalCode": "94086",
+                        "countryCode": "USA"
+                    },
+                    "billToParty": {
+                        "partyId": "ABCD"
+                    },
+                    "items": [
+                        {
+                            "itemSequenceNumber": "00001",
+                            "buyerProductIdentifier": "B07DFVDRAB",
+                            "vendorProductIdentifier": "8806098286500",
+                            "title": "LG 8 kg Inverter Wi-Fi Fully-Automatic Front Loading Washing Machine (FHT1408SWS, STS-VCM, Inbuilt Heater)",
+                            "orderedQuantity": {
+                                "amount": 1,
+                                "unitOfMeasure": "EACH"
+                            },
+                            "netPrice": {
+                                "currencyCode": "USD",
+                                "amount": "500"
+                            },
+                            "taxDetails": {
+                                "taxLineItem": [
+                                    {
+                                        "taxRate": "0.1",
+                                        "taxAmount": {
+                                            "currencyCode": "USD",
+                                            "amount": "50"
+                                        },
+                                        "type": "TOTAL"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "itemSequenceNumber": "00002",
+                            "buyerProductIdentifier": "B07DFYF5AB",
+                            "vendorProductIdentifier": "8806098286123",
+                            "title": "LG 6.5 kg Inverter Fully-Automatic Front Loading Washing Machine (FHT1065SNW, Blue and White, Inbuilt Heater)",
+                            "orderedQuantity": {
+                                "amount": 2,
+                                "unitOfMeasure": "EACH"
+                            },
+                            "netPrice": {
+                                "currencyCode": "USD",
+                                "amount": "700"
+                            },
+                            "taxDetails": {
+                                "taxLineItem": [
+                                    {
+                                        "taxRate": "0.1",
+                                        "taxAmount": {
+                                            "currencyCode": "USD",
+                                            "amount": "140"
+                                        },
+                                        "type": "TOTAL"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "purchaseOrderNumber": "3TRD2IAB",
+                "orderDetails": {
+                    "customerOrderNumber": "456-ABC",
+                    "orderDate": "2020-02-18T11:47:00Z",
+                    "orderStatus": "NEW",
+                    "shipmentDetails": {
+                        "isPriorityShipment": false,
+                        "isScheduledDeliveryShipment": false,
+                        "isPslipRequired": true,
+                        "isGift": false,
+                        "shipMethod": "UPS_2ND",
+                        "shipmentDates": {
+                            "requiredShipDate": "2020-02-20T00:00:00Z",
+                            "promisedDeliveryDate": "2020-02-22T00:00:00Z"
+                        },
+                        "messageToCustomer": "This shipment completes your order. You can always check the status of your orders from the \"Your Account\" link at the top of each page of our site.Thank you for shopping at Amazon.com"
+                    },
+                    "taxTotal": {
+                        "taxLineItem": [
+                            {
+                                "taxRate": "0.1",
+                                "taxAmount": {
+                                    "currencyCode": "USD",
+                                    "amount": "2"
+                                },
+                                "type": "TOTAL"
+                            }
+                        ]
+                    },
+                    "sellingParty": {
+                        "partyId": "999US"
+                    },
+                    "shipFromParty": {
+                        "partyId": "ABCD"
+                    },
+                    "shipToParty": {
+                        "name": "XYZ",
+                        "attention": "XYZ",
+                        "addressLine1": "456 ABC Street",
+                        "city": "Seattle",
+                        "stateOrRegion": "WA",
+                        "postalCode": "98007",
+                        "countryCode": "USA"
+                    },
+                    "billToParty": {
+                        "partyId": "ABCD"
+                    },
+                    "items": [
+                        {
+                            "itemSequenceNumber": "00001",
+                            "buyerProductIdentifier": "B01LNRIIAB",
+                            "vendorProductIdentifier": "8806098286501",
+                            "title": "Baby Dove Baby Wipes Rich Moisture (50 Pieces)",
+                            "orderedQuantity": {
+                                "amount": 1,
+                                "unitOfMeasure": "EACH"
+                            },
+                            "netPrice": {
+                                "currencyCode": "USD",
+                                "amount": "20"
+                            },
+                            "taxDetails": {
+                                "taxLineItem": [
+                                    {
+                                        "taxRate": "0.1",
+                                        "taxAmount": {
+                                            "currencyCode": "USD",
+                                            "amount": "2"
+                                        },
+                                        "type": "TOTAL"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

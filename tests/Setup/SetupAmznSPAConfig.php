@@ -75,7 +75,7 @@ trait SetupAmznSPAConfig
     }
 
     /** @return array{0: AmznSPAConfig, 1: Factory} */
-    public function setupConfigWithFakeHttp(string | array $stubs, int $status_code = 200): array
+    public function setupConfigWithFakeHttp(string|array $stubs, int $status_code = 200): array
     {
         if (is_string($stubs)) {
             $stubs = [$stubs];
@@ -106,7 +106,7 @@ trait SetupAmznSPAConfig
         return $http;
     }
 
-    public function loadHttpStub(string $stub): array
+    public function loadHttpStub(string $stub): array|string|int|float|bool|null
     {
         $stub_filepath = __DIR__ . '/../stubs/' . $stub . '.json';
 
