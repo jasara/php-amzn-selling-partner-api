@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentShipping\GetCustomerInvoiceResponse;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentShipping\GetCustomerInvoicesResponse;
 use Jasara\AmznSPA\Data\Responses\VendorDirectFulfillmentShipping\GetPackingSlipResponse;
@@ -26,8 +26,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/get-shipping-labels');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->getShippingLabels(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->getShippingLabels(
             created_after: 'createdAfterValue',
             created_before: 'createdBeforeValue',
             ship_from_party_id: 'shipFromPartyIdValue',
@@ -51,8 +52,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/submit-shipping-label-request');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->submitShippingLabelRequest(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->submitShippingLabelRequest(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -80,8 +82,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/get-shipping-label');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->getShippingLabel(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->getShippingLabel(
             purchase_order_number: 'purchaseOrderNumberValue',
         );
 
@@ -100,8 +103,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/submit-shipment-confirmations');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->submitShipmentConfirmations(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->submitShipmentConfirmations(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -129,8 +133,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/submit-shipment-status-updates');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->submitShipmentStatusUpdates(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->submitShipmentStatusUpdates(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -158,8 +163,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/get-customer-invoices');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->getCustomerInvoices(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->getCustomerInvoices(
             created_after: 'createdAfterValue',
             created_before: 'createdBeforeValue',
             ship_from_party_id: 'shipFromPartyIdValue',
@@ -183,8 +189,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/get-customer-invoice');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->getCustomerInvoice(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->getCustomerInvoice(
             purchase_order_number: 'purchaseOrderNumberValue',
         );
 
@@ -203,8 +210,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/get-packing-slips');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->getPackingSlips(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->getPackingSlips(
             created_after: 'createdAfterValue',
             created_before: 'createdBeforeValue',
             ship_from_party_id: 'shipFromPartyIdValue',
@@ -228,8 +236,9 @@ class VendorDirectFulfillmentShippingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-direct-fulfillment-shipping/get-packing-slip');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_direct_fulfillment_shipping->getPackingSlip(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorDirectFulfillmentShipping();
+        $response = $resource->getPackingSlip(
             purchase_order_number: 'purchaseOrderNumberValue',
         );
 

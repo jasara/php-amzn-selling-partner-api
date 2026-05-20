@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\Finances\ListTransactionsResponse;
 use Jasara\AmznSPA\Resources\FinancesResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -18,8 +18,9 @@ class FinancesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('finances/list-transactions');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->finances->listTransactions(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getFinances();
+        $response = $resource->listTransactions(
             posted_after: 'postedAfterValue',
             posted_before: 'postedBeforeValue',
             marketplace_id: 'ATVPDKIKX0DER',

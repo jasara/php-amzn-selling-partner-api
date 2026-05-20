@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\Messaging\ConfirmCustomizationDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\Messaging\CreateConfirmDeliveryDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\Messaging\CreateConfirmOrderDetailsResponse;
@@ -28,8 +28,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/get-messaging-actions-for-order');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->getMessagingActionsForOrder(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->getMessagingActionsForOrder(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -51,8 +52,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/confirm-customization-details');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->confirmCustomizationDetails(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->confirmCustomizationDetails(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -84,8 +86,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-confirm-delivery-details');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createConfirmDeliveryDetails(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createConfirmDeliveryDetails(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -117,8 +120,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-legal-disclosure');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createLegalDisclosure(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createLegalDisclosure(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -150,8 +154,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-confirm-order-details');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createConfirmOrderDetails(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createConfirmOrderDetails(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -183,8 +188,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-confirm-service-details');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createConfirmServiceDetails(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createConfirmServiceDetails(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -216,8 +222,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-warranty');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createWarranty(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createWarranty(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -249,8 +256,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/get-attributes');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->getAttributes(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->getAttributes(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -272,8 +280,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-digital-access-key');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createDigitalAccessKey(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createDigitalAccessKey(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -305,8 +314,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/create-unexpected-problem');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->createUnexpectedProblem(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->createUnexpectedProblem(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -338,8 +348,9 @@ class MessagingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('messaging/send-invoice');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->messaging->sendInvoice(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getMessaging();
+        $response = $resource->sendInvoice(
             amazon_order_id: 'amazonOrderIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\ListingsRestrictions\GetListingsRestrictionsResponse;
 use Jasara\AmznSPA\Resources\ListingsRestrictionsResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -18,8 +18,9 @@ class ListingsRestrictionsResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('listings-restrictions/get-listings-restrictions');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->listings_restrictions->getListingsRestrictions(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getListingsRestrictions();
+        $response = $resource->getListingsRestrictions(
             asin: 'asinValue',
             seller_id: 'sellerIdValue',
             marketplace_ids: [

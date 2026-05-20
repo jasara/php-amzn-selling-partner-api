@@ -48,12 +48,14 @@ class AmznSPAHttp
     public function __construct(
         private AmznSPAConfig $config,
         private ?string $grantless_resource = null,
-    ) {}
+    ) {
+    }
 
     /**
      * @template TSetResponse of BaseResponse
      *
-     * @param  class-string<TSetResponse>  $response_class
+     * @param class-string<TSetResponse> $response_class
+     *
      * @return self<TSetResponse>
      */
     public function responseClass(
@@ -547,10 +549,7 @@ class AmznSPAHttp
 
     private function handleResponse(Response $response): array|BaseResponse
     {
-        $response_json = $response->json();
-        $response_array = is_array($response_json)
-            ? array_keys_to_snake($response_json)
-            : ['payload' => $response_json];
+        $response_array = array_keys_to_snake($response->json() ?: []);
 
         if ($this->response_class) {
             try {

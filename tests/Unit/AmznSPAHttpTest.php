@@ -22,7 +22,6 @@ use Jasara\AmznSPA\Data\Responses\ErrorListResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v0\CreateInboundShipmentPlanResponse;
 use Jasara\AmznSPA\Data\Responses\MerchantFulfillment\GetShipmentResponse;
 use Jasara\AmznSPA\Data\Responses\Reports\GetReportDocumentResponse;
-use Jasara\AmznSPA\Data\Responses\Services\SetAppointmentFulfillmentDataResponse;
 use Jasara\AmznSPA\Data\RestrictedDataToken;
 use Jasara\AmznSPA\Data\Schemas\Notifications\DestinationResourceSpecificationSchema;
 use Jasara\AmznSPA\Exceptions\AmznSPAConnectionTimeoutException;
@@ -662,32 +661,6 @@ class AmznSPAHttpTest extends UnitTestCase
         $response = $http->get($config->getMarketplace()->getBaseUrl() . '/orders/v0/orders');
 
         $this->assertIsArray($response);
-    }
-
-    public function testScalarJsonResponseIsMappedToPayload()
-    {
-        $http = new Factory();
-        $http->fake([
-            '*' => $http->response('"fulfillment-data-set"', 200, [
-                'x-amzn-RequestId' => Str::random(),
-            ]),
-        ]);
-
-        $config = $this->setupMinimalConfig(null, $http);
-
-        $amzn = new AmznSPA($config);
-        $response = $amzn->services->setAppointmentFulfillmentData(
-            service_job_id: 'serviceJobIdValue',
-            appointment_id: 'appointmentIdValue',
-            request_body: [
-                'payload' => [
-                    'testValue' => 'request-value',
-                ],
-            ],
-        );
-
-        $this->assertInstanceOf(SetAppointmentFulfillmentDataResponse::class, $response);
-        $this->assertEquals('fulfillment-data-set', $response->payload);
     }
 
     public function testErrorResponseEvenIfResponseClassHasRequiredProperties()

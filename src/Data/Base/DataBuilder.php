@@ -14,12 +14,13 @@ use ReflectionParameter;
 class DataBuilder
 {
     /**
-     * @param  class-string<TClass>  $class
+     * @param class-string<TClass> $class
      */
     public function __construct(
         private string $class,
         private array $payload,
-    ) {}
+    ) {
+    }
 
     /**
      * @return TClass
@@ -111,7 +112,7 @@ class DataBuilder
     }
 
     /**
-     * @param  class-string<TypedCollection>  $type_name
+     * @param class-string<TypedCollection> $type_name
      */
     private function getTypedCollectionValue(
         string $type_name,
@@ -130,7 +131,7 @@ class DataBuilder
     }
 
     /**
-     * @param  class-string<IsFlatResponse&Data>  $class
+     * @param class-string<IsFlatResponse&Data> $class
      */
     private function buildFlatResponse(
         string $class,
@@ -151,20 +152,9 @@ class DataBuilder
             ]);
         }
 
-        $type_name = $parameter->getType()->getName();
-        if (! is_a($type_name, Data::class, true)) {
-            $payload = array_key_exists($map_to_parameter, $this->payload)
-                ? $this->payload[$map_to_parameter]
-                : $this->payload;
-
-            return new $class(...[
-                $class::mapResponseToParameter() => self::getValueFromNamedType($type_name, $payload),
-            ]);
-        }
-
         return new $class(...[
             $class::mapResponseToParameter() => (
-                new self($type_name, $this->payload))
+                new self($parameter->getType()->getName(), $this->payload))
                     ->build(),
         ]);
     }

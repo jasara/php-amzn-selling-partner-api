@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\VendorOrders\GetPurchaseOrderResponse;
 use Jasara\AmznSPA\Data\Responses\VendorOrders\GetPurchaseOrdersResponse;
 use Jasara\AmznSPA\Data\Responses\VendorOrders\GetPurchaseOrdersStatusResponse;
@@ -21,8 +21,9 @@ class VendorOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-orders/get-purchase-orders');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_orders->getPurchaseOrders(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorOrders();
+        $response = $resource->getPurchaseOrders(
             limit: 10,
             created_after: 'createdAfterValue',
             created_before: 'createdBeforeValue',
@@ -52,8 +53,9 @@ class VendorOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-orders/get-purchase-order');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_orders->getPurchaseOrder(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorOrders();
+        $response = $resource->getPurchaseOrder(
             purchase_order_number: 'purchaseOrderNumberValue',
         );
 
@@ -72,8 +74,9 @@ class VendorOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-orders/submit-acknowledgement');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_orders->submitAcknowledgement(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorOrders();
+        $response = $resource->submitAcknowledgement(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -101,8 +104,9 @@ class VendorOrdersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-orders/get-purchase-orders-status');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_orders->getPurchaseOrdersStatus(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorOrders();
+        $response = $resource->getPurchaseOrdersStatus(
             limit: 10,
             sort_order: 'sortOrderValue',
             next_token: 'nextTokenValue',

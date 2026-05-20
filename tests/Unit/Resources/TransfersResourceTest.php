@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\Transfers\GetPaymentMethodsResponse;
 use Jasara\AmznSPA\Data\Responses\Transfers\InitiatePayoutResponse;
 use Jasara\AmznSPA\Resources\TransfersResource;
@@ -19,8 +19,9 @@ class TransfersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('transfers/initiate-payout');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->transfers->initiatePayout(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getTransfers();
+        $response = $resource->initiatePayout(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
@@ -48,8 +49,9 @@ class TransfersResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('transfers/get-payment-methods');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->transfers->getPaymentMethods(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getTransfers();
+        $response = $resource->getPaymentMethods(
             marketplace_id: 'ATVPDKIKX0DER',
             payment_method_types: [
                 0 => 'paymentMethodTypesOne',

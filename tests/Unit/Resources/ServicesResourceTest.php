@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\Services\AddAppointmentForServiceJobByServiceJobIdResponse;
 use Jasara\AmznSPA\Data\Responses\Services\AssignAppointmentResourcesResponse;
 use Jasara\AmznSPA\Data\Responses\Services\CancelReservationResponse;
@@ -34,8 +34,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/get-service-job-by-service-job-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->getServiceJobByServiceJobId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->getServiceJobByServiceJobId(
             service_job_id: 'serviceJobIdValue',
         );
 
@@ -54,8 +55,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/cancel-service-job-by-service-job-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->cancelServiceJobByServiceJobId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->cancelServiceJobByServiceJobId(
             service_job_id: 'serviceJobIdValue',
             cancellation_reason_code: 'cancellationReasonCodeValue',
         );
@@ -77,8 +79,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/complete-service-job-by-service-job-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->completeServiceJobByServiceJobId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->completeServiceJobByServiceJobId(
             service_job_id: 'serviceJobIdValue',
         );
 
@@ -99,8 +102,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/get-service-jobs');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->getServiceJobs(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->getServiceJobs(
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
             ],
@@ -151,8 +155,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/add-appointment-for-service-job-by-service-job-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->addAppointmentForServiceJobByServiceJobId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->addAppointmentForServiceJobByServiceJobId(
             service_job_id: 'serviceJobIdValue',
             request_body: [
                 'payload' => [
@@ -181,8 +186,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/reschedule-appointment-for-service-job-by-service-job-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->rescheduleAppointmentForServiceJobByServiceJobId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->rescheduleAppointmentForServiceJobByServiceJobId(
             service_job_id: 'serviceJobIdValue',
             appointment_id: 'appointmentIdValue',
             request_body: [
@@ -212,8 +218,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/assign-appointment-resources');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->assignAppointmentResources(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->assignAppointmentResources(
             service_job_id: 'serviceJobIdValue',
             appointment_id: 'appointmentIdValue',
             request_body: [
@@ -243,8 +250,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/set-appointment-fulfillment-data');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->setAppointmentFulfillmentData(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->setAppointmentFulfillmentData(
             service_job_id: 'serviceJobIdValue',
             appointment_id: 'appointmentIdValue',
             request_body: [
@@ -274,8 +282,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/get-range-slot-capacity');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->getRangeSlotCapacity(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->getRangeSlotCapacity(
             resource_id: 'resourceIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -308,8 +317,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/get-fixed-slot-capacity');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->getFixedSlotCapacity(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->getFixedSlotCapacity(
             resource_id: 'resourceIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -342,8 +352,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/update-schedule');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->updateSchedule(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->updateSchedule(
             resource_id: 'resourceIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -375,8 +386,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/create-reservation');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->createReservation(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->createReservation(
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
             ],
@@ -407,8 +419,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/update-reservation');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->updateReservation(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->updateReservation(
             reservation_id: 'reservationIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -440,8 +453,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/cancel-reservation');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->cancelReservation(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->cancelReservation(
             reservation_id: 'reservationIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -463,8 +477,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/get-appointmment-slots-by-job-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->getAppointmmentSlotsByJobId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->getAppointmmentSlotsByJobId(
             service_job_id: 'serviceJobIdValue',
             marketplace_ids: [
                 0 => 'ATVPDKIKX0DER',
@@ -488,8 +503,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/get-appointment-slots');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->getAppointmentSlots(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->getAppointmentSlots(
             asin: 'asinValue',
             store_id: 'storeIdValue',
             marketplace_ids: [
@@ -514,8 +530,9 @@ class ServicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('services/create-service-document-upload-destination');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->services->createServiceDocumentUploadDestination(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getServices();
+        $response = $resource->createServiceDocumentUploadDestination(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',

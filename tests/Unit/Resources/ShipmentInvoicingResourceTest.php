@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\ShipmentInvoicing\GetInvoiceStatusResponse;
 use Jasara\AmznSPA\Data\Responses\ShipmentInvoicing\GetShipmentDetailsResponse;
 use Jasara\AmznSPA\Data\Responses\ShipmentInvoicing\SubmitInvoiceResponse;
@@ -20,8 +20,9 @@ class ShipmentInvoicingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('shipment-invoicing/get-shipment-details');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->shipment_invoicing->getShipmentDetails(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getShipmentInvoicing();
+        $response = $resource->getShipmentDetails(
             shipment_id: 'shipmentIdValue',
         );
 
@@ -40,8 +41,9 @@ class ShipmentInvoicingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('shipment-invoicing/submit-invoice');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->shipment_invoicing->submitInvoice(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getShipmentInvoicing();
+        $response = $resource->submitInvoice(
             shipment_id: 'shipmentIdValue',
             request_body: [
                 'payload' => [
@@ -70,8 +72,9 @@ class ShipmentInvoicingResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('shipment-invoicing/get-invoice-status');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->shipment_invoicing->getInvoiceStatus(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getShipmentInvoicing();
+        $response = $resource->getInvoiceStatus(
             shipment_id: 'shipmentIdValue',
         );
 

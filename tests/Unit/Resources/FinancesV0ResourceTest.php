@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\FinancesV0\ListFinancialEventGroupsResponse;
 use Jasara\AmznSPA\Data\Responses\FinancesV0\ListFinancialEventsByGroupIdResponse;
 use Jasara\AmznSPA\Data\Responses\FinancesV0\ListFinancialEventsByOrderIdResponse;
@@ -21,8 +21,9 @@ class FinancesV0ResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('finances-v0/list-financial-event-groups');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->finances_v0->listFinancialEventGroups(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getFinancesV0();
+        $response = $resource->listFinancialEventGroups(
             max_results_per_page: 10,
             financial_event_group_started_before: 'FinancialEventGroupStartedBeforeValue',
             financial_event_group_started_after: 'FinancialEventGroupStartedAfterValue',
@@ -44,8 +45,9 @@ class FinancesV0ResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('finances-v0/list-financial-events-by-group-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->finances_v0->listFinancialEventsByGroupId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getFinancesV0();
+        $response = $resource->listFinancialEventsByGroupId(
             event_group_id: 'eventGroupIdValue',
             max_results_per_page: 10,
             posted_after: 'PostedAfterValue',
@@ -68,8 +70,9 @@ class FinancesV0ResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('finances-v0/list-financial-events-by-order-id');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->finances_v0->listFinancialEventsByOrderId(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getFinancesV0();
+        $response = $resource->listFinancialEventsByOrderId(
             order_id: 'orderIdValue',
             max_results_per_page: 10,
             next_token: 'NextTokenValue',
@@ -90,8 +93,9 @@ class FinancesV0ResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('finances-v0/list-financial-events');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->finances_v0->listFinancialEvents(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getFinancesV0();
+        $response = $resource->listFinancialEvents(
             max_results_per_page: 10,
             posted_after: 'PostedAfterValue',
             posted_before: 'PostedBeforeValue',

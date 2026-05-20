@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jasara\AmznSPA\Tests\Unit\Resources;
 
 use Illuminate\Http\Client\Request;
-use Jasara\AmznSPA\AmznSPA;
+use Jasara\AmznSPA\Resources\ResourceGetter;
 use Jasara\AmznSPA\Data\Responses\VendorInvoices\SubmitInvoicesResponse;
 use Jasara\AmznSPA\Resources\VendorInvoicesResource;
 use Jasara\AmznSPA\Tests\Unit\UnitTestCase;
@@ -18,8 +18,9 @@ class VendorInvoicesResourceTest extends UnitTestCase
     {
         [$config, $http] = $this->setupConfigWithFakeHttp('vendor-invoices/submit-invoices');
 
-        $amzn = (new AmznSPA($config))->usingMarketplace('ATVPDKIKX0DER');
-        $response = $amzn->vendor_invoices->submitInvoices(
+        $config->setMarketplace('ATVPDKIKX0DER');
+        $resource = (new ResourceGetter($config))->getVendorInvoices();
+        $response = $resource->submitInvoices(
             request_body: [
                 'payload' => [
                     'testValue' => 'request-value',
