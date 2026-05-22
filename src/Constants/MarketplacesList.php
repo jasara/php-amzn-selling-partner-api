@@ -70,6 +70,12 @@ class MarketplacesList
                 region: 'EU',
             ),
             new Marketplace(
+                identifier: 'A28R8C7NBKEWEA',
+                country_code: 'IE',
+                seller_central_url: 'https://sellercentral.amazon.ie',
+                region: 'EU',
+            ),
+            new Marketplace(
                 identifier: 'A21TJRUUN4KGV',
                 country_code: 'IN',
                 seller_central_url: 'https://sellercentral.amazon.in',
