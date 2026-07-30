@@ -63,6 +63,8 @@ use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateItemComplia
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentDeliveryWindowResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentSourceAddressResponse;
 use Jasara\AmznSPA\Data\Responses\FulfillmentInbound\v20240320\UpdateShipmentTrackingDetailsResponse;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\IncentiveSchemaList;
+use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\IncentiveType;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\MskuPrepDetailInputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\MskuPrepDetailInputSchemaList;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v20240320\PrepCategory;
@@ -920,6 +922,17 @@ class FulfillmentInbound20240320ResourceTest extends UnitTestCase
         );
 
         $this->assertInstanceOf(ListDeliveryWindowOptionsResponse::class, $response);
+
+        $this->assertNull($response->delivery_window_options[0]->discounts);
+
+        $discounts = $response->delivery_window_options[1]->discounts;
+        $this->assertInstanceOf(IncentiveSchemaList::class, $discounts);
+        $this->assertCount(1, $discounts);
+        $this->assertEquals('Discounted delivery window option', $discounts[0]->description);
+        $this->assertEquals('Placement Services', $discounts[0]->target);
+        $this->assertEquals(IncentiveType::Discount, $discounts[0]->type);
+        $this->assertEquals('5', $discounts[0]->value->amount);
+        $this->assertEquals('USD', $discounts[0]->value->code);
 
         $http->assertSent(function (Request $request) use ($inbound_plan_id, $shipment_id) {
             $this->assertEquals('GET', $request->method());
