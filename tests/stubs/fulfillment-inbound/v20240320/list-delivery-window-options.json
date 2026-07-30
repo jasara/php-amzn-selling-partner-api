@@ -6,6 +6,24 @@
             "endDate": "2024-01-01T06:00:00.000Z",
             "availabilityType": "AVAILABLE",
             "validUntil": "2024-01-01T06:00:00.000Z"
+        },
+        {
+            "deliveryWindowOptionId": "dw5678efgh-5678-efgh-1234-5678efgh1234",
+            "startDate": "2024-01-05T14:00:00.000Z",
+            "endDate": "2024-01-05T20:00:00.000Z",
+            "availabilityType": "DISCOUNTED",
+            "validUntil": "2024-01-05T20:00:00.000Z",
+            "discounts": [
+                {
+                    "description": "Discounted delivery window option",
+                    "target": "Placement Services",
+                    "type": "DISCOUNT",
+                    "value": {
+                        "amount": 5,
+                        "code": "USD"
+                    }
+                }
+            ]
         }
     ],
     "pagination": {

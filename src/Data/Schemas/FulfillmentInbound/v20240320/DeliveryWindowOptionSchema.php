@@ -14,6 +14,7 @@ class DeliveryWindowOptionSchema extends BaseSchema
         public string $availability_type,
         #[RuleValidator(['min:36', 'max:38'])]
         public string $delivery_window_option_id,
+        public ?IncentiveSchemaList $discounts,
         #[CarbonFromStringCaster]
         public CarbonImmutable $start_date,
         #[CarbonFromStringCaster]
