@@ -230,6 +230,11 @@ class ResourceGetter
         return $this->constructResource(Orders20260101Resource::class);
     }
 
+    public function getTracking(): TrackingResource
+    {
+        return $this->constructResource(TrackingResource::class);
+    }
+
     public function getTokens(): TokensResource
     {
         return $this->constructResource(TokensResource::class);

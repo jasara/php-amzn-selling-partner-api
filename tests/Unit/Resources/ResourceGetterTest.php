@@ -34,6 +34,7 @@ use Jasara\AmznSPA\Resources\ShipmentInvoicingResource;
 use Jasara\AmznSPA\Resources\ShippingResource;
 use Jasara\AmznSPA\Resources\SolicitationsResource;
 use Jasara\AmznSPA\Resources\TokensResource;
+use Jasara\AmznSPA\Resources\TrackingResource;
 use Jasara\AmznSPA\Resources\TransfersResource;
 use Jasara\AmznSPA\Resources\UploadsResource;
 use Jasara\AmznSPA\Resources\VendorDirectFulfillmentInventoryResource;
@@ -89,6 +90,7 @@ class ResourceGetterTest extends UnitTestCase
     #[TestWith(['getShipping', ShippingResource::class])]
     #[TestWith(['getSolicitations', SolicitationsResource::class])]
     #[TestWith(['getTokens', TokensResource::class])]
+    #[TestWith(['getTracking', TrackingResource::class])]
     #[TestWith(['getUploads', UploadsResource::class])]
     #[TestWith(['getVendorDirectFulfillmentInventory', VendorDirectFulfillmentInventoryResource::class])]
     #[TestWith(['getVendorDirectFulfillmentOrders', VendorDirectFulfillmentOrdersResource::class])]
