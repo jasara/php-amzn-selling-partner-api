@@ -42,6 +42,7 @@ use Jasara\AmznSPA\Traits\HasConfig;
  * @property Resources\ShippingResource $shipping
  * @property Resources\SolicitationsResource $solicitations
  * @property Resources\TokensResource $tokens
+ * @property Resources\TrackingResource $tracking
  * @property Resources\TransfersResource $transfers
  * @property Resources\UploadsResource $uploads
  * @property Resources\VendorDirectFulfillmentInventoryResource $vendor_direct_fulfillment_inventory

@@ -1,0 +1,61 @@
+{
+    "trackingDetail": {
+        "identifier": {
+            "aftn": "AFTN987654321",
+            "carrierTracking": {
+                "trackingNumber": "1Z999AA1234567890",
+                "carrierCode": "UPS"
+            }
+        },
+        "trackingUrl": "https://www.swiship.com/track/AFTN987654321",
+        "trackingEstimates": [
+            {
+                "type": "ESTIMATED_DELIVERY_DATE",
+                "estimatedInterval": {
+                    "startTime": "2026-02-03T08:00:00Z",
+                    "endTime": "2026-02-03T20:00:00Z"
+                },
+                "lastUpdatedTime": "2026-02-01T12:15:00Z"
+            }
+        ],
+        "latestMilestone": {
+            "status": {
+                "code": "OUT_FOR_DELIVERY",
+                "subCode": "DELIVERY_ATTEMPTED",
+                "description": "The package is out for delivery."
+            },
+            "location": {
+                "address": {
+                    "city": "Seattle",
+                    "region": "Washington",
+                    "countryCode": "US"
+                }
+            },
+            "occurredAt": "2026-02-03T09:32:00Z"
+        },
+        "milestoneHistory": [
+            {
+                "status": {
+                    "code": "OUT_FOR_DELIVERY",
+                    "subCode": "DELIVERY_ATTEMPTED",
+                    "description": "The package is out for delivery."
+                },
+                "location": {
+                    "address": {
+                        "city": "Seattle",
+                        "region": "Washington",
+                        "countryCode": "US"
+                    }
+                },
+                "occurredAt": "2026-02-03T09:32:00Z"
+            },
+            {
+                "status": {
+                    "code": "SHIPPED",
+                    "description": "The package has shipped."
+                },
+                "occurredAt": "2026-02-01T12:15:00Z"
+            }
+        ]
+    }
+}
