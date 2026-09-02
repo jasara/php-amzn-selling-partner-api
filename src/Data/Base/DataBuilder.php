@@ -100,7 +100,7 @@ class DataBuilder
             is_a($type_name, Data::class, true) => $type_name::from($payload_value),
             is_a($type_name, TypedCollection::class, true) => self::getTypedCollectionValue($type_name, $payload_value),
             is_a($type_name, Collection::class, true) => $type_name::make($payload_value),
-            is_a($payload_value, $type_name, true) => $payload_value,
+            is_object($payload_value) && is_a($payload_value, $type_name) => $payload_value,
             is_a($type_name, BackedEnum::class, true) => $type_name::from($payload_value),
             $type_name === 'int' => (int) $payload_value,
             $type_name === 'float' => (float) $payload_value,

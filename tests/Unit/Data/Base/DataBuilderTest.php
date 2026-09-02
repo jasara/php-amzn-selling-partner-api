@@ -13,6 +13,7 @@ use Jasara\AmznSPA\Data\Responses\Notifications\GetDestinationsResponse;
 use Jasara\AmznSPA\Data\Responses\Tokens\CreateRestrictedDataTokenResponse;
 use Jasara\AmznSPA\Data\Responses\Uploads\CreateUploadDestinationResponse;
 use Jasara\AmznSPA\Data\Schemas\AddressSchema;
+use Jasara\AmznSPA\Data\Schemas\CatalogItems\v20220401\ItemSummaryByMarketplaceSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\InboundShipmentInfoSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelDataOutputSchema;
 use Jasara\AmznSPA\Data\Schemas\FulfillmentInbound\v0\NonPartneredSmallParcelPackageOutputListSchema;
@@ -241,5 +242,16 @@ class DataBuilderTest extends UnitTestCase
         $this->assertInstanceOf(MskuPrepDetailInputSchema::class, $data);
         $this->assertEquals(PrepCategory::Textile, $data->prep_category);
         $this->assertEquals(PrepType::ItemBoxing, $data->prep_types[0]);
+    }
+
+    public function testBuildDataWithBackslashStringValue(): void
+    {
+        $data = ItemSummaryByMarketplaceSchema::from([
+            'marketplace_id' => 'ATVPDKIKX0DER',
+            'part_number' => '\\',
+        ]);
+
+        $this->assertInstanceOf(ItemSummaryByMarketplaceSchema::class, $data);
+        $this->assertEquals('\\', $data->part_number);
     }
 }
