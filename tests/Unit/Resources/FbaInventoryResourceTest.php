@@ -50,6 +50,26 @@ class FbaInventoryResourceTest extends UnitTestCase
         });
     }
 
+    public function testGetInventorySummariesSendsDetailsAsTrue()
+    {
+        list($config, $http) = $this->setupConfigWithFakeHttp('fba-inventory/get-inventory-summaries');
+
+        $amzn = new AmznSPA($config);
+        $amzn = $amzn->usingMarketplace('ATVPDKIKX0DER');
+        $amzn->fba_inventory->getInventorySummaries(
+            granularity_type: 'Marketplace',
+            granularity_id: 'ATVPDKIKX0DER',
+            marketplace_ids: ['ATVPDKIKX0DER'],
+            details: true,
+        );
+
+        $http->assertSent(function (Request $request) {
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?details=true&granularityType=Marketplace&granularityId=ATVPDKIKX0DER&marketplaceIds=ATVPDKIKX0DER', $request->url());
+
+            return true;
+        });
+    }
+
     public function testGetCatalogItem()
     {
         list($config, $http) = $this->setupConfigWithFakeHttp('catalog-items/v20201201/get');

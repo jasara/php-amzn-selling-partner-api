@@ -511,6 +511,11 @@ class AmznSPAHttp
     private function transformGetRequestArraysToStrings(array $data): array
     {
         foreach ($data as $key => $param) {
+            // http_build_query sends booleans as 1/0, but Amazon's boolean query parameters expect true/false
+            if (is_bool($param)) {
+                $data[$key] = $param ? 'true' : 'false';
+            }
+
             if (is_array($param)) {
                 if (array_values($param) === $param) { // Is not an associative array
                     // Amazon cannot handle commas in string arrays in GET calls
