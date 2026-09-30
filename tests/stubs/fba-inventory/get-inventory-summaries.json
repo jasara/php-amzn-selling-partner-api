@@ -14,22 +14,22 @@
                 "sellerSku": "EMTEC 1 GB",
                 "condition": "NewItem",
                 "inventoryDetails": {
-                    "fulfillableQuantity": 0,
-                    "inboundWorkingQuantity": 0,
-                    "inboundShippedQuantity": 0,
-                    "inboundReceivingQuantity": 0,
+                    "fulfillableQuantity": 11,
+                    "inboundWorkingQuantity": 12,
+                    "inboundShippedQuantity": 13,
+                    "inboundReceivingQuantity": 14,
                     "reservedQuantity": {
-                        "totalReservedQuantity": 0,
+                        "totalReservedQuantity": 15,
                         "pendingCustomerOrderQuantity": 0,
                         "pendingTransshipmentQuantity": 0,
                         "fcProcessingQuantity": 0
                     },
                     "researchingQuantity": {
-                        "totalResearchingQuantity": 0,
+                        "totalResearchingQuantity": 16,
                         "researchingQuantityBreakdown": []
                     },
                     "unfulfillableQuantity": {
-                        "totalUnfulfillableQuantity": 0,
+                        "totalUnfulfillableQuantity": 17,
                         "customerDamagedQuantity": 0,
                         "warehouseDamagedQuantity": 0,
                         "distributorDamagedQuantity": 0,

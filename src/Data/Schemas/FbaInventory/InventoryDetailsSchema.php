@@ -13,7 +13,7 @@ class InventoryDetailsSchema extends BaseSchema
         public ?int $inbound_receiving_quantity,
         public ?ReservedQuantitySchema $reserved_quantity,
         public ?ResearchingQuantitySchema $researching_quantity,
-        public ?UnfulfillableQuantitySchema $unfillable_quantity,
+        public ?UnfulfillableQuantitySchema $unfulfillable_quantity,
     ) {
     }
 }
