@@ -22,7 +22,7 @@ jobs:
           path-to-document: 'https://github.com/jasara/php-amzn-selling-partner-api/blob/main/CLA.html' # e.g. a CLA or a DCO document
           # branch should not be protected
           branch: 'main'
-          allowlist: keithbrink
+          allowlist: keithbrink,rasmus-kelstrom[bot]
           use-dco-flag: false #'Set this to true if you want to use a dco instead of a cla'
           
          #below are the optional inputs - If the optional inputs are not given, then default values will be taken
