@@ -32,7 +32,15 @@ class FbaInventoryResourceTest extends UnitTestCase
         $this->assertEquals('seed', $response->pagination->next_token);
         $this->assertEquals('B0020MLK00', $response->payload->inventory_summaries->first()->asin);
         $this->assertEquals('B0020MLK00', $response->payload->inventory_summaries->first()->fnsku);
-        $this->assertSame(0, $response->payload->inventory_summaries->first()->inventory_details->unfulfillable_quantity->total_unfulfillable_quantity);
+
+        $inventory_details = $response->payload->inventory_summaries->first()->inventory_details;
+        $this->assertSame(11, $inventory_details->fulfillable_quantity);
+        $this->assertSame(12, $inventory_details->inbound_working_quantity);
+        $this->assertSame(13, $inventory_details->inbound_shipped_quantity);
+        $this->assertSame(14, $inventory_details->inbound_receiving_quantity);
+        $this->assertSame(15, $inventory_details->reserved_quantity->total_reserved_quantity);
+        $this->assertSame(16, $inventory_details->researching_quantity->total_researching_quantity);
+        $this->assertSame(17, $inventory_details->unfulfillable_quantity->total_unfulfillable_quantity);
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
