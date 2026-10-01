@@ -25,6 +25,7 @@ class FbaInventoryResourceTest extends UnitTestCase
             granularity_type: 'Marketplace',
             granularity_id: 'ATVPDKIKX0DER',
             marketplace_ids: ['ATVPDKIKX0DER'],
+            details: true,
             seller_skus: [$sku],
         );
 
@@ -44,7 +45,7 @@ class FbaInventoryResourceTest extends UnitTestCase
 
         $http->assertSent(function (Request $request) use ($sku) {
             $this->assertEquals('GET', $request->method());
-            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?granularityType=Marketplace&granularityId=ATVPDKIKX0DER&sellerSkus='.$sku.'&marketplaceIds=ATVPDKIKX0DER', $request->url());
+            $this->assertEquals('https://sellingpartnerapi-na.amazon.com/fba/inventory/v1/summaries?details=true&granularityType=Marketplace&granularityId=ATVPDKIKX0DER&sellerSkus='.$sku.'&marketplaceIds=ATVPDKIKX0DER', $request->url());
 
             return true;
         });

@@ -663,6 +663,46 @@ class AmznSPAHttpTest extends UnitTestCase
         $this->assertIsArray($response);
     }
 
+    public function testGetSendsBooleanQueryParametersAsTrueAndFalse()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('empty');
+
+        $base_url = $config->getMarketplace()->getBaseUrl();
+
+        $amzn_http = new AmznSPAHttp($config);
+        $amzn_http->get($base_url . '/orders/v0/orders', [
+            'isISPU' => true,
+            'isPrime' => false,
+            'count' => 1,
+        ]);
+
+        $http->assertSent(function (Request $request) use ($base_url) {
+            $this->assertEquals($base_url . '/orders/v0/orders?isISPU=true&isPrime=false&count=1', $request->url());
+
+            return true;
+        });
+    }
+
+    public function testGetGrantlessSendsBooleanQueryParametersAsTrueAndFalse()
+    {
+        [$config, $http] = $this->setupConfigWithFakeHttp('empty');
+        $config->setGrantlessToken(new GrantlessToken(Str::random(), 3600));
+
+        $base_url = $config->getMarketplace()->getBaseUrl();
+
+        $amzn_http = new AmznSPAHttp($config, 'notifications');
+        $amzn_http->getGrantless($base_url . '/notifications/v1/destinations', [
+            'enabled' => true,
+            'archived' => false,
+        ]);
+
+        $http->assertSent(function (Request $request) use ($base_url) {
+            $this->assertEquals($base_url . '/notifications/v1/destinations?enabled=true&archived=false', $request->url());
+
+            return true;
+        });
+    }
+
     public function testErrorResponseEvenIfResponseClassHasRequiredProperties()
     {
         [$config] = $this->setupConfigWithFakeHttp('errors/unauthorized');

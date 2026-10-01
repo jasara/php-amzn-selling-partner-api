@@ -181,6 +181,10 @@ class AmznSPAHttp
                 $url = str_replace('//sellingpartnerapi', '//sandbox.sellingpartnerapi', $url);
             }
 
+            if ($method === 'get') {
+                $data = $this->transformGetRequestBooleansToStrings($data);
+            }
+
             /** @var Response $response */
             $response = $this->http->$method($url, $data);
 
@@ -529,6 +533,12 @@ class AmznSPAHttp
         }
 
         return $data;
+    }
+
+    private function transformGetRequestBooleansToStrings(array $data): array
+    {
+        // The HTTP client would serialise booleans as 1/0, but SP-API expects the literals true/false
+        return array_map(fn ($param) => is_bool($param) ? ($param ? 'true' : 'false') : $param, $data);
     }
 
     private function getMetadata(Response $response): MetadataSchema
