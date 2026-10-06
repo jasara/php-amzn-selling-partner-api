@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jasara\AmznSPA\Data\Base;
 
 use BackedEnum;
 use Illuminate\Support\Collection;
+use Iterator;
+use IteratorAggregate;
 use Jasara\AmznSPA\Contracts\IsFlatResponse;
 use Jasara\AmznSPA\Data\Base\Casts\Caster;
+use ReflectionNamedType;
 use ReflectionParameter;
 
 /**
@@ -70,11 +75,11 @@ class DataBuilder
         if ($parameter->getType() instanceof \ReflectionUnionType) {
             $types = array_filter(
                 $parameter->getType()->getTypes(),
-                fn ($type) => $type->getName() !== 'null',
+                fn (ReflectionNamedType $type): bool => $type->getName() !== 'null',
             );
             foreach ($types as $type) {
                 try {
-                    return self::getValueFromNamedType($type, $payload_value);
+                    return self::getValueFromNamedType($type->getName(), $payload_value);
                 } catch (\Throwable) {
                     continue;
                 }
@@ -85,7 +90,7 @@ class DataBuilder
 
         $value = $payload_value;
 
-        if (($type = $parameter->getType()) instanceof \ReflectionNamedType) {
+        if (($type = $parameter->getType()) instanceof ReflectionNamedType) {
             $value = self::getValueFromNamedType($type->getName(), $payload_value);
         }
 
@@ -97,16 +102,16 @@ class DataBuilder
         mixed $payload_value,
     ): mixed {
         return match (true) {
-            is_a($type_name, Data::class, true) => $type_name::from($payload_value),
-            is_a($type_name, TypedCollection::class, true) => self::getTypedCollectionValue($type_name, $payload_value),
-            is_a($type_name, Collection::class, true) => $type_name::make($payload_value),
-            is_object($payload_value) && is_a($payload_value, $type_name) => $payload_value,
-            is_a($type_name, BackedEnum::class, true) => $type_name::from($payload_value),
             $type_name === 'int' => (int) $payload_value,
             $type_name === 'float' => (float) $payload_value,
             $type_name === 'string' => (string) $payload_value,
             $type_name === 'array' => (array) $payload_value,
             $type_name === 'bool' => (bool) $payload_value,
+            is_a($type_name, Data::class, true) => $type_name::from($payload_value),
+            is_a($type_name, TypedCollection::class, true) => self::getTypedCollectionValue($type_name, $payload_value),
+            is_a($type_name, Collection::class, true) => $type_name::make($payload_value),
+            is_object($payload_value) && is_a($payload_value, $type_name) => $payload_value,
+            is_a($type_name, BackedEnum::class, true) => $type_name::from($payload_value),
             default => throw new \InvalidArgumentException("Unsupported parameter type: {$type_name} with value: {$payload_value} for class {$this->class}"),
         };
     }
@@ -139,9 +144,9 @@ class DataBuilder
     ): Data {
         $map_to_parameter = $class::mapResponseToParameter();
 
-        $parameter = array_filter($parameters, fn ($parameter) => $parameter->getName() === $map_to_parameter)[0] ?? null;
+        $parameter = array_filter($parameters, fn (ReflectionParameter $parameter): bool => $parameter->getName() === $map_to_parameter)[0] ?? null;
 
-        if (! $parameter || ! $parameter->getType() instanceof \ReflectionNamedType) {
+        if (! $parameter || ! $parameter->getType() instanceof ReflectionNamedType) {
             throw new \InvalidArgumentException("Missing required parameter: {$map_to_parameter} for {$this->class}");
         }
 
@@ -195,8 +200,12 @@ class DataBuilder
             return false;
         }
 
-        if ($parameter->getType() instanceof \ReflectionNamedType) {
-            $param_is_iterable = is_a($parameter->getType()->getName(), \Iterator::class, true) || is_a($parameter->getType()->getName(), \IteratorAggregate::class, true);
+        $type = $parameter->getType();
+        if ($type instanceof ReflectionNamedType) {
+            $param_is_iterable = ! $type->isBuiltin() && (
+                is_a($type->getName(), Iterator::class, true)
+                || is_a($type->getName(), IteratorAggregate::class, true)
+            );
 
             if (! $param_is_iterable) {
                 return true;
