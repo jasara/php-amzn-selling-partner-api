@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Jasara\AmznSPA\Tests\Unit\Data\Base;
 
 use Closure;
