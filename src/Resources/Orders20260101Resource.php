@@ -15,7 +15,6 @@ use Jasara\AmznSPA\Traits\ValidatesParameters;
 class Orders20260101Resource implements ResourceContract
 {
     use ValidatesParameters;
-
     public const BASE_PATH = '/orders/2026-01-01/';
 
     public function __construct(
@@ -36,10 +35,6 @@ class Orders20260101Resource implements ResourceContract
         ?string $pagination_token = null,
         ?array $included_data = null,
     ): SearchOrdersResponse|ErrorListResponse {
-        if ($this->requiresRestrictedDataToken($included_data)) {
-            $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
-        }
-
         $response = $this->http
             ->responseClass(SearchOrdersResponse::class)
             ->get($this->endpoint . self::BASE_PATH . 'orders', array_filter([
@@ -62,10 +57,6 @@ class Orders20260101Resource implements ResourceContract
         string $order_id,
         ?array $included_data = null,
     ): GetOrderResponse|ErrorListResponse {
-        if ($this->requiresRestrictedDataToken($included_data)) {
-            $this->http->setRestrictedDataElements(['buyerInfo', 'shippingAddress']);
-        }
-
         $response = $this->http
             ->responseClass(GetOrderResponse::class)
             ->get($this->endpoint . self::BASE_PATH . 'orders/' . $order_id, array_filter([
@@ -73,14 +64,5 @@ class Orders20260101Resource implements ResourceContract
             ]));
 
         return $response;
-    }
-
-    private function requiresRestrictedDataToken(?array $included_data): bool
-    {
-        if ($included_data === null) {
-            return true;
-        }
-
-        return in_array('BUYER', $included_data, true) || in_array('RECIPIENT', $included_data, true);
     }
 }
