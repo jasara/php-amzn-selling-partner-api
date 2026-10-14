@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Jasara\AmznSPA;
 
 use Aws\Credentials\Credentials;
@@ -378,8 +380,6 @@ class AmznSPAHttp
             '#.*orders/v0/orders$#',
             '#.*orders/v0/orders/[^/]*$#',
             '#.*orders/v0/orders/.*/orderItems$#',
-            '#.*orders/2026-01-01/orders$#',
-            '#.*orders/2026-01-01/orders/[^/]*$#',
             '#.*reports/.*/documents/.*$#',
         ];
 
